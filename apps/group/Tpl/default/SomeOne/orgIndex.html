@@ -1,0 +1,98 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="../Public/Js/common.js"></script>
+<link  href="../Public/layout.css" rel="stylesheet" type="text/css"/>
+<link  href="../Public/group.css" rel="stylesheet" type="text/css"/>
+<div class="content_holder">
+<div class="content no_bg"><!-- 内容 begin  -->
+<include file="../Public/_orgMainNav" />
+<div class="main no_l">
+  <!-- 右侧内容 begin  -->
+  <div class="mainbox">
+    <include file="../Public/_isOrgHotList" />
+      <div class="mainbox_appC">
+    <div class="tab-menu">
+          <!-- 切换标签 begin  -->
+          <ul>
+              <li><a href="{:U('group/SomeOne/orgIndex')}" 
+              <eq name="ACTION_NAME" value="orgIndex">class="on"</eq>
+              ><span>{$current_uname}的组织</span></a></li>
+          </ul>
+        </div>
+        <div class="MenuSub" style="margin:0px;"> 
+          <a href="{:U('group/SomeOne/orgIndex')}" <if condition="$type eq 'all'">class="on"</if>>全部</a>
+          <i class="vline">|</i>
+          <a href="{:U('group/SomeOne/orgIndex',array('uid'=>$uid,'type'=>'manage'))}" 
+          <if condition="$type eq 'manage'">class="on"</if>
+          >{$current_uname}管理的组织</a>
+          <i class="vline">|</i>
+          <a href="{:U('group/SomeOne/orgIndex',array('uid'=>$uid,'type'=>'join'))}" 
+          <if condition="$type eq 'join'">class="on"</if>
+          >{$current_uname}加入的组织</a>
+          <!--<i class="vline">|</i>
+           <a href="{:U('group/SomeOne/orgIndex',array('uid'=>$uid,'type'=>'following'))}" 
+          <if condition="$type eq 'following'">class="on"</if>
+          >{$current_uname}关注的人的组织</a> -->
+          <!-- <i class="vline">|</i>
+          <a href="{:U('group/SomeOne/orgIndex',array('uid'=>$uid,'type'=>'done'))}" 
+          <if condition="$type eq 'done'">class="on"</if>
+          >已完成的组织</a> -->
+        </div>
+      <div class="groupBox">
+        <div class="boxL"><!-- 好友日志 begin  -->
+          <ul class="search">
+            <volist name="grouplist['data']" id="group">
+              <li class="lineD_btm">
+                <div class="face">
+                	<a href="{$group['id']|group_id_to_url}"><img src="{$group['logo']|logo_path_to_url}"/></a>
+                </div>
+                <div class="rmenu right">
+                  <if condition="$group['status'] eq 1">
+	                  <a href="{:U('group/Group/index',array('gid'=>$group['id']))}">浏览该组织</a>
+	                  <php>$level = getLevel($uid, $group['id']);</php>
+	                  <php>if($level===null){</php>
+<!-- 	                  <a href="javascript:joingroup({$group['id']});">加入该圈</a> -->
+	                  <php>} else if($level==='0'){</php>
+	                  &nbsp;成员审核
+	                  <php>} else if($level==1 || $level==2){</php>
+	                  <a href="{:U('group/Manage/index',array('gid'=>$group['id']))}">管理该组织</a>
+	                  <php>} else if($level==3){</php>
+	                  &nbsp;该组织成员
+	                  <php>}</php>
+	              <else />
+	                  &nbsp;组织审核
+	                  <a href="javascript:;" onclick="delgroup({$group['id']});" >解散该组织</a>
+	              </if>
+                </div>
+                <div class="info">
+                  <h3><if condition="$group['status'] eq 1"><a href="{:U('group/Group/index',array('gid'=>$group['id']))}">{$group['name']}</a><else />{$group['name']}</if></h3>
+                  <p>创建：{$group['ctime']|friendlyDate}</p>
+                  <p>类型：{$group['cid0']|getCategoryName}</p>
+                  <p>发起人：<space uid="group['uid']" target="_blank">{uname}</space></p>
+                <p><a href="{:U('group/Member/index',array('gid'=>$group['id']))}">参与者({$group['membercount']})：</a>
+                	<volist name="group.member" id="m">
+                		<php>if(isJoinGroup($m['uid'],$group['id'])){</php>
+<!--                 		&nbsp;&nbsp;&nbsp;&nbsp;<space uid="m['uid']" target="_blank">{uname}</space> -->
+                		&nbsp;&nbsp;
+                		<a target="_blank" href="{:U('home/Space/index',array('uid'=>$m['uid']))}" rel='face' uid="{$m['uid']}">
+                          {$m.uid|getUserName|getShort=4,'...'}
+                      	</a>
+                		<php>}</php>
+                	</volist>
+                </p>
+                </div>
+                <div class="c"></div>
+              </li>
+            </volist>
+          </ul>
+          <div class="page">{$grouplist['html']}</div>
+        </div>
+        <!-- 好友日志 end  -->
+      </div>
+    </div>
+    <div class="c"></div>
+  </div></div>
+  <!-- 右侧内容 end  -->
+</div>
+</div>
+<!-- 内容 end -->
+<include file="__THEME__/footer" /> 

@@ -1,0 +1,71 @@
+<div class="group_info">    
+    <!--发起者&关注者-->
+    <php>if(ACTION_NAME == 'eventDetail') {</php>
+    	<h3>活动成员</h3>
+    <div class="e_info">
+        <div class="e_member">
+          <span class="l_tit">发起者</span>
+          <ul class="ListBox">
+            <li><span class="headpic50"><a href="{:U('home/space/index',array('uid'=>$uid))}"  class="tips" rel="{:U('home/space/index',array('uid'=>$uid))}"><img src="{$uid|getUserFace}" /></a></span><space uid="uid" class="fn">{uname}</space></li>
+          </ul>
+          <div class="btm"></div>
+        </div>
+        <div class="e_member">
+          <span class="l_tit">关注者</span><span class="right"><a href="{:U('//member',array('id'=>$id,'action'=>'att'))}">所有的人>></a></span>
+          <ul class="ListBox">
+            <volist name="attention" id ="vo">
+              <li><span class="headpic50"><a href="{:U('home/space/index',array('uid'=>$vo['uid']))}"  class="tips" rel="{:U('home/space/index',array('uid'=>$vo['uid']))}"><img src="{$vo['uid']|getUserFace}" /></a></span><a href="{:U('home/space/index',array('uid'=>$vo['uid']))}">{$vo['uid']|getUserName}</a></li>
+            </volist>
+            <div class="c"></div>
+          </ul>
+          
+          <div class="btm"></div>
+        </div>
+        <!-- <div class="boxR">
+	    	<h3>参加这个活动的人也参加了</h3>
+	        <volist name="other" id="vo">
+	            <p class="btmlineD">
+	            <a href="{:U('//eventDetail',array('id'=>$vo['id'],'uid'=>$vo['uid']))}">{$vo['title']}</a> <br />
+	            <span class="cGray2">{$vo['cTime']} {$vo['joinCount']}人参加/{$vo['attentionCount']}人关注</span><br />
+	            </p>
+	        </volist>
+	     </div> -->
+      </div>
+      <php>}</php>
+    
+	    <div class="e_left">
+	      <h3>活动分类</h3>
+	          <ul>
+	            <li> <a href="javascript:void(0);" onclick="$('#cids').val(0);$('#search_form').submit();" <php>if( $_POST['cid'] == 0 ){echo "class = 'on'";}</php>>全部</a>
+	            </li>
+	            <php> foreach($category as $k=>$cate){ </php>
+	            <li
+	            
+	            ><a href="javascript:void(0);" onclick="$('#cids').val({$k});$('#search_form').submit();" <eq name="k" value="$_POST['cid']"> class="on" </eq>>{$cate}</a>
+	<!--                 ><a href="{:U('//search', array('cid'=>$k,'title'=>$title))}">{$cate}</a> -->
+	            </li>
+	            <php> } </php>
+	          </ul>
+	    </div>
+    
+    <div class="recommend_event">
+    	<h3>推荐{$ts['app']['app_alias']}</h3>
+	    <div>
+	        <volist name="is_hot_list" id="li"> 
+	            <div class="e_list">
+	                <div class="d1"><a href="{:U('//eventDetail',array(uid=>$li['uid'],id=>$li['id']))}"><img src="{$li['coverId']}" /></a></div>
+	                <div class="d2">
+	                    <dl style="text-align: left">
+	                        <dt><strong><a href="{:U('//eventDetail',array(uid=>$li['uid'],id=>$li['id']))}" class="OverH" title="{$li.title}" >{$li.title|getShort=###,7,'...'}</a></strong></dt> 
+	                        <dd>类型：{$li.type}</dd>
+	                        <dd>地点：{$li.address|getShort=###,5,'...'}</dd>
+	                        <dd>发起者：<a href="{:U('home/Space/index',array(uid=>$li['uid']))}">{$li.uid|getUserName|getShort=###,5}</a></dd>
+	                    </dl>
+	                </div>
+	                <div class="c"></div>
+	            </div>
+	        </volist>
+	    </div>
+
+    </div>
+</div>

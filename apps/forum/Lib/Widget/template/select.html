@@ -1,0 +1,23 @@
+<tr height="30">
+          <td align="right" class="pt10" width="15%"><eq name="must" value="1"><font color="red">*</font>&nbsp;</eq>{$label}：</td>
+          <td align="left" class="pt10">
+          		<select name="template[{$field}]" onchange="$('#{$field}_opt').val(this.value);">
+          				<option value="">请选择</option>
+          				<volist name="data" id="vo">
+          				     <option value="{$vo}" <php>if(isset($hasData) && $vo ==$hasData[$field] ){</php>echo "selected='selected'";<php>}</php>>{$vo}</option>
+          				</volist>
+          		</select>
+          		  <input type="hidden" id="{$field}_opt" value="<php>if(isset($hasData) && !empty($hasData[$field])){</php>echo 1;<php>}</php>" />
+          <input type="hidden" name="widgetType[{$field}]" value="{$widget}" />
+			<eq name="must" value="1">
+		  	<input type="hidden" name="must[{$label}]" value="{$field}" />
+		  	<script>
+		  	 mustCheck["{$field}"] = '{$label}';
+		  	</script>
+		  	</eq>
+				  <span class="ml5 c999">
+				  	{$info}
+				  </span>
+          </td>
+        
+</tr>

@@ -1,0 +1,163 @@
+<style type="text/css">
+.atention_box { font-size: 12px; text-align: left; padding-bottom:5px;}
+.atention_box dl{ margin: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 10px; padding-left: 0px; }
+.atention_box dt{ background-color: #F0F0F0; line-height: 24px; margin: 0px; padding-top: 0px; padding-right: 5px; padding-bottom: 0px; padding-left: 5px; clear: both; }
+.atention_box dd{ color: #666; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #DDDDDD; margin: 0px; line-height: 24px; padding-top: 0px; padding-right: 5px; padding-bottom: 0px; padding-left: 5px; clear: both; height: 24px; }
+.atention_box dd .del{ background: url(../images/ico_del.gif) no-repeat 0px 0px; text-indent: 999px; white-space: nowrap; display: inline-block; width: 12px; overflow: hidden; height: 12px; margin-top: 5px; margin-right: 5px; }
+</style>
+<div class="atention_box">
+    <dl id="attentionList">
+      <dt>
+        <span class="R">
+          		{:L('board_subscibe_del')}
+        </span>
+        	{:L('board_subscibe_added')}
+      </dt>
+      <volist name="attentionData" id="vo">
+       <dd class="on" rel="{$vo.cid}" id="s{$i}">
+        <a href="javascript:void(0)" onclick='deleteAttention({$i},"{$vo.cid}")' class="delR mt5" title="{:L('board_subscibe_del')}">{:L('board_subscibe_del')}</a>{$vo.title}
+       </dd>
+      </volist>
+    </dl>
+    <div id="addCatetable">
+	<span id="categoryList"></span>
+      <input type="button" id="addAttentionButton" class="btn_r" onclick="addAttention()" value="{:L('board_subscibe_add')}" />
+       <p id="attentionLabel" class="lh180 cl04"></p>
+    </div>
+  </div>
+<script type="text/javascript" src="../Public/js/tsjs.json2select.js" ></script>
+    <script>
+
+Array.prototype.remove=function(dx)
+{
+    if(isNaN(dx)||dx>this.length){return false;}
+    for(var i=0,n=0;i<this.length;i++)
+    {
+        if(this[i]!=this[dx])
+        {
+            this[n++]=this[i]
+        }
+    }
+    this.length-=1
+} 				
+				
+var attentionJson = {$jeson};
+var attentionCount = {$attentionCount};
+var cateFirst      = {$firstCate};
+var attentionAllData = new Array();
+
+
+		
+$(document).ready(function(){
+	$("#categoryList").json2select({$jeson},cateFirst);
+	if(attentionCount >= 5){																													
+			$('#addAttentionButton').attr('disabled',"disabled");
+			$('#attentionLabel').html('{:L("board_subscibe_overtop")}');
+	}
+})
+
+
+
+
+function addAttention(){
+		$('#attentionLabel').html('');
+		
+		var parentHtml = "";
+		
+		$('#sel0 option').each(function(){
+		if($(this).attr('selected') == true) parentHtml = $(this).html();
+		})
+		
+		
+		
+		var parentId   = $('#sel0').val();
+
+	 
+		var childHtml  = '';
+		$('#sel1 option').each(function(){
+		if($(this).attr('selected') == true) childHtml = $(this).html();
+		})
+		
+		var childId  = $('#sel1').val();
+		if( childId == null ){
+				$('#attentionLabel').html('{:L("select_full_category")}');
+				return;
+		}
+		
+		var threeHtml  = '';
+		$('#sel2 option').each(function(){
+		if($(this).attr('selected') == true) threeHtml = $(this).html();
+		})
+		var threeId  = $('#sel2').val();
+		
+		if(threeId){
+			var attentionId = parentId +','+childId +','+threeId;
+		}else{
+			var attentionId = parentId +','+childId;
+		}
+		
+		var hasAttention = false;
+		if($.inArray('"'+attentionId+'"',attentionAllData) != -1){
+				$('#attentionLabel').html('{:L("category_have_added")}');
+					return;
+		}
+		
+		//检查是否存在
+		$('#attentionList > dd').each(function(){
+			if( $(this).attr('rel') == attentionId ){
+							$('#attentionLabel').html( '{:L("category_have_added")}' );
+							hasAttention = true;
+			}
+		});
+		
+		if(hasAttention == true) return;
+		if(threeId){
+			var attentionTitle = parentHtml+' > '+childHtml +' > '+ threeHtml;
+		}else{
+			var attentionTitle = parentHtml+' > '+childHtml;
+		}
+		
+		
+		attentionAllData.push('"'+attentionId+'"');
+		attentionCount ++;
+		
+  var   html   = '<dd id="s'+attentionCount+'" rel="'+attentionCount+'" class="on"><a href="#" class="delR" title="{:L("board_subscibe_del")}" onclick=\'deleteAttention('+attentionCount+',"'+attentionId+'",true)\'>&nbsp;</a>'+attentionTitle+'</dd>';
+		$('#attentionList').append(html);
+		if(attentionCount == 5) {
+				$('#addAttentionButton').attr('disabled',"disabled");
+				$('#attentionLabel').html('{:L("board_subscibe_overtop")}');
+		}
+}
+
+function subscibeCate(){
+	 attentionAllData  = "["+attentionAllData.join(',')+"]";
+		$.post('__APP__&mod=Do&act=subscibeCate',{subId:attentionAllData},function(result){
+																																																																													location.reload();
+																																																																													});
+}
+
+function deleteAttention(key,id,htmlAppend){
+			if(htmlAppend){
+					if(attentionAllData.length == 0) return;
+					
+					var num = $.inArray('"'+id+'"',attentionAllData);
+					attentionAllData.remove(num);
+					$('#s'+key).remove();
+					attentionCount --;
+						$('#addAttentionButton').removeAttr('disabled');
+						$('#attentionLabel').html('');
+			}else{
+				$.post('__APP__&mod=Do&act=deleteSubscibeCate',
+											{subId:id},
+											function(result){
+																										if(result == 1){
+																												$('#s'+key).remove();
+																												attentionCount --;
+																												$('#addAttentionButton').removeAttr('disabled');
+																												$('#attentionLabel').html('');
+																										}
+																										});
+			}
+}
+
+</script>

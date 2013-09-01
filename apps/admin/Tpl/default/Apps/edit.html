@@ -1,0 +1,258 @@
+<include file="../Public/_header" />
+<div class="so_main">
+  <div class="page_tit">应用信息</div>
+  <eq name="ACTION_NAME" value="preinstall">
+    <form method="post" action="{:U('admin/Apps/doInstall')}">
+    <input type="hidden" name="path_name" value="{$path_name}" />
+  <else/>
+    <form method="post" action="{:U('admin/Apps/doEdit')}">
+    <input type="hidden" name="app_id" value="{$app_id}" />
+  </eq>
+  
+  <div class="form2">
+    <dl class="lineD">
+      <dt>目录名：</dt>
+      <dd>
+        <input name="path_name" type="text" value="{$path_name}" disabled>
+        <!-- <p>如需修改，请直接修改对应的目录名</p> -->
+      </dd>
+    </dl>
+    
+    <dl class="lineD">
+      <dt>应用名称：</dt>
+      <dd>
+        <php>if(ACTION_NAME=='preinstall') {</php>
+        <input name="app_name" type="text" value="{$app_name}" disabled>
+        <p>如需修改，请直接修改对应的目录名</p>
+        <php>}else {</php>
+        <input name="app_name" type="text" value="{$app_name}" id="app_name">
+        <p>如需修改，请直接修改对应的目录名, 然后再在这里修改应用名称</p>
+        <php>}</php>
+      </dd>
+    </dl>
+    
+    <dl class="lineD">
+      <dt><font color="red">应用别名：</font></dt>
+      <dd>
+        <input name="app_alias" type="text" value="{$app_alias}" id="app_alias">
+        <p>前台展示的应用名称</p>
+      </dd>
+    </dl>
+    
+    <dl class="lineD">
+      <dt><font color="red">官方名称：</font></dt>
+      <dd>
+        <input name="app_offi" type="text" value="{$app_offi}" id="app_offi">
+        <p>前台展示的官方名称</p>
+      </dd>
+    </dl>
+    
+    <dl class="lineD">
+      <dt>应用图标：</dt>
+      <dd>
+        <input name="icon_url" type="text" value="{$icon_url}">
+        <p>前台展示的应用图标（24X24）</p>
+      </dd>
+    </dl>
+    
+    <dl class="lineD">
+      <dt>应用图标大图：</dt>
+      <dd>
+        <input name="large_icon_url" type="text" value="{$large_icon_url}">
+        <p>应用安装时的应用图标（64X64）</p>
+      </dd>
+    </dl>
+    
+    <dl class="lineD">
+      <dt>应用类型：</dt>
+      <dd>
+        <select name="category" id="category">
+        	<option value="{$category}" alt="{$category_id}">{$category}</option>
+        	{:getDatadictData("app_catalog","$category")}
+        </select>
+        <p>应用安装时展示的的应用类型</p>
+      </dd>
+    </dl>
+    
+    <dl class="lineD">
+      <dt>应用简介：</dt>
+      <dd>
+        <textarea rows="5" cols="50" name="description">{$description}</textarea>
+        <p>前台展示的应用简介</p>
+      </dd>
+    </dl>
+    
+    <dl class="lineD">
+      <dt>应用状态：</dt>
+      <dd>
+        <php>$status = ($status=='0' || $status == '1')?$status:'2'</php>
+        <label><input name="status" type="radio" value="0" <eq name="status" value="0">checked</eq>>关闭</label><br/>
+        <label><input name="status" type="radio" value="1" <eq name="status" value="1">checked</eq>>默认</label><br/>
+        <label><input name="status" type="radio" value="2" <eq name="status" value="2">checked</eq>>可选</label>
+      </dd>
+    </dl>
+    
+    <dl class="lineD">
+      <dt>是否推荐：</dt>
+      <dd>
+      <php>$is_recommend = ($is_recommend=='0')?$is_recommend:'1'</php>
+        <label><input name="is_recommend" type="radio" value="0" <eq name="is_recommend" value="0">checked</eq>>否</label><br/>
+        <label><input name="is_recommend" type="radio" value="1" <eq name="is_recommend" value="1">checked</eq>>是</label><br/>
+   
+    </dd>
+    </dl>
+    
+    <dl class="lineD">
+      <dt>托管方式：</dt>
+      <dd>
+        {$host_type_alias}
+      </dd>
+    </dl>
+    
+    <dl class="lineD">
+      <dt>评价得分：</dt>
+      <dd>
+        <input name="score_all" type="text" value="{$score_all}">
+        <p>应用的评价得分</p>
+      </dd>
+    </dl>
+    
+    <dl class="lineD">
+      <dt>安装数量 ：</dt>
+      <dd>
+        <input name="add_num" type="text" value="{$add_num}">
+        <p>应用的安装数量</p>
+      </dd>
+    </dl>
+    
+    <dl class="lineD">
+      <dt>计费类型 ：</dt>
+      <dd>
+        <input name="type_name" type="text" value="{$type_name}">
+        <p>应用的计费类型</p>
+      </dd>
+    </dl>
+    <dl class="lineD">
+      <dt>前台入口：</dt>
+      <dd>
+        <input name="app_entry" type="text" value="{$app_entry}">
+        <p>使用“Action/act”格式 [ 谨慎修改 ]</p>
+      </dd>
+    </dl>
+    
+    <dl class="lineD">
+      <dt>后台入口：</dt>
+      <dd>
+        <input name="admin_entry" type="text" value="{$admin_entry}">
+        <p>使用“Action/act”格式 [ 谨慎修改 ]</p>
+      </dd>
+    </dl>
+    
+    <dl class="lineD">
+      <dt>统计入口：</dt>
+      <dd>
+        <input name="statistics_entry" type="text" value="{$statistics_entry}">
+        <p>使用“Model/method”格式 [ 谨慎修改 ]</p>
+      </dd>
+    </dl>
+    
+    <dl class="lineD">
+      <dt>附加链接名称：</dt>
+      <dd>
+        <input name="sidebar_title" type="text" value="{$sidebar_title}">
+        <p>如“博客”的“发表”</p>
+      </dd>
+    </dl>
+    
+    <dl class="lineD">
+      <dt>附加链接图标：</dt>
+      <dd>
+        <input name="sidebar_icon_url" type="text" value="{$sidebar_icon_url}">
+        <p>当附加链接的名称和图标都存在时，优先使用名称</p>
+      </dd>
+    </dl>
+    
+    <dl class="lineD">
+      <dt>附加链接入口：</dt>
+      <dd>
+        <input name="sidebar_entry" type="text" value="{$sidebar_entry}">
+        <p>如“博客”的“发表”的入口，使用“Action/act”格式 [ 谨慎修改 ]</p>
+      </dd>
+    </dl>
+    
+    <php>if($sidebar_support_submenu) {</php>
+    <dl class="lineD">
+      <dt>附加链接的子菜单：</dt>
+      <dd>
+        <input name="sidebar_is_submenu_active" type="radio" value="0" <eq name="sidebar_is_submenu_active" value="0">checked</eq>>禁用<br/>
+        <input name="sidebar_is_submenu_active" type="radio" value="1" <neq name="sidebar_is_submenu_active" value="0">checked</neq>>启用
+        <p>在应用列表中，当鼠标放在应用上时显示子菜单</p>
+      </dd>
+    </dl>
+    <php>}</php>
+    <php>if($link_url) {</php>
+    <dl class="lineD">
+      <dt><font color="red">应用页面：</font></dt>
+      <dd><input type="text" name="link_url" value="{$link_url}" id="linkurl"/>
+      	<p>应用程序下载地址或者应用的连接地址</p>
+      </dd>
+    </dl>
+     <php>}</php>
+    <php>if(!empty($homepage_url)){</php>
+    <dl class="lineD">
+      <dt>应用主页：</dt>
+      <dd><a href="{$homepage_url}" target="_blank">应用主页</a></dd>
+    </dl>
+    <php>}</php>
+    <dl class="lineD">
+      <dt>作者：</dt>
+      <dd>
+        {$author_name} 
+        <php>if(!empty($author_homepage_url)){</php>
+        <a href="{$author_homepage_url}" target="_blank">个人网站</a> 
+        <php>}</php>
+        <php>if(!empty($author_email)){</php>
+        <a href="mailto:{$author_email}">Email</a>
+        <php>}</php>
+      </dd>
+    </dl>
+    <php>if(!empty($contributor_name)){</php>
+    <dl class="lineD">
+      <dt>贡献者：</dt>
+      <dd>
+        {$contributor_name}
+      </dd>
+    </dl>
+    <php>}</php>
+    
+    <div class="page_btm">
+      <php>if(ACTION_NAME=='preinstall'){</php>
+      	<input name="host_type" type="hidden" value="0">
+      <input type="submit" class="btn_b" value="安装" />
+      <php>}else{</php>
+      <input type="submit" class="btn_b" onclick="messageBox($is_recommend)" value="保存" />
+      <php>}</php>
+    </div>
+  </div>
+    <input type="hidden" id="category_id" name="category_id"/>
+  </form>
+</div>
+
+<script type="text/javascript">
+	function infosubmit(){
+		if($("#app_alias").val()){
+			return true;
+		}
+		alert("请填写应用别名！");
+		return false;
+	};
+	$("#category").blur(function(){
+	  var dataid = $("#category option:checked").attr("alt");
+	  $("#category_id").val(dataid);
+	});
+    function messageBox(item) {
+        alert(item);
+        return false;
+    }
+</script>
+<include file="../Public/_footer" />

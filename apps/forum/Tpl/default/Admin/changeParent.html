@@ -1,0 +1,15 @@
+<div class="postbox">
+	<form id="forum" method="post" action="{:U('forum/admin/doChangeParent')}">
+		<select name="target">
+			<volist name="list" id="vo">
+				<option value="{$vo.fid}">{$vo.name}</option>
+			</volist>
+		</select>
+		<input type="hidden" name="fid" value="{$fid}" />
+	</form>
+</div>
+<script>
+function doChangeParent(){
+	$('#forum').submit();
+}
+</script>

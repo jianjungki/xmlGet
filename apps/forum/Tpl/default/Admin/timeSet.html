@@ -1,0 +1,45 @@
+<div class="postbox">
+<ul class="listtopicadmin">
+	<li id="itemcp_stick" fwin="mods">
+	<table cellspacing="0" cellpadding="5">
+		<tbody>
+			<tr>
+				<td><label class="labeltxt" >开始时间</label>
+					<input type="text" value=""  onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" name="sfromTime" maxlength="2" style="width: 80px;" id="sfromTime" class="in_put">&nbsp;时&nbsp;<input type="text" value="" onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" name="toTime" maxlength="2" style="width: 80px;" id="stoTime" class="in_put">&nbsp;分&nbsp;
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	</li>
+	<li id="itemcp_stick" fwin="mods">
+	<table cellspacing="0" cellpadding="5">
+		<tbody>
+			<tr>
+				<td><label class="labeltxt" >结束时间</label>
+					<input type="text" value="" name="efromTime" maxlength="2" onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"  style="width: 80px;" id="efromTime" class="in_put">&nbsp;时&nbsp;<input type="text" onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" value="" name="toTime" maxlength="2" style="width: 80px;" id="etoTime" class="in_put">&nbsp;分&nbsp;
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	</li>
+	</li>
+	<li id="itemcp_stick" fwin="mods">
+	<input type="hidden" name="status" value="0"/>
+	</li>
+	<li id="itemcp_stick" fwin="mods">
+	<table cellspacing="0" cellpadding="5" width="90%">
+		<tbody>
+			<tr>
+				<td align="left"><label class="labeltxt" >用户组</label>
+					<select id="userGroup" multiple="multiple">
+						<volist name="userGroup" id="vo">
+							<option value="{$vo.gid}">{$vo.name}</option>
+						</volist>
+					</select>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	</li>
+</ul>
+</div>

@@ -1,0 +1,122 @@
+<include file="__THEME__/admin" />
+<link href="../Public/style.css" rel="stylesheet" type="text/css">
+
+   <!--   <div id="container">
+		<form action="{:U('/System/doSaveSiteOption')}" method="post">        
+			<table width="100%" border="0" cellpadding="4" cellspacing="0" class="form">
+                <tr class="top">
+                    <dd colspan="2" class="tit">站点状态</dd>
+                </dl>
+                <dl>
+                    <dt width="160" valign="top" class="th">是否关闭访问：</dt>
+                    <dd class="td">
+                        <input type="radio" name="site_close" value="1" class="radio" <php>if($opt["site_close"] == 1){</php>  checked="true" <php>}</php>/>是  
+                        <input type="radio" name="site_close" value="0" class="radio" <php>if($opt["site_close"] == 0){</php>  checked="true" <php>}</php>/>否
+                    </dd>
+                </dl>
+                <dl>
+                    <dt class="th" valign="top">关闭访问理由：</dt>
+                    <dd class="td"><textarea name="site_close_reason" cols="50">{$opt['site_close_reason']}</textarea></dd>
+                </dl>
+                <dl>
+                    <dt valign="top">&nbsp;</dt>
+                    <dd class="td"><input type="submit" class="button" value="提交保存" /></dd>
+                </dl>
+			</table>
+		</form>                                   
+    </div> --> 
+    <div id="so_main" class="so_main">
+    	<div class="page_tit"></span>基本配置</div>
+        <div class="form">
+		<form action="{:U('forum/Admin/doSaveSiteOption')}" method="post" enctype="multipart/form-data">        
+           
+				<dl>
+					<dt class="th" width="160" valign="top">站点名称：</dt>
+					<dd class="td"><input name="name" class="txt" type="text" value="{$opt['name']}" /></dd>
+				</dl>
+				<dl>
+					<dt class="th" valign="top">页头标题：</dt>
+					<dd class="td"><input name="title" class="txt" type="text" size="50" value="{$opt['title']}"/></dd>
+				</dl>
+				<dl>
+					<dt class="th" valign="top">页头信息描述：</dt>
+					<dd class="td">
+					<p><input name="description" type="text" class="txt" size="50" value="{$opt['description']}"/></p></dd>
+				</dl>
+				<dl>
+					<dt class="th" valign="top">页头信息关键字：</dt>
+					<dd class="td">
+					<p><input name="keywords" type="text" class="txt" size="50" value="{$opt['keywords']}"/></p></dd>
+				</dl>
+			
+				<dl>
+					<dt class="th" valign="top">选择模板：</dt>
+					<dd class="td">
+						<select name="template" id="select">
+                        	<volist id="vo" name="themelist">
+                            	<php>$isselected = (trim($vo['filename']) == $opt['template'])?'selected="true"':''</php>
+                            	<option value="{$vo.filename}" {$isselected}>{$vo.filename}</option>
+                        	</volist>
+                    	</select>
+                    	<span class="cGray2 ml5">站点模板目录存放在 ./public/themes 下面。其中 blue 目录为默认风格，不能删除。 </span> 
+                    </dd>
+				</dl>
+				<dl>
+					<dt valign="top">&nbsp;</dt>
+					<dd class="td"><input type="submit" class="btn_b" value="保存" />
+					<span class="cGray2 ml5" style="color:red">提交保存后，请刷新缓存。<a href="javascript:void(0)" onClick="clean()">点此进行清理</a></span></dd>
+				</dl>
+			</table>
+		</form>                                   
+    </div>
+
+<!--    <div id="container">
+		<form action="{:U('/System/doSaveSiteOption')}" method="post">        
+			<table width="100%" border="0" cellpadding="4" cellspacing="0" class="form">
+                <tr class="top">
+                    <dd colspan="2" class="tit">IP禁止</dd>
+                </dl>
+                <dl>
+                    <dt width="160" valign="top" class="th">是否启用IP过滤：</dt>
+                    <dd class="td">
+                        <input type="radio" name="ip_filter" value="1" class="radio" <php>if($opt["ip_filter"] == 1){</php>  checked="true" <php>}</php>/>是  
+                        <input type="radio" name="ip_filter" value="0" class="radio" <php>if($opt["ip_filter"] == 0){</php>  checked="true" <php>}</php>/>否
+                    </dd>
+                </dl>
+                <dl>
+                    <dt class="th" valign="top">允许访问IP：</dt>
+                    <dd class="td"><textarea name="allow_ips" cols="50">{$opt['allow_ips']}</textarea></dd>
+                </dl>
+                <dl>
+                    <dt class="th" valign="top">拒绝访问IP：</dt>
+                    <dd class="td"><textarea name="deny_ips" cols="50">{$opt['deny_ips']}</textarea></dd>
+                </dl>
+                <dl>
+                    <dt valign="top">&nbsp;</dt>
+                    <dd class="td"><input type="submit" class="button mt10 mb10" value="提交保存" /></dd>
+                </dl>
+			</table>
+		</form>                                   
+    </div> -->
+    </div>
+    <script>
+function unzipTemplate(info){
+	var id = info.id;
+	$.post('{:U("forum/admin/unzipTemplate")}',{id:id},function(result){
+		result = eval('('+result+')');
+		if(result.status == 1){
+			location.reload();
+		}else{
+			alert(result.info);
+			location.reload();
+		}
+	});
+}
+
+function clean(){
+	$.tbox.popup("{:U('forum/Admin/cleancache')}","清理缓存");
+}
+</script>
+</body>
+
+</html>

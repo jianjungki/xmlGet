@@ -1,0 +1,54 @@
+<div class="box-out">
+                      </div>
+                      <div class="box-in">
+                      </div>
+                      <div class="box-inner">
+                        <div class="alL lh25">
+                          <strong>{:L('board_change')}</strong>
+                        </div>
+                        <span id="categoryList">
+                        </span>
+                      </div>
+                      <div class="box-in" style="margin:5px;" >
+                      	{:L('board_change_info')}
+                      </div>
+                      <div class="box-out" id="boardMessage" style="margin:5px;color:red">
+					  
+                      </div>
+<div style="display: block;" id="tb_content_list" class="tb_button_list">
+	<p>
+		<input type="button" value="{:L('confirm')}" onclick="domove()"  name="" id="tb_button_ok" />
+		<input type="button" value="{:L('cancel')}" onclick="$.tbox.close()" id="tb_button_no" name="" class="ml5"/>
+	</p>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/tsjs.json2select.js" ></script>
+<script>
+	$("#categoryList").json2select({$json},[{$class}],"sel");
+	
+	function domove(){
+		var categoryId    = new Array();
+		var categoryTitle = new Array();
+		
+		for(i=0;i<=2;i++){
+			if( $("#sel"+i).val() ){
+				categoryId[i]     = $("#sel"+i).val();
+				categoryTitle[i]  = $("#sel"+i+" option[value="+categoryId[i]+"]").html();
+			}		
+		}
+	
+		if( categoryId.length < 2 ){
+			$("#boardMessage").html('{:L("select_full_category")}',"{:L('error')}");
+			return false;
+		}else{
+			 var browse_category_title = categoryTitle.join(' > ');
+			 var browse_category_id = categoryId.join(',');
+			 if(confirm('{:L("thread_movetocategory_info2")}  '+browse_category_title+'？')){
+				$.post(doadminurl,{type:'moveToCategory',id:$.fn.getData('topic_'),newboard:browse_category_id},function(txt){
+					$.tbox.close();
+					window.location.reload()
+				});
+			}
+		 }
+
+	}
+</script>

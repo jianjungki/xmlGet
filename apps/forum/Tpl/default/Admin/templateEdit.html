@@ -1,0 +1,61 @@
+<include file="_header" />
+
+<div class="so_main">
+<div class="page_tit">模板选项设置</div>
+<div class="form">
+    <form action="{:U('forum/admin/doEditTemplate')}" method="post" onsubmit="$('#selectedWidget option').attr('selected','selected');return true;">
+    <dl>
+      <dt><font color="red">*</font> 名称：</dt>
+      <dd>
+        <input class="txt" name="name" value="{$template.name}" type="text" maxlength="10" />
+        <span class="cGray2 ml5">请输入名称,前台发布时将显示该名称</span>
+        </dd>
+    </dl>
+    <dl> 
+       <dt>已选选项：</dt>
+      <dd>
+      <select id="selectedWidget" name="template[]" multiple="multiple" size="10" style="height:200px;width:150px;">
+      		<volist name="template.template" id="vo">
+      			<option value="{$vo.id}" selected>{$vo.label}</option>
+      		</volist>
+      </select>
+       <p><a href="javascript:deleteWidget()">[ 删除选中项 ]</a></p>
+      </dd>
+    </dl>
+    <dl>
+      <dt>可选选项：</dt>
+      <dd>
+      <select  id="maybeWidget"  multiple="multiple" size="10" style="height:200px;width:150px;">
+      		<volist name="widget" id="vo">
+      			<php>if(!in_array($vo['id'],$hasSelected)){</php>
+      			<option value="{$vo.id}" selected="selected">{$vo.label}</option>
+      			<php>}</php>
+      		</volist>
+     	 </select>
+     	 <p><a href="javascript:addWidget()">[ 复制到已选选项 ]</a></p>
+      </dd>
+    </dl>
+    <div class="sea_left" >
+       <input type="hidden" name="id" value="{$template.id}" />
+      <input type="submit" class="btn_b" value="确定">
+    </div>
+    </form>
+  </div>
+  </div>
+  <script>
+	function addWidget(){
+		$('#maybeWidget option:selected').each(function(){
+			var temp = $(this).clone();
+			$('#selectedWidget').append(temp);
+			$(this).remove();
+		});
+	}
+	function deleteWidget(){
+		$('#selectedWidget option:selected').each(function(){
+			var temp = $(this).clone();
+			$('#maybeWidget').append(temp);
+			$(this).remove();
+		});
+	}
+  </script>
+<include file="_footer" />

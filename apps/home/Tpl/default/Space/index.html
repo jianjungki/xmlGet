@@ -1,0 +1,97 @@
+<include file="__THEME__/header" />
+<link href="../Public/css/space.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/weibo.js"></script>
+<link href="__PUBLIC__/js/editor/editor/theme/change.css" rel="stylesheet"/>
+<style>
+	.mainbox_appR{background:none;border:none;}
+	.boxspace{background:#F9F9F9;}
+	.content{width:1002px;}
+	
+</style>
+<script>
+var weibo = $.weibo({
+      timeStep : 10000
+});
+</script> 
+<php>if ($user['deputyoriid']){</php>
+<div class="t_column">
+  <div class="t_column_left iepng"><img src="__PUBLIC__/js/editor/editor/theme/images/org.png" width="128" height="39"></div>
+ 
+</div>
+<php>}</php>
+<div class="content_holder">
+<div class="content"><!-- 内容 begin  --> 
+  <div class="main no_l">
+    <div class="mainbox boxspace">
+      <div class="mainbox_appR">
+	      <include file="space_right" />
+      </div>
+      <div class="mainbox_appC boxspace_L">
+        <div class="friend_info">
+ 			<include file="userMenu" />
+        </div>
+		{:Addons::hook('home_space_middle', array('uid'=>$uid))}
+      <div class="tab-menu"><!-- 切换标签 begin  -->
+        <ul>
+          <volist name="space_menu" id="vo">
+          	<li><a id="feed_colleague_item" rel="colleague" class="<if condition="$type eq $key">on</if> feed_item" href="{:U('home/Space/index', array('uid'=>$_GET['uid'], 'type'=>$key))}"><span>{$vo}</span></a></li>
+          </volist>
+          <php>if($mid == $uid){</php>
+          	<li><a id="feed_colleague_item" rel="colleague" class="<if condition="$type eq 'project'">on</if> feed_item" href="{:U('home/Space/index', array('uid'=>$_GET['uid'], 'type'=>'project'))}"><span>项目</span></a></li>
+          <php>}</php>
+          <php>if(isShowInfo($uid,"orginfo")||$mid == $uid){</php>
+          	<li><a id="feed_colleague_item" rel="colleague" class="<if condition="$type eq 'org'">on</if> feed_item" href="{:U('home/Space/index', array('uid'=>$_GET['uid'], 'type'=>'org'))}"><span>组织</span></a></li>
+          <php>}</php>
+          <php>if($websiteurl){</php>
+          	<li><a id="feed_colleague_item" rel="colleague" class="<if condition="$type eq 'website'">on</if> feed_item" href="{:U('home/Space/index', array('uid'=>$_GET['uid'], 'type'=>'website'))}"><span>官方网站</span></a></li>
+          <php>}</php>
+        </ul>
+      </div>
+      <!-- 个人主页微博分类 -->
+          <eq name="type" value="weibo">
+          <div class="MenuSub" id="MenuSub">
+          <volist name="weibo_menu" id="vo">
+            <a id="feed_colleague_item" rel="colleague" class="<if condition="$weibo_type eq $key">on</if> feed_item" href="{:U('home/Space/index',array('uid'=>$uid,'weibo_type'=>$key))}"><span>{$vo}</span></a>
+          </volist>
+          </div>   
+          </eq>
+      <!-- /个人主页微博分类 -->
+      
+      <!-- 活动分类 -->
+          <eq name="type" value="event">
+          <div class="MenuSub">
+          <!-- 切换标签 begin  -->
+          <ul>
+            <a href="{:U('home/space/index', array('uid'=>$uid, 'type'=>$type, 'action'=>'launch'))}" <php>if(!in_array($_GET['action'],array('join','att'))){echo 'class="on"';}</php>><span>{$name}发起的活动</span></a>
+            <a href="{:U('home/space/index', array('uid'=>$uid, 'type'=>$type, 'action'=>'join'))}" <if condition="$_GET['action'] eq 'join'"> class="on"</if>><span>{$name}参与的活动</span></a>
+            <a href="{:U('home/space/index', array('uid'=>$uid, 'type'=>$type, 'action'=>'att'))}" <if condition="$_GET['action'] eq 'att'"> class="on"</if>><span>{$name}关注的活动</span></a>
+          </ul>
+        </div>   
+          </eq>
+      <!-- /活动分类 -->
+      <if condition="$list">
+	      <div class="feedBox">
+			{:W('WeiboList', array('mid'=>$mid, 'list'=>$list['data'], 'insert'=>0, 'hidden_user'=>1))}
+	      </div>
+	      <div class="page">{$list.html}</div>
+      <elseif condition="$type neq 'website'" />
+          {:Addons::hook('home_space_list', array('uid'=>$uid, 'type'=>$type))}
+      <else />
+      	  <div style="height:30px;position:relative;line-height: 30px;"><a href="http://{$websiteurl}" target="_blank">在新窗口打开</a></div>
+          <iframe src="http://{$websiteurl}" width="100%" height="900px" frameborder="0" ></iframe>
+      </if>
+      
+       
+      <div class="c"></div>
+    </div>
+  </div>
+  <div class="clear"></div>
+</div>
+</div>
+</div>
+
+{:Addons::hook('weibo_js_plugin')}
+
+<!-- 内容 end --> 
+<include file="__THEME__/footer" /> 

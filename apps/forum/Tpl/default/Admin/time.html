@@ -1,0 +1,61 @@
+<include file="__THEME__/admin" />
+<div class="tab">
+	<ul>
+		<li><a href="{:U('forum/Admin/basicSet',array('fid'=>$fid))}" <eq name="ACTION_NAME" value="basicSet">class="on"</eq>>基本设置</a></li>
+		<li><a href="{:U('forum/Admin/popedomSet',array('fid'=>$fid))}" <eq name="ACTION_NAME" value="popedomSet">class="on"</eq>>权限管理</a></li>
+		<li><a href="{:U('forum/Admin/creditPolicy',array('fid'=>$fid))}" <eq name="ACTION_NAME" value="creditPolicy">class="on"</eq>>积分管理</a></li>
+		<li><a href="{:U('forum/Admin/time',array('fid'=>$fid))}" <eq name="ACTION_NAME" value="time">class="on"</eq>>时间控制</a></li>
+	</ul>
+</div>
+  <!--列表模块-->
+        <php>
+      	$status = array("不允许","允许");
+      </php>
+  <div class="list">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+       <php>foreach($userRule as $value){</php>
+        <tr>
+       		<td class="line_l" onclick="addTime('{$value}')">{:L($value)}</td>
+       		<php>if(isset($timeSetting[$value])){</php>
+       			<td>
+       				<volist id="so" name="timeSetting[$value]">
+       					<p><php>echo $status[$so['status']];</php>:&nbsp;{$so['s'][0]}:{$so['s'][1]} -- {$so['e'][0]}:{$so['e'][1]}</p>
+       				</volist>
+       			</td>
+       		<php>}else{</php>
+				<td></td>
+			<php>}</php>
+		<php>}</php>
+      </tr>
+
+    </table>
+  </div>
+  
+    
+ <script>
+ var fid = "{$fid}";
+ var postIndex = "";
+  function addTime(index){
+	  postIndex = index;
+	$.tbox.popup("{:U('forum/admin/timeSet')}"+"&index="+index+"&fid="+fid);
+    var button = '<p><input class="btn_b" id="savemodel"  name="" type="button" value="确定" /><input class="btn_w ml5" name="" id="cannel" type="button" value="取消"/></p>';
+    $('#tbox .tb_button_list').show().html(button);
+    $('#savemodel').click(function(){
+        addTimeAjax();
+        //$.tbox.close();
+    });
+    $('#cannel').click(function(){
+        $.tbox.close();
+    });
+  }
+
+  function addTimeAjax(){
+		var startTime = $('#sfromTime').val()+":"+$('#stoTime').val();
+		var endTime = $('#efromTime').val()+":"+$('#etoTime').val();
+		var status = $('#status').val();
+		$.post("{:U('forum/admin/addTimeSet')}",{sTime:startTime,eTime:endTime,index:postIndex,fid:fid,status:status},function(result){
+			alert(result);
+		});
+  }
+ </script>
+  

@@ -1,0 +1,60 @@
+<include file="__THEME__/header" />
+<link href="../Public/css/survey.css" rel="stylesheet" type="text/css"  />
+<div class="content_holder">
+<div class="content no_bg">
+ <!--路径-->
+<!-- <div class="path"><span>首页</span><span>&gt;&gt;</span><span><a href="{:U('survey/Index/index')}">问卷调查</a></span><span>&gt;&gt;</span><span>{$title|getShort=###,30,'...'}</span></div> -->
+<include file="../Public/_mainNav" />
+<!--end 路径-->
+  <!--  中间内容-->
+  <div class="mentor_index ask_bg">
+  	<div class="ask_tit"><h3>{$title}</h3><span class="ask_icon"></span></div>
+    <div class="ask_list">
+    
+    	<fieldset> <legend> 简介: </legend>{$description}</fieldset>  
+    </div>
+    <form method="post" action="{:U('survey/Survey/submitSurvey')}">
+	<input type="hidden" name="survey_id" value="{$survey_id}">
+    <volist name="list" id='fetch'>
+    <div class="ask_list">
+    
+    	<fieldset> <legend>{:++$firstRow}. {$fetch['title']}</legend>
+        	<if condition="$fetch['description']"><p style="color:#333">说明：<span class="c999"><php>$description = keyWordFilter($fetch['description']);</php>{$description}</span></p></if>
+              <php>$queres = keyWordFilter($fetch['data']);</php>
+              {:W($fetch['widget'], array('id'=>$fetch['question_id'],'data'=>$queres,'disabled'=>$disabled,'result'=>$answer[$fetch['question_id']]['result']))}
+        </fieldset>  
+    </div>
+    	</volist>
+    
+    <div style="padding-left:30px; padding-bottom:10px;">
+      <php>if(!$disabled){</php><input class="btnAll_2" type="submit" value="{:L('Submit')}" {$disabled}><php>}</php>
+        <input type="button" class=" mr5 btnAll" value="{:L('cancel')}" onclick="if(confirm('{:L('Confirm_Close_Window')}'))window.close();">
+    </div>
+    </form>
+  </div>
+  	
+  <!--  中间内容 end-->
+  
+  <!--底部页面影印-->
+  <div class="bottom_photocopy">
+    <div class="bottom_photocopy_left"></div>
+    <div class="bottom_photocopy_center"></div>
+    <div class="bottom_photocopy_right"></div>
+  </div>
+  <!--底部页面影印 end-->
+
+</div>
+</div>
+
+<script type="text/javascript">
+$(function() {
+  $('.checkLen').live('keydown', function(e) {
+    if(this.value.length > 1000 && e.which != '8' && e.which != '46') {
+      e.preventDefault();
+      return;
+    }
+  });
+});
+</script>
+
+<include file="__THEME__/footer" />

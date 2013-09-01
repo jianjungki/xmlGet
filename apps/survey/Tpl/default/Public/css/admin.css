@@ -1,0 +1,9 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*答案卷页*/
+.list_t{}
+.list_t li{ overflow:hidden;zoom:1;width:100%;border-bottom: 1px solid #E3E6EB; padding:8px 0;}
+.c1{ float:left; overflow:hidden; text-align:left; width:5%;}
+.c2{ float:left; overflow:hidden; text-align:left; width:73%;}
+.c3{ float:left; overflow:hidden; text-align:left; }

@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>用户编辑</title>
+<link href="../Public/style.css" rel="stylesheet" type="text/css">
+<link href="__PUBLIC__/js/tbox/box.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/tbox/box.js"></script>
+</head>
+<body>
+<div class="so_main">
+  <div class="page_tit"><eq name="type" value="edit">编辑用户<else/>添加用户</eq></div>
+  
+  <eq name="type" value="add">
+  <form method="post" action="{:U('forum/Admin/doAddUser')}">
+  <else/>
+  <form method="post" action="{:U('forum/Admin/doEditUser')}">
+  	<input type="hidden" name="uid" value="{$uid}" />
+  </eq>
+  
+  <div class="form">
+   <dl>
+      <dt>账户：</dt>
+      <dd>
+        {$uname}
+    </dl>
+        <dl>
+      <dt>姓名：</dt>
+      <dd>
+        <input name="fullname" id="fu" type="text" value="{$fullname}">
+        <span class="cGray2 ml5">用户的站内昵称</span>
+    </dl>
+    <dl>
+      <dt>Email：</dt>
+      <dd>
+        <input name="email" id="email" type="text" value="{$email}">
+        <span class="cGray2 ml5">用户进行登陆的帐号</span>
+    </dl>
+	
+    <dl>
+      <dt>密码：</dt>
+      <dd>
+        <input name="password" id="password" type="text">
+        <span class="cGray2 ml5">用户进行登陆的密码</span>
+    </dl>
+	
+
+    
+    <dl>
+      <dt>性别：</dt>
+      <dd>
+        <input name="sex" type="radio" value="GG" <eq name="sex" value="GG">checked</eq>>男
+        <input name="sex" type="radio" value="MM" <eq name="sex" value="MM">checked</eq>>女
+    </dl>
+	
+	<dl>
+      <dt>是否激活：</dt>
+      <dd>
+        <input name="active" type="radio" value="1" <eq name="active" value="1">checked</eq>>是
+        <input name="active" type="radio" value="0" <neq name="active" value="1">checked</neq>>否
+    </dl>
+	
+	<dl>
+      <dt>用户组：</dt>
+      <dd>
+        <select name="user_group_id">
+        <volist name="usergroup" id="vo">
+        <option <php>if($ug['gid']==$vo['gid']){</php>selected <php>}</php>value="{$vo.gid}">{$vo.name}</option>
+        </volist>
+        </select>
+      </dd>
+    </dl>
+	
+    <div class="sea_left">
+      <input type="submit" class="btn_b" value="提交" />
+    </div>
+  </div>
+  </form>
+</div>
+</body>
+</html>

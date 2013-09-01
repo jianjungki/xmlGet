@@ -1,0 +1,18 @@
+<php>$label=getLabel($gid);</php>
+<switch name="label">
+	  <case value="项目">
+	    <include file="../Public/_projectMainNav" />
+	  </case>
+	  <case value="组织">
+	    <include file="../Public/_orgMainNav" />
+	  </case>
+	  <default /><include file="../Public/_mainNavOrigi" />
+</switch>
+
+<php>
+	switch($label){
+		case '项目' : $config = $projectConfig; break;
+		case '组织' : $config = $orgConfig; break;
+		default : $config = $groupConfig; break;
+	}
+</php>

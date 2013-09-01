@@ -1,0 +1,8 @@
+﻿<div class="Toolbar_inbox">
+        <div class="page right">{$list.html}</div>
+        <a href="javascript:void(0);" class="btn_a" onclick="searchObject();"><span class="searchObject_action"><neq name="isSearch" value="1">搜索{$ts['app']['app_alias']}<else/>搜索完毕</neq></span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.edit_tab('添加')"><span>添加{$ts['app']['app_alias']}</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除{$ts['app']['app_alias']}</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.resume()"><span>启用{$ts['app']['app_alias']}</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.forbid()"><span>禁用{$ts['app']['app_alias']}</span></a>
+    </div>

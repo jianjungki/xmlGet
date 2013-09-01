@@ -1,0 +1,78 @@
+<include file="__THEME__/header" />
+<link href="../Public/css/bbs.css" rel="stylesheet" type="text/css" />
+<div class="contents BBS">
+ <php>$sideShow = intval($_COOKIE['menuSide']) </php>	
+  <div class="bbs_left" <eq name="sideShow" value="1">style="display:none"</eq> > <include file="../Public/left"  /> </div>
+ <eq name="sideShow" value="1">
+    <div class="rightBox" style="margin-left:0px;">
+ <else />
+ 	<div class="rightBox" style="margin-left:150px;_margin-left:0;">
+ </eq>
+	<div onclick="changeIframe()" class="sideBarToggle">
+		<eq name="sideShow" value="1">
+			<img src="../Public/images/clearright.gif" id="sideBarIcon"  />
+		 <else />
+		 	<img src="../Public/images/clearleft.gif" id="sideBarIcon"  />
+		 </eq>
+		</div>  <div class="bbs_main">
+    <div class="top_address">
+<span class="edi_adder"><a href="{:U('bbs/Index/index')}">{:L('base_forum')}</a> > <a href="{:U('bbs/Index/all')}">{:L('all_threads')}</a></span></div>
+    <div class="list_box">
+      <ul class="tab">
+      <a class="add" href="{:U('bbs/Index/post',array('class'=>$class))}">{:L('new_thread')}</a>
+        <li <eq name="isdist" value="0">class="on"</eq> ><span><a href="{:U('bbs/Index/all')}">{:L('all_threads')}</a></span></li>
+        <li <eq name="isdist" value="1">class="on"</eq> ><span><a href="{:U('bbs/Index/all',array( 'dist'=>1 ))}">{:L('soul_thread')}</a></span></li>
+      </ul>
+      <dl>
+		<dt>
+			<div style="width: 67%;" class="cl">{:L('thread_title')}( {$topic.count}{:L('thread_count_about')} )</div>
+
+			<div style="width: 11%;" class="cl">{:L('thread_author')} <a <if condition="$order=='cTime' && $val_cTime=='asc'">class="icon_order"</if><if condition="$order=='cTime' && $val_cTime=='desc'">class="icon_ortop"</if> href="{:U('bbs/Index/all',array('p'=>$topic['nowPage'],'order'=>'cTime','val_cTime'=>$val_cTime,'dist'=>$isdist))}">{:L('thread_addtime')} </a></div>
+
+			<div style="width: 10%;" class="cc"><a <if condition="$order=='viewcount' && $val_viewcount=='asc'">class="icon_order"</if><if condition="$order=='viewcount' && $val_viewcount=='desc'">class="icon_ortop"</if> href="{:U('bbs/Index/all',array('p'=>$topic['nowPage'],'order'=>'viewcount','val_viewcount'=>$val_viewcount,'dist'=>$isdist))}">{:L('thread_view_count')}</a>  <a <if condition="$order=='replycount' && $val_replycount=='asc'">class="icon_order"</if><if condition="$order=='replycount' && $val_replycount=='desc'">class="icon_ortop"</if> href="{:U('bbs/Index/all',array('p'=>$topic['nowPage'],'order'=>'replycount','val_replycount'=>$val_replycount,'dist'=>$isdist))}">{:L('thread_reply_count')}</a></div>
+			
+			<div style="width: 11.5%;" class="cr"><a <if condition="$order=='rTime' && $val_rTime=='asc'">class="icon_order"</if><if condition="$order=='rTime' && $val_rTime=='desc'">class="icon_ortop"</if> href="{:U('bbs/Index/all',array('p'=>$topic['nowPage'],'order'=>'rTime','val_rTime'=>$val_rTime,'dist'=>$isdist))}">{:L('thread_new_reply')}</a></div>
+		</dt>		
+		<volist id="vo" name="topic['data']">
+		<dd>
+			<div style="width: 67%;" class="cl f14">
+				<eq name="vo['type']" value="1"><span class="ico_vote" title="{:L('thread_vote')}">&nbsp;</span></eq>
+				<a class="mr10" href="{:U('bbs/Index/detail',array('id'=>$vo['id']))}" target="_blank" title="{$vo.title|t}">{$vo.title|getShort=28}</a>
+				<span class="f12">
+					<eq name="vo['dist']" value="1"><span class="zd">&nbsp;</span></eq>
+					<eq name="vo['top']" value="1"><span class="jh">&nbsp;</span></eq>
+					<eq name="vo['lock']" value="1"><span class="suo">&nbsp;</span></eq>
+					<eq name="vo['attach']" value="1"><span class="dow_icon lh18" title="{:L('thread_attach')}">&nbsp;</span></eq>
+				</span>
+
+				<php>if($vo['replycount'] >=25 && $vo['replycount'] < 150 ){</php>
+					<img src="../Public/images/hot_1.gif">
+				<php>}else if($vo['replycount'] >= 150 && $vo['replycount']<500 ){</php>
+					<img src="../Public/images/hot_2.gif">
+				<php>}else if($vo['replycount']>=500){</php>
+					<img src="../Public/images/hot_3.gif">
+				<php>}</php>				
+			</div>
+
+			<div style="width: 11%;" class="cl lh16">
+				<cite class="author"><a href="{:U('space/View/index',array('uid'=>$vo['uid']))}">{$vo.uid|getUserName}</a></cite>
+				<em>{$vo.cTime|friendLydate}</em>
+			</div>
+
+			<div style="width: 10%;" class="cc">{$vo.viewcount} / <span class="cl04">{$vo.replycount}</span></div>
+
+			<div style="width: 11.5%;" class="cr lh16">
+				<cite class="author"><a href="{:U('space/View/index',array('uid'=>$vo['lastreuid']))}">{$vo.lastreuid|getUserName}</a></cite>
+				<em>{$vo.rTime|friendLydate}</em>
+			</div>
+			<div class="C"></div>
+		</dd>
+		</volist>
+      </dl>
+    </div>
+   <div class="page mt5 alR mb20">{$topic['html']}</div>
+  </div>
+</div>
+<div class="C"></div>
+</div>
+<include file="__THEME__/footer" /> 

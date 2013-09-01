@@ -1,0 +1,76 @@
+<style style="text/css">
+.admin_window {
+	background-color: #F0F0F0;
+	clear: both;
+	line-height: 24px;
+	margin: 0;
+	padding: 0 5px;
+	font-size: 12px;
+}
+</style>
+
+<body>
+<div id="container">
+<div class="admin_window">本版块下有{$count}个主题，请选择操作</div>
+<table width="100%" border="0" cellpadding="0" cellspacing="0"
+	class="tableborder">
+	<tr class="cell" height="30">
+		<td class="altbg1 pt10"><input name="deleteCategory"
+			class="deleteCategory_type" type="radio" value="0" /></td>
+		<td class="altbg2 pt10">删除该版块，版块下的主题将不可见（不可逆）。</td>
+	</tr>
+	<tr>
+		<td class="altbg1 pt10" valign="top"><input name="deleteCategory"
+			class="deleteCategory_type" checked="checked" type="radio" value="1" /></td>
+		<td class="altbg2 pt10">删除该版块，仅仅更换版块（不可逆）。
+		<div id="categoryList" class="pt10"></div>
+		</td>
+	</tr>
+</table>
+</div>
+</body>
+</html>
+
+<script type="text/javascript" src="../Public/js/tsjs.json2select.js"></script>
+<script>
+
+$("#categoryList").json2select({$jeson},{$firstCate});
+function confirmDelete() {
+	var newFid = $('#categoryList').children(":last").val();
+	var url = "{$url}";
+	var fid = "{$_GET['fid']}";
+	var type = 1;
+	// 子层
+	$('.deleteCategory_type').each(function() {
+		if ($(this).attr('checked')) {
+			type = $(this).val();
+		}
+	});
+	
+	if(type == 1){
+		if (newFid == null) {
+			$.tbox.no('请选择完整的版块', "选择版块失败");
+			setTimeout("$.tbox.close()", 1500);
+			return;
+		}
+		if (newFid == fid) {
+			$.tbox.no('请选择与原来版块不同的新版块', "选择版块失败");
+			setTimeout("$.tbox.close()", 1500);
+			return;
+		}
+	}
+	
+	$.post(url,{type : type,fid : fid,newFid : newFid},
+					function(result) {
+						if (result == 1) {
+							$.tbox.yes('更改完毕', "修改版块成功");
+							setTimeout("$.tbox.close()", 1500);
+							location.reload();
+							return;
+						} else {
+							$.tbox.no('更改失败', "修改版块失败");
+							setTimeout("$.tbox.close()", 1500);
+						}
+					})
+}
+</script>

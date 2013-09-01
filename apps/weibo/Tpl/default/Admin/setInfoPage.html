@@ -1,0 +1,81 @@
+<include file="../Public/_header" />
+
+<div class="so_main">
+  <div class="page_tit">应用信息</div>
+  <div class="Toolbar_inbox">
+        <div class="page right"></div>
+    </div>
+    <div  class="list">
+    	<php>if($_GET['type']==3){</php>
+    		<form action="{:U('weibo/Admin/setRecomInfo')}" method="post">
+    	<php>}else{</php>
+    		<form action="{:U('weibo/Admin/setInfo')}" method="post">
+    	<php>}</php>
+      	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+      	<tr>
+		    <th class="line_l" width="10%">{$_name}ID</th>
+		    <th class="line_l" width="25%">{$_name}名字</th>
+		    <th class="line_l" width="45%">{$_name}介绍</th>
+		    <th class="line_l" width="20%">操作</th>
+        </tr>
+        <volist name="user_set" id="vo">
+          	<tr>
+          		<td>{$vo.uid}</td>
+          		<td>
+			<div style="float:left;margin-right:10px;border:1px solid #8098A8;height:30px;padding:1px;width:30px;">
+				<img src="{$vo.face}" width="30">
+			</div>
+			<div style="float:left">
+				<a href="{$vo.space}" class="fn" target="_blank">{$vo.uname}</a><br>{$vo.sex}
+			</div>
+			</td>
+          		<td><textarea name="introduce_{$vo.uid}" id="introduce" width="300px;" class="contentObj" style="max-width:83.5%;min-width:83.5%;width:83.5%;height:55px; max-height:55px;min-height:55px;padding:5px; margin:0; _padding:5;overflow: hidden;overflow-x:hidden;overflow-y:auto;line-height:18px">{$vo.about}</textarea></td>
+          		<php>if($_GET['type']==2){</php>
+          			<td><input type="checkbox" value="1" name="delete_{$vo.uid}">删除&nbsp;|&nbsp;{:IsRecomHost($vo['uid'])}</td>
+          		<php>}else{</php>
+          			<td><input type="checkbox" value="1" name="delete_{$vo.uid}">删除</td>
+          		<php>}</php>
+          	</tr>
+          </volist>
+          <volist name="user_id" id="vo">
+          	<tr>
+          		<td>{$vo.uid}</td>
+          		<td>
+			<div style="float:left;margin-right:10px;border:1px solid #8098A8;height:30px;padding:1px;width:30px;">
+				<img src="{$vo.face}" width="30">
+			</div>
+			<div style="float:left">
+				<a href="{$vo.space}" class="fn" target="_blank">{$vo.uname}</a><br>{$vo.sex}
+			</div>
+			</td>
+          		<td><textarea name="introduce_{$vo.uid}" id="introduce" width="300px;" class="contentObj" style="max-width:83.5%;min-width:83.5%;width:83.5%;height:55px; max-height:55px;min-height:55px;padding:5px; margin:0; _padding:5;overflow: hidden;overflow-x:hidden;overflow-y:auto;line-height:18px"></textarea></td>
+          		<php>if($_GET['type']==2){</php>
+          			<td><input type="checkbox" value="1" name="delete_{$vo.uid}">删除&nbsp;|&nbsp;{:IsRecomHost($vo['uid'])}</td>
+          		<php>}else{</php>
+          			<td><input type="checkbox" value="1" name="delete_{$vo.uid}">删除</td>
+          		<php>}</php>
+          	</tr>
+          </volist>
+         </table>
+         <div class="Toolbar_inbox">
+         	<input id="topcisId" name="topcisId" type="hidden" value="{$topcisId}"/>
+         	<input id="guestsId" name="guestsId" type="hidden" value="{$guestsId}"/>
+         	<input id="usertype" name="usertype" type="hidden" value="{$type_to}"/>
+			<input class="btn_b" type="submit" value="设置信息"/>
+         </form>
+        </div>
+ </div>
+ <script>
+ 	function getToRecom(idobj){
+ 		var topicid = '{$topcisId}';
+ 		$.post('{:U("weibo/Admin/ajaxRecomHost")}',{user_id:idobj,topics_id:topicid},function(res){
+ 			if(res==1){
+ 				ui.success("操作成功");
+ 			}else{
+ 				ui.error("操作失败，已添加该主持人");
+ 			}
+ 			$("#click_"+idobj).html("<font color='red'>设置成功</font>");
+ 		})
+ 	}
+ </script>
+<include file="../Public/_footer" />

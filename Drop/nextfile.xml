@@ -1,0 +1,464 @@
+﻿<package>
+  <components>
+    <component name="礼物首页" desc="" code="Form249" permissionCtrl="false" loginCtrl="false" id="giftgroup">
+      <componentOutputs />
+      <componentTables>
+        <componentTable name="gift_user">
+          <componentFields>
+            <componentField name="fromUserId" />
+          </componentFields>
+        </componentTable>
+        <componentTableRelas />
+      </componentTables>
+      <componentVariants />
+      <propertys>
+        <property name="Name"><![CDATA[]]></property>
+        <property name="FormLoadAction"><![CDATA[<evaluate id="cf10d3be9d134c06aa3d870b7662ad1e" />]]></property>
+        <property name="OuterJoinTableName"><![CDATA[]]></property>
+        <property name="TableName"><![CDATA[]]></property>
+        <property name="OutputSettings"><![CDATA[]]></property>
+        <property name="ComponentVariantEditor"><![CDATA[]]></property>
+        <property name="Width"><![CDATA[960]]></property>
+        <property name="BackColor"><![CDATA[240,246,247]]></property>
+        <property name="FormCloseAction"><![CDATA[]]></property>
+        <property name="Padding"><![CDATA[0,0,0,0]]></property>
+        <property name="Height"><![CDATA[902]]></property>
+        <property name="OutputCondition"><![CDATA[]]></property>
+      </propertys>
+      <controls>
+           <control type="TabControl" permissionCtrl="false" name="" desc="" code="JGTabControl2" id="indexaaaaaaaaaaaaaaaaaaaaaaaaaaa">
+                  <controls>
+                    <control type="TabPage" permissionCtrl="false" name="热门礼物" desc="" code="categorys" id="ababababababababababababababababababab">
+                      <controls>
+							<control type="TabPage" permissionCtrl="false" name="热门礼物" desc="" code="categorys" id="dddddddddddddddddddddddddddddddddddddd">
+							  <controls />
+							  <propertys>
+								<property name="Name"><![CDATA[app_alias]]></property>
+								<property name="Height"><![CDATA[100]]></property>
+								<property name="Width"><![CDATA[200]]></property>
+								<property name="Top"><![CDATA[0]]></property>
+								<property name="Left"><![CDATA[0]]></property>
+								<property name="UseVisualStyleBackColor"><![CDATA[True]]></property>
+								<property name="TabIndex"><![CDATA[0]]></property>
+								<property name="SimpleChineseTitle"><![CDATA[热门礼物]]></property>
+								<property name="ComplexChineseTitle"><![CDATA[]]></property>
+								<property name="EnglishTitle"><![CDATA[]]></property>
+								<property name="JapaneseTitle"><![CDATA[]]></property>
+								<property name="Visible"><![CDATA[True]]></property>
+								<property name="Anchor"><![CDATA[Top, Left]]></property>
+								<property name="Dock"><![CDATA[None]]></property>
+								<property name="TagData"><![CDATA[]]></property>
+								<property name="BackColor"><![CDATA[240, 246, 247]]></property>
+								<property name="Padding"><![CDATA[0, 0, 0, 0]]></property>
+							  </propertys>
+							</control>
+							<control type="TabPage" permissionCtrl="false" name="热门礼物" desc="" code="categorys" id="cccccccccccccccccccccccccccccccccccccc">
+							  <controls />
+							  <propertys>
+								<property name="Name"><![CDATA[categorys]]></property>
+								<property name="Height"><![CDATA[100]]></property>
+								<property name="Width"><![CDATA[200]]></property>
+								<property name="Top"><![CDATA[0]]></property>
+								<property name="Left"><![CDATA[0]]></property>
+								<property name="UseVisualStyleBackColor"><![CDATA[True]]></property>
+								<property name="TabIndex"><![CDATA[0]]></property>
+								<property name="SimpleChineseTitle"><![CDATA[热门礼物]]></property>
+								<property name="ComplexChineseTitle"><![CDATA[]]></property>
+								<property name="EnglishTitle"><![CDATA[]]></property>
+								<property name="JapaneseTitle"><![CDATA[]]></property>
+								<property name="Visible"><![CDATA[True]]></property>
+								<property name="Anchor"><![CDATA[Top, Left]]></property>
+								<property name="Dock"><![CDATA[None]]></property>
+								<property name="TagData"><![CDATA[]]></property>
+								<property name="BackColor"><![CDATA[240, 246, 247]]></property>
+								<property name="Padding"><![CDATA[0, 0, 0, 0]]></property>
+							  </propertys>
+							</control>
+					  </controls>
+                      <propertys>
+                        <property name="Name"><![CDATA[categorys]]></property>
+                        <property name="Height"><![CDATA[100]]></property>
+                        <property name="Width"><![CDATA[200]]></property>
+                        <property name="Top"><![CDATA[0]]></property>
+                        <property name="Left"><![CDATA[0]]></property>
+                        <property name="UseVisualStyleBackColor"><![CDATA[True]]></property>
+                        <property name="TabIndex"><![CDATA[0]]></property>
+                        <property name="SimpleChineseTitle"><![CDATA[热门礼物]]></property>
+                        <property name="ComplexChineseTitle"><![CDATA[]]></property>
+                        <property name="EnglishTitle"><![CDATA[]]></property>
+                        <property name="JapaneseTitle"><![CDATA[]]></property>
+                        <property name="Visible"><![CDATA[True]]></property>
+                        <property name="Anchor"><![CDATA[Top, Left]]></property>
+                        <property name="Dock"><![CDATA[None]]></property>
+                        <property name="TagData"><![CDATA[]]></property>
+                        <property name="BackColor"><![CDATA[240, 246, 247]]></property>
+                        <property name="Padding"><![CDATA[0, 0, 0, 0]]></property>
+                      </propertys>
+                    </control>
+					<control type="TabPage" permissionCtrl="false" name="热门礼物" desc="" code="categorys" id="bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb">
+					  <controls />
+					  <propertys>
+						<property name="Name"><![CDATA[categorys]]></property>
+						<property name="Height"><![CDATA[100]]></property>
+						<property name="Width"><![CDATA[200]]></property>
+						<property name="Top"><![CDATA[0]]></property>
+						<property name="Left"><![CDATA[0]]></property>
+						<property name="UseVisualStyleBackColor"><![CDATA[True]]></property>
+						<property name="TabIndex"><![CDATA[0]]></property>
+						<property name="SimpleChineseTitle"><![CDATA[热门礼物]]></property>
+						<property name="ComplexChineseTitle"><![CDATA[]]></property>
+						<property name="EnglishTitle"><![CDATA[]]></property>
+						<property name="JapaneseTitle"><![CDATA[]]></property>
+						<property name="Visible"><![CDATA[True]]></property>
+						<property name="Anchor"><![CDATA[Top, Left]]></property>
+						<property name="Dock"><![CDATA[None]]></property>
+						<property name="TagData"><![CDATA[]]></property>
+						<property name="BackColor"><![CDATA[240, 246, 247]]></property>
+						<property name="Padding"><![CDATA[0, 0, 0, 0]]></property>
+					  </propertys>
+					</control>
+                  </controls>
+                  <propertys>
+                    <property name="Name"><![CDATA[JGTabControl2]]></property>
+                    <property name="Height"><![CDATA[204]]></property>
+                    <property name="Width"><![CDATA[917]]></property>
+                    <property name="Top"><![CDATA[3]]></property>
+                    <property name="Left"><![CDATA[3]]></property>
+                    <property name="SelectedIndex"><![CDATA[0]]></property>
+                    <property name="TabIndex"><![CDATA[0]]></property>
+                    <property name="Visible"><![CDATA[True]]></property>
+                    <property name="Anchor"><![CDATA[Top, Left]]></property>
+                    <property name="TabIndexChangedAction"><![CDATA[]]></property>
+                    <property name="Dock"><![CDATA[None]]></property>
+                    <property name="TagData"><![CDATA[]]></property>
+                  </propertys>
+                </control>
+      </controls>
+      <ruleInstances>
+        <ruleInstance id="cf10d3be9d134c06aa3d870b7662ad1e" isNeedLog="false" ruleName="LoadBasicAndQueryComponentData" code="Code100015" isEnabled="true" isBreak="false" instanceId="f89e7df67bd34541bd89166ab74ffc8d" isTransaction="false">
+          <condition><![CDATA[]]></condition>
+          <ruleConfig><![CDATA[{"Configs":[{"Condition":null,"TableName":"gift_user","itemqueryparam":null,"orderBy":[]}]}]]></ruleConfig>
+        </ruleInstance>
+        <ruleInstance id="943d6fd02c2d480b98aaa838cac2401c" isNeedLog="false" ruleName="UpdateRecord" code="Code100002" isEnabled="true" isBreak="false" instanceId="ed4661209756479f90ffb28f7943e055" isTransaction="true">
+          <condition><![CDATA[]]></condition>
+          <ruleConfig><![CDATA[]]></ruleConfig>
+        </ruleInstance>
+      </ruleInstances>
+    </component>
+	 <component name="礼物首页" desc="" code="Form249" permissionCtrl="false" loginCtrl="false" id="giftfor">
+      <componentOutputs />
+      <componentTables>
+        <componentTable name="gift_user">
+          <componentFields>
+            <componentField name="fromUserId" />
+          </componentFields>
+        </componentTable>
+        <componentTableRelas />
+      </componentTables>
+      <componentVariants />
+      <propertys>
+        <property name="Name"><![CDATA[]]></property>
+        <property name="FormLoadAction"><![CDATA[<evaluate id="cf10d3be9d134c06aa3d870b7662ad1e" />]]></property>
+        <property name="OuterJoinTableName"><![CDATA[]]></property>
+        <property name="TableName"><![CDATA[]]></property>
+        <property name="OutputSettings"><![CDATA[]]></property>
+        <property name="ComponentVariantEditor"><![CDATA[]]></property>
+        <property name="Width"><![CDATA[960]]></property>
+        <property name="BackColor"><![CDATA[240,246,247]]></property>
+        <property name="FormCloseAction"><![CDATA[]]></property>
+        <property name="Padding"><![CDATA[0,0,0,0]]></property>
+        <property name="Height"><![CDATA[902]]></property>
+        <property name="OutputCondition"><![CDATA[]]></property>
+      </propertys>
+      <controls>
+           <control type="TabControl" permissionCtrl="false" name="" desc="" code="JGTabControl2" id="indexaaaaaaaaaaaaaaaaaaaaaaaaaaa">
+                  <controls>
+                    <control type="TabPage" permissionCtrl="false" name="热门礼物" desc="" code="categorys" id="ababababababababababababababababababab">
+                      <controls>
+							<control type="TabPage" permissionCtrl="false" name="热门礼物" desc="" code="categorys" id="dddddddddddddddddddddddddddddddddddddd">
+							  <controls />
+							  <propertys>
+								<property name="Name"><![CDATA[app_alias]]></property>
+								<property name="Height"><![CDATA[100]]></property>
+								<property name="Width"><![CDATA[200]]></property>
+								<property name="Top"><![CDATA[0]]></property>
+								<property name="Left"><![CDATA[0]]></property>
+								<property name="UseVisualStyleBackColor"><![CDATA[True]]></property>
+								<property name="TabIndex"><![CDATA[0]]></property>
+								<property name="SimpleChineseTitle"><![CDATA[热门礼物]]></property>
+								<property name="ComplexChineseTitle"><![CDATA[]]></property>
+								<property name="EnglishTitle"><![CDATA[]]></property>
+								<property name="JapaneseTitle"><![CDATA[]]></property>
+								<property name="Visible"><![CDATA[True]]></property>
+								<property name="Anchor"><![CDATA[Top, Left]]></property>
+								<property name="Dock"><![CDATA[None]]></property>
+								<property name="TagData"><![CDATA[]]></property>
+								<property name="BackColor"><![CDATA[240, 246, 247]]></property>
+								<property name="Padding"><![CDATA[0, 0, 0, 0]]></property>
+							  </propertys>
+							</control>
+							<control type="TabPage" permissionCtrl="false" name="热门礼物" desc="" code="categorys" id="cccccccccccccccccccccccccccccccccccccc">
+							  <controls />
+							  <propertys>
+								<property name="Name"><![CDATA[categorys]]></property>
+								<property name="Height"><![CDATA[100]]></property>
+								<property name="Width"><![CDATA[200]]></property>
+								<property name="Top"><![CDATA[0]]></property>
+								<property name="Left"><![CDATA[0]]></property>
+								<property name="UseVisualStyleBackColor"><![CDATA[True]]></property>
+								<property name="TabIndex"><![CDATA[0]]></property>
+								<property name="SimpleChineseTitle"><![CDATA[热门礼物]]></property>
+								<property name="ComplexChineseTitle"><![CDATA[]]></property>
+								<property name="EnglishTitle"><![CDATA[]]></property>
+								<property name="JapaneseTitle"><![CDATA[]]></property>
+								<property name="Visible"><![CDATA[True]]></property>
+								<property name="Anchor"><![CDATA[Top, Left]]></property>
+								<property name="Dock"><![CDATA[None]]></property>
+								<property name="TagData"><![CDATA[]]></property>
+								<property name="BackColor"><![CDATA[240, 246, 247]]></property>
+								<property name="Padding"><![CDATA[0, 0, 0, 0]]></property>
+							  </propertys>
+							</control>
+					  </controls>
+                      <propertys>
+                        <property name="Name"><![CDATA[categorys]]></property>
+                        <property name="Height"><![CDATA[100]]></property>
+                        <property name="Width"><![CDATA[200]]></property>
+                        <property name="Top"><![CDATA[0]]></property>
+                        <property name="Left"><![CDATA[0]]></property>
+                        <property name="UseVisualStyleBackColor"><![CDATA[True]]></property>
+                        <property name="TabIndex"><![CDATA[0]]></property>
+                        <property name="SimpleChineseTitle"><![CDATA[热门礼物]]></property>
+                        <property name="ComplexChineseTitle"><![CDATA[]]></property>
+                        <property name="EnglishTitle"><![CDATA[]]></property>
+                        <property name="JapaneseTitle"><![CDATA[]]></property>
+                        <property name="Visible"><![CDATA[True]]></property>
+                        <property name="Anchor"><![CDATA[Top, Left]]></property>
+                        <property name="Dock"><![CDATA[None]]></property>
+                        <property name="TagData"><![CDATA[]]></property>
+                        <property name="BackColor"><![CDATA[240, 246, 247]]></property>
+                        <property name="Padding"><![CDATA[0, 0, 0, 0]]></property>
+                      </propertys>
+                    </control>
+					<control type="TabPage" permissionCtrl="false" name="热门礼物" desc="" code="categorys" id="bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb">
+					  <controls />
+					  <propertys>
+						<property name="Name"><![CDATA[categorys]]></property>
+						<property name="Height"><![CDATA[100]]></property>
+						<property name="Width"><![CDATA[200]]></property>
+						<property name="Top"><![CDATA[0]]></property>
+						<property name="Left"><![CDATA[0]]></property>
+						<property name="UseVisualStyleBackColor"><![CDATA[True]]></property>
+						<property name="TabIndex"><![CDATA[0]]></property>
+						<property name="SimpleChineseTitle"><![CDATA[热门礼物]]></property>
+						<property name="ComplexChineseTitle"><![CDATA[]]></property>
+						<property name="EnglishTitle"><![CDATA[]]></property>
+						<property name="JapaneseTitle"><![CDATA[]]></property>
+						<property name="Visible"><![CDATA[True]]></property>
+						<property name="Anchor"><![CDATA[Top, Left]]></property>
+						<property name="Dock"><![CDATA[None]]></property>
+						<property name="TagData"><![CDATA[]]></property>
+						<property name="BackColor"><![CDATA[240, 246, 247]]></property>
+						<property name="Padding"><![CDATA[0, 0, 0, 0]]></property>
+					  </propertys>
+					</control>
+                  </controls>
+                  <propertys>
+                    <property name="Name"><![CDATA[JGTabControl2]]></property>
+                    <property name="Height"><![CDATA[204]]></property>
+                    <property name="Width"><![CDATA[917]]></property>
+                    <property name="Top"><![CDATA[3]]></property>
+                    <property name="Left"><![CDATA[3]]></property>
+                    <property name="SelectedIndex"><![CDATA[0]]></property>
+                    <property name="TabIndex"><![CDATA[0]]></property>
+                    <property name="Visible"><![CDATA[True]]></property>
+                    <property name="Anchor"><![CDATA[Top, Left]]></property>
+                    <property name="TabIndexChangedAction"><![CDATA[]]></property>
+                    <property name="Dock"><![CDATA[None]]></property>
+                    <property name="TagData"><![CDATA[]]></property>
+                  </propertys>
+                </control>
+      </controls>
+      <ruleInstances>
+        <ruleInstance id="cf10d3be9d134c06aa3d870b7662ad1e" isNeedLog="false" ruleName="LoadBasicAndQueryComponentData" code="Code100015" isEnabled="true" isBreak="false" instanceId="f89e7df67bd34541bd89166ab74ffc8d" isTransaction="false">
+          <condition><![CDATA[]]></condition>
+          <ruleConfig><![CDATA[{"Configs":[{"Condition":null,"TableName":"gift_user","itemqueryparam":null,"orderBy":[]}]}]]></ruleConfig>
+        </ruleInstance>
+        <ruleInstance id="943d6fd02c2d480b98aaa838cac2401c" isNeedLog="false" ruleName="UpdateRecord" code="Code100002" isEnabled="true" isBreak="false" instanceId="ed4661209756479f90ffb28f7943e055" isTransaction="true">
+          <condition><![CDATA[]]></condition>
+          <ruleConfig><![CDATA[]]></ruleConfig>
+        </ruleInstance>
+      </ruleInstances>
+    </component>
+	<component name="礼物首页" desc="" code="Form249" permissionCtrl="false" loginCtrl="false" id="howtogif">
+      <componentOutputs />
+      <componentTables>
+        <componentTable name="gift_user">
+          <componentFields>
+            <componentField name="fromUserId" />
+          </componentFields>
+        </componentTable>
+        <componentTableRelas />
+      </componentTables>
+      <componentVariants />
+      <propertys>
+        <property name="Name"><![CDATA[]]></property>
+        <property name="FormLoadAction"><![CDATA[<evaluate id="cf10d3be9d134c06aa3d870b7662ad1e" />]]></property>
+        <property name="OuterJoinTableName"><![CDATA[]]></property>
+        <property name="TableName"><![CDATA[]]></property>
+        <property name="OutputSettings"><![CDATA[]]></property>
+        <property name="ComponentVariantEditor"><![CDATA[]]></property>
+        <property name="Width"><![CDATA[960]]></property>
+        <property name="BackColor"><![CDATA[240,246,247]]></property>
+        <property name="FormCloseAction"><![CDATA[]]></property>
+        <property name="Padding"><![CDATA[0,0,0,0]]></property>
+        <property name="Height"><![CDATA[902]]></property>
+        <property name="OutputCondition"><![CDATA[]]></property>
+      </propertys>
+      <controls>
+           <control type="TabControl" permissionCtrl="false" name="" desc="" code="JGTabControl2" id="indexaaaaaaaaaaaaaaaaaaaaaaaaaaa">
+                  <controls>
+                    <control type="TabPage" permissionCtrl="false" name="d热门礼物sss" desc="" code="categorys" id="ababababababababababababababababababab">
+                      <controls>
+							<control type="TabPage" permissionCtrl="false" name="热门礼物" desc="" code="categorys" id="dddddddddddddddddddddddddddddddddddddd">
+							  <controls />
+							  <propertys>
+								<property name="Name"><![CDATA[app_alias]]></property>
+								<property name="Height"><![CDATA[100]]></property>
+								<property name="Width"><![CDATA[200]]></property>
+								<property name="Top"><![CDATA[0]]></property>
+								<property name="Left"><![CDATA[0]]></property>
+								<property name="UseVisualStyleBackColor"><![CDATA[True]]></property>
+								<property name="TabIndex"><![CDATA[0]]></property>
+								<property name="SimpleChineseTitle"><![CDATA[热门礼物]]></property>
+								<property name="ComplexChineseTitle"><![CDATA[]]></property>
+								<property name="EnglishTitle"><![CDATA[]]></property>
+								<property name="JapaneseTitle"><![CDATA[]]></property>
+								<property name="Visible"><![CDATA[True]]></property>
+								<property name="Anchor"><![CDATA[Top, Left]]></property>
+								<property name="Dock"><![CDATA[None]]></property>
+								<property name="TagData"><![CDATA[]]></property>
+								<property name="BackColor"><![CDATA[240, 246, 247]]></property>
+								<property name="Padding"><![CDATA[0, 0, 0, 0]]></property>
+							  </propertys>
+							</control>
+							<control type="TabPage" permissionCtrl="false" name="热门礼物" desc="" code="categorys" id="cccccccccccccccccccccccccccccccccccccc">
+							  <controls />
+							  <propertys>
+								<property name="Name"><![CDATA[categorys]]></property>
+								<property name="Height"><![CDATA[100]]></property>
+								<property name="Width"><![CDATA[200]]></property>
+								<property name="Top"><![CDATA[0]]></property>
+								<property name="Left"><![CDATA[0]]></property>
+								<property name="UseVisualStyleBackColor"><![CDATA[True]]></property>
+								<property name="TabIndex"><![CDATA[0]]></property>
+								<property name="SimpleChineseTitle"><![CDATA[热门礼物]]></property>
+								<property name="ComplexChineseTitle"><![CDATA[]]></property>
+								<property name="EnglishTitle"><![CDATA[]]></property>
+								<property name="JapaneseTitle"><![CDATA[]]></property>
+								<property name="Visible"><![CDATA[True]]></property>
+								<property name="Anchor"><![CDATA[Top, Left]]></property>
+								<property name="Dock"><![CDATA[None]]></property>
+								<property name="TagData"><![CDATA[]]></property>
+								<property name="BackColor"><![CDATA[240, 246, 247]]></property>
+								<property name="Padding"><![CDATA[0, 0, 0, 0]]></property>
+							  </propertys>
+							</control>
+					  </controls>
+                      <propertys>
+                        <property name="Name"><![CDATA[categorys]]></property>
+                        <property name="Height"><![CDATA[100]]></property>
+                        <property name="Width"><![CDATA[200]]></property>
+                        <property name="Top"><![CDATA[0]]></property>
+                        <property name="Left"><![CDATA[0]]></property>
+                        <property name="UseVisualStyleBackColor"><![CDATA[True]]></property>
+                        <property name="TabIndex"><![CDATA[0]]></property>
+                        <property name="SimpleChineseTitle"><![CDATA[热门礼物]]></property>
+                        <property name="ComplexChineseTitle"><![CDATA[]]></property>
+                        <property name="EnglishTitle"><![CDATA[]]></property>
+                        <property name="JapaneseTitle"><![CDATA[]]></property>
+                        <property name="Visible"><![CDATA[True]]></property>
+                        <property name="Anchor"><![CDATA[Top, Left]]></property>
+                        <property name="Dock"><![CDATA[None]]></property>
+                        <property name="TagData"><![CDATA[]]></property>
+                        <property name="BackColor"><![CDATA[240, 246, 247]]></property>
+                        <property name="Padding"><![CDATA[0, 0, 0, 0]]></property>
+                      </propertys>
+                    </control>
+					<control type="TabPage" permissionCtrl="false" name="热门礼物" desc="" code="categorys" id="bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb">
+					  <controls />
+					  <propertys>
+						<property name="Name"><![CDATA[categorys]]></property>
+						<property name="Height"><![CDATA[100]]></property>
+						<property name="Width"><![CDATA[200]]></property>
+						<property name="Top"><![CDATA[0]]></property>
+						<property name="Left"><![CDATA[0]]></property>
+						<property name="UseVisualStyleBackColor"><![CDATA[True]]></property>
+						<property name="TabIndex"><![CDATA[0]]></property>
+						<property name="SimpleChineseTitle"><![CDATA[热门礼物]]></property>
+						<property name="ComplexChineseTitle"><![CDATA[]]></property>
+						<property name="EnglishTitle"><![CDATA[]]></property>
+						<property name="JapaneseTitle"><![CDATA[]]></property>
+						<property name="Visible"><![CDATA[True]]></property>
+						<property name="Anchor"><![CDATA[Top, Left]]></property>
+						<property name="Dock"><![CDATA[None]]></property>
+						<property name="TagData"><![CDATA[]]></property>
+						<property name="BackColor"><![CDATA[240, 246, 247]]></property>
+						<property name="Padding"><![CDATA[0, 0, 0, 0]]></property>
+					  </propertys>
+					</control>
+                  </controls>
+                  <propertys>
+                    <property name="Name"><![CDATA[JGTabControl2]]></property>
+                    <property name="Height"><![CDATA[204]]></property>
+                    <property name="Width"><![CDATA[917]]></property>
+                    <property name="Top"><![CDATA[3]]></property>
+                    <property name="Left"><![CDATA[3]]></property>
+                    <property name="SelectedIndex"><![CDATA[0]]></property>
+                    <property name="TabIndex"><![CDATA[0]]></property>
+                    <property name="Visible"><![CDATA[True]]></property>
+                    <property name="Anchor"><![CDATA[Top, Left]]></property>
+                    <property name="TabIndexChangedAction"><![CDATA[]]></property>
+                    <property name="Dock"><![CDATA[None]]></property>
+                    <property name="TagData"><![CDATA[]]></property>
+                  </propertys>
+                </control>
+      </controls>
+      <ruleInstances>
+        <ruleInstance id="cf10d3be9d134c06aa3d870b7662ad1e" isNeedLog="false" ruleName="LoadBasicAndQueryComponentData" code="Code100015" isEnabled="true" isBreak="false" instanceId="f89e7df67bd34541bd89166ab74ffc8d" isTransaction="false">
+          <condition><![CDATA[]]></condition>
+          <ruleConfig><![CDATA[{"Configs":[{"Condition":null,"TableName":"gift_user","itemqueryparam":null,"orderBy":[]}]}]]></ruleConfig>
+        </ruleInstance>
+        <ruleInstance id="943d6fd02c2d480b98aaa838cac2401c" isNeedLog="false" ruleName="UpdateRecord" code="Code100002" isEnabled="true" isBreak="false" instanceId="ed4661209756479f90ffb28f7943e055" isTransaction="true">
+          <condition><![CDATA[]]></condition>
+          <ruleConfig><![CDATA[]]></ruleConfig>
+        </ruleInstance>
+      </ruleInstances>
+    </component>
+  </components>
+  <systemOptions>
+    <systemOption name="StartComponentID" value="8bcfdbb33a6c4afcb723942bdb513170" desc="" />
+    <systemOption name="Administrator" value="" desc="" />
+    <systemOption name="SuperAdmin" value="" desc="" />
+    <systemOption name="EncryptionStrategy" value="AES" desc="" />
+  </systemOptions>
+  <tables>
+    <table id="109cb93498c44fdda88d40959884a2aa" name="gift_user" chineseName="用户送礼数据模型" desc="" isQuery="false" isTree="false" isPrivilegeObj="false" isDeleted="false">
+      <fields>
+        <field id="02d855db8b1f477e86655feb09055a08" name="sendWayName" chineseName="sendWayName" desc="" type="1" length="50" rowPermissionDisplay="false" rowPermissionCtrl="false" columnPermissionCtrl="false" defaultValue="" />
+        <field id="39395f10a0c646fda81bfce278025eeb" name="id" chineseName="id" desc="" type="1" length="255" rowPermissionDisplay="false" rowPermissionCtrl="false" columnPermissionCtrl="false" defaultValue="" />
+        <field id="420cd9e1622e443fb4479145195dfa94" name="fromUserId" chineseName="fromUserId" desc="" type="1" length="255" rowPermissionDisplay="false" rowPermissionCtrl="false" columnPermissionCtrl="false" defaultValue="" />
+        <field id="469d6e1e7ac743629e34b71624dd5452" name="sendWay" chineseName="sendWay" desc="" type="1" length="50" rowPermissionDisplay="false" rowPermissionCtrl="false" columnPermissionCtrl="false" defaultValue="" />
+        <field id="4d40039482c24ac48b8b6f2e06179199" name="giftImg" chineseName="giftImg" desc="" type="1" length="255" rowPermissionDisplay="false" rowPermissionCtrl="false" columnPermissionCtrl="false" defaultValue="" />
+        <field id="84956bab4b0f4a44b872fffff1a71087" name="cTime" chineseName="cTime" desc="" type="7" length="50" rowPermissionDisplay="false" rowPermissionCtrl="false" columnPermissionCtrl="false" defaultValue="" />
+        <field id="9a1290610f174e7f8feb2d194c8885da" name="fromUserName" chineseName="fromUserName" desc="" type="1" length="255" rowPermissionDisplay="false" rowPermissionCtrl="false" columnPermissionCtrl="false" defaultValue="" />
+        <field id="a31a6044c224400a9dd57999513ee136" name="giftPrice" chineseName="giftPrice" desc="" type="3" precision="2" length="50" rowPermissionDisplay="false" rowPermissionCtrl="false" columnPermissionCtrl="false" defaultValue="" />
+        <field id="ae02378bf7b64c37bc4003f95d7bdbb0" name="MasterID" chineseName="MasterID" desc="" type="1" length="64" rowPermissionDisplay="false" rowPermissionCtrl="false" columnPermissionCtrl="false" defaultValue="" />
+        <field id="c4eddf8bdb2b4ddba466adf6339302ce" name="toUserId" chineseName="toUserId" desc="" type="1" length="255" rowPermissionDisplay="false" rowPermissionCtrl="false" columnPermissionCtrl="false" defaultValue="" />
+        <field id="e76d596c9f5f43deb7c0377e4814957d" name="sendInfo" chineseName="sendInfo" desc="" type="2" length="50" rowPermissionDisplay="false" rowPermissionCtrl="false" columnPermissionCtrl="false" defaultValue="" />
+      </fields>
+    </table>
+    <privilegeObjRelas />
+  </tables>
+  <resources />
+</package>

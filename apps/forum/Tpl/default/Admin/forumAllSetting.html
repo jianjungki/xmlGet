@@ -1,0 +1,45 @@
+<include file="_header" />
+<link href="../Public/style.css" rel="stylesheet" type="text/css">
+
+<div class="so_main">
+	<include file="_tab" />
+<div class="form">
+    <form action="{:U('forum/Admin/doAddFroumSetting')}"  method="post">
+    <!--
+   	<dl>
+   		<dt>附件是否需要审核：</dt>
+		<dd>
+			<label style="display:inline;">
+				<input class="radio" type="radio" name="attach_auditing" value="1" <?php if($attach_auditing == 1) { echo 'checked="checked"'; }?> />是
+			</label>
+			<label style="display:inline;">
+				<input class="radio" type="radio" name="attach_auditing" value="0" <?php if($attach_auditing == 0) { echo 'checked="checked"'; }?> />否
+			</label>
+		</dd>
+    </dl>
+    -->
+    <dl> 
+       <dt>允许附件上传类型：</dt>
+       <dd>
+        	<label>
+   				<input class="txt" type="text" name="attach_type" value="{$attach_type}"/><span class="cGray2 ml5">类型之间用","分隔</span>
+         	</label>
+      	</dd>
+    </dl>
+    
+   	<dl> 
+      	<dt>允许附件上传个数：</dt>
+      	<dd>
+        	<label>
+   				<input class="txt" type="text" name="attach_num" value="{$attach_num}" maxlength="4"   onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"><span class="cGray2 ml5">为0或不填时，将不限制个数</span>
+         	</label>
+     	</dd>
+    </dl>
+    <div class="sea_left">
+      <input type="submit" class="btn_b" value="确定" />
+    </div>
+  </form>
+</div>
+</div>
+  
+<include file="_footer" />

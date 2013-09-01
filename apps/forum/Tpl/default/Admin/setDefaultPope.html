@@ -1,0 +1,265 @@
+<include file="_header" />
+<!-- <link href="../Public/css/admin_forum.css" rel="stylesheet" type="text/css" /> -->
+<link href="../Public/style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript">
+$(function(){
+	$('.hAll').click(function(){
+		var checked = $(this).attr("checked");
+		if(!checked){
+			var rel = $(this).attr("rel");
+			var name = $(this).attr('name');
+			$('.'+name+"_"+rel).removeAttr("checked");
+			$('.vAll').removeAttr("checked");
+		}else{
+			var rel = $(this).attr("rel");
+			var name = $(this).attr('name');
+			$('.'+name+"_"+rel).attr("checked","checked");
+		}
+		
+		});
+	$('.vAll').click(function(){
+		var checked = $(this).attr("checked");
+		if(!checked){
+			var rel = $(this).attr("rel");
+			var name = $(this).attr('name');
+			$('.'+name+"_"+rel).removeAttr("checked");
+			$('.hAll').removeAttr("checked");
+		}else{
+			var rel = $(this).attr("rel");
+			var name = $(this).attr('name');
+			$('.'+name+"_"+rel).attr("checked","checked");
+		}
+		
+		});
+});
+</script>
+
+<div class="so_main">
+	<include file="_tab" />
+  <div class="form2">
+    <div class="tab">
+      <ul>
+        <li <eq name="type" value="user" >class="on"</eq>><a href="{:U('forum/Admin/setDefaultPope',array('fid'=>$fid,'type'=>'user'))}">默认用户行为权限</a></li>
+        <li <eq name="type" value="admin1">class="on"</eq>><a href="{:U('forum/Admin/setDefaultPope',array('fid'=>$fid,'type'=>'admin1'))}">默认管理操作权限</a></li>
+        <li <eq name="type" value="admin3">class="on"</eq>><a href="{:U('forum/Admin/setDefaultPope',array('fid'=>$fid,'type'=>'admin3'))}" >管理面板权限</a></li>
+      </ul>
+    </div>
+    <!-- 用户组基本权限 -->
+    <php>if($type=='user'){</php>
+    <div class="urse_purview list">
+      <form action="{:U('forum/Admin/saveDeUser',array('fid'=>0))}" method="post">
+<table class="tab_popedom" width="100%" cellpadding="0" cellspacing="0"	border="0">
+	<!-- 用户组基本权限 -->
+	<tr>
+		<th style="width:30px">操作</th>
+		<th class="line_l">用户组</th>
+		<php>foreach($userRule as $value){</php>
+			<th class="line_l"><input class="mr1 hAll"
+			name="{$value}" rel="user" type="checkbox" value="" />{:L($value)}</th>
+		<php>}</php>
+	</tr>
+	<php>$temp =
+	array("usergid","name","fid","gid","allow_post_special_thread","allow_edit_special_thread","allow_post_vote","allow_read_image","allow_search","allow_post_hide","allow_read_hide");</php>
+	<volist name="userList" id="vo">
+	<tr>
+		<td><input width="2%"  height="30" class="mr_{$vo.gid} vAll" name="gid" rel="{$vo.gid}"
+			type="checkbox" value="" /></td>
+		<input type="hidden" name="gids[]" value="{$vo.gid}"></input>
+		<td width="5%" align="left" style="padding-left: 5px">{$vo.name}</td>
+
+		<php>foreach($vo as $key=>$value){</php> <php>if(!in_array($key,$temp)){</php>
+		<td><input
+			class="mr1 {$key}_user gid_{$vo.gid}" name="{$key}[{$vo.gid}]  "<php>if($value==1){</php>checked="checked"<php>}</php>
+		type="checkbox" value="1" /></td>
+		<input type="hidden" name="field[]" value="{$key}" /> <php>}</php> <php>}</php>
+	</tr>
+	</volist>
+	
+	
+    </table>
+        <div class="mt20" style="padding-left:10px">
+          <input class="btn_b" type="submit" value="提交">
+          </input>
+        </div>
+      </form>
+    </div>
+    <php>}elseif($type=="admin1"){</php>
+    <!-- 管理组权限 -->
+    <tr>
+      <div class="urse_purview list">
+        <table class="tab_popedom" width="100%" cellpadding="0" cellspacing="0"
+		border="0">
+          <tr>
+            <th style="width: 30px;">操作</th>
+            <th class="line_l">用户组</th>
+          <th class="line_l"><input class="mr1 hAll" name="allow_exalt"
+				rel="admin" type="checkbox" value="" />
+              发布公告</th> 
+            <th class="line_l"><input class="mr1 hAll"
+				name="allow_highlight" rel="admin" type="checkbox" value="1" />
+              高亮</th>
+            <th class="line_l"><input class="mr1 hAll" name="allow_close"
+				rel="admin" type="checkbox" value="" />
+              锁帖</th>
+        <!--
+            <th class="line_l"><input class="mr1 hAll" name="allow_hide"
+				rel="admin" type="checkbox" value="" />
+              仅内部可见</th>
+        -->
+            <th class="line_l"><input class="mr1 hAll" name="allow_commend"
+				rel="admin" type="checkbox" value="" />
+              热门推荐</th>
+            <th class="line_l"><input class="mr1 hAll" name="allow_elite"
+				rel="admin" type="checkbox" value="" />
+              精华</th>
+			  <!--
+            <th class="line_l"><input class="mr1 hAll" name="allow_top5"
+				rel="admin" type="checkbox" value="" />
+              TOP5</th>
+			  -->
+              <th class="line_l"><input class="mr1 hAll"
+				name="allow_edit_thread" rel='admin' type="checkbox" value="" />
+              编辑</th>
+            <th class="line_l"><input class="mr1 hAll"
+				name="allow_delete_thread" rel='admin' type="checkbox" value="" />
+              删除</th>            
+         
+            <th class="line_l"><input class="mr1 hAll" name="allow_tip"
+				rel='admin' type="checkbox" value="" />
+              置顶</th>
+            <th class="line_l"><input class="mr1 hAll"
+				name="allow_changeCate" rel='admin' type="checkbox" value="" />
+              转移版块</th>
+            <th class="line_l"><input class="mr1 hAll"
+				name="allow_all_tip" rel='admin' type="checkbox" value="" />
+              全局置顶</th>
+        <th class="line_l"><input class="mr1 hAll"
+			name="allow_banzhu" rel="admin" type="checkbox" value="" />版主回复</th>
+			<!--
+	<th class="line_l"><input class="mr1 hAll"
+			name="allow_banzhu_biaoshi" rel="admin" type="checkbox" value="" />版主标识</th>
+          -->
+		  </tr>
+          
+          <form  action="{:U('forum/Admin/saveDeAdmin',array('fid'=>0))}" method="post">
+          <volist name="adminList" id="vo">
+            <tr>
+              <php>  $temp =
+                array("admingid","fid","name","gid","allow_screen_thread","allow_alarm_thread","allow_grade_thread","allow_read_report","allow_edit_special_thread","allow_edit_special_sign","allow_top5","allow_banzhu_biaoshi","allow_hide");
+       $t = array("allow_check_attach","allow_adjust_popedom","allow_edit_report","allow_tclass_manage","allow_check_face","allow_commend_popedom","allow_log_manage","allow_find_trueuser","allow_filter_word","allow_add_score","allow_online_count") ;
+                
+                </php>
+              <td><input class="mr_{$vo.gid} vAll" name="adminGid"
+				rel="{$vo.gid}" type="checkbox" value="" /></td>
+              <input type="hidden" name="gids[]" value="{$vo.gid}">
+              </input>
+              <td style="padding-left: 5px">{$vo.name}</td>
+              <php> foreach($vo as $key=>$value){ </php>
+              <php> if(!in_array($key,$temp)){ </php>
+              <td <php>if(in_array($key,$t)){</php> style="display:none"<php>}</php>><input <php>if(!in_array($key,$t)){</php> class="mr1 {$key}_admin adminGid_{$vo.gid}" rel="admin"
+				<php>}</php> name="{$key}[{$vo.gid}]  "
+                <php>if($value==1){</php>
+                checked="checked"
+                <php>}</php>
+                type="checkbox" value="1" /></td>
+              <input type="hidden" name="field[]" value="{$key}" />
+              <php> } </php>
+              <php> } </php>
+            </tr>
+          </volist>
+        </table>
+        <div class="mt20" style="padding-left:10px">
+          <input class="btn_b" type="submit" value="提交">
+          </input>
+        </div>
+        </form>
+      </div>
+      <php>}elseif($type=="admin3"){</php>
+      <div class="urse_purview list">
+        <table class="tab_popedom" width="100%" cellpadding="0" cellspacing="0"
+		border="0">
+          <!-- 管理面板权限 -->
+          <tr>
+            <th style="width: 30px;">操作</th>
+            <th class="line_l" style="padding-left: 5px">用户组</th>
+            <th class="line_l"><input class="mr1 hAll"
+				name="allow_check_attach" rel='admin' type="checkbox" value="1" />
+              附件审核</th>
+            <th class="line_l"><input class="mr1 hAll"
+				name="allow_adjust_popedom" rel='admin' type="checkbox" value="1" />
+              主题管理</th> 
+            <th class="line_l"><input class="mr1 hAll"
+				name="allow_edit_report" rel='admin' type="checkbox" value="1" />
+              公告管理</th>
+             <th class="line_l"><input class="mr1 hAll"
+				name="allow_tclass_manage" rel='admin' type="checkbox" value="1" />
+              分类管理</th>
+			  <!--
+              <th class="line_l"><input class="mr1 hAll"
+				name="allow_check_face" rel='admin' type="checkbox" value="1" />
+              头像审核</th>
+			  -->
+            <th class="line_l"><input class="mr1 hAll"
+				name="allow_commend_popedom" rel='admin' type="checkbox" value="1" />
+              推荐管理</th>
+			<!--
+            <th class="line_l"><input class="mr1 hAll"
+				name="allow_find_trueuser" rel='admin' type="checkbox" value="1" />
+              查找真实用户</th>
+			-->
+            <th class="line_l"><input class="mr1 hAll"
+				name="allow_log_manage" rel='admin' type="checkbox" value="1" />
+              管理日志</th>
+			  <!--
+             <th class="line_l"><input class="mr1 hAll"
+				name="allow_filter_word" rel='admin' type="checkbox" value="1" />
+	敏感词管理</th>
+			 <th class="line_l"><input class="mr1 hAll"
+				name="allow_online_count" rel='admin' type="checkbox" value="1" />	
+	在线用户</th>
+		     <th class="line_l"><input class="mr1 hAll"
+				name="allow_add_score" rel='admin' type="checkbox" value="1" />	
+	添加积分</th>
+		-->
+
+          </tr>
+          <form action="{:U('forum/Admin/saveBlockPope',array('fid'=>0))}"
+			method="post">
+          <volist name="adminList" id="vo">
+            <tr>
+              <php>  $temp =
+                array("admingid","fid","name","gid","allow_screen_thread","allow_alarm_thread","allow_grade_thread",
+                "allow_read_report","allow_exalt","allow_edit_special_thread", "allow_edit_special_sign", "allow_check_face", "allow_find_trueuser","allow_filter_word","allow_online_count","allow_add_score"); 
+                
+                  $t = array("allow_highlight","allow_commend","allow_close","allow_hide","allow_elite","allow_top5",
+      "allow_edit_thread","allow_delete_thread","allow_tip","allow_all_tip","allow_changeCate","allow_banzhu","allow_banzhu_biaoshi");   
+                 </php>
+              <td><input class="mr_{$vo.gid} vAll" name="adminGid2"
+				rel="{$vo.gid}" type="checkbox" value="" /></td>
+              <input type="hidden" name="gids[]" value="{$vo.gid}">
+              </input>
+              <td>{$vo.name}</td>
+              <php> foreach($vo as $key=>$value){ </php>
+              <php> if(!in_array($key,$temp)){ </php>
+              <td <php>if(in_array($key,$t)){</php> style="display:none" <php>}</php>><input  <php>if(!in_array($key,$t)){</php>class="mr1 {$key}_admin adminGid2_{$vo.gid}"<php>}</php>
+				name="{$key}[{$vo.gid}]  "
+                <php>if($value==1){</php>
+                checked="checked"
+                <php>}</php>
+                type="checkbox" value="1" /></td>
+              <input type="hidden" name="field[]" value="{$key}" />
+              <php> } </php>
+              <php> } </php>
+            </tr>
+          </volist>
+        </table>
+        <div class="mt20" style="padding-left:10px">
+          <input class="btn_b" type="submit" value="提交">
+          </input>
+        </div>
+        </form>
+      </div>
+      <php>}</php>
+  </div>
+</div>
+<include file="_footer" />

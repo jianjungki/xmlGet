@@ -1,0 +1,33 @@
+<div class="box-out"> </div>
+<div class="box-in"> </div>
+<div class="box-inner">
+  <div class="alL lh25"> <strong>{:L('board_change')}</strong> </div>
+  <span id="categoryList"> </span> </div>
+<div class="box-in cl06" style="margin:5px;" >{:L('board_change_info')}</div>
+<div class="box-out" id="boardMessage" style="margin:5px;color:red"></div>
+<div style="display: block;" id="tb_content_list" class="tb_button_list">
+  <p>
+    <input type="button" value="{:L('confirm')}" onclick="ok()"  name="" id="tb_button_ok" />
+    <input type="button" value="{:L('cancel')}" onclick="$.tbox.close()" id="tb_button_no" name="" class="ml5"/>
+  </p>
+</div>
+<script type="text/javascript" src="../Public/js/tsjs.json2select.js" ></script>
+<script>
+	$("#categoryList").json2select({$json},[{$class}],"sel");
+	
+	$(document).ready(function(){
+		$("#sel1").live('click',function(){
+			if( $('#sel2') ){
+				if( $("#sel2 option[value='0']").val() !=0 ){
+					$('#sel2').prepend('<option value="0">{:L("board_change_notify")}</option>');
+				}
+			}
+		})
+		
+		if( $('#sel2') ){
+			if( $("#sel2 option[value='0']").val() !=0 ){
+				$('#sel2').prepend('<option value="0">{:L("board_change_notify")}</option>');
+			}
+		}	
+	});
+</script>

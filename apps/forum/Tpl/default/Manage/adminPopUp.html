@@ -1,0 +1,119 @@
+<script type="text/javascript">
+var actionId = "{$_GET["actionId"]}";
+    var Color = {  
+        outprint: function() {  
+           var s='',i=0,cc = this.getCC();  
+           for(var b=1;b<=56;b+=11){  
+               for(var a=1;a<=281;a+=8){s+=this.getArea(a,b,a+6,b+9,cc[i++]);}  
+           }  
+           $('map').html(s);
+       },  
+       getCC: function() {  
+           var c=['00','33','66','99','cc','ff'],cc=[];  
+           for(var j=c.length;j>0;j--){  
+               var ccm=c[j-1];  
+               for(var i=0;i<c.length;i++){  
+                   var ccl=c[i];  
+                   for(var l=0;l<c.length;l++){cc[cc.length]=ccl+ccm+c[l];}  
+               }  
+           }  
+           return cc;  
+       },  
+       getArea: function(a,b,c,d,cc) {  
+           return '<area shape="rect" coords='+a+','+b+','+c+','+d+  
+               ' href="javascript:Color.theColor(\'#'+cc+'\')"/>';  
+       },  
+       theColor: function(cvalue) {  
+           //to do  
+           //alert(cvalue);  
+           $('#color_selection_show').css('background',cvalue);
+           $('#highlight_opt').val(cvalue);
+          //document.getElementById('theColor').style.color=cvalue;  
+       }  
+   } 
+   function adminStatus(id){
+	    var str= new Array();
+	    switch (actionId){
+	    case "highlight":
+	    	str.push("action=highlight");
+		   	str.push("highlight="+$("#highlight_opt").val());
+		    break;
+	    case "changeCate":
+	    	str.push("action=changeCate");
+	    	var fid = $('#categoryList').children(":last").val();
+	    	if( fid == null || $('#categoryList').children(":nth-child(2)").val() == null){
+		    	alert("请选择完整分类");
+				return false;
+		    }
+			str.push("newCate="+fid);
+		    break;
+	    }
+		str.push('id='+id);
+		var result = str.join('&');
+        $.ajax({
+            type: "POST",
+            url: APP + '&mod=Do&act=action',
+            data: result,
+            dataType: 'json',
+            success: function(result){
+           	 if(result.status){
+        		//$.tbox.yes(result.info,"操作提示");
+            	location.reload();
+          		//setTimeout("",2000);
+             }else{
+      			$.tbox.no(result.info,"操作提示");
+      			setTimeout("$.tbox.close();",2000);
+             }
+            }
+        });
+   }
+</script>
+<div class="postbox">
+<ul class="listtopicadmin">
+	<php>if(isset($_GET['actionId']) && $_GET['actionId'] == 'highlight'){ </php>
+	<li id="itemcp_highlight" fwin="mods" class="currentopt">
+	<table cellspacing="0" cellpadding="5">
+		<tbody>
+			<tr>
+				<td width="15"></td>
+				<td><label class="labeltxt" rel="highlight">请选择标题高亮颜色</label>
+				<div class="detailopt" ><span class="hasdropdownbtn"> <input
+					type="hidden"  name="highlight_opt" id="highlight_opt" value="#000"
+					fwin="mods">
+					<input type="text" readonly="readonly" class="txt" id="color_selection_show" style="border:1px solid #ddd;width:20px;background:#000" fwin="mods">
+					<div class="detailopt">
+				<span id="color_selection">  
+          			<img height="67" src="../Public/palette.gif" width="289" useMap="#spmap" border="0"/>  
+       			</span>  
+       			     <map name="spmap"><script>Color.outprint();</script></map>  
+       			</div>
+				</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	</li>
+	<php>}</php>
+	
+	<php>if(isset($_GET['actionId']) && $_GET['actionId'] == 'changeCate') {</php>
+	<li class="currentopt">
+	<table cellspacing="0" cellpadding="5">
+		<tbody>
+			<tr>
+				<td width="15"></td>
+				<td><label class="labeltxt" rel="highlight">请选择完整版块(必选)</label>
+				<div class="detailopt" >
+					<script type="text/javascript" src="../Public/js/tsjs.json2select.js" ></script>
+					<span id="categoryList"> </span> 
+					<script>
+						$("#categoryList").json2select({$json},[{$class}],"sel");
+					</script>
+				</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	</li>
+	<php>}</php>
+</ul>
+</div>

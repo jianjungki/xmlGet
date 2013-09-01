@@ -1,0 +1,61 @@
+<style>
+    .checkbutton {
+        position: relative;
+        padding-right: 10px;
+        top: 18px;
+    }
+    .create_box {
+        margin: 0;
+        padding: 20px;
+        background-color: #F8F8F8;
+        border: 1px solid #EBEBEB;
+        -moz-border-radius: 3px;
+        -khtml-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        border-radius: 3px;
+        color: #666666
+    }
+    .l250 {
+        width: 230px;
+        color: #666;
+    }
+    .l400 {
+        width: 370px;
+    }
+    .w300 {
+        width: 300px;
+        background: #fff;
+        margin: 0 5px 0 0;
+    }
+</style>
+<script>
+	var toFriend = function(){
+		if($('#ui_fri_ids').val()!=''){
+			$('#orgfriendsId').val($('#ui_fri_ids').val());
+			$.post(U('home/User/getStrName'),{uidstr:$('#ui_fri_ids').val()},function(res){
+				content = $("#content_publish").val();
+				$("#content_publish").val(content+res);
+			})
+			ui.box.close();
+		}else{
+			ui.error('请选择好友');
+			return false;
+		}
+		
+	}
+</script>
+<div class="create_box" style="*zoom:1;height:30px">
+	<div class="left l250">
+		同时发送给多个组织>>
+	</div>
+	<div class="left l400">
+			<!-- 添加好友-->
+			<div class="left w300">
+				{:W('ToOrgUser',array("uids"=>$_GET['orgfriends']))}
+			</div>
+			<div class="left">
+				<input type="hidden" value="1" name="sendsubmit" />
+				<input type="button" class="btn_b" value="选择" onclick="toFriend(this)"/>
+			</div>
+	</div>
+</div>

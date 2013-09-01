@@ -1,0 +1,133 @@
+<include file="__THEME__/header" />
+<link href="../Public/account.css" rel="stylesheet" type="text/css" />
+<link href="../Public/js/setavatar/css/imgareaselect-default.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="../Public/js/avatar/avatar.js"></script>
+<script type="text/javascript" src="../Public/js/account.js"></script>
+<script type="text/javascript" src="../Public/js/setavatar/jquery.imgareaselect.min.js"></script>
+<script>
+	//个人标签部分
+	$(document).ready(function(){
+		$('#tag_list').find('li').live("mouseover", function(){
+			$(this).addClass('bg');
+		});
+		$('#tag_list').find('li').live("mouseout", function(){
+			$(this).removeClass('bg');
+		});
+		
+	})
+	
+	function addTagById(tagid){
+		$.post(U('home/Account/doUserTag'),{type:'addByid',tagid:tagid},function(txt){
+			txt = eval("("+txt+")");
+			if(txt.code=='1'){
+				var url = "<php>echo U('home/User/searchtag'); </php>&k="+encodeURI(txt.data.tag_name);
+				var html = '<li><a class="a1" href="'+url+'">'+txt.data.tag_name+'</a><a class="a2" onclick="deleteTag(this)" tagid="'+txt.data.user_tag_id+'" href="javascript:;"><img class="del" src="__THEME__/images/zw_img.gif" /></a></li>'
+				$("#tag_list").append(html);
+			}else if(txt.code=='2'){
+				ui.error('每个人最多添加10个标签');
+			}else if(txt.code=='3'){
+				ui.error('标签不能为空');
+			}else{
+				ui.error('添加失败');
+			}
+		})
+	}
+	
+	function doUserTag(){
+		if(tagName==''){
+			alert('Tag名不能为空');
+			return false;
+		}
+		/*过滤单个标签首尾的空格开始*/
+		var tagName = $("#tag_input").val();
+		var arrTag = tagName.split(',');
+		var newTag = '';
+		for(key in arrTag){
+			var newTag = newTag + arrTag[key].replace(/(^\s*)|(\s*$)/g,"") + ',';
+		}
+		var tagName = newTag.slice(0,-1);
+		/*过滤单个标签首尾的空格结束*/
+		$.post(U('home/Account/doUserTag'),{type:'addByname',tagname:tagName},function(txt){
+			txt = eval("("+txt+")");
+			if(txt.code=='1'){
+				var html='';
+				$.each(txt.data,function(i,n){
+					var url = "<php>echo U('home/User/searchtag'); </php>&k="+encodeURI(n.tag_name);
+					html+= '<li><a class="a1" href="'+url+'">'+n.tag_name+'</a><a class="a2" onclick="deleteTag(this)" tagid="'+n.user_tag_id+'" href="javascript:;"><img class="del" src="__THEME__/images/zw_img.gif" /></a></li>'
+				});
+				$('#tag_input').val('');
+				$("#tag_list").append(html);
+			}else if(txt.code=='2'){
+				ui.error('每个人最多添加10个标签');
+			}else if(txt.code=='3'){
+				ui.error('标签不能为空');
+			}else{
+				ui.error('添加失败');
+			}
+			
+		})
+	}
+	
+	function deleteTag(o){
+		var tagId = $(o).attr('tagid');
+		$.post(U('home/Account/doUserTag'),{type:'deltag',tagid:tagId},function(txt){
+			$(o).parent('li').fadeOut("slow",function(){
+				$(this).remove();
+ 			}); 
+		})
+	}
+	
+</script>
+<div class="content_holder">
+<div class="content"><!-- 内容 begin  --> 
+  <div class="main no_l"> <!-- 右侧内容 begin  -->
+    <div class="mainbox">
+      <div class="mainbox_appC no_r">
+    <include file="_tab" />
+    <!-- 切换标签 end  -->
+    <div class="mainbox_C_C">
+		<div class="setupBox">
+    	<div class="setItems">
+            <div class="setFold  setUnfold" rel="tags">
+              <h2>组织标签设置</h2>
+              <div class="setStep"> <span class="txt1">添加描述自己职业、兴趣爱好等方面的词语，让更多人找到你，让你找到更多同类</span></div>
+            </div>
+            <div class="setItemsInfo"> 
+				<div class="setupTag_box">
+                	<div class="setupTag_boxL">
+                            	<input type="text" id="tag_input" class="text mr5 left"  maxlength="110" style=" width:170px">
+                                <a class="btn_b" href="javascript:void(0);" id="add_tag" onclick="doUserTag()"><em>保存</em></a>
+                <div class="mt10 cGray2">选择最适合你的词语，多个标签用'逗号'格开.如 thinksns,web</div></div>
+                    <div class="setupTag_boxR">
+                    	<p>你可能感兴趣的标签(点击直接添加) ：</p>
+                        <div id="rec_tags" class="setupTag_list01">
+                        <volist id="vo" name="userFavTag">
+                        	<a href="javascript:;" onclick="addTagById({$vo.tag_id})" title="添加标签"><em>+</em>{$vo.tag_name}</a>
+						</volist>
+                       </div>
+                       </div>
+                    </div>
+                    
+                 <div class="lineS_top pt10 cGray2">我已经添加的标签</div>
+                 <div class="setupTag_list02" id="mytagshow2">
+                    <ul id="tag_list" class="tagList">
+						<volist id="vo" name="userTag">
+							<li><a class="a1" href="{:U('home/user/searchtag',array('k'=>$vo['tag_name']))}">{$vo.tag_name}</a><a class="a2" onclick="deleteTag(this)" tagid="{$vo.user_tag_id}" href="javascript:;"><img class="del" src="__THEME__/images/zw_img.gif" /></a></li>
+						</volist>
+					</ul>
+                    <div class="clear"></div>
+                    </div>
+                </div>
+			</div>
+      </div>
+    </div>
+  </div>
+  <!-- 右侧内容 end  -->
+  <div class="c"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- 内容 end --> 
+<include file="__THEME__/footer" />

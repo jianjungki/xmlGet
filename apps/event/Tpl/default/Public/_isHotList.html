@@ -1,0 +1,29 @@
+
+<div>
+	
+   <div class="u_left">
+       <div class="u_nav">
+         <ul>
+           <li <php>if(in_array((ACTION_NAME),array('index','all_photos','all_albums')) || !in_array((ACTION_NAME),array('all_photos','all_albums'))&&$uid!=$mid){
+        	echo 'class="g_nav_1"';} else {echo 'class="g_nav_4"';} </php>>
+        		<a href="{:U('event/Index/index')}" >{$ts['app']['app_alias']}首页</a>
+           </li>
+           <li <php>if(!in_array((ACTION_NAME),array('index','addEvent','all_photos','all_albums'))&&$uid==$mid){
+        	echo 'class="g_nav_1"';} else {echo 'class="g_nav_4"';} </php>>
+        		<a href="{:U('event/Index/personal', array('action'=>'launch'))}" >我的{$ts['app']['app_alias']}</a>
+           </li>
+           <li <eq name="ACTION_NAME" value="addEvent">class="g_nav_1"<else/>class="g_nav_4"</eq>><a href="{:U('/Index/addEvent')}">发起{$ts['app']['app_alias']}</a></li>
+           <li class="g_nav_4"><a href="{:U('vote/Index/index')}">投票</a></li>
+           <li class="g_nav_4"><a href="{:U('survey/Index/index')}">问卷调查</a></li>
+           
+   </div>
+   <include file="../Public/_allHotEvent" />
+</div>
+<script>
+$(document).ready(function(){
+	
+	$(".mainbox").addClass("u_main g_main");
+	$(".mainbox_appC").addClass("u_right e_right");
+	
+});
+</script>   

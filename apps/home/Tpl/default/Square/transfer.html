@@ -1,0 +1,34 @@
+<div style="min-width:260px;">
+<div style="margin-top:20px;height:40px;"><label>现在该问题的指定嘉宾为：{$guest_now}</label></div>
+<div style="margin-bottom: 10px;">
+<select name="guestId">
+	<volist name="guestlist" id="vo">
+	<option value="{$vo.uid}">{$vo.uname}</option>
+	</volist>
+</select>
+<input class="btn_b" value="提交" type="button" onclick="transferit()"/>
+<input type="hidden" value="{$topic_id}" id="topicid"/>
+<input type="hidden" value="{$weibo_id}" id="weiboid"/>
+<input type="hidden" value="{$user_id}" id="userid"/>
+</div>
+<script>
+	function  transferit(){
+    
+		var topicid = $('#topicid').val();	
+		var weiboid = $('#weiboid').val();		
+		var userid = $('#userid').val();		
+		var guestid = $('option:selected').val();
+		
+		$.post(U('home/Square/TransferGuest'),{topicid:topicid,weiboid:weiboid,userid:userid,guestId:guestid},function(txt){			
+			if(txt == 1){
+				ui.success("转移成功");
+			}else if(txt==0){
+				ui.error("该嘉宾已是回答者之一");
+			}else if(txt==2){
+				ui.error("转移失败");
+			}
+			ui.box.close();
+		})
+	}
+</script>
+</div>

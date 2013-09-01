@@ -1,0 +1,149 @@
+
+
+<div class="content_right" style="position:relative;float:right;margin-top:25px;padding-right:20px;">
+	<div style="width:300px;background-color:#F6F6F6;border: solid #F0F0F0 1px;">
+		<if condition="$mid">
+		<div class="userinfo" style="padding-top:20px;margin-top: 20px;margin-left: 10px;margin-right: 10px;margin-bottom: 20px;">
+		    	<div class="userpic" onmouseover="this.className='userpic over'" onmouseout="this.className='userpic'" >
+					<span id="my_face"><space uid="mid" class="nocard">{uavatar}</space></span>
+					<a class="pic" href="{:U('home/account/index')}#face" rel="face" uid="{$mid}">上传头像</a>
+				</div>
+		  		<div class="user_name">
+		        	<h2  style="color:black">{$userInfoCache['uname']}<php>Addons::hook('user_name_end', array('uid'=>$mid, 'html'=>&$user_name_end));echo $user_name_end;</php>{$mid|getUserGroupIcon}</h2>
+		            <php>
+		            	$user_credit = $userInfoCache['credit'];
+		            	foreach($user_credit as $k => $v) {
+		            </php>
+		           		<p>{$v['alias']}：<a href="{:U('home/Account/credit')}" title="{$v['credit']}"><span class="cRed">{$v['credit']}</span></a></p>
+		            <php>
+		                }
+		                unset($user_credit);
+		            </php>
+		        </div>
+		</div>
+		        
+	</div>
+	<div style="width:300px;background-color:#F6F6F6;border: solid #F0F0F0 1px;border-top: solid #FFFFFF 1px;">
+		<php>if($on_me){</php>
+		        	<div style="position:relative;margin-top: 20px;margin-left: 10px;margin-right: 10px;margin-bottom: 20px;">
+		        	<ul>
+		        	<volist name="on_me" id="vo">
+		        		<li style="margin-left:30px;margin-right:30px;">
+		        			<a href="{:U('home/Square/interviewPage',array('type_to'=>'all','k'=>getInterviewName($vo['topic_id']),'status'=>$setinfo[$vo['status']]))}" >{:getInterviewName($vo['topic_id'])}</a>
+							<span style="right:15px;position:absolute;">
+								<php>
+								switch($vo['status']){
+										case '0': 
+										   echo '[即将开始]';
+										   break;
+										case '1':
+										   echo '[正在进行]';
+										   break;
+										case '2':
+										   echo '[已结束]';
+										   break;
+										default:
+											echo '';
+									  }
+							  </php>
+						  </span>
+		        		</li>
+		        	</volist>
+		        	</ul>
+		        	</div>
+		        <php>}else{</php>
+		        	<div style="position:relative;margin-top: 20px;margin-left: 10px;margin-right: 10px;margin-bottom: 20px;background-color:white;border: solid #F6F6F6 1px;">
+		        		<span style="line-height: 50px;margin:10px;">您还没参与过任何微访谈，赶快参与吧！</span>
+		        	</div>
+		        <php>}</php>
+		  
+		  	
+		  <else/>
+		  </if>
+	</div>
+	<div style="width:300px;height:180px;background-color:#F6F6F6;border: solid #F0F0F0 1px;border-top: solid #FFFFFF 1px;">
+		<div style="position: relative;margin:20px 10px 20px; 10px;padding:10px 15px 10px 15px;">
+			<span style="line-height: 30px;"><b>关于天工微访谈</b></span>
+			<div style="background-color:#F1F8FE;border:solid #EBEBEB 1px;width:214px;padding:10px 10px 10px 10px;line-height:22px;">
+				你想跟行业领袖、行业专家、优秀企业领导人等近距离接触吗？<br>来这里！<a href="#">天工社区访谈！</a>
+			</div>
+		</div>
+	</div>
+	<div style="width:300px;background-color:#F6F6F6;border: solid #F0F0F0 1px;border-top: solid #FFFFFF 1px;">
+		<div style="position: relative;margin-top:20px;margin-left:10px;margin-right:10px;margin-bottom: 20px;padding-top:10px;padding-left:10px;border: solid #F6F6F6 1px;">
+			<span style="line-height: 25px;"><b>微博主持人</b></span>
+			<volist name="author" id="vo">
+				<div class="card_content">
+					<div class="card_name clearfix">
+						<dl class="name clearfix">
+							<dt><img class="picborder_r" title="{$vo.uname}" uid="{$vo.uid}" imgtype="head" src="{$vo.face}"></dt>
+							<dd  style="width:150px;">
+							<php>if($mid){</php>
+								<php>if($vo['follow_state']=="unfollow"){</php>
+									<p><a href="javascript:void(0);" style="position:absolute;right:20px;" onclick="subscribe('{$vo['uid']}')"><img src="__PUBLIC__/themes/images/guanzhu.png" style="height: 10px;">加关注</a></p></case>
+								<php>}else if($vo['follow_state']=="havefollow"){</php>	
+									<p><a href="javascript:void(0);" style="position:absolute;right:20px;" >已关注</a></p></case>
+								<php>}else if($vo['follow_state']=="eachfollow"){</php>
+									<p><a href="javascript:void(0);" style="position:absolute;right:20px;" >互相关注</a></p></case>
+								<php>}</php>
+							<php>}</php>
+							<p class="parag">{$vo.space_link}</p>
+							
+							<p class="parag" >{$vo.location}</p>
+							<div >
+								<ul class="userdata">
+									<li><a href="{$vo.following_url}">关注</a>({$vo.followed_count})</li>
+									<li><a href="{$vo.follower_url}">粉丝</a>({$vo.followers_count})</li>
+									<li><a href="{$vo.space_url}">微博</a>({$vo.weibo_count})</li>
+								</ul>
+							</div>
+							</dd>
+						</dl>
+						<dl class="infoset clearfix">
+						<dt></dt>
+						<dd>{$vo.introduce}</dd>
+					  </dl>
+					</div>
+				</div>
+			</volist>
+		</div>
+	</div>
+	<div style="width:300px;background-color:#F6F6F6;border: solid #F0F0F0 1px;border-top: solid #FFFFFF 1px;">
+		<div style="margin-top:20px;margin-left:10px;margin-bottom:20px;margin-right:10px;padding:10px;">
+		<span style="line-height: 30px;"><b>精彩回顾</b></span>
+	<volist name="pass_topics" id="vo">
+     <div align="center" style="line-height:20px;margin-left: 20px;margin-bottom: 20px;">
+     	<div style="float:left;margin-right: 15px;">{:InterviewImage($vo['pic'],60,60)}</div>
+        <div style="text-align: left;margin-left: 75px;">
+        	<image src="__PUBLIC__/themes/images/interview_state.png" style="position:relative;top:4px;margin-right:5px;"><a href="{:U('home/Square/interviewPage',array('type_to'=>'all','k'=>getInterviewName($vo['topic_id']),'status'=>$setinfo[$vo['status']]))}">{:getInterviewName($vo['topic_id'])}</a>
+         <br/>
+                     嘉宾：{:getGuestName($vo['topic_id'])}<br/>
+                    微访谈简介：<a href="{:U('home/Square/interviewPage',array('type_to'=>'all','k'=>getInterviewName($vo['topic_id']),'status'=>$setinfo[$vo['status']]))}">{$vo['content']|getShort=17,"……"}<a><br/>
+                     时间：{$vo['time_start']|date='Y年m月d日',###}<br/>
+                    <span style="margin-left:33px;">{$vo['time_start']|date='H:i',###}-{$vo['time_end']|date='H:i',###}<span><br/>
+        <php>if(($vo['column'])){</php>
+                       栏目：<a href="##">{$vo['column']}</a>
+        <php>}</php>
+        </div>		
+    </div>
+			</volist>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+    function subscribe(uid) {
+        $.post("{:U('home/Widget/doFollowRelatedUser')}", {uid:uid}, function(res){
+        	if('14' == res){
+        		ui.error('关注人数已超过配置最大数量，关注失败！');
+        	}else{
+	            if ('0' == res) {
+	                ui.error('关注失败');
+	            }else{
+					//followGroupSelectorBox(uid);
+					$(".guanzhu").html("已关注");
+	                ui.success('关注成功');
+	            }
+        	}
+        });
+    }
+</script>

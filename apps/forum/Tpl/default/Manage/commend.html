@@ -1,0 +1,80 @@
+<include file="../Public/manage_top" />
+
+<link href="../Public/css/bbs.css" rel="stylesheet" type="text/css" />
+<link href="../Public/css/layout.css" rel="stylesheet" type="text/css" />
+<link href="../Public/css/public.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+	.ui-state-highlight { height: 1.5em; line-height: 1.2em;background-color:#FFEC86}
+</style>	
+
+<div class="content zbg">
+  <div class="bbs_left">
+ 	<include file="../Public/manage_left" />
+  </div>
+  <div class="bbs_main">
+      <div class="tit_line">推荐管理</div>
+<form action="{:U('forum/Manage/doCommend',array('class'=>$fid))}" method="post" autocomplete="off">
+<input type="hidden" name="type" value="saveCommendOrder">
+
+    <div class="list_box">
+      <dl id="sortable">
+        <dt>
+          <div style="width: 53%;" class="cl mr10">标题</div>
+          <div style="width: 13%;" class="cc">回复/访问</div>
+          <div style="width: 21%;" class="cl">最后回复时间</div>
+          <div style="width: 8%;" class="cr">操作</div>
+        </dt>
+<volist id="vo" name="list">	 
+       <dd id="commend_{$vo.commendId}"  class="ui-state-disabled">
+			<input type="hidden" name="commendId[]" value="{$vo.commendId}"/>
+          <div style="width: 430px;" class="cl mr10 over_det">
+          		<a href="{:U('forum/Detail/index',array('id'=>$vo['tid']))}" title="{$vo.title}">{$vo.title}</a>
+		  </div>
+          <div style="width: 13%;" class="cc">{$vo.replycount}/{$vo.viewcount}</div>
+          <div style="width: 22%;" class="cl">{$vo.rTime|friendlyDate=###,'full'}</div>
+          <div style="width: 8%;" class="cr"><a href="javascript:void(0)" onclick="cancel({$vo.commendId},{$vo.tid})">取消推荐</a></div>
+          <div class="C"></div>
+        </dd>
+</volist>	
+      </dl>
+      <php>if(empty($list)){</php>
+	   <div class="no_data">暂无数据</div>
+<php>}</php>
+      <php>if(!empty($list)){</php>
+	  <div id="catelist" class="mt10 ml10" ><input type="submit" class="btn_sea"  id="button2" value="确定" /><font color="red" class="ml10">{:L('tclass_save_info')}</font></div>
+    </div>
+    <php>}</php>
+</form>
+  </div><div class="C"></div>
+</div>
+<script src="../Public/js/jquery-1.4-and-jquery-ui-core-1.7.2.js"></script>
+<script src="../Public/js/sortale.js" type="text/javascript"></script>
+<script type="text/javascript" src="../Public/js/tbox/tbox.js" ></script>
+<script type="text/javascript">
+var tid;
+var cid;
+function cancel(ccid,ttid){
+	tid = ttid;
+	cid = ccid;
+	$.tbox.confirm("是否取消对该主题的推荐？","提示",{ok:"deleteCommend"});
+	}
+function deleteCommend(){
+	var checkData = new Array();
+	checkData.push(tid);
+		$.post("{:U('forum/Do/action')}",{id:checkData,action:'commend'},function(result){
+				result = eval('('+result+")");
+				//$.tbox.no(result.info);
+				alert(result.info);
+				$('#commend_'+cid).remove();
+			});
+}
+
+$(function() {
+	$("#sortable").sortable({
+		items: '.ui-state-disabled',
+		placeholder: 'ui-state-highlight'
+	});
+});
+$("#sortable dd").disableSelection();
+</script>
+<include file="__THEME__/footer" /> 

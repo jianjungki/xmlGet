@@ -1,0 +1,244 @@
+<include file="__THEME__/admin" />
+<link href="../Public/style.css" rel="stylesheet" type="text/css" />
+<body>
+<div class="so_main">
+
+  <!-------- 搜索用户 -------->
+  <div id="searchUser_div"> <!--  <neq name="type" value="searchUser">style="display:none;"</neq>-->
+  	<div class="page_tit">搜索用户 <!--[ <a href="javascript:void(0);" onclick="searchUser();">隐藏</a> ]--></div>
+	
+	<div class="form2">
+	<form method="GET" action="">
+    <dl>
+      <dt>Email：</dt>
+      <dd>
+        <input class="txt" name="email" id="email" type="text" value="{$email}">
+      </dd>
+    </dl>
+	
+   <!--  <dl>
+      <dt>用户ID：</dt>
+      <dd>
+        <input name="uid" id="uid" type="text" value="{$uid}">
+        <span class="cGray2 ml5">用户ID,多个时使用英文的","分割</span>
+      </dd>
+    </dl> -->
+	
+    <dl>
+      <dt>账户：</dt>
+      <dd>
+        <input class="txt" name="uname" id="uname" type="text" value="{$uname}" /> <span class="cGray2 ml5">用户进行登陆的帐号</span>
+      </dd>
+    </dl>
+	<dl>
+      <dt>用户组：</dt>
+      <dd>
+      <select name="user_group_id">
+      	<option <php>if($user_group_id == $vo['gid']){ </php> selected <php>}</php> value="0">全部</option>
+      	<volist name="userGroup" id="vo">
+      	 <option <php>if($user_group_id == $vo['gid']){  </php> selected <php>}</php> value="{$vo.gid}">{$vo.name}</option>
+      	</volist>
+      </select>
+
+      </dd>
+    </dl>
+	<!--  <dl>
+      <dt>是否激活：</dt>
+      <dd>
+      	<input name="is_active" type="radio" value="" <eq name="is_active" value="">checked</eq>>全部
+        <input name="is_active" type="radio" value="1" <eq name="is_active" value="1">checked</eq>>是
+        <input name="is_active" type="radio" value="0" <eq name="is_active" value="0">checked</eq>>否
+      </dd>
+    </dl>-->
+ <div>
+				<input type="hidden" name="app" value="{*APP_NAME}" />
+				<input type="hidden" name="mod" value="{*MODULE_NAME}" />
+				<input type="hidden" name="act" value="{*ACTION_NAME}" />
+</div>
+    <div class="sea_left">
+      <input type="submit" class="btn_b" value="提交" />
+    </div>
+	</form>
+  </div>
+  </div>
+  <!-------- 用户列表 -------->
+  <div class="page_tit">用户列表<span class=" fn f12px pt10 pl10" style="color:red">转移用户组后请清理缓存。<a href="javascript:void(0)" onClick="clean()">点此进行清理</a></span></div>
+  <div class="form">
+  <div class="Toolbar_inbox">
+  	<div class="page right">{$html}</div>
+<!-- 	<a href="javascript:void(0);" class="btn_a" onclick="searchUser();">
+		<span class="searchUser_action"><neq name="type" value="searchUser">搜索用户<else/>搜索完毕</neq></span>
+	</a>-->
+  	<a href="javascript:void(0);" class="btn_a" onclick="changeUserGroup();"><span>转移用户组</span></a>
+<!--  	<a href="javascript:void(0);" class="btn_a" onclick="deleteUser();"><span>删除用户</span></a>-->
+  </div>
+  <div class="list">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th style="width:30px;">
+		<input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+    	<label for="checkbox"></label>
+	</th>
+    <th class="line_l">ID</th>
+    <th class="line_l">用户信息</th>
+    <th class="line_1">账户</th>
+    <th class="line_l">用户组</th>
+    <th class="line_l">注册时间</th>
+    <!--  <th class="line_l">状态</th> --> 
+    <th class="line_l">操作</th>
+  </tr>
+  <volist id="vo" name="data">
+	  <tr overstyle='on' id="user_{$vo['uid']}">
+	    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.uid}"></td>
+	    <td>{$vo.uid}</td>
+	    <td>
+			<div style="float:left;margin-right:10px;border:1px solid #8098A8;height:30px;padding:1px;width:30px;""><img src="{$vo.uid|getUserFace='s'}" width="30"></div>
+			<div style="float:left">{$vo.fullname}<br>{$vo.email}</div></td>
+		<td>{$vo.uname}</td>
+	    <td>
+			<php>if(empty($vo['user_group'])){</php>暂无用户组信息<php>}</php>
+			<volist name="vo['user_group']" id="group">
+				{$group['gname']}<br />
+			</volist>
+		</td>
+	    <td>{$vo.regtime|date="Y-m-d H:i",###}</td>
+	<!--    <td><eq name="vo['is_active']" value="0">未激活<else/>激活</else></eq></td> --> 
+	    <td>
+			<!--<a href="javascript:void(0);" onclick="changeDepartment({$vo['uid']});">转移部门</a>-->
+			<a href="{:U('forum/Admin/editUser', array('uid'=>$vo['uid']))}">编辑</a> 
+	    <!-- <a href="javascript:void(0);" onclick="deleteUser({$vo['uid']});">删除</a> -->	
+		</td>
+	  </tr>
+  </volist>
+  </table>
+  </div>
+  
+  <div class="Toolbar_inbox">
+	<div class="page right">{$html}</div>
+<!-- 	<a href="javascript:void(0);" class="btn_a" onclick="searchUser();">
+		<span class="searchUser_action"><neq name="type" value="searchUser">搜索用户<else/>搜索完毕</neq></span>
+	</a>-->
+  	<a href="javascript:void(0);" class="btn_a" onclick="changeUserGroup();"><span>转移用户组</span></a>
+	<!--  <a href="javascript:void(0);" class="btn_a" onclick="deleteUser();"><span>删除用户</span></a>-->
+  </div>
+</div>
+</div>
+</body>
+</html>
+<script>
+	//鼠标移动表格效果
+	$(document).ready(function(){
+		$("tr[overstyle='on']").hover(
+		  function () {
+		    $(this).addClass("bg_hover");
+		  },
+		  function () {
+		    $(this).removeClass("bg_hover");
+		  }
+		);
+	});
+	
+	function checkon(o){
+		if( o.checked == true ){
+			$(o).parents('tr').addClass('bg_on') ;
+		}else{
+			$(o).parents('tr').removeClass('bg_on') ;
+		}
+	}
+	
+	function checkAll(o){
+		if( o.checked == true ){
+			$('input[name="checkbox"]').attr('checked','true');
+		//	$('tr[overstyle="on"]').addClass("bg_on");
+		}else{
+			$('input[name="checkbox"]').removeAttr('checked');
+			//$('tr[overstyle="on"]').removeClass("bg_on");
+		}
+	}
+
+	//获取已选择用户的ID数组
+	function getChecked() {
+		var uids = new Array();
+		$.each($('table input:checked'), function(i, n){
+			uids.push( $(n).val() );
+		});
+		return uids;
+	}
+
+	
+	//转移用户组
+	function changeUserGroup(uids) {
+		var uids = uids ? uids : getChecked();
+		uids = uids.toString();
+		if(!uids) {
+			ui.success('请先选择用户～');
+			return false;
+		}
+
+		if(!confirm('转移成功后，已选择用户原来的用户组信息将被覆盖，确定继续？')) return false;
+		
+		$.tbox.popup("{:U('forum/Admin/changeUserGroup')}&uids="+uids, '转移用户组',{ok:"changegroup"});
+	}
+
+	function changegroup(){
+		var gid = $('#user_group_id').val();
+		//提交修改
+		$.post("{:U('forum/Admin/doChangeUserGroup')}", {uid:uid, gid:gid}, function(res){
+			if(res == '1') {
+				$.tbox.close();
+				$.tbox.yes('保存成功～');
+				window.location.reload();
+			}else {
+				$.tbox.close();
+				$.tbox.no('保存失败，请重试～');
+			}
+		});
+	}
+	
+	//删除用户
+	function deleteUser(uid) {
+		uid = uid ? uid : getChecked();
+		uid = uid.toString();
+		if(uid == '' || !confirm('删除成功后将无法恢复，确认继续？')) return false;
+		
+		$.post("{:U('forum/Admin/doDeleteUser')}", {uid:uid}, function(res){
+			if(res == '1') {
+				uid = uid.split(',');
+				for(i = 0; i < uid.length; i++) {
+					$('#user_'+uid[i]).remove();
+				}
+				ui.success('删除成功～');
+			}else {
+				ui.success('删除失败～');
+			}
+		});
+	}
+	
+	//搜索用户
+	var isSearchHidden = <neq name="type" value="searchUser">1<else/>0</neq>;
+	function searchUser() {
+		if(isSearchHidden == 1) {
+			$("#searchUser_div").slideDown("fast");
+			$(".searchUser_action").html("搜索完毕");
+			isSearchHidden = 0;
+		}else {
+			$("#searchUser_div").slideUp("fast");
+			$(".searchUser_action").html("搜索用户");
+			isSearchHidden = 1;
+		}
+	}
+	
+	function folder(type, _this) {
+		$('#search_'+type).slideToggle('fast');
+		if ($(_this).html() == '展开') {
+			$(_this).html('收起');
+		}else {
+			$(_this).html('展开');
+		}
+		
+	}
+
+	function clean(){
+  		$.tbox.popup("{:U('forum/Admin/cleancache')}","清理缓存");
+  	}
+</script>

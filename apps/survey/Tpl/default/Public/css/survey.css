@@ -1,0 +1,36 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*答案卷页*/
+.ask_tit{ position:relative; height:60px; line-height:60px;}
+.ask_tit h3{ font-size:24px; font-weight:700; color:#666; padding-left:10px;text-indent:0.5em}
+.ask_tit span{ position:absolute; top:-5px; right:54px;}
+.ask_tit .ask_icon{ background: url(../images/ask_tit.png) no-repeat; width:30px; height:61px; z-index:99; }
+.ask_bg{ background: url(../images/ask_bg.gif) repeat-y 22px #fff; width:1002px;}
+.ask_list{ margin-bottom:15px; padding-left:10px;}
+.ask_list fieldset{ border:1px dashed #ccc; padding:15px; width:820px; color:#666; line-height:160%;margin-left:15px;}
+.ask_list fieldset legend{ color:#333;  background:#fff; padding:0 5px;}
+.ask_list fieldset p{ padding:6px 5px;}
+.ask_list fieldset p input{ margin-right:5px;}
+
+/*底部页面影印*/
+.bottom_photocopy_left,.bottom_photocopy_center,.bottom_photocopy_right{background:#fff; height:20px;}
+.bottom_photocopy{ width:1002px;padding:0; text-align:center; }
+.bottom_photocopy_left{ background-position:0 0; float:left;width:83px; height:14px;}
+.bottom_photocopy_center{background-position:0 -15px; background-repeat:repeat-x; float:left; width:836px; height:14px;}
+.bottom_photocopy_right{background-position:0 -31px; float:left;width:83px; height:14px;}
+
+.path {color: #999999;padding-bottom:10px;}
+.path span {padding-right: 5px;}
+
+/*列表样式*/
+.survey_list{ padding:20px; background-color:#fff}
+.survey_list ul{margin-bottom:10px;}
+.survey_list ul li{padding:3px 0;line-height:180%;overflow: hidden; margin:0 5px; height:20px;line-height:20px;word-break:keep-all;white-space:nowrap;text-overflow:ellipsis;overflow:hidden; border-bottom:1px dashed #ddd;}
+.survey_list ul li span{color: #999999;display: block;float: left;text-align: right;width: 110px;}
+.survey_list ul li  a,.survey_list ul li a:visited{margin-left: 20px;}
+
+/*列表标题*/
+.tab_Squ{ padding:0; margin-bottom:5px;}
+.tab_Squ ul{margin:0}
+.tab_Squ ul li{height:26px;line-height:26px; color:#454545; border:0;margin-left:10px;font-size:14px;font-weight:bold;}

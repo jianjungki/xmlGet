@@ -1,0 +1,104 @@
+<include file="__THEME__/header" />
+<include file="../Public/forum_header" />
+<link href="../Public/css/bbs.css" rel="stylesheet" type="text/css" />
+
+<div class="content zbg">
+    <h3 class="box_tit"><div class="box_tit_r"><strong>发表回复</strong></div></h3>
+    <div class="add_vote" style="width:99.8%; overflow:hidden; padding:15px 0">
+    <form action="{:U('forum/Do/reply')}" method="post" style="margin:5px;" onsubmit="return checkForm();">
+    <input type="hidden" name="tid" value="{$postInfo.tid}">
+	<present name="quoteInfo">
+		<input type="hidden" name="quote" value="{$quoteInfo.pid}">
+	</present>
+    <table style="line-height:25px; float:left"  width="99%">
+	<php>
+        $floorHref = "<a href='".U('forum/Index/gopost',array('id'=>$id,'pid'=>$pid))."'>{$floor}</a>";
+    </php>
+            	<php>if($quoteInfo){</php>
+					<php> if(!$postInfo['istopic']){</php>
+				    	<tr>
+                        <td align="right" valign="top" class="pb10" style="width:15%"></td>
+				            <td class="pb10">
+			            		<b>{:L('thread_quote')} {$floor} {:L('thread_floor')}</b>
+								<input type="hidden" name="title" value="{:L('thread_quote')} {$floor} {:L('thread_floor')}">
+							</td>
+				        </tr>
+					<php>}else{</php>
+				    	<tr>
+                        <td align="right" valign="top" class="pb10" style="width:15%">{:L('thread_quote')}：</td>
+				            <td class="pb10">
+			            		<b>{$postInfo.title|filterWord}</b>
+							</td>
+				        </tr>
+					<php>}</php>				
+				<php>}else if(!$reppostInfo['istopic']){</php>
+		    	<tr>
+                <td align="right" valign="top" class="pb10" style="width:15%"></td>
+		            <td class="pb10">				
+					<b>{:L('thread_reply')} {$floor} {:L('thread_floor')}</b>
+					<input type="hidden" name="title" value="{:L('thread_reply')} {$floor} {:L('thread_floor')}">
+					</td>
+		        </tr> 					
+				<php>}else{</php>
+			    	<tr>
+                    <td align="right" style="width:15%" class="pb10" >{:L('thread_reply')}：</td>
+			            <td class="pb10">				
+						<b>{$postInfo.title|filterWord}</b>
+						</td>
+			        </tr> 	
+				<php>}</php>
+    	<tr>
+        <td align="right" valign="top" style="width:15%"><font color="red">*</font> 内容：</td>
+            <td >
+            	<textarea name="content" cols="" rows="" id="reply_content" style="width:780px;height:220px" >
+				<present name="quoteInfo">
+				&nbsp;<br>
+            	<php>$uname = getForumUserName($quoteInfo['uid'],$setting,$Core['siteSetting'],$quoteInfo['maskId']);</php>
+            	<p>**********{$uname} {:L('thread_add_in')} {$quoteInfo.cTime|date="Y-m-d H:i:s",###}********** </p>
+            	<php>echo filterWord(h($quoteInfo['content'],"base"));</php>
+            	</present>
+				</textarea>
+			</td>
+        </tr>
+        <php>if($popedom->check("allow_post_attach")){</php>
+        <tr height="30">
+          <td align="right" valign="top" class="pt10" style="width:15%">{:L('thread_attach')}：</td>
+          <td align="left" valign="top" class="pt10">
+              {:W( 'UploadAttach',array( 'uid'=>$mid , 'type'=>'forum_'.$fid,'allow_size'=>$Core['setting']['attach_size'],'limit'=>$Core['siteSetting']['attach_num'],'allow_exts'=>$Core['setting']['attach_type'],'fid'=>$postInfo['fid'] , 'callback'=>'attach_upload_success','need_review'=>$popedom->check("attach_need_auditing")) )}
+			  <div class="attach"></div>
+           </td>
+	   </tr><php>}</php>
+        <tr height="45">
+        <td style="width:15%"></td>
+            <td><input class="btn_sea" name="" type="submit"  value="回复"/><input class="btn_sea_n ml5" name="" type="button" onclick="javascript:history.back(-1)" value="{:L('edit_back')}" />
+                                	<label class="ml5">
+                    <input name="jump" type="checkbox" value="1" checked="checked" />
+                    		回帖后跳转到最后一页
+                    	</label>
+            </td>
+        </tr>
+    </table>
+     </form>
+     </div>
+ </div>
+     <script>
+     $(document).ready(function(){
+ 		E	=	KISSY.Editor( "reply_content" );
+ 		E._focusToFirst();
+ 	});
+
+
+     function checkForm(){
+     		if( $.trim(E.getData()).length<1 || $.trim(E.getData()) == "<br>" || $.trim(E.getData()) == "&nbsp"){
+     			$.tbox.no("{:L('edit_content_empty')}","提示");
+     			E._focusToEnd()
+     			return false;
+     		}
+            if ($.trim(E.getData()).length  > 1000) {
+            $.tbox.no("字数不能超过1000个字符",'提示');
+            setTimeout("$.tbox.close()", 2000);
+            return false;   
+            }
+     }
+     </script>
+	 <include file="__THEME__/footer" />

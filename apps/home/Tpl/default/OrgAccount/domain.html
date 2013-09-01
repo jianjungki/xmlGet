@@ -1,0 +1,116 @@
+<include file="__THEME__/header" />
+<link href="../Public/account.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="../Public/js/account.js"></script>
+<div class="content_holder">
+<div class="content"><!-- 内容 begin  --> 
+  <div class="main no_l"> <!-- 右侧内容 begin  -->
+
+      <div class="mainbox">
+      <div class="mainbox_appC no_r">
+    <!-- page_title end -->
+    <include file="_tab" />
+    <!-- 切换标签 end  -->
+    <div class="mainbox_C_C">
+		<div class="setupBox">
+		  <!-- 修改密码 -->
+          <div class="setItems" style=" margin:20px 0;">
+          	<div class="setFold setUnFold" rel="domain" >
+              <h2>个性化域名</h2>
+            </div>
+            <div style="display: block;" class="setItemsInfo">
+	            <div class="data">
+		          <php>if($userDomain){</php>
+		          <h3 class="mt10 mb10">您的个性化域名地址为: </h3>
+		         	  <div class="line_box mt10" style="padding:10px 5px">{:U('home/Space/index',array('uid'=>$userDomain))}</div>
+		          <php>}else{</php>
+			          <div>
+			          <h3 class="mt10 mb10">记得自己的微博客地址是什么吗？设置个性域名，让朋友更容易记住！</h3>
+			          <ul class="lh20">
+			          <li>－可以输入2至20位的英文或数字（必须以英文字符开头）</li>
+			          <li>－保存后就不能修改了</li>
+			          </ul>
+			          <form action="" method="Post">
+			          	<div class="line_box mt10" style="padding:10px 5px">{:SITE_URL}/@<input type="text" maxlength=20 name="domain" class="text">
+			          	<input type="submit" value="保存" class="N_but"></div>
+			          </form>
+			          </div>
+		          <php>}</php>
+		          </div>
+	          </div>
+           </div>
+           <!-- 备注查看设置   -->
+          <div class="setItems">
+            <div class="setFold" rel="remark" >
+              <h2>备注查看设置</h2>
+            </div>
+            <div style="display: none;" class="setItemsInfo">
+		      <div class="data"><!-- 修改密码 begin  -->
+		            <form action="{:U('home/Account/saveRemark')}" method="post" class="form_validator" id="regform" oncomplete="false">
+		            <dl class="set_basic">
+                        <dd>
+		                    <label>&nbsp;</label>
+		                    <div class="left" style="width: 80%;">
+			                    <div class="left mr5"><input type="radio" name='remark_set' value="0" <eq name="userset['show_remark']" value="0">checked="true"</eq>>昵称（备注）</div><br>
+			                    <div class="left mr5"><input type="radio" name='remark_set' value="1" <eq name="userset['show_remark']" value="1">checked="true"</eq> >备注（昵称）</div><br>
+			                    <div class="left mr5"><input type="radio" name='remark_set' value="2" <eq name="userset['show_remark']" value="2">checked="true"</eq>>昵称</div><br>
+			                    <div class="left mr5"><input type="radio" name='remark_set' value="3" <eq name="userset['show_remark']" value="3">checked="true"</eq> >备注</div><br>	
+		                    </div>
+		                </dd>
+		           </dl>
+						{:Addons::hook('home_account_privacy')}
+		           <dl class="set_basic"><dd><label>&nbsp;</label><input type="submit" class="btn_b" value="保存" /></dd></dl>
+		           </form> 
+		        </div><!-- 修改密码 end  -->
+            </div>
+          </div>
+        <div class="c"></div>
+        </div>
+        </div>
+      </div>
+  </div>
+  </div>
+  <!-- 右侧内容 end  -->
+  <div class="c"></div>
+</div>
+</div>
+<script>
+	$(document).ready(function(){
+		//alert($("#check_remark").attr('checked'));
+		$('.setFold').click(function(){
+			if( $(this).attr('class')=='setFold' ){
+				changeModel( $(this).attr('rel') );
+			}else{
+				$(this).removeClass('setUnfold');
+				$(this).next('.setItemsInfo').hide();
+			}
+			location.href='#'+$(this).attr('rel');
+		})
+	});
+	
+	//切换操作模块
+	function changeModel( type ){
+		var t = type || 'base';
+		$('.setFold').removeClass('setUnfold');
+		$('.setItemsInfo').hide();
+		var handle = $('div[rel="'+t+'"]');
+		handle.addClass('setUnfold');
+		handle.next('.setItemsInfo').show();
+	}
+
+	//解除黑名单
+	function release(id){
+          $.get(U('home/Account/release'),{id:id},function(msg){
+             if(msg == 0){
+                ui.error('解除失败！');
+             }else{
+                ui.success('解除成功！');
+                $('#black_'+id).remove();
+                setTimeout("location.href = location.href",1000);               
+             }   
+          });  
+	}	
+</script>
+<!-- 内容 end --> 
+<include file="__THEME__/footer" />
+

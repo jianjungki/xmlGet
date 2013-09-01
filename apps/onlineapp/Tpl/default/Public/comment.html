@@ -1,0 +1,42 @@
+<div>
+    <div><!--页面居中暂写样式-->
+        <div class="clearfix" style="width:400px;">
+        	<!--<h4><a href="#" class="del right" onclick="ui.box.close()"></a>用户登录</h4>-->
+            <div>
+            <form action="{:U('onlineapp/Public/doAjaxcomment')}" method="post">
+                	<dl class="list_login">
+                	<div class="line_tips" id="login_tips" style="display:none;"></div>
+                	<input type="hidden" name="appid" id="appid" value="{$appid}"/>
+                    <dd style="padding-left: 30px;"><span>反馈信息:</span><div style="width: 80%;padding-top:10px;"><textarea id="comment" name="commentinfo" type="text" class="text_Pop" title="反馈信息" style="width:300px;height:150px;"></textarea></div></dd>
+                    <dd><label>&nbsp;</label>
+                    	<input onclick="javascript:ajaxComment();" type="button" name="button" id="button" value="提交反馈" class="btn_b" />
+                    </dd>
+					</dl>
+             </form>
+            </div>
+            
+        </div>
+    </div>
+<!--/快速登录框-->
+</div>
+<script>
+function ajaxComment(){
+	var commentinfo = $("#comment").val();
+	var appid = $("#appid").val();
+	//alert(commentinfo);
+	if(commentinfo == ''){
+		$('#login_tips').html('反馈内容不能为空！').show('fast');
+		return false;
+	}
+	$.post( '{:U('onlineapp/Public/doAjaxcomment')}',{commentinfo:commentinfo,appid:appid},function(txt){
+		json = eval('('+txt+')');
+		//登录成功
+		if(json.status==1){
+			$('#login_tips').html(json.message).show('fast');
+			window.location.reload();
+			//window.location.href='{:U('home/User/index')}';
+		}
+	});
+	return false;
+}
+</script>

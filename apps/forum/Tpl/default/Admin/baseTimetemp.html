@@ -1,0 +1,56 @@
+<div class="postbox">
+<ul class="listtopicadmin">
+	<li id="itemcp_stick" fwin="mods">
+	<table cellspacing="0" cellpadding="5">
+		<tbody>
+			<tr>
+				<td><label class="labeltxt" >开始时间</label>
+					<input type="text" value="" name="sfromTime" style="width: 80px;" id="sfromTime"  class="txt">&nbsp;小时&nbsp;<input type="text" value="" name="toTime" style="width: 80px;" id="stoTime"  class="txt">&nbsp;分钟&nbsp;
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	</li>
+	<li id="itemcp_stick" fwin="mods">
+	<table cellspacing="0" cellpadding="5">
+		<tbody>
+			<tr>
+				<td><label class="labeltxt" >结束时间</label>
+					<input type="text" value="" name="efromTime" style="width: 80px;" id="efromTime"  class="txt">&nbsp;小时&nbsp;<input type="text" value="" name="toTime" style="width: 80px;" id="etoTime"  class="txt">&nbsp;分钟&nbsp;
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	</li>
+	</li>
+	<li id="itemcp_stick" fwin="mods">
+	<table cellspacing="0" cellpadding="5">
+		<tbody>
+			<tr>
+				<td><label class="labeltxt" >状态</label>
+					<select id="status">
+						<option value="0">不允许</option>
+						<option value="1">允许</option>
+					</select>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	</li>
+	<li id="itemcp_stick" fwin="mods">
+	<table cellspacing="0" cellpadding="5">
+		<tbody>
+			<tr>
+				<td><label class="labeltxt" >用户组</label>
+					<select id="userGroup" multiple="multiple">
+						<volist name="userGroup" id="vo">
+							<option value="{$vo.gid}">{$vo.name}</option>
+						</volist>
+					</select>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	</li>
+</ul>
+</div>

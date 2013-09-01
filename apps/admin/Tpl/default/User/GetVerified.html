@@ -1,0 +1,126 @@
+<include file="../Public/_header" />
+<div class="so_main">
+	<div class="page_tit">
+		组织认证管理
+	</div>
+	<div class="Toolbar_inbox">
+		<div class="page right">
+			{$html}
+		</div>
+		<a href="javascript:void(0);" class="btn_a" onclick="Getitpass();"><span>通过认证</span></a>
+		<a href="javascript:void(0);" class="btn_a" onclick="delRequest();"><span>驳回认证</span></a>
+
+	</div>
+	<div class="list">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<th style="width:30px;">
+				<input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+				<label for="checkbox"></label></th>
+				<th class="line_l" style="width: 80px">ID</th>
+				<th class="line_l" style="width: 150px">组织全称</th>
+				<th class="line_l">组织简称</th>
+				<th class="line_l" style="width: 120px">行业类别</th>
+				<th class="line_l" style="width: 120px">所在地区</th>
+				<th class="line_l" style="width: 120px">公司网址</th>
+				<th class="line_l">联系人姓名</th>
+				<th class="line_l">联系人电话</th>
+				<th class="line_l">申请时间</th>
+				<th class="line_l">附件显示</th>
+				<th class="line_l">操作</th>
+			</tr>
+			<volist id="vo" name="data">
+				<tr overstyle='on' id="user_{$vo['uid']}">
+					<td>
+					<input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.logid}">
+					</td>
+					<td>{$vo.logid}</td>
+					<td> {$vo.unitFullName} </td>
+					<td> {$vo.unitShortName} </td>
+					<td>{$vo.category}</td>
+					<td>{$vo.location}</td>
+					<td>{$vo.website}</td>
+					<td>{$vo.realname}</td>
+					<td>{$vo.phone}</td>
+					<td>{$vo.veritime|date='Y-m-d',###}</td>
+					<td><a href="{:U('home/Attach/download',array('id'=>$vo['attachment'],'uid'=>$vo['uid']))}" target="_blank"><img src="{:showAttach($vo['attachment'],$vo['uid'])}" style="width:30px;"></a></td>
+					<td><a href="javascript:Getitpass({$vo.logid})">通过认证</a>&nbsp;|&nbsp;<a href="javascript:Delitnow({$vo.logid})">驳回</a></td>
+				</tr>
+
+			</volist>
+		</table>
+	</div>
+<script>
+	function checkAll(o){
+		if( o.checked == true ){
+			$('input[name="checkbox"]').attr('checked','true');
+			$('tr[overstyle="on"]').addClass("bg_on");
+		}else{
+			$('input[name="checkbox"]').removeAttr('checked');
+			$('tr[overstyle="on"]').removeClass("bg_on");
+		}
+	}
+	//获取已选择组织的ID数组
+	function getChecked() {
+		var uids = new Array();
+		$.each($('table input:checked'), function(i, n){
+			uids.push( $(n).val() );
+		});
+		return uids;
+	}
+	
+	function Getitpass(logid){
+		var length = 0;
+		if(logid) {
+		    length = 1;         
+		}else {
+		    logid    = getChecked();
+		    length = logid.length;
+		    logid    = logid.toString();
+		}
+		if(logid=='') {
+		    ui.error('请先选择一条记录');
+		    return ;
+		}
+		if(logid == '' || !confirm('是否确认审核通过？')) return false;
+		
+		$.post("{:U('admin/User/ajaxPassed')}", {logidstr:logid}, function(res){
+			if(res == 1) {
+				/*logid = logid.toString().split(',');
+				for(i = 0; i < logid.length; i++) {
+					$('#user_'+logid[i]).remove();
+				}*/
+				ui.success('操作成功');
+			}else {
+				ui.error('操作失败');
+			}
+		});
+	}
+	
+	function Delitnow(logid){
+		if(logid) {
+		    length = 1;         
+		}else {
+		    logid    = getChecked();
+		    length = logid.length;
+		    logid    = logid.toString();
+		}
+		if(logid=='') {
+		    ui.error('请先选择一条记录');
+		    return ;
+		}
+		if(logid == '' || !confirm('是否确认删除记录？')) return false;
+		
+		$.post("{:U('admin/User/DelLog')}", {logidstr:logid}, function(res){
+			if(res==1) {
+				ui.success('操作成功');
+			}else {
+				ui.error('操作失败');
+			}
+		});
+	}
+	
+</script>
+</div>
+
+<include file="../Public/_footer" />

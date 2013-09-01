@@ -1,0 +1,531 @@
+<include file="__THEME__/header" />
+<include file="../Public/forum_header" />
+
+<div class="content zbg">
+	<div class="list_h mb5">
+		<php>$tid=$_GET['id'];</php>
+		<div class="page R">
+    		<a href="{:U('forum/List/index',array("class"=>$fid))}">返回列表</a>{$list.html}
+    		<php>if($list['totalPages']>1){</php>
+			<select id="changePage" onChange="turnToPage()">
+				<php>for($i=1;$i<$list['totalPages']+1;$i++){</php>
+						<option <php>if($_GET['p']== $i){</php> selected <php>}</php>value="{:U('forum/Detail/index',array('id'=>$_GET['id'],'p'=>$i))}">{$i}</option>
+				<php>}</php>
+			</select>
+    		<php>}</php>
+    	</div>
+    
+	    <php>if($popedom->check("allow_post") || $popedom->check("allow_post_vote") || ($popedom->check("allow_reply") && $topic['lock'] != 1)){</php>
+	    <div>
+	    	<php>if($popedom->check("allow_post")){</php>
+	    	<input class="text_button mt5" onclick="location.href='{$postUrl}&cate={$topic['tclass']}'" type="button" value="发表新帖" />
+			<php>}</php>
+	    </div>
+	    <php>}</php>
+    <div class="C"></div>
+  </div>
+  
+  <div class="bbs_de_bg">
+  	<h2><neq name="topic.lastreuid" value=""><span class="R"> 发表者：{$topic.lastreuid|getUserName}</span><span class="R">最后回复：{$topic.rTime|friendlyDate=###,'full'}</span></neq><span>回帖数：<b>{$topic.replycount}</b></span><span>浏览数：<b>{$topic.viewcount}</b></span></h2>
+    <volist name="list.data" id="vo">
+      <php>if($vo['istopic'] == "1"){</php>
+      <php>$topic['pid'] = $vo['pid'];</php>
+      <div class="floorBox">
+        <div class="floorBox_left">
+          <div class="P_l">
+            <span class="headpic83">
+	            <php>$faceUrl = getUserFace($vo['uid'],'b');</php>
+	            <img class="shopimg img_resize" data-ks-lazyload="{$faceUrl}" />
+            </span>
+            <p>{$topic.uid|getUserName}</p>
+            <php>
+            	if($topic['maskId'] !=0 && !empty($credit[$topic['maskId']]['0']['credit_score']) ){
+            </php>
+	            <p>
+	           		积分：<span>{$credit[$topic['maskId']]['0']['credit_score']}</span>
+	            </p>
+            <php>}</php>
+            <php>if(isset($userDist[$topic['maskId']])){</php>
+	            <p>
+	            	精华：{$userDist[$topic['maskId']][0]['dists']}
+	            </p>
+            <php>}</php>
+            
+          </div>
+           <php>
+            	if($topic['maskId'] !=0){
+            </php>
+          
+          <div style="padding-left:38px; margin:10px; line-height:20px; color:#666;">
+            <volist name="score" id="so">
+              <php>$fuhao = $so['credit'] > 0 ? "奖励":"惩罚";</php>
+              <php>	
+              if($so['info'] == "置顶"){
+              		if($topic['top'] == 1 ){
+              	 		$so['info'] = "版块置顶";
+              	 	}elseif($topic['top'] ==2){
+              	 		$so['info'] = "全局置顶";
+              	 	}
+              }elseif($so['info'] == "推荐"){
+              		$so['info'] = "热门推荐";
+              }else{
+              		$so['info'] = $so['info']."帖";
+              }</php>
+              <p class="left">{$so.info}，{$fuhao}<span style="color:red; margin:2px;">{$so.credit}分</span></p>
+              <p class="C"></p>
+            </volist>
+            
+          </div>
+          <php>}</php>
+        </div>
+        <div class="floorBox_right">
+          <div class="floorBox_right_T">
+            <p class="floorBox_tit"><span class="right"><a  class="changeFontSize font12" onclick="changeFontSize(12)" hidefocus="true" href="javascript:void(0)">小</a><a class="changeFontSize font14" hidefocus="true" onclick="changeFontSize(14)" href="javascript:void(0)">中</a><a  class="changeFontSize font16" onclick="changeFontSize(16)" hidefocus="true" href="javascript:void(18)">大</a><strong>楼主</strong></span>
+            <cite class="font_cite">
+              <php>$Core['siteSetting'];</php>{$topic.uid|getUserName}
+              </cite>
+              发表于<span>{$topic.cTime|friendlyDate=###,'full'}</span>|<span>
+              <php>if(!(isset($_GET['pid']) && $_GET['auther'] == 1)){</php>
+              <a hidefocus="true" href="{$topicUrl}&auther=1&pid={$vo.pid}">只看该作者</a>
+              <php>}else{</php>
+              <a hidefocus="true" href="{$topicUrl}">查看全部</a>
+              <php>}</php>
+              </span></p>
+            <div class="def_post">
+              <div class="def_post_tit">
+                <h3>
+                  <php>if(!empty($topic['cate'])){</php>
+                  <span class="tit"> <a
+					href="{$forumUrl}&cate={$topic['cate'].id}">[{$topic['cate'].name}]</a>
+                  <php>}</php>
+                  {$topic.title}
+                  <php>if(!empty($topic['sign'])){ </php>
+                  <volist name="topic.sign" id="so">
+                   	<img <php>if($topic['affiche'] == 1 && $so['signid'] == 3){</php> style="display:none"<php>}</php> title="{$so.name}" align="absmiddle" src="{$so.icon}" /> </volist> 
+                  <php>}</php>
+                </h3>
+              </div>
+              <div class="img_resize restore_C gut_style" rel="content">
+                <php>if(!empty($topic['template'])){</php>
+                <div style=" padding-bottom:10px; margin-bottom:10px;">
+				<php>$topictemp = keyWordFilter($topic['template']);</php>
+                  <volist name="topictemp" k="key" id="t">
+                    <php> if($t !== 0 && empty($t)) continue;
+                      if(is_array($t)){
+                      $t = implode(',',$t);
+                      } </php>
+                    <div class="lh25 f14">
+                      <div class="cr pr5 fB"><span style="width:20px; display:inline-block">&nbsp;</span>{$key}：</div>
+                      <div class="cl" style="width:500px;">{$t}</div>
+                      <div class="C"></div>
+                    </div>
+                  </volist>
+                </div>
+                <php>}</php>
+				{$vo.content|ubb} </div>
+              <php> //附件下载
+                if($vo['attach']){ 
+                foreach($vo['attach'] as $attaches){
+                	$bbs_aids[]	=	intval($attaches['id']);
+                }
+                $data['ids'] = $bbs_aids;
+                $data['popedom'] = $popedom->getPopedom();
+                $data['pageAttach'] = $pageAttach;
+                W('ShowAttach',$data);
+                unset($bbs_aids);
+                } </php>
+              <php>if($topic['lastOptUid'] != 0){</php>
+              <div class="copy"><i>[ 本帖最后由  {$topic['lastOptUid']} {$topic['mTime']} 编辑 ]</i></div>
+              <php>}</php>
+              <php>if(!empty($topic['tags'])){</php>
+              <div class="bbs_lable"> 标签：
+                <php>$topicTags = explode(',',$topic['tags']);</php>
+                <volist name="topicTags" id="vo"> <a href="#">{$vo}</a> </volist>
+              </div>
+              <php>}</php>
+            </div>
+          </div>
+        <div class="bbs_app">
+        <php>if($popedom->check("allow_reply")){</php>
+        <neq name="topic.lock" value="1"><a class="fastreply" href="{:U('forum/Index/reply',array('id'=>$topic['tid'],'reppost'=>$vo['pid']))}" >回复</a><a class="repquote" href="{:U('forum/Index/reply',array('id'=>$topic['tid'],'quote'=>$vo['pid']))}" >引用</a></neq><php>}</php><php>$isForumAdmin = $Core['isAdmin'] || $Core['isWebAdmin'];</php><php>if( ($isForumAdmin && $popedom->check("allow_edit_thread")) || ( !$isForumAdmin && ($popedom->check("allow_edite") && $mid == $vo['uid'] ) )){</php><a class="editpost" href="{:U('forum/Index/edit',array('pid'=>$vo['pid']))}" >编辑</a><php>}</php><php>if($popedom->check('allow_delete_thread') || ($popedom->check("allow_delete") && $mid == $vo['uid'] )){</php><a class="det" href="javascript:void(0)" onclick="adminCheck('delete','删除','','1','delete',1,'{$vo.tid}')">删除</a><php>}</php>
+        <php>if(!empty($adminCheckbox)){</php>
+		<volist name="adminCheckbox" id="so"> 
+			<a class="{$so.class}" href="javascript:void(0)" onclick="adminCheck('{$so.url}','{$so.name}','{$so.popup}','{$so.alert}','{$so.url}','{$so.jump}','{$topic.tid}',{$so.check|intval})">{$so.name}</a> </volist>
+		<php>}</php>
+		<php>if(!empty($adminHide)){</php>
+		<span class="fn"><label><input type="checkbox" class="forum_admin_check" rel="{$adminHideSign}" dataId="{$topic.tid}">管理</label></span>
+		<php>}</php>
+		</div>
+        </div>
+        <div class="clear"></div>
+      </div>
+      <php>}else{</php>
+      
+      <php> $p = $list['nowPage'];
+        $follor = intval($p-1)*$limit+$key+1; </php>
+        
+   	  <php>if(!$vo['isdel']){</php>
+      <div class="floorBox" id="p{$vo.pid}">
+        <div class="floorBox_left">
+          <div class="P_l">
+          <span class="headpic83">
+           <php>$faceUrl = getUserFace($vo['uid'],'b');</php>
+            <img class="shopimg img_resize" data-ks-lazyload="{$faceUrl}" />
+            </span>
+           <p><php>$Core['siteSetting'];</php>{$vo.uid|getUserName}</p>
+			 <php>if(!empty($credit[$vo['maskId']]['0']['credit_score'])){</php>
+         	 <p>积分：<span>{$credit[$vo['maskId']]['0']['credit_score']}</span></p>
+         	 <php>}</php>
+         	<php>if(isset($userDist[$vo['maskId']])){</php>
+	            <p>
+	            	精华：{$userDist[$vo['maskId']][0]['dists']}
+	            </p>
+            <php>}</php>
+          </div>
+        </div>
+        <div class="floorBox_right">
+          <div class="floorBox_right_T">
+            <p class="floorBox_tit"><span class="right"><a  class="changeFontSize font12" onclick="changeFontSize(12)" hidefocus="true" href="javascript:void(0)">小</a><a class="changeFontSize font14" hidefocus="true" onclick="changeFontSize(14)" href="javascript:void(0)">中</a><a  class="changeFontSize font16" onclick="changeFontSize(16)" hidefocus="true" href="javascript:void(18)">大</a><strong class="fn">
+              <php>echo $follor;</php>
+              楼</strong></span>
+             <cite class="font_cite "> 
+ <php>$Core['siteSetting'];</php>
+ <php>if($vo['banzhu']==1){</php>
+            	<img title="版主" align="absmiddle" src="<php>echo getSignIcon(78)</php>"></img>
+            <php>}</php>{$vo.uid|getUserName}</cite>
+              发表于<span>{$vo.cTime|friendlyDate=###,'full'} </span>|<span>
+              <php>if(!(isset($_GET['pid']) && $_GET['auther'] == 1)){</php>
+              <a hidefocus="true" href="{$topicUrl}&auther=1&pid={$vo.pid}">只看该作者</a>
+              <php>}else{</php>
+              <a hidefocus="true" href="{$topicUrl}">查看全部</a>
+              <php>}</php>
+              </span></p>
+            <div class="def_post">
+              <php>if(!empty($vo['title'])){</php>
+              <div class="def_post_tit">
+                <h4>{$vo.title}</h4>
+              </div>
+              <php>}</php>
+              <div class="img_resize restore_C gut_style" rel="content">
+                {$vo['content']|ubb}
+              </div>
+              <php>if(!$vo['isdel']){</php>
+              <php>if(!empty($vo['attach'])){</php>
+              <php> //附件下载
+                foreach($vo['attach'] as $attaches){
+                $bbs_aids[]	=	intval($attaches['id']);
+                }
+                $data['ids'] = $bbs_aids;
+                $data['popedom'] = $popedom->getPopedom();
+                $data['pageAttach'] = $pageAttach;
+                W('ShowAttach',$data);
+                unset($bbs_aids); </php>
+              <php>}</php>
+              <php>if($topic['lastOptUid'] != 0){</php>
+              <div class="copy"><i>[ 本帖最后由  {$topic['lastOptUid']} {$topic['mTime']} 编辑 ]</i></div>
+              <php>}</php>
+              <php>if(!empty($topic['tags'])){</php>
+              <div class="bbs_lable"> 标签：
+                <php>$topicTags = explode(',',$topic['tags']);</php>
+                <volist name="topicTags" id="vo"> <a href="#">{$vo}</a> </volist>
+              </div>
+              <php>}</php>
+              <php>}</php>
+            </div>
+          </div>
+        <div class="bbs_app">   
+            <php>if(!$vo['isdel']){</php><php>if($popedom->check("allow_reply")){</php><neq name="topic.lock" value="1"> <a class="fastreply" href="{:U('forum/Index/reply',array('id'=>$topic['tid'],'reppost'=>$topic['pid']))}" >回复</a><a class="repquote" href="{:U('forum/Index/reply',array('id'=>$topic['tid'],'quote'=>$vo['pid']))}" >引用</a> </neq><php>}</php><php>if($popedom->check('allow_edit_thread') || ($popedom->check("allow_edite") && $mid == $vo['uid'] )){</php><a class="editpost" href="{:U('forum/Index/edit',array('pid'=>$vo['pid']))}">编辑</a><php>}</php><php>if($popedom->check('allow_delete_thread') || ($popedom->check("allow_delete") && $mid == $vo['uid'] )){</php><a class="det" href="javascript:void(0)" onclick="adminCheck('deletePost','删除','','1','deletePost',1,'{$vo.pid}')">删除</a><php>}</php><php>}</php><php>if($popedom->check("allow_banzhu_biaoshi")){</php><a class="ban" href="javascript:void(0)" onClick="addMark({$vo['pid']},{$vo['banzhu']})">版主</a><php>}</php>
+            
+            
+            </div>
+        </div>
+        <div class="clear"></div>
+      </div>
+      <php>}</php>
+      <php>}</php>
+    </volist>
+  </div>
+  <div class="list_h mt5">
+    <div class="page R"><a href="{:U('forum/List/index',array("class"=>$fid))}">返回列表</a>{$list.html}<php>if($list['totalPages']>1){</php>
+    						<select id="changeToPage" onChange="turnPage()">
+    								<php>for($i=1;$i<$list['totalPages']+1;$i++){</php>
+    										<option <php>if($_GET['p']== $i){</php> selected <php>}</php>value="{:U('forum/Detail/index',array('id'=>$_GET['id'],'p'=>$i))}">{$i}</option>
+    								<php>}</php>
+    						</select>
+    			<php>}</php></div>
+    <div>
+     <php>if($popedom->check("allow_post")){</php>
+    	<input class="text_button" onclick="location.href='{$postUrl}&cate={$topic['tclass']}'" type="button" value="发表新帖" />
+	<php>}</php>
+	     <php>if($popedom->check("allow_post_vote")){</php>
+      <input class="text_button" onClick="location.href='{:U('forum/Index/special',array('class'=>$topic['fid'],'special'=>2))}'" type="button" value="发表投票" />
+      	<php>}</php>
+    </div>
+    <div class="C"></div>
+  </div>
+   	<php>if($popedom->check("allow_reply")){</php>
+  <neq name="topic.lock" value="1">
+    <div class="line_bule mt10">
+      <div>
+        <div>
+          <div class="pls L">
+          <php>$faceUrl = getForumUserFace($mid,$setting,$Core['siteSetting']);</php>
+          <div class="avatar_left headpic83" style="margin-left:45px;"> 
+          <img class="shopimg" rel="lazy" src="{$faceUrl}" original="" /> 
+          </div>
+          <p class="ans_pic">
+          <php>$uname = getForumUserName($mid,$setting,$Core['siteSetting']);</php>{$uname}
+          </p>
+          </div>
+          <div class="plc L">
+          <div class="plc_cl">
+              <div class="R"></div>
+              <div class="plc_hasfsl">
+                <form id="subForm"action="{:U('forum/Do/reply')}" method="post" onsubmit="return checkForum();">
+                  <div class="tedt">
+                  	<input name="quickreply" value="quickreply" type="hidden"></input>
+                    <textarea class="ans_tex" id="reply_content" tabindex="3" name="content" cols="100" wrap="virtual" rows="8"></textarea>
+                  </div>
+                  <p class="ptm pt10">
+                    <input class="btn_sea" name="" type="submit"  value="快速回复"/>
+                    <input type="hidden" name="tid" value="{$topic.tid}" /><input type="hidden" name="limit" value="{$limit}" /><label style="margin-left:10px;+margin-left:5px; _margin-left:5px;"><input name="jump" checked="checked" type="checkbox" value="1" />&nbsp;回帖后跳转到最后一页</label></p>
+                </form>
+              </div>
+            </div></div>
+            <div class="C"></div>
+        </div>
+      </div>
+    </div>
+  </neq>
+  <php>}</php>
+
+<div id="topicadmin" style="display:none">
+  <volist name="adminHide" id="so">
+   <a href="javascript:void(0)" onclick="adminCheck('{$so.url}','{$so.name}','{$so.popup}','{$so.alert}','{$so.url}','{$so.jump}','{$topic.tid}',{$so.check|intval})">{$so.name}</a> 
+   </volist>
+</div>
+</div>
+<script>
+<php>
+$fontSize = intval($userSetting['fontSize'])?intval($userSetting['fontSize']):14;
+</php>
+
+$(function(){
+	<php>if($Core['isAdmin'] || $Core['isWebAdmin']){</php>
+	   $('.forum_admin_check').removeAttr("checked");
+	     $.fn.admin({
+		     prefix:'topic_',
+		     checkClass:'forum_admin_check',
+		     hiddenId:'topicadmin',
+			 lMinOffset:1,
+			 position:'left',
+			 type:false
+	     });
+	<php>}</php>
+	changeFontSize({$fontSize});
+
+	
+})
+KISSY.ready(function(S) {
+    var dl = S.DataLazyload({
+    	mod: "manual", // 延迟模式。默认为 auto
+    	placeholder: "__PUBLIC__/js/kissy/loading.gif",
+    	diff:200
+	});
+});
+
+function changeFontSize(size){
+	$('.changeFontSize').removeClass('fB').css("color","#07a");
+	$('.font'+size).addClass("fB").css("color","#333");
+	$("div[rel='content']").css("font-size",size);
+}
+
+var checkData = new Array();
+var actionUrl = '';
+var needJump = false;
+function adminCheck(key,title,popup,fire,url,jump,tid,check){
+	actionUrl = url;
+	 checkData.push(tid);
+	 needJump = jump;
+	 var tip = check?"取消":"设置";
+	 if(fire){
+		 $.tbox.confirm("是否将帖子"+tip+title+"？","操作提示",{ok:"action"});
+	}
+
+	if(popup){
+		$.tbox.popup("{:U('forum/Manage/adminPopUp')}"+"&actionId="+url+"&fid={$fid}");
+        var button = '<p><input class="btn_sea" id="savemodel"  name="" type="button" value="确定" /><input class="btn_sea_n ml5" id="closeModel"  name="" type="button" value="取消" /></p>';
+        $('#tbox .tb_button_list').show().html(button);
+        $('#savemodel').click(function(){
+            adminStatus($.fn.getData('topic_'));
+            $.tbox.close();
+        });
+        $('#closeModel').click(function(){
+            $.tbox.close();
+        });	
+	}
+}
+
+function checkForum(){
+	var cou = {$count1};
+	var ns =  {$setting['truename_state']};
+	if($.trim($('#reply_content').val()).length <= 0 || $.trim($('#reply_content').val()) == "&nbsp;"){
+		$.tbox.no("{:L('edit_content_empty')}","提示");
+		return false;
+	}
+	if( cou == 0 && ns == 0){
+		$.tbox.confirm("你还没有昵称，将使用实名发帖，去添加一个新昵称。","提示",{ok:"setMask()",no:"goPost1()"});
+		return false;
+	}
+  if ($.trim($('#reply_content').val()).length  > 1000) {
+        $.tbox.no("字数不能超过1000个字符",'提示');
+        setTimeout("$.tbox.close()", 2000);
+        return false;    
+  } 
+}
+
+function goPost1(){
+	$('#subForm').submit();
+}
+
+function action() {
+	$.post("{:U('forum/Do/action')}", {id:checkData,action:actionUrl}, function(result) {
+		// result = eval('('+result+')');
+		if(result.status) {
+			if(needJump) {
+				location.href = result.info;
+			}else{
+				location.reload();
+			}
+		} else {
+			$.tbox.no(result.info, "操作提示");
+			setTimeout("$.tbox.close()", 2000);
+		}
+		needJump = false;
+		actionUrl = "";
+		checkData = new Array();
+	}, 'json');
+}	 
+
+function photo_size(name,sizeNum){
+	var newWidth = $(name).width();
+    $(name +" img").each(function(){
+        var width = sizeNum || 728;
+        var images = $(this);
+        
+        //判断是否是IE
+        if (-[1, ]) {
+        	  if (images.width() >= width) {
+                  images.click(function(){
+                      tb_show("", this.src, false);
+                  });
+                  images.width(width);
+                  images.height(width / images.width() * images.height());
+              }
+           
+        }
+        else {
+        	 image = new Image();
+             image.src = $(this).attr('src');
+             image.onload = function(){
+                 if (image.width >= width) {
+                 	images.click(function(){
+                         tb_show("", this.src, false);
+                     });
+                     images.width(width);
+                     images.height(width / image.width * image.height);
+                 }
+             }
+	       	  if (images.width() >= width) {
+	              images.click(function(){
+	                  tb_show("", this.src, false);
+	              });
+	              images.width(width);
+	              images.height(width / images.width() * images.height());
+	          }
+        }
+
+		
+		//image.attr('rel','imageGroup');
+
+    });
+}
+
+
+var aid;
+function checkattach(id){
+	 aid = id;		 
+	 se =/,/i;
+	  r = aid.search(se); 
+	 if(r == -1){
+		 $.tbox.confirm("你确定要审核附件？","提示",{ok:"docheck"});
+	}else{
+		 $.tbox.confirm("你确定要批量审核附件？","提示",{ok:"docheck"});
+
+	}
+}
+
+function docheck(){
+	var attachId= aid;
+	$.post(SITE_URL+'/index.php?app=forum&mod=Manage&act=doAttachAudit',{tp:'attach',id:attachId,status:0},function(result){
+		if(result){
+			location.reload();		
+		}
+	});
+}
+function cacleCheck(id){
+	aid = id;
+	$.tbox.confirm("你确定要取消审核附件？","提示",{ok:"docacle"});
+}
+function docacle(id){
+	$.post(SITE_URL+'/index.php?app=forum&mod=Manage&act=doAttachAudit',{tp:'attach',id:aid,status:1},function(result){
+		if(result){
+			location.reload();		
+		}
+	});
+}
+
+function turnToPage(){
+	window.location.href = $('#changePage').val();
+	}
+function turnPage(){
+	window.location.href = $('#changeToPage').val();
+	}
+
+var tp ;
+var su ;
+//判断页面的跳转链接
+function goPost(type, sure) {
+	tp = type;
+	su = sure;
+	if(tp=="topic"){
+		window.location.href = "{$postUrl}&cate={$topic['tclass']}";
+	}else if(tp=="vote"&& su=="y"){
+		window.location.href = "{:U('forum/Index/special',array('class'=>$topic['fid'],'special'=>2,'cate'=>$topic['tclass']))}";
+	}else if(tp=="vote"&& su=="n"){
+		window.location.href = "{:U('forum/Index/special',array('class'=>$topic['fid'],'special'=>2))}";
+	}else if(tp=="highReply"){
+		window.location.href = "{:U('forum/Index/reply',array('id'=>$topic['tid'],'reppost'=>$topic['pid']))}";
+	}
+}
+
+var ppid;
+var sstatus;
+function addMark(pid,status){
+	ppid = pid;
+	sstatus = status;
+	 var tip = status?"取消":"设置";
+	$.tbox.confirm("你确定要"+tip+"版主标识?","提示",{ok:"goAdd()"});
+}
+
+function goAdd(){
+	var tid = {$_GET['id']};
+	var	fid = {$fid};
+	$.post("{:U('forum/Do/doAddMark')}",{pid:ppid,banzhu:sstatus,tid:tid,fid:fid},function(txt){
+			if(txt){
+				window.location.reload();
+				}
+	});
+}
+</script>
+<include file="__THEME__/footer" /> 

@@ -1,0 +1,42 @@
+<include file="__THEME__/jsHeader" />
+
+<link rel="stylesheet" href="../Public/screen.css" type="text/css" media="screen" charset="utf-8" />
+<script src="../Public/screen.js" type="text/javascript" charset="utf-8"></script>
+
+<div class="main_screen">
+	<div class="head_screen"><div class="tit right">{$screen.title}</div><div class="logo_screen"></div></div>
+    <div class="wrap_screen_show">
+        <div class="back_screen_show"></div>
+        <div class="box_screen_show">
+        	<ul class="list_screen">
+                <li style="display:none;">
+                    <span class="ico_point_l"></span>
+                    <div class="userPic">
+                    <img class="userface" src=""  style="width:90px"/>
+                    <div class="username"><a href="#">申天豪</a></div>
+                    </div>
+                    <div class="userInfo">如果#保护动物#入任何页面，请检查您计算机的网络连接。</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script>
+    Screen.show.init({
+            screenId:{$screen.screen_id},
+            listScreen:".list_screen"
+            });
+</script>
+<!-- 
+                    <li>
+                <span class="ico_point_l"></span>
+                <div class="userPic">
+                <img src="http://m3.img.libdd.com/farm2/76/A2850092544FAE491975E9EC5DF8C44C_412_572.jpg" />
+                <div class="username"><a href="#">申天豪</a></div>
+                </div>
+                <div class="userInfo">
+                
+                如果#保护动物#入任何页面，请检查您计算机的网络连接。</div>
+                </li>
+    
+    -->

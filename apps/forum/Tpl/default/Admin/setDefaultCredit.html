@@ -1,0 +1,42 @@
+<include file="__THEME__/admin" />
+<link href="../Public/style.css" rel="stylesheet" type="text/css">
+<div class="so_main" style=" overflow:hidden; width:100%">
+<div class="page_tit">积分</div>
+<div class="form">
+<div class="urse_purview list">
+
+	<form action="{:U('forum/Admin/doSetDefaultPolicy',array('fid'=>$fid))}" method="post">
+	<table class="tab_popedom" width="100%" cellpadding="0" cellspacing="0"	border="0">
+		<tr>
+			<th class="line_l">积分代号</th>
+            <th class="line_l">score(积分)</th>
+		 <!--	<th class="line_l">exp(经验)</th>
+            <th class="line_l">ext1</th>
+            <th class="line_l">ext2</th>
+            <th class="line_l">ext3</th>
+            <th class="line_l">ext4</th>
+            <th class="line_l">ext5</th> -->
+		</tr>
+		<volist id="vo" name="list" key="k">
+			<tr>
+			<td align="left"><input type="hidden" name="score[]" value="{$vo.action}">{$vo.info}</input></td>
+            <td align="left"><input name="score_{$vo.action}" type="text" size="2"  maxlength="3" onkeyup="value=value.replace(/[^\\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\\d]/g,''))"  value="{$vo.score}" /></td>
+		 <!--	<td align="left"><input name="exp_{$vo.action}" type="text" size="2" value="{$vo.exp}"></input></td>
+          <td align="left"><input name="ext1_{$key}" type="text" size="2"value=""></input></td>
+            <td align="left"><input name="ext2_{$key}" type="text" size="2" value=""></input></td>
+            <td align="left"><input name="ext3_{$key}" type="text" size="2" value=""></input></td>
+            <td align="left"><input name="ext4_{$key}" type="text" size="2" value=""></input></td>
+            <td align="left"><input name="ext5_{$key}" type="text" size="2" value=""></input></td> -->
+			</tr>
+		</volist>
+	
+    
+	</table>
+	 <div class="mt20" style="padding-left:10px"><input class="btn_b" type="submit" value="提交"></input></div>
+	</form>
+  
+    </div>
+    </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<include file="__THEME__/header" />
+<script>
+	var myappnum;
+	var recomappnum;
+	$(document).ready(function(){
+		myappnum = 0;
+		recomappnum = 0;
+		var id = "#type_{$checkid}"
+		$(id).toggleClass("checkit");
+	})
+	function changetab(param){
+		$(".tabMenu a").removeClass();
+		if('good'==param){
+			$("#installed").hide();
+			$("#second").addClass("no");
+			$("#goodcomment").show();
+		}else if('install'==param){
+			$("#goodcomment").hide();
+			$("#first").addClass("no");
+			$("#installed").show();
+		}
+	}
+	
+	function checkit(param){
+		$(".checkit").toggleClass("checkit");
+		$("#type_"+param).toggleClass("checkit");
+		searchapp();
+		$("#search_form").submit();
+	}
+	function searchapp(){
+		$("#apptype").val($(".checkit").attr("alt"));
+		var str = $(".checkit").attr("id");
+		$("#apptypeid").val(str.substring(5));
+	}
+	
+	function nextmyapp(type){
+		tmp1 = myappnum;
+		if(type=="add")
+			myappnum++;
+		else if(type=="sub")
+			myappnum--;
+		if(myappnum<0)ui.error("已经没有更多应用了");
+		$.post("{:U('home/Index/NextMyApp')}",{'appnum':myappnum},function(res){
+			if(res=='0'){
+				ui.error("已经没有更多应用了");myappnum=tmp1;return;
+			}
+			$("#myapplist").html("");
+			$("#myapplist").html(res);
+		})
+	}
+	
+	function nextrecomapp(type){
+		tmp2 = recomappnum;
+		if(type=="add")
+			recomappnum++;
+		else if(type=="sub")
+			recomappnum--;
+		if(recomappnum<0)ui.error("已经没有更多应用了");
+		$.post("{:U('home/Index/NextRecomApp')}",{'appnum':recomappnum},function(res){
+			if(res=='0'){
+				ui.error("已经没有更多应用了");recomappnum=tmp2;return;
+			}
+			$("#recomapplist").html("");
+			$("#recomapplist").html(res);
+		})
+	}
+	
+</script>
+<link href="__PUBLIC__/js/editor/editor/theme/change.css" rel="stylesheet"/>
+<link href="../Public/addapp.css" rel="stylesheet" type="text/css" />
+<div class="content_holder">
+<div class="t_column iepng">
+	  <div class="t_column_left"><img src="__PUBLIC__/themes/images/icon/app.png" width="128" height="39" id="icon"></div>
+	  <div class="t_column_right">
+	   <ul>
+	   <li class="app2_right"><a href="{:U('home/Index/editapp')}"></a></li>
+	   <li class="app1_right"><a href="{:U('home/Index/addapp')}"></a></li>
+	   </ul>
+	  </div>
+	</div>
+<div class="content"><!-- 内容 begin  --> 
+  <div class="main no_l">
+    <div class="mainbox">
+	<div class="mainbox_appC no_r">
+      <div class="mainbox_C no_r">
+          <include file="../Public/addapp_right" />
+         <div style="margin-right: 250px;">
+		  	<php>if(!$search_data){</php>
+		  
+		  <div class="add_app_left">
+		  <div style="line-height:40px;background: #F1F8FE; font-size:15px;  border:#E1EFFC solid 1px; padding-left:20px; color:#2679A5;"><b>我的应用</b></div>
+          <ol class="add_app_class" style="padding-top:20px;min-height: 180px;max-height: 500px;" id="myapplist">
+			<volist name="listdata" id="vo">
+			<li>
+					<div>
+						    <a href="{:U('onlineapp/Index/index',array('appid'=>$vo['app_id']))}"><img src="{$vo['large_icon_url']}" class="userPhoto" width="64px" height="64px"></a>
+					</div>
+					<h4 style="width:170px; margin-top:10px;">
+							<a href="{:U('onlineapp/Index/index',array('appid'=>$vo['app_id']))}">{$vo['app_alias']}</a>
+				    </h4>
+					<div style="width:170px; margin-top:10px;">
+						<a href="javascript:ui.commentit({$vo['app_id']});">应用评价</a>|
+							<span >已添加</span>
+					</div>
+				</li>
+            </volist>
+           </ol>
+           <div style="width:150px; margin-left:22px; clear:both;">
+	           		<span class="btn_b">
+	           			<a href="javascript:nextmyapp('sub')"><font color="#ffffff">上一页</font></a>
+	           		</span>
+           			<span class="btn_b">
+           				<a href="javascript:nextmyapp('add')"><font color="#ffffff">下一页</font></a>
+           			</span>
+           	</div>
+           </div>
+           <div class="add_app_left" style="margin-bottom:25px;">
+          <div style="line-height:40px;background: #F1F8FE; font-size:15px;  border:#E1EFFC solid 1px; padding-left:20px; margin-top:10px; color:#2679A5;"><b>推荐应用</b></div>
+          <ol class="add_app_class" style="padding-top:20px;min-height: 180px;max-height: 500px;" id="recomapplist">
+			<volist name="recomdata" id="vo">
+				<li>
+				    <a href="{:U('onlineapp/Index/index',array('appid'=>$vo['app_id']))}"><img src="{$vo['large_icon_url']}" class="userPhoto" width="64px" height="64px"></a>
+						
+					<h4 style="width:170px;  margin-top:10px;">
+							<a href="{:U('onlineapp/Index/index',array('appid'=>$vo['app_id']))}">{$vo['app_alias']}</a>
+					<div style="width:170px;  margin-top:10px;">
+						 <php>if(in_array($vo['app_id'],$installed) || $vo['status']==1){</php>
+							<span >已添加</span>
+						 <php>}else{</php>
+						 	<a href="{:U('home/Index/install',array('app_id'=>$vo['app_id']))}">我要添加</a>
+						 <php>}</php>
+					</div>
+					</h4>
+				</li>
+            </volist>
+           </ol>
+            <div style="width:150px; margin-left:22px; clear:both;">
+	           		<span class="btn_b">
+	           			<a href="javascript:nextrecomapp('sub')"><font color="#ffffff">上一页</font></a>
+	           		</span>
+           			<span class="btn_b">
+           				<a href="javascript:nextrecomapp('add')"><font color="#ffffff">下一页</font></a>
+           			</span>
+           	</div>
+          
+           </div>
+          
+           <php>}else if($search_data){</php>
+            <div class="add_app1_long">
+           	<div class="add_app_left">
+           	<php>if($search_data['data']){</php>
+           <ol class="add_app_class" style="padding-top:10px;height:600px;">
+			<volist name="search_data['data']" id="vo">
+			<li style="height:180px;margin-bottom: 20px;margin-top: 10px;">
+						<div>
+							 <a href="{:U('onlineapp/Index/index',array('appid'=>$vo['app_id']))}"><img src="{$vo['large_icon_url']}" class="userPhoto" width="64px" height="64px"></a>
+						</div>
+						
+						<h4 style="width:170px;margin-top: 5x;">
+						
+							<a href="{:U('onlineapp/Index/index',array('appid'=>$vo['app_id']))}">{$vo['app_alias']}</a>
+				
+					    </h4><br>
+					    <table style="text-align: left;">
+					    	<tr>
+					        	<td style="line-height:20px;">用户数：</td><td>{$vo.add_num}</td>
+					    	</tr>
+					    	<tr>
+						        <td style="line-height:20px;">应用类别：</td><td><a href="javascript:checkit({$vo.category_id})">{$vo.category}</a></td>
+						    </tr>
+					    	<tr>
+						        <td style="line-height:20px;">应用评分：</td><td>{$vo.avgstar}</td>
+						    </tr>
+						   </table>
+							<php>if(in_array($vo['app_id'],$installed) || $vo['status']==1){</php>
+								<span >已添加</span>
+							 <php>}else{</php>
+							 	<a href="{:U('home/Index/install',array('app_id'=>$vo['app_id']))}">我要添加</a>
+							 <php>}</php>
+				</li>
+            </volist>
+           </ol>
+           <div class="linkpage" style="width:100%;text-align: center;"> 
+        		{$search_data['html']}
+        	</div>
+		           <php>}else{</php>
+		           		<div style="line-height:200px;margin-left: 50px">暂无您搜索的应用，请进入<font color="red"><a href="{:U('home/Index/addapp')}">" 应用中心 "</a></font>看看是否有您感兴趣的应用....</div>
+		           <php>}</php>
+       		 </div>
+  </div>
+           	<php>}</php>
+           </div>
+ </div>
+</div>
+</div>          
+   
+  <div class="c"></div>
+
+</div>
+</div>
+</div>
+<include file="__THEME__/footer" /> 

@@ -1,0 +1,40 @@
+<include file="../Public/manage_top" />
+<link href="../Public/css/bbs.css" rel="stylesheet" type="text/css" />
+<link href="../Public/css/layout.css" rel="stylesheet" type="text/css" />
+<link href="../Public/css/public.css" rel="stylesheet" type="text/css" />
+<!--中间内容-->
+<div class="content zbg"> 
+  <div class="bbs_left">
+ 	<include file="../Public/manage_left" />
+  </div><include file="nav" />
+  <div class="bbs_main">
+<div class="tit_line">10分钟内在线活动人数</div>
+  	当前在线注册人数 {$userCount}，游客人数 <php>if(empty($guestCount)){</php>0<php>}else{</php> {$guestCount} <php>}</php>
+    <div class="list_box1">
+	      <dl>
+	        <dt>
+	          <div class="cl" style="width: 29%;">昵称</div>
+	          <div class="cl" style="width: 20%;">版块</div>
+	          <div class="cl" style="width: 15%;">浏览器</div>
+	          <div class="cl" style="width: 20%;">登录IP</div>
+	          <div class="cr" style="width: 15%;">统计时间</div>	
+              <div class="C"></div>
+	        </dt>	
+            <volist name="userList['data']" id="vo">
+			<dd class="det_l">
+	          <div class="cl" style="width: 29%;">{$vo.maskname}</div>
+	          <div class="cl" style="width: 20%;"><php>if(empty($vo['forumName'])){</php>首页<php>}else{</php>{$vo.forumName}<php>}</php>
+	           </div>
+	          <div class="cl" style="width:15%;">{$vo.agent}</div>
+	          <div class="cl" style="width: 20%;"><php>echo long2ip($vo['ip']);</php></div>
+	          <div class="cr " style="width:15%">{$vo['cTime']|friendlyDate='full'}</div>
+	          <div class="C"></div>
+	        </dd>
+            </volist>
+            </dl>
+	    </div>
+        <div class="page mt5 alR mb20">{$userList['html']}</div>
+  </div>
+  <div class="C"></div>
+  </div>
+<include file="__THEME__/footer" /> 

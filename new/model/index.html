@@ -1,0 +1,139 @@
+<include file="_header" />
+<script>
+function getChecked() {
+    var ids = new Array();
+    $.each($('table input:checked'), function(i, n){
+        ids.push( $(n).val() );
+    });
+    return ids;
+}
+
+function checkon(o){
+    if( o.checked == true ){
+        $(o).parents('tr').addClass('bg_on') ;
+    }else{
+        $(o).parents('tr').removeClass('bg_on') ;
+    }
+}
+
+function checkAll(o){
+    if( o.checked == true ){
+        $('input[name="checkbox"]').attr('checked','true');
+        $('tr[overstyle="on"]').addClass("bg_on");
+    }else{
+        $('input[name="checkbox"]').removeAttr('checked');
+        $('tr[overstyle="on"]').removeClass("bg_on");
+    }
+}
+
+//搜索用户
+var isSearchHidden = <neq name="isSearch" value="1">1<else/>0</neq>;
+function searchObject() {
+    if(isSearchHidden == 1) {
+        $("#searchObject_div").slideDown("fast");
+        $(".searchObject_action").html("搜索完毕");
+        isSearchHidden = 0;
+    }else {
+        $("#searchObject_div").slideUp("fast");
+        $(".searchObject_action").html("搜索{$ts['app']['app_alias']}");
+        isSearchHidden = 1;
+    }
+}
+
+var ctrl = function(){
+}
+ctrl.prototype = {
+	del:function(id){
+		var id = id ? id : getChecked();
+		id = id.toString();
+		if(id=='' || id==0){
+			ui.error("请选择要删除的礼物");
+			return false;
+		}
+		if( confirm("是否删除{$ts['app']['app_alias']}？") ){
+		  $.post( '__URL__&act=delete',{id:id},function(text ){
+			  if( text == 1 ){
+				  ui.success( "删除多份{$ts['app']['app_alias']}成功" );
+				  var id_list = id.split( ',' );   
+				  for (var j=0 ; j< id_list.length ; j++   ){
+					  $('#list_'+id_list[j]).remove(); 
+				  }
+			  }else if( text == 2 ){
+				  ui.success( "删除成功" );
+				  $('#list_'+id).remove();
+			  }else{
+				  ui.error( "删除失败" );
+			  }
+		  });
+		}
+	},
+	forbid:function(id){
+		var id = id ? id : getChecked();
+		id = id.toString();
+		if(id=='' || id==0){
+			ui.error("请选择要禁用的礼物");
+			return false;
+		}
+	    if( confirm( "是否禁用{$ts['app']['app_alias']}" ) ){
+	      $.post('__URL__&act=forbid',{id:id},function( text ){
+			 if( text == 1 ){
+				 ui.success( "禁用多份{$ts['app']['app_alias']}成功" );
+				  var id_list = id.split( ',' );   
+				  for (var j=0 ; j< id_list.length ; j++   ){
+					  $('#status'+id_list[j]).html('{:getStatus(0)}');
+					  $('#button'+id_list[j]).html('<a href="javascript:void(0);" onclick="c.resume('+id_list[j]+')">启用</a> ');
+				  }
+			 }else if( text == 2 ){
+				 ui.success( "禁用成功" );
+				 $('#status'+id).html('{:getStatus(0)}');
+				 $('#button'+id).html('<a href="javascript:void(0);" onclick="c.resume('+id+')">启用</a> ');
+			 }else{
+			 	 ui.error( "禁用失败或已经禁用" );
+		   	 }
+	      });
+	    }
+	},
+	resume:function(id){
+		var id = id ? id : getChecked();
+		id = id.toString();
+		if(id=='' || id==0){
+			ui.error("请选择要启用的礼物");
+			return false;
+		}
+	    if( confirm( "是否启用{$ts['app']['app_alias']}" ) ){
+	      $.post('__URL__&act=resume',{id:id},function( text ){
+			 if( text == 1 ){
+				 ui.success( "启用多份{$ts['app']['app_alias']}成功" );
+				  var id_list = id.split( ',' );   
+				  for (var j=0 ; j< id_list.length ; j++   ){
+					  $('#status'+id_list[j]).html('{:getStatus(1)}');
+					  $('#button'+id_list[j]).html('<a href="javascript:void(0);" onclick="c.forbid('+id_list[j]+')">禁用</a> ');
+				  }
+			 }else if( text == 2 ){
+				 ui.success( "启用成功" );
+				 $('#status'+id).html('{:getStatus(1)}');
+				 $('#button'+id).html('<a href="javascript:void(0);" onclick="c.forbid('+id+')">禁用</a> ');
+			 }else{
+			 	 ui.error( "启用失败或已非禁用" );
+		   	 }
+	      });
+	    }
+	},
+	edit_tab:function(action,id){
+		var title = action+"{$ts['app']['app_alias']}";
+		ui.box.load('__URL__&act=edit_gift_tab&id='+id,{title:title+'信息'});
+	}
+}
+var c = null;
+</script>
+<div class="so_main">
+【$V3UNDER JGLabel 9ee21c838fa542e6acb7e51f1c18acc0】start 【$V3UNDER JGLabel 9ee21c838fa542e6acb7e51f1c18acc0】end
+<div class="tit_tab">
+<ul>
+    【$V3UNDER JGTabPage 33b77d554fac498b953b5b9bf2542a67】start 【$V3UNDER JGTabPage 33b77d554fac498b953b5b9bf2542a67】end
+    【$V3UNDER JGTabPage 52e43322f841447fa2c4cb3158f2686d】start 【$V3UNDER JGTabPage 52e43322f841447fa2c4cb3158f2686d】end
+    
+<script type="text/javascript">
+var c = new ctrl();
+</script>
+<include file="_footer" />

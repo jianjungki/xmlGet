@@ -1,0 +1,55 @@
+<php>
+	$label = getLabel($gid);
+	$log1 = '小组';
+	$log2 = '小组';
+	if($label=='项目'){
+		$log1 = '项目';
+		$log2 = '小组话题';
+	}	
+</php>
+<div class=page_title> 
+  <!-- page_title begin -->
+  <div class="left" style="width:70px;"><span class="headpic50"><a href="{:U('group/Group/index',array('gid'=>$groupinfo['id']))}"><img src="__ROOT__/thumb.php?w=80&h=80&url={$groupinfo['logo']|get_photo_url}"/></a></span></div>
+  <div style="margin-left:70px">
+    <h2><a href="{:U('group/Group/index',array('gid'=>$gid))}">{$groupinfo['name']}</a> > {$label}管理</h2>
+  </div>
+  <div style="clear:left;"></div>
+</div>
+<!-- page_title end -->
+<div class="tab-menu"> 
+  <!-- 切换标签 begin  -->
+   
+  <php>$a = M("Group")->where(array('id'=>intval($_GET['gid'])))->getField('uid');if($_SESSION['mid'] ==$a && $groupinfo[grouptype]!=2 ){</php>
+  	<span class="right" style="margin-right: 5px"><a href="javascript:;" onclick="delgroup({$groupinfo['id']});" class="btn_b">解散{$label}</a></span>
+  <php>}</php>
+  <php>$a = M("Group")->where(array('id'=>intval($_GET['gid'])))->getField('uid');if($_SESSION['mid'] ==$a && $groupinfo[isDone]==0 && $groupinfo[grouptype]==1){</php>
+  	<span class="right" style="margin-right: 5px"><a href="javascript:;" onclick="endproject({$groupinfo['id']});" class="btn_b">完成项目</a></span>
+  <php>}else if($groupinfo[isDone]==1){</php>
+  <span class="right" style="margin:5px 5px 0 0;color: red">该项目已完成</span>
+  <php>}</php>
+  <ul>
+    <li><a href="{:U('group/Manage/index',array('gid'=>$groupinfo['id']))}" 
+      
+      <if condition="$current eq 'basic'">class="on" </if>
+      ><span>基本信息</span></a></li>
+    <php>if(iscreater($mid,$gid)){</php>
+    <li><a href="{:U('group/Manage/privacy',array('gid'=>$groupinfo['id']))}" 
+      
+      <if condition="$current eq 'privacy'">class="on" </if>
+      ><span>访问权限</span></a></li>
+    <php>}</php>
+    <li><a href="{:U('group/Manage/membermanage',array('gid'=>$groupinfo['id']))}" 
+      
+      <if condition="$current eq 'membermanage'">class="on" </if>
+      ><span>成员管理</span></a></li>
+    <li><a href="{:U('group/Manage/announce',array('gid'=>$groupinfo['id']))}" 
+      
+      <if condition="$current eq 'announce'">class="on" </if>
+      ><span>公告发布</span></a></li>
+    <li><a href="{:U('group/Log/index',array('gid'=>$groupinfo['id']))}" 
+      
+      <if condition="$current eq 'log'">class="on" </if>
+      ><span>管理日志</span></a></li>
+  </ul>
+</div>
+<!-- 切换标签 end  --> 

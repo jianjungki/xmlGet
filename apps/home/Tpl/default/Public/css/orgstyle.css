@@ -1,0 +1,79 @@
+.checkbutton {
+    position: relative;
+    padding-right: 10px;
+    top: 18px;
+}
+.create_box {
+    margin: 0;
+    padding: 20px;
+    background-color: #F8F8F8;
+    border: 1px solid #EBEBEB;
+    -moz-border-radius: 3px;
+    -khtml-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    color: #666666
+}
+.l250 {
+    width: 230px;
+    color: #666;
+}
+.l400 {
+    width: 370px;
+}
+.w300 {
+    width: 300px;
+    background: #fff;
+    margin: 0 5px 0 0;
+}
+.groupBox {
+    position: relative;
+    _width: 99%;
+}
+.memberlist {
+    padding: 10px 0 0
+}
+.cGray2, .cGray2:visited, a.cGray2 {
+    color: #999;
+}
+.memberlist {
+    padding: 10px 0 0
+}
+.memberlist dd, .memberlist dt {
+    border-bottom: 1px solid #ddd;
+    padding: 8px 0;
+    width: 100%;
+    line-height: 18px;
+}
+.memberlist dt {
+    color: #999
+}
+.memberlist dd .ck {
+    vertical-align: middle;
+    margin: 9px 15px 10px 0;
+    padding: 0
+}
+.memberlist dt .ck {
+    vertical-align: middle;
+    margin: 3px 15px 0 0;
+    padding: 0
+}
+.memberlist dd .c1, .memberlist dt .c1 {
+    float: left;
+    width: 25%
+}
+.memberlist dd .c2, .memberlist dt .c2 {
+    float: left;
+    width: 15%
+}
+.memberlist dd .c3, .memberlist dt .c2 {
+    float: left;
+}
+.memberlist dd .c4, .memberlist dt .c4 {
+    float: left;
+    width: 25%
+}
+.pic30 {
+    display: inline-block;
+    vertical-align: middle
+}

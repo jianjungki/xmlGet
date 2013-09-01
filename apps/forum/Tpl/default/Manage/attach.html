@@ -1,0 +1,283 @@
+<include file="../Public/manage_top" />
+
+<link href="../Public/css/bbs.css" rel="stylesheet" type="text/css" />
+<link href="../Public/css/layout.css" rel="stylesheet" type="text/css" />
+<link href="../Public/css/public.css" rel="stylesheet" type="text/css" />
+<div class="content zbg"> 
+  <div class="bbs_left">
+ 	<include file="../Public/manage_left" />
+  </div><include file="nav" />
+    
+    <div class="bbs_main">
+    <div class="tit_line">附件审核</div>
+    <div class="mb20">
+	<form id="form1" name="form1" method="post" action="{:U('forum/Manage/attach',array('type'=>$_GET['type'],'class'=>$fid))}">   
+        <div class="mb10">
+          <div class="cr lh22" style="width: 8%;">附件标题：</div>
+          <div class="cl" style="width: 20%;">
+            <input  name="name" type="text" class="in_put" id="name" style="width: 150px;" value="{$search.name}">
+          </div>
+         <div class="cl" style="width: 30%; color:#999"><span>根据附件标题搜索,支持模糊查询</span></div>
+          <div class="C"></div>
+        </div>
+        <div class="mb10">
+          <div class="cr lh22" style="width: 8%;">昵称：</div>
+          <div class="cl" style="width: 20%;">
+            <input  name="maskname" type="text" class="in_put" id="uid" style="width: 150px;" value="{$search.maskname}"><br />
+          </div>
+          <div class="cl lh22" style="width: 40%; color:#999"><span class="cl06">搜索该用户昵称上传的附件</span></div>
+          <div class="C"></div>
+        </div>
+         
+        <div class="mb10">
+          <div class="cl" style="width: 8%;">&nbsp;</div>
+          <div class="cl" style="width: 20%;">
+            <input type="submit" value="搜 索" name="" class="btn_sea mb5">
+          </div>
+          <div class="C"></div>
+        </div>
+	  </form>
+    </div>
+    
+    <div class="mt20">
+      <ul class="tab">
+     	<li <php>if($_GET['type']=='nocheck'){</php>class="on"<php>}</php> ><span><a href="{:U('forum/Manage/attach',array('type'=>'nocheck','class'=>$fid))}">未审核</a></span></li>
+        <li <php>if($_GET['type']=='check'){</php>class="on"<php>}</php> ><span><a href="{:U('forum/Manage/attach',array('type'=>'check','class'=>$fid))}">已审核</a></span></li>
+      </ul></div>
+    <div class="list_box">
+      <dl>
+        <dt>
+          <div class="cl" style="width: 41%;">标题</div>
+          <div class="cl" style="width: 10%;">昵称</div>
+          <div class="cl" style="width: 16%;">上传时间</div>
+          <div class="cc" style="width: 10%;">状态</div>
+          <div class="cr" style="width: 20%;">管理操作</div>
+          <div class="C"></div>
+        </dt>
+        <php>if($_GET['type']=='nocheck'){</php>
+		<volist name='data' id='vo'>
+        <dd id="attach_{$vo.attach_id}">
+          <div class="cl img_w" style="width:40%; margin-right:10px;">
+          	<input type="checkbox" class="checkbox1" value={$vo.attach_id}></input>
+          <php>if($vo['pid']==0){</php>
+		  <a style="margin-right:5px;" href="{:U('forum/Detail/index',array('id'=>$vo['tid']))}" target="_blank" title="{$vo.title}">{$vo.title|getShort=4}</a>{$vo.name}
+		  <php>}else{</php>
+		   <a style="margin-right:5px;" href="{:U('forum/index/gopost',array('id'=>$vo['tid'],'pid'=>$vo['pid']))}" target="_blank" title="{$vo.title}">{$vo.title|getShort=4}</a>{$vo.name}
+
+		  <php>}</php>
+		  <php>$path = $vo['savepath'].$vo['savename'];</php>
+		  <!--
+		  <php> $temp=strtolower($vo['extension']);
+		  		 if(in_array($temp,array('jpeg','jpg','bmp','gif','png')) ){ </php>
+		  <a style="color:#E6722C" href="javascript:void(0)"  onClick='seePic("{$path|getGroupIcon}")'>查看</a>
+		  <php>}</php>
+		   -->
+		 </div>
+          <div class="cl" style="width: 10%;">{$vo.maskName}</a></div>
+          <div class="cl" style="width: 16%;">{$vo.uploadTime|friendlyDate=###,'full'}</div>
+          <div class="cc" style="width: 10%;">
+		  <if condition="$vo.status eq '1'"><font color="blue">已审核</font>
+                <else />
+                <font color="red">未审核</font></if>
+		  </div>
+          <div class="cr" style="width: 20%;">
+           <a href="javascript:void(0)" onclick="changeStatus({$vo.id},0)">[ 审核 ]</a>
+           <a href="{:U('home/attach/download',array('id'=>$vo['id'],'uid'=>$vo['userId'],'hash'=>$vo['hash']),false,UPLOAD_URL);}">[ 下载 ]</a>
+           <a href="javascript:void(0)" onclick="del('{$vo.attach_id}')">[ 删除 ]</a></div>
+          <div class="C"></div>
+        </dd>
+		</volist>
+      </dl>
+         <php>if(empty($data)){</php>
+           <div class="no_data">暂无数据</div>
+        <php>}</php>
+       <div class="mt10">
+           <div class="alR page R" style="width: 60%;">{$html}</div>
+         <php>if(!empty($data)){</php>
+          <div class="cl" style="width: 30%; float: left; padding-left:5px;">
+            <input type="checkbox" onClick="checkAll(this)" class="checkbox"/>
+            全选
+            <input class="btn_sea ml5" name="del" type="button" id="del" value=" 删除附件" onclick="del(0)"/><input class="btn_sea ml5" name="chang" type="button" id="chang" value="批量审核" onclick="changeStatus(0,0)"/>
+          </div>
+           <php>}</php>
+           <div class="C"></div>
+        </div>	
+       
+        
+       <php>}elseif($_GET['type']=='check'){</php>
+       	<volist name='data' id='vo'>
+        <dd id="attach_{$vo.attach_id}">
+          <div class="cl img_w" style="width:40%; margin-right:10px;">
+          	<input type="checkbox" class="checkbox1" value={$vo.attach_id}></input>
+          <php>if($vo['pid']==0){</php>
+		  <a href="{:U('forum/Detail/index',array('id'=>$vo['tid']))}" target="_blank" title="{$vo.title}">{$vo.title|getShort=4}</a>{$vo.name}
+		  <php>}else{</php>
+		   <a href="{:U('forum/index/gopost',array('id'=>$vo['tid'],'pid'=>$vo['pid']))}" target="_blank" title="{$vo.title}"> {$vo.title|getShort=4}</a>{$vo.name}
+		  <php>}</php>
+		  <php>$path = $vo['savepath'].$vo['savename'];</php>
+		  <!--
+		  <php>if(  in_array($vo['extension'],array('jpeg','jpg','bmp','gif')) ){ </php>
+		  <a style="color:#E6722C" href="javascript:void(0)"  onClick='seePic("{$path|getGroupIcon}")'>查看</a>
+		 <php>}</php>
+		-->
+		 </div>
+          <div class="cl" style="width: 10%;">{$vo.maskName}</div>
+          <div class="cl" style="width: 16%;">{$vo.uploadTime|friendlyDate=###,'full'}</div>
+          <div class="cc" style="width: 10%;">
+		  <if condition="$vo.status eq '1'"><font color="blue">已审核</font>
+                <else />
+            <font color="red">未审核</font></if>
+		  </div>
+          <div class="cr" style="width: 20%;*width:22%;">
+          	<a href="javascript:void(0)" onclick="changeStatus({$vo.id},1)">[ 取消审核 ]</a>
+          	<a href="{:U('home/attach/download',array('id'=>$vo['id'],'uid'=>$vo['userId'],'hash'=>$vo['hash']),false,UPLOAD_URL);}">[ 下载 ]</a>
+          	<a href="javascript:void(0)" onclick="del('{$vo.attach_id}')">[ 删除 ]</a></div>
+          <div class="C"></div>
+        </dd>
+		</volist>
+      </dl>
+        <php>if(empty($data)){</php>
+           <div class="no_data">暂无数据</div>
+        <php>}</php>
+           <div class="mt10">
+           <div class="alR page R" style="width: 60%;">{$html}</div>
+         <php>if(!empty($data)){</php>
+          <div class="cl" style="width: 30%; float: left; padding-left:5px;">
+            <input type="checkbox" onClick="checkAll(this)" class="checkbox"/>
+            全选
+            <input class="btn_sea ml5" name="del" type="button" id="del" value=" 删除附件" onclick="del(0)"/><input class="btn_sea ml5" name="chang" type="button" id="chang" value="取消审核" onclick="changeStatus(0,1)"/>
+          </div>
+          <PHP>}</PHP>
+          <div class="C"></div>
+        </div>	
+      <php>}</php>
+    </div>
+   </div> 
+<div class="C"></div>
+</div>
+
+<include file="__THEME__/footer" />
+<!--
+<script type="text/javascript" src="../Public/js/audit.js"></script>
+-->
+<script type="text/javascript">
+function seePic(path){
+	tb_show("", path, false);
+}
+
+var fid = {$fid};
+var attachId;
+var astatus;
+function changeStatus(id,status){
+	var cid = getChecked()
+	cid = cid.toString();
+	attachId = id;
+	astatus = status;
+	if(status==1){
+		if((!attachId) && (!cid)){
+			$.tbox.no("请选择你要取消审核的附件！","提示");
+			setTimeout("$.tbox.close()",1500);
+			return false;
+		}
+		$.tbox.confirm('你确定取消审核这些附件？','提示',{ok:"checkAttach"});
+	}else if(status == 0){
+		if((!cid) && (!attachId)){
+			$.tbox.no("请选择你要审核的附件！","提示");
+			setTimeout("$.tbox.close()",1500);
+			return false;
+		}
+		$.tbox.confirm('你确定审核这些附件？','提示',{ok:"checkAttach"});
+		}
+	
+}
+function checkAttach(){
+	var id = attachId;
+	var type = astatus;
+	var url = "{:U('forum/Manage/doAttachAudit')}";
+	var postId;
+	if(id != 0){
+		postId =  id;
+	}else{
+		postId = getChecked();
+		status = 0;
+	}
+	if (!postId){
+		$.tbox.no('请选择需要改变审核状态的附件！');
+		return false;
+	}
+	$.post(url,{tp:'attach',id:postId,status:type,fid:fid},function(result){
+		if(result){
+			postId  = postId.toString();
+			postId = postId.split(',');
+			for(var i = 0; i < postId.length; i++) {
+				$('#attach_'+postId[i]).remove();
+			}
+			window.location.href=window.location.href;
+		}
+	});
+}
+var aid;
+function del(id){
+	aid = id;
+	var cid = getChecked()
+	cid = cid.toString();
+	if(!cid && !aid){
+		$.tbox.no("请选择你要删除的附件！","提示");
+		setTimeout("$.tbox.close()",1500);
+		return false;
+	}
+	$.tbox.confirm("你确定要删除附件吗？","删除提示",{ok:"delAttach"});
+}
+
+function delAttach(){
+	var url = "{:U('forum/Manage/doDelAttach')}";
+	var postId;
+	if(aid != 0){
+		postId =  aid;
+	}else{
+		postId = getChecked();
+	}
+	if (!postId){
+		$.tbox.no('请选择需要删除的附件！');
+		setTimeout("$.tbox.close()",1500);
+		return false;
+	}
+
+	$.post(url,{id:postId,fid:fid},function(result){
+		result = eval("("+result+")");
+		if(result.status){
+		//	$.tbox.no(result.info);
+			setTimeout("$.tbox.close()",1500);
+			postId  = postId.toString();
+			postId = postId.split(',');
+				for(i = 0; i < postId.length; i++) {
+					$('#attach_'+postId[i]).remove();
+				}
+		}else{
+			$.tbox.no(result.info);
+			setTimeout("$.tbox.close()",1500);
+			}
+	});
+}
+
+function checkAll(o){
+	if( o.checked == true ){
+		$('.checkbox1').attr('checked','true');
+	}else{
+		$('.checkbox1').removeAttr('checked');
+	}
+}
+
+//获取已选择用户的ID数组
+function getChecked() {
+	var postId = new Array();
+	$('.checkbox1').each(function(i, n){
+		if($(this).attr("checked")){
+			postId.push( $(this).val() );
+			}
+		
+	});
+	return postId;
+}
+
+</script>

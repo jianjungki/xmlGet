@@ -1,0 +1,118 @@
+@charset "utf-8";
+/* CSS Document */
+
+body { font:12px Arial, Verdana, Helvetica, sans-serif; text-align:center; color:#333; }
+body, div, dl, dt, dd, ul, ol, li, pre, form, fieldset, blockquote, h1, h2, h3, h4, h5, h6 { padding:0; margin:0 }
+table, td, tr, th { font-size:12px }
+input, select { vertical-align: middle; font-size:12px;}
+table { margin:0 auto }
+img { border:none }
+ol, ul, li{ list-style:none }
+em { color:#999; font-family: Tahoma, Verdana, helvetica; font-size: 10px; font-style: normal; white-space: nowrap; }
+
+/* 连接 */
+a { color:#005fab; text-decoration:none }
+a:link { color:#3b5999; text-decoration:none }
+a:visited { color:#3b5999; text-decoration:none }
+a:hover { color:#3b5999; text-decoration:underline }
+a:active { color:#3b5999 }
+
+/* 字体颜色 */
+.cWhite, .cWhite:visited, a.cWhite { color:#fff }
+.cYellow, .cYellow:visited { color:#ff0 }
+.cGray, .cGray:visited, a.cGray { color:#333 }
+.cGray2, .cGray2:visited, a.cGray2 { color:#999 }
+.cBlack, .cBlack:visited, a.cBlack { color:#000 }
+.cBlue, .cBlue:visited, a.cBlue { color:#005fab }
+.cRed, .cRed:visited, a.cRed { color:Red }
+.cGreen, a.cGreen:link, a.cGreen:visited { color:#008000; }
+
+.fn { font-weight: normal; }
+.fI { font-style:italic }
+.fu, .fu a { text-decoration: underline; }
+
+/* padding */
+.pt5{ padding-top:5px;}
+.pl10{ padding-left:10px;}
+.pt10{ padding-top:10px;}
+.pt20{ padding-top:20px;}
+
+/* margin */
+.ml5{ margin-left:5px;}
+.ml10{ margin-left:10px;}
+.mt10{ margin-top:10px;}
+.mt5{ margin-top:5px;}
+.mt20{ margin-top:20px;}
+.mr10{ margin-right:10px;}
+.mb10{ margin-bottom:10px}
+.mb5{ margin-bottom:5px;}
+.mr5{ margin-right:5px;}
+
+/* 字体大小 */
+.f12px { font-size:12px }
+.f14px { font-size:14px }
+.f16px { font-size:16px }
+.f18px { font-size:18px }
+
+/*其它样式*/
+.alR { text-align:right }
+.alL { text-align:left }
+.alC { text-align:center }
+.alM { vertical-align: middle; }
+.left { float:left }
+.right { float:right }
+.clear { clear: both; }
+.c { clear:both; font-size:1px; height:0; line-height:0; visibility:hidden; }
+.hidden { display:none }
+.OverH { overflow: hidden; text-overflow:ellipsis; white-space: nowrap; }
+.hand { cursor:pointer; }
+.WB { word-wrap:break-word; }
+.wn { white-space: nowrap; }
+.sea_left{padding:10px 0 18px 180px;}
+.txt{ line-height:18px;height:18px;font-size:12px;}
+
+.lineD{border-bottom:1px dashed #e2e2e2}
+.btn_b{background:url(images/btn_b.gif) no-repeat 0 0; color:#fff;cursor:pointer;font-size:12px;overflow:visible;vertical-align:middle;z-index:0; width:60px; height:24px; line-height:24px; color:#fff;margin-right:3px; border:0}
+.btn_w{background:#fcfcfc url(images/btn_w.gif) no-repeat 0 0; border:0 none; width:60px; height:24px; color:#333}
+
+/*行高样式*/
+.lh22{ line-height:22px;}
+.lh25{ line-height:25px;}
+.lh30{ line-height:30px;}
+
+/*tab*/
+.tab {border-bottom:1px solid #9CB8CC;font-size:12px;line-height:100%;margin:10px auto;overflow:hidden;text-align:left;
+width:99%;height:24px;}
+.tab li{padding:0 10px;background:none;background-color:#F3F3F3;border-color:#E7E7E7 #E7E7E7;border-style:solid solid none;border-width:1px 1px 0; line-height:24px;}
+.tab li a {color:#333333;text-align:center;text-decoration:none;}
+.tab li.on,.tab li.on a {background-color:#9CB8CC;color:#fff;font-weight:bold}
+.tab_b {background-color:#F5F5F5;clear:both;font-size:12px;line-height:25px;margin-top:5px;padding-left:5px;}
+.tab_b span {cursor:pointer;padding-right:8px;}
+.tab_b a.on {color:#333;font-weight:bold;}
+
+/*排序*/
+.category_tree .ico_top, .ico_btm { vertical-align:middle; }
+.category_tree .ico_top img { background-position:-12px 0; _margin-top:5px; }
+.category_tree .ico_btm img { background-position:-24px 0; _margin-top:5px;}
+.category_tree .ico_top:hover img { background-position:0 0; }
+.category_tree .ico_btm:hover img { background-position:-35px 0; }
+
+/* 翻页样式 */
+.page{padding:5px;color:#666;font-size:12px;clear:both; line-height:22px}
+.page span.disabled{border:1px solid #EEE;color:#DDD;margin:2px;padding:2px 2px;_padding:7px 9px;*padding:7px 9px;}
+.page span.current{ background:none; border:0;color:#000;margin:2px;margin-left:-2px;padding:2px 5px; text-decoration:none; font-weight:bold}
+.page a, .page a:link, .page a:visited{background-color:#f0f4f9;border:1px solid #bacee2;color:#333;margin:2px;padding:2px 5px;text-decoration:none;}
+.page a:hover{border:1px solid #069; background:#fff;color:#069;margin:2px;padding:2px 5px;text-decoration:none;}
+
+/*删除样式*/
+a.del {background: url(images/title_icon_18.gif) no-repeat 0;width:13px;height:20px; display:inline-block;}
+a.del:hover {background: url(images/title_icon_19.gif) no-repeat 0;width: 13px;height: 20px; text-decoration:none;}
+a.delR {display:none;float: right;}
+.on a.delR {background-image: url(images/title_icon_18.gif);background-repeat: no-repeat;background-position: 0px 0px;width: 14px;overflow: hidden;white-space: nowrap;font-size: 12px;text-indent: 100px;display: block;float: right;height: 13px;}
+.on a.delR:hover {background-image: url(images/title_icon_19.gif);background-repeat: no-repeat;width: 14px;white-space: nowrap;height: 13px;}
+
+/*列表浮动*/
+.cl{ float:left;overflow:hidden;}
+.cr{ float:left;overflow:hidden; text-align:right}
+.cc{ float:left;overflow:hidden; text-align:center}
+.C{ clear:both}

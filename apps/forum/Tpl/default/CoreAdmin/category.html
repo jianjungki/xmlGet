@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<style type="text/css">
+<!--
+.overtr { background-color: #eee; }
+-->
+</style>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>后台管理 - {$xsite.title}</title>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/admin/css/layout.css" />
+ <link href="__PUBLIC__/themes/blue/layout.css" rel="stylesheet" type="text/css" />
+</head>
+<script type="text/javascript" src="__PUBLIC__/language/{$lang}/lang.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.4-and-jquery-ui-core-1.7.2.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-ui-1.7.2/dragable.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/js/tbox/tbox.js" ></script>
+
+<script type="text/javascript" src="__PUBLIC__/js/admin.js" ></script>
+<script>
+	var THEME = "__THEME__";
+	var APP    = "__APP__";
+	var URL    = "__URL__";
+	var PUBLIC = "../Public";
+	var SITE_URL = "{*SITE_URL}";
+</script>
+	<body>
+    <div>
+    	
+		<include file="_tab" />
+		<div>添加完分类后，请点击页面底部“保存修改”按钮。</div>
+		<!-- 分类管理 -->        
+		<form method="POST" action="{:U('bbs/Admin/doChangeCate')}">
+		<table class="tb tb2 tableborder" width="100%">
+		  <tbody>
+
+		    <tr class="header">
+				<th>显示顺序</th>
+				<th>分类名称</th>
+				<th style="width:350px">已添加版主</th>
+				<th>版主</th>
+				<!-- <th>专家</th>  -->
+				<th>操作</th>
+	        </tr>
+			<!-- level1 -->
+			<php>foreach($catetree as $k1=>$v1):</php>
+		    <tr onmouseout="this.className='#'" onmouseover="this.className='overtr'" id="tr_{$v1.a}" class="#">
+				<td class="td25"> <input type="text" name="cate[{$k1}][o]" value="{$k1}" style="width:30px" /></td>
+
+				<td>
+					<div class="parentboard"><input type="hidden" class="txt" value="{$v1.t}" name="cate[{$k1}][t]" />{$v1.t}</div>
+				</td>
+
+					<td rel="{$v1.a}" style="color:#2366A8">{$v1.a|getBanzu}&nbsp;</td>
+					<td> <a title="编辑本版块版主" href="javascript:setAdmin({$v1.a},'添加 [ {$v1.t} ] 版主','m')">添加版主</a></td>
+					<!-- <td><a title="编辑本版块专家" href="javascript:setAdmin({$v1.a},0,0,'添加专家','e')">添加专家</a></td> -->
+				<td>
+					<div>
+						 <input type="hidden" id="hm{$v1.a}_0_0" name="cate[{$k1}][m]" value="{$v1.m}">
+					     <input type="hidden" id="he{$v1.a}_0_0" name="cate[{$k1}][e]" value="{$v1.e}">
+						<php>if(!is_array($v1[d])):</php> <a href="javascript:void(0);" onclick="removeThis(this);">删除</a><php>endif;</php>
+					</div>
+				</td>
+	        </tr>
+				<!-- level2 -->
+				<php>if(is_array($v1[d])): foreach($v1[d] as $k2=>$v2):</php>
+				<tr onmouseout="this.className='#'" onmouseover="this.className='overtr'" class="#" id="tr_{$v1.a}_{$v2.a}">
+					<td class="td25"></td>
+
+					<td>
+						<div class="sort_list1">
+						<input type="text" name="cate[{$k1}][d][{$k2}][o]"  value="{$k2}" style="width:15px" />
+						<input type="hidden" class="txt" value="{$v2.t}"  name="cate[{$k1}][d][{$k2}][t]" /> {$v2.t}
+						</div>
+					</td>
+					<td rel="{$v2.a}" style="color:#2366A8">{$v2.a|getBanzu}&nbsp;</td>
+					<td> <a title="编辑本版块版主" href="javascript:setAdmin({$v2.a},'添加 [ {$v1.t} >> {$v2.t} ] 版主','m')">添加版主</a></td>
+					<!-- <td><a title="编辑本版块专家" href="javascript:setAdmin({$v1.a},{$v2.a},0,'添加专家','e')">添加专家</a></td> -->		
+				<td>
+					<div>
+					     <input type="hidden" id="hm{$v1.a}_{$v2.a}_0" name="cate[{$k1}][d][{$k2}][m]" value="{$v2.m}">
+					     <input type="hidden" id="he{$v1.a}_{$v2.a}_0" name="cate[{$k1}][d][{$k2}][e]" value="{$v2.e}">
+
+						<a href="javascript:void(0);" onclick="deletCategory('{$v1.a},{$v2.a}');">删除</a>
+					</div>
+				</td>
+				</tr>
+					<!-- level3 -->
+					<php>if(is_array($v2[d])): foreach($v2[d] as $k3=>$v3):</php>
+					<tr onmouseout="this.className='#'" onmouseover="this.className='overtr'" class="#" id="tr_{$v1.a}_{$v2.a}_{$v3.a}">
+						<td class="td25"></td>
+
+						<td>
+							<div class="sort_list2">
+							<input type="text"  name="cate[{$k1}][d][{$k2}][d][{$k3}][o]" value="{$k3}" style="width:15px" />
+							<input type="hidden"  class="txt" value="{$v3.t}" name="cate[{$k1}][d][{$k2}][d][{$k3}][t]" /> {$v3.t}
+							</div>
+						</td>
+						<td rel="{$v3.a}" style="color:#2366A8">{$v3.a|getBanzu}&nbsp;</td>
+						<td> <a title="编辑本版块版主" href="javascript:setAdmin({$v3.a},'添加 [ {$v1.t} >> {$v2.t} >> {$v3.t} ] 版主','m')">添加版主</a></td>
+						<!-- <td><a title="编辑本版块专家" href="javascript:setAdmin({$v1.a},{$v2.a},{$v3.a},'添加专家','e')">添加专家</a></td>	 -->
+						<td>
+							<div>
+								 <input type="hidden" id="hm{$v1.a}_{$v2.a}_{$v3.a}" name="cate[{$k1}][d][{$k2}][d][{$k3}][m]" value="{$v3.m}">
+					    		 <input type="hidden" id="he{$v1.a}_{$v2.a}_{$v3.a}" name="catecate[{$k1}][d][{$k2}][d][{$k3}][e]" value="{$v3.e}">
+								<php>if(!is_array($v3[d])):</php><a href="javascript:void(0);" onclick="deletCategory('{$v1.a},{$v2.a},{$v3.a}');">删除</a><php>endif;</php>
+							</div>
+						</td>
+					</tr>
+					<php>endforeach;endif;</php>
+
+					<tr onmouseout="this.className='#'" onmouseover="this.className='overtr'" class="#">
+					  <td colspan="1" class="td25"></td>
+					  <td colspan="4"><div class="sort_list2"><a class="addchildboard" style="color:#2366A8" onclick="addNewBoard(this,{$k1},{$k2})" href="javascript:void(0);">添加子版块</a></div></td>
+					</tr>
+
+
+				<php>endforeach;endif;</php>
+
+		    <tr onmouseout="this.className='#'" onmouseover="this.className='overtr'" class="#">
+		      <td colspan="1" class="td25"></td>
+		      <td colspan="4"><div class="sort_list1"><a class="addtr" onclick="addNewParentBoard(this,{$k1})" href="javascript:void(0);">添加新版块</a></div></td>
+	        </tr>
+
+			<php>endforeach;</php>
+
+		    <tr onmouseout="this.className='#'" onmouseover="this.className='overtr'" class="#">
+		      <td colspan="1" class="td25"></td>
+		      <td colspan="4"><div><br /><a class="addtr" onclick="addNewCate(this)" href="javascript:void(0);">添加新分区</a></div></td>
+	        </tr>
+
+		    <tr onmouseout="this.className='#'" onmouseover="this.className='overtr'" class="#">
+		      <td colspan="15">
+				<div class="fixsel">
+		        <input type="submit" value="保存修改" name="editsubmit" id="submit_editsubmit" class="btn"/>
+		        </div></td>
+	        </tr>
+
+	      </tbody>
+	  </table>
+	  </form>
+    </div>
+
+<script LANGUAGE="JavaScript">
+<!--
+function addNewCate(obj){
+	var table	=	obj.parentNode.parentNode.parentNode.parentNode;
+	var row		=	table.insertRow(obj.parentNode.parentNode.parentNode.rowIndex);
+	var cell1	=	row.insertCell(0);
+	var cell2	=	row.insertCell(1);
+	cell1.colSpan	=	1;
+	cell2.colSpan	=	4;
+	cell2.innerHTML	=	'<input type="text" class="txt" size="20" value="新分区名称" name="cate[][t]" /> <a href="javascript:void(0);" onclick="removeThis(this);">删除</a>';
+}
+
+function addNewParentBoard(obj,pid){
+	var table	=	obj.parentNode.parentNode.parentNode.parentNode;
+	var row		=	table.insertRow(obj.parentNode.parentNode.parentNode.rowIndex);
+	var cell1	=	row.insertCell(0);
+	var cell2	=	row.insertCell(1);
+	cell1.colSpan	=	1;
+	cell2.colSpan	=	4;
+	cell2.innerHTML	=	'<div class="sort_list1"><input type="text" class="txt" size="20" value="新版块名称" name="cate['+pid+'][d][][t]" /> <a href="javascript:void(0);" onclick="removeThis(this);">删除</a></div>';
+}
+
+function addNewBoard(obj,pid,ppid){
+	var table	=	obj.parentNode.parentNode.parentNode.parentNode;
+	var row		=	table.insertRow(obj.parentNode.parentNode.parentNode.rowIndex);
+	var cell1	=	row.insertCell(0);
+	var cell2	=	row.insertCell(1);
+	cell1.colSpan	=	1;
+	cell2.colSpan	=	4;
+	cell2.innerHTML	=	'<div class="sort_list2"><input type="text" class="txt" size="20" value="子版块名称" name="cate['+pid+'][d]['+ppid+'][d][][t]" /> <a href="javascript:void(0);" onclick="removeThis(this);">删除</a></div>';
+}
+var selectedObj = null;
+function removeThis(obj,cid){
+			if(confirm('删除分类，分类下的内容将都不可见。')){
+				var table	=	obj.parentNode.parentNode.parentNode.parentNode;
+				table.deleteRow(obj.parentNode.parentNode.parentNode.rowIndex);
+		 }
+
+}
+
+function deletCategory(cid){
+	$.tbox.popup(URL+"&act=deleteCategory&cid="+cid,'删除版块');
+}
+
+function dodel(){
+	
+}
+
+function setAdmin(tagid,title,type){
+	$.tbox.popup(URL+"&act=setAdmin&tagid="+tagid,title,{ok:"confirmExpert"});
+}
+
+//-->
+</script>
+</body>
+</html>

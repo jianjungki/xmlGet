@@ -1,0 +1,97 @@
+<style type="text/css">
+.atention_box { font-size: 12px; text-align: left; padding-bottom:5px;width:500px;}
+.atention_box dl{ margin: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 10px; padding-left: 0px; }
+.atention_box dt{ background-color: #F0F0F0; line-height: 30px; margin: 0px; padding-top: 0px; padding-right: 5px; padding-bottom: 0px; padding-left: 5px; clear: both; }
+.atention_box dd{ color: #666; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #DDDDDD; margin: 0px; line-height: 24px; padding-top: 0px; padding-right: 5px; padding-bottom: 0px; padding-left: 5px; clear: both; height: 24px; }
+.atention_box dd .del{ background: url(../images/ico_del.gif) no-repeat 0px 0px; text-indent: 999px; white-space: nowrap; display: inline-block; width: 12px; overflow: hidden; height: 12px; margin-top: 5px; margin-right: 5px; }
+</style>
+<div class="atention_box" id="join_box">
+    <dl id="attentionList">
+	  <dt style="color:red">
+	      	{$deInfo.message}
+      </dt>
+<php>if($deInfo['error']=='havetopic'){</php>	  
+      <dt>
+      		<li><input type="radio" name="isMoveTopic" value="0" checked="true"> 删除该分类，分类下的主题将不可见（不可逆）。</li>
+		    <li><input type="radio" name="isMoveTopic" value="1"> 转移至 <span id="categoryList"></span></li>
+      </dt>
+	       <div class="box-in" style="margin:5px;" >
+  	注：所选择的版块必须是两级以上，否则帖子无法转移！
+  </div>
+<php>}</php>	  
+   </dl>
+
+  <div class="box-out" id="boardMessage" style="margin:5px;color:red"></div>
+	<div style="display: block;" id="tb_content_list" class="tb_button_list">
+		<p>
+			<php>if( $deInfo['error']=='havetopic' ){</php>
+				<input type="button" value="删除" onclick="domove()"  name="" id="tb_button_ok" class="ml5"/>
+			<php>}else if( $deInfo['error']=='' ){</php>
+				<input type="button" value="删除" onclick="dodelcat()"  name="" id="tb_button_ok" class="ml5"/>
+			<php>}</php>
+			<input type="button" value="关闭" onclick="$.tbox.close()" id="tb_button_no" name="" class="ml5"/>
+		</p>
+	</div>
+  </div>
+  
+  <script type="text/javascript" src="__PUBLIC__/js/tsjs.json2select.js" ></script>
+  <script type="text/javascript" src="__PUBLIC__/language/{$lang}/lang.js" ></script>
+<script>
+
+	var oldClass      = '{$cids}';
+	
+	function domove(){
+		
+		var dotype = $("input:radio[name='isMoveTopic']:checked").val();	
+		if( dotype=='1' ){
+			var categoryId    = new Array();
+			var categoryTitle = new Array();
+			
+			for(i=0;i<=2;i++){
+				if( $("#sel"+i).val() ){
+					categoryId[i]     = $("#sel"+i).val();
+					categoryTitle[i]  = $("#sel"+i+" option[value="+categoryId[i]+"]").html();
+				}		
+			}
+		
+			if( categoryId.length < 2 ){
+				$("#boardMessage").html('请选择完整的版块',"选择分类失败");
+				return false;
+			}else{
+				 var browse_category_title = categoryTitle.join(' > ');
+				 var browse_category_id = categoryId.join(',');
+				 
+				 if( browse_category_id == oldClass){
+					$("#boardMessage").html('请选择新的版块',"选择分类失败");
+					return false;
+				 }
+				 
+				 $("#boardMessage").html('数据转移中...');
+				 
+			   	$.post("{:U('bbs/Admin/doMoveTopic')}",{type:'moveToCategory',oldClass:oldClass,newClass:browse_category_id},function(txt){
+					if(txt==1){
+						$("#boardMessage").html("主题转移成功!!");
+						dodelcat();
+					}else{
+						$("#boardMessage").html("主题转移失败!!");
+					}
+				});
+			 }
+		 }else{
+		 	dodelcat();
+		 }
+		 
+		 
+
+	}
+	
+	function dodelcat(){
+		oldClass = oldClass.replace(/,/g,'_');
+		$("tr[id='tr_"+oldClass+"']").remove();
+		$.tbox.close();
+	}
+	
+<php>if( $deInfo['error']=='havetopic' ){</php>
+	$("#categoryList").json2select({$json},[{$cids}],"sel");
+<php>}</php>
+</script>

@@ -1,0 +1,81 @@
+<form id="addClassPopedom" action="{:U('forum/Manage/doCatePopedom',array('cid'=>$id))}"
+	method="post">
+<table class="tab_popedom" style="width:1000px; margin:0 20px;" cellpadding="0" cellspacing="0"	border="0">
+	<tr height="30">
+		<th style="width: 30px">操作</th>
+		<th class="line_l" style="padding-left:5px;">用户组</th>
+		<php>
+		foreach($userRule as $value){
+		</php>
+		<th class="line_l"><input class="mr5 hAll" name="{$value}"
+			rel="user" type="checkbox" value="" />{:L($value)}</th>
+		<php>
+		}
+		</php>
+	</tr>
+	
+	<php>
+	$temp =	array("usergid","name","fid","gid","allow_post_special_thread","allow_edit_special_thread","allow_post_vote","allow_read_image","allow_search","allow_post_hide","allow_read_hide");
+	</php>
+	
+	<volist name="userList" id="vo">
+	<tr height="30">
+		<td>
+        	<input width="2%" height="30" class="mr_{$vo.gid} vAll" name="gid" rel="{$vo.gid}" type="checkbox" value="" />
+            <input type="hidden" name="gids[]" value="{$vo.gid}" />
+            </td>
+		<td width="8%" align="left" style="padding-left: 5px">{$vo.name}</td>
+		<php>
+		foreach($vo as $key=>$value){
+		</php>
+		<php>
+		if(!in_array($key,$temp)){
+		</php>
+		<td><input class="mr5 {$key}_user gid_{$vo.gid}" type="checkbox" value="1"  name="{$key}[{$vo.gid}]" <php>if($value==1){</php>checked="checked"<php>}</php> />
+        		<input type="hidden" name="field[]" value="{$key}" />
+		</td>
+		<php>
+		}
+		</php>
+		<php>
+		}
+		</php>
+	</tr>
+	</volist>
+</table>
+</form>
+
+<script type="text/javascript">
+
+	$(function(){
+		$('.hAll').click(function(){
+			var checked = $(this).attr("checked");
+			if(!checked){
+				var rel = $(this).attr("rel");
+				var name = $(this).attr('name');
+				$('.'+name+"_"+rel).removeAttr("checked");
+				$('.vAll').removeAttr("checked");
+			}else{
+				var rel = $(this).attr("rel");
+				var name = $(this).attr('name');
+				$('.'+name+"_"+rel).attr("checked","checked");
+			}
+			
+			});
+		$('.vAll').click(function(){
+			var checked = $(this).attr("checked");
+			if(!checked){
+				var rel = $(this).attr("rel");
+				var name = $(this).attr('name');
+				$('.'+name+"_"+rel).removeAttr("checked");
+				$('.hAll').removeAttr("checked");
+			}else{
+				var rel = $(this).attr("rel");
+				var name = $(this).attr('name');
+				$('.'+name+"_"+rel).attr("checked","checked");
+			}
+			
+			});
+	});
+
+</script>

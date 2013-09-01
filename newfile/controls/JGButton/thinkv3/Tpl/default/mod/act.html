@@ -1,0 +1,59 @@
+<script>
+var ctrl = function(){
+}
+ctrl.prototype = {
+	ModifyDataBaseRecord:function(id){
+		var id = id ? id : getChecked();
+		id = id.toString();
+		if(id=='' || id==0){
+			ui.error("请选择要启用的礼物");
+			return false;
+		}
+	    if( confirm( "是否启用{$ts['app']['app_alias']}" ) ){
+	      $.post('__URL__&act=resume',{id:id},function( text ){
+			 if( text == 1 ){
+				 ui.success( "启用多份{$ts['app']['app_alias']}成功" );
+				  var id_list = id.split( ',' );   
+				  for (var j=0 ; j< id_list.length ; j++   ){
+					  $('#status'+id_list[j]).html('{:getStatus(1)}');
+					  $('#button'+id_list[j]).html('<a href="javascript:void(0);" onclick="c.forbid('+id_list[j]+')">禁用</a> ');
+				  }
+			 }else if( text == 2 ){
+				 ui.success( "启用成功" );
+				 $('#status'+id).html('{:getStatus(1)}');
+				 $('#button'+id).html('<a href="javascript:void(0);" onclick="c.forbid('+id+')">禁用</a> ');
+			 }else{
+			 	 ui.error( "启用失败或已非禁用" );
+		   	 }
+	      });
+	    }
+	}
+	,
+	DeleteListSelectRow:function(id){
+		var id = id ? id : getChecked();
+		id = id.toString();
+		if(id=='' || id==0){
+			ui.error("请选择要删除的礼物");
+			return false;
+		}
+		if( confirm("是否删除{$ts['app']['app_alias']}？") ){
+		  $.post( '__URL__&act=delete',{id:id},function(text ){
+			  if( text == 1 ){
+				  ui.success( "删除多份{$ts['app']['app_alias']}成功" );
+				  var id_list = id.split( ',' );   
+				  for (var j=0 ; j< id_list.length ; j++   ){
+					  $('#list_'+id_list[j]).remove(); 
+				  }
+			  }else if( text == 2 ){
+				  ui.success( "删除成功" );
+				  $('#list_'+id).remove();
+			  }else{
+				  ui.error( "删除失败" );
+			  }
+		  });
+		}
+	}
+}
+var c = null;
+</script>
+  <a href="javascript:void(0);" class="btn_a" onclick="c.【ruleName】"><span>【name】</span></a>

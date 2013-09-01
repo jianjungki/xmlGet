@@ -1,0 +1,883 @@
+<package>
+  <components>
+    <component name="礼物" desc="" code="Form3" permissionCtrl="false" loginCtrl="false" id="0f7bd68b296e4a508396fbe90dfade64" isDeleted="false">
+      <componentOutputs />
+      <componentTables>
+        <componentTableRelas />
+      </componentTables>
+      <componentVariants>
+        <componentVariant name="app" desc="" valueType="1" initValue="gift" chineseName="组件名称" />
+        <componentVariant name="act" desc="" valueType="1" initValue="giftlist" chineseName="动作" />
+        <componentVariant name="mod" desc="" valueType="1" initValue="Admin" chineseName="模块" />
+      </componentVariants>
+      <propertys>
+        <property name="Width"><![CDATA[1111]]></property>
+        <property name="OutputSettings"><![CDATA[]]></property>
+        <property name="OutputCondition"><![CDATA[]]></property>
+        <property name="OuterJoinTableName"><![CDATA[]]></property>
+        <property name="TableName"><![CDATA[]]></property>
+        <property name="FormLoadAction"><![CDATA[]]></property>
+        <property name="BackColor"><![CDATA[240,246,247]]></property>
+        <property name="Name"><![CDATA[]]></property>
+        <property name="Padding"><![CDATA[0,0,0,0]]></property>
+        <property name="ComponentVariantEditor"><![CDATA[app,mod,act]]></property>
+        <property name="Height"><![CDATA[450]]></property>
+        <property name="FormCloseAction"><![CDATA[]]></property>
+      </propertys>
+      <controls>
+        <control type="JGLabel" permissionCtrl="false" name="礼物" desc="" code="JGLabel1" id="9ee21c838fa542e6acb7e51f1c18acc0">
+          <controls />
+          <propertys>
+            <property name="ComplexChineseTitle"><![CDATA[]]></property>
+            <property name="ButtonAction"><![CDATA[]]></property>
+            <property name="FontStyle"><![CDATA[{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}]]></property>
+            <property name="Left"><![CDATA[16]]></property>
+            <property name="ForeColor"><![CDATA[Black]]></property>
+            <property name="SimpleChineseTitle"><![CDATA[礼物]]></property>
+            <property name="Anchor"><![CDATA[Top, Left]]></property>
+            <property name="Width"><![CDATA[78]]></property>
+            <property name="TagData"><![CDATA[]]></property>
+            <property name="Height"><![CDATA[31]]></property>
+            <property name="ToolTipSource"><![CDATA[]]></property>
+            <property name="Dock"><![CDATA[None]]></property>
+            <property name="EnglishTitle"><![CDATA[]]></property>
+            <property name="JapaneseTitle"><![CDATA[]]></property>
+            <property name="Visible"><![CDATA[True]]></property>
+            <property name="DoubleClickAction"><![CDATA[]]></property>
+            <property name="ValueMouse"><![CDATA[Default]]></property>
+            <property name="Name"><![CDATA[JGLabel1]]></property>
+            <property name="BackColor"><![CDATA[240, 246, 246]]></property>
+            <property name="TextAlign"><![CDATA[Left]]></property>
+            <property name="Top"><![CDATA[12]]></property>
+          </propertys>
+        </control>
+        <control type="JGTabControl" permissionCtrl="false" name="" desc="" code="JGTabControl1" id="b747d5c03ede4fd5982a245342a1230d">
+          <controls>
+            <control type="JGTabPage" permissionCtrl="false" name="分类管理" desc="" code="JGTabPage3" id="5da3be44b56d4fa4b760123e87aff722">
+              <controls />
+              <propertys>
+                <property name="Left"><![CDATA[0]]></property>
+                <property name="BackColor"><![CDATA[240, 246, 247]]></property>
+                <property name="JapaneseTitle"><![CDATA[]]></property>
+                <property name="Padding"><![CDATA[0, 0, 0, 0]]></property>
+                <property name="ComplexChineseTitle"><![CDATA[]]></property>
+                <property name="Dock"><![CDATA[None]]></property>
+                <property name="Visible"><![CDATA[True]]></property>
+                <property name="TabIndex"><![CDATA[2]]></property>
+                <property name="Name"><![CDATA[JGTabPage3]]></property>
+                <property name="Height"><![CDATA[100]]></property>
+                <property name="SimpleChineseTitle"><![CDATA[分类管理]]></property>
+                <property name="TagData"><![CDATA[]]></property>
+                <property name="UseVisualStyleBackColor"><![CDATA[True]]></property>
+                <property name="Width"><![CDATA[200]]></property>
+                <property name="Anchor"><![CDATA[Top, Left]]></property>
+                <property name="EnglishTitle"><![CDATA[]]></property>
+              </propertys>
+            </control>
+            <control type="JGTabPage" permissionCtrl="false" name="礼物管理" desc="" code="JGTabPage2" id="52e43322f841447fa2c4cb3158f2686d">
+              <controls>
+                <control type="JGButton" permissionCtrl="false" name="搜索礼物" desc="" code="JGButton1" id="7c43868af21b405bbd77d953353e32be">
+                  <controls />
+                  <propertys>
+                    <property name="ComplexChineseTitle"><![CDATA[]]></property>
+                    <property name="JapaneseTitle"><![CDATA[]]></property>
+                    <property name="Dock"><![CDATA[None]]></property>
+                    <property name="ToolTipSource"><![CDATA[]]></property>
+                    <property name="Anchor"><![CDATA[Top, Left]]></property>
+                    <property name="EnglishTitle"><![CDATA[]]></property>
+                    <property name="ImageObj"><![CDATA[]]></property>
+                    <property name="Top"><![CDATA[13]]></property>
+                    <property name="ImageValue"><![CDATA[]]></property>
+                    <property name="ButtonAction"><![CDATA[]]></property>
+                    <property name="Height"><![CDATA[36]]></property>
+                    <property name="ForeColor"><![CDATA[Black]]></property>
+                    <property name="TabIndex"><![CDATA[0]]></property>
+                    <property name="FontStyle"><![CDATA[{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}]]></property>
+                    <property name="Visible"><![CDATA[True]]></property>
+                    <property name="SimpleChineseTitle"><![CDATA[搜索礼物]]></property>
+                    <property name="Width"><![CDATA[81]]></property>
+                    <property name="Enabled"><![CDATA[True]]></property>
+                    <property name="Left"><![CDATA[3]]></property>
+                    <property name="TagData"><![CDATA[]]></property>
+                    <property name="ImageType"><![CDATA[Url]]></property>
+                    <property name="BackColor"><![CDATA[156, 194, 231]]></property>
+                    <property name="Name"><![CDATA[JGButton1]]></property>
+                  </propertys>
+                </control>
+                <control type="JGButton" permissionCtrl="false" name="添加礼物" desc="" code="JGButton2" id="282e60307af24cecb148e6637deb8ad9">
+                  <controls />
+                  <propertys>
+                    <property name="Anchor"><![CDATA[Top, Left]]></property>
+                    <property name="BackColor"><![CDATA[156, 194, 231]]></property>
+                    <property name="Width"><![CDATA[81]]></property>
+                    <property name="ImageObj"><![CDATA[]]></property>
+                    <property name="Top"><![CDATA[13]]></property>
+                    <property name="Height"><![CDATA[36]]></property>
+                    <property name="Visible"><![CDATA[True]]></property>
+                    <property name="Left"><![CDATA[90]]></property>
+                    <property name="FontStyle"><![CDATA[{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}]]></property>
+                    <property name="Name"><![CDATA[JGButton2]]></property>
+                    <property name="ButtonAction"><![CDATA[]]></property>
+                    <property name="TabIndex"><![CDATA[1]]></property>
+                    <property name="TagData"><![CDATA[]]></property>
+                    <property name="ImageType"><![CDATA[Url]]></property>
+                    <property name="EnglishTitle"><![CDATA[]]></property>
+                    <property name="JapaneseTitle"><![CDATA[]]></property>
+                    <property name="ToolTipSource"><![CDATA[]]></property>
+                    <property name="ImageValue"><![CDATA[]]></property>
+                    <property name="Enabled"><![CDATA[True]]></property>
+                    <property name="ComplexChineseTitle"><![CDATA[]]></property>
+                    <property name="ForeColor"><![CDATA[Black]]></property>
+                    <property name="SimpleChineseTitle"><![CDATA[添加礼物]]></property>
+                    <property name="Dock"><![CDATA[None]]></property>
+                  </propertys>
+                </control>
+                <control type="JGButton" permissionCtrl="false" name="删除礼物" desc="" code="JGButton3" id="0f92e07c3abc4689a7b132d4157ef367">
+                  <controls />
+                  <propertys>
+                    <property name="EnglishTitle"><![CDATA[]]></property>
+                    <property name="JapaneseTitle"><![CDATA[]]></property>
+                    <property name="Height"><![CDATA[36]]></property>
+                    <property name="ImageValue"><![CDATA[]]></property>
+                    <property name="SimpleChineseTitle"><![CDATA[删除礼物]]></property>
+                    <property name="Enabled"><![CDATA[True]]></property>
+                    <property name="ComplexChineseTitle"><![CDATA[]]></property>
+                    <property name="BackColor"><![CDATA[156, 194, 231]]></property>
+                    <property name="TabIndex"><![CDATA[2]]></property>
+                    <property name="Visible"><![CDATA[True]]></property>
+                    <property name="Anchor"><![CDATA[Top, Left]]></property>
+                    <property name="Left"><![CDATA[177]]></property>
+                    <property name="FontStyle"><![CDATA[{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}]]></property>
+                    <property name="ToolTipSource"><![CDATA[]]></property>
+                    <property name="Dock"><![CDATA[None]]></property>
+                    <property name="Top"><![CDATA[13]]></property>
+                    <property name="ImageObj"><![CDATA[]]></property>
+                    <property name="ImageType"><![CDATA[Url]]></property>
+                    <property name="Width"><![CDATA[81]]></property>
+                    <property name="ButtonAction"><![CDATA[]]></property>
+                    <property name="TagData"><![CDATA[]]></property>
+                    <property name="Name"><![CDATA[JGButton3]]></property>
+                    <property name="ForeColor"><![CDATA[Black]]></property>
+                  </propertys>
+                </control>
+                <control type="JGButton" permissionCtrl="false" name="禁用礼物" desc="" code="JGButton4" id="edbac2a6e9e24455b3430c909e968e12">
+                  <controls />
+                  <propertys>
+                    <property name="ImageObj"><![CDATA[]]></property>
+                    <property name="FontStyle"><![CDATA[{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}]]></property>
+                    <property name="Left"><![CDATA[351]]></property>
+                    <property name="TabIndex"><![CDATA[3]]></property>
+                    <property name="Dock"><![CDATA[None]]></property>
+                    <property name="Anchor"><![CDATA[Top, Left]]></property>
+                    <property name="Name"><![CDATA[JGButton4]]></property>
+                    <property name="Top"><![CDATA[13]]></property>
+                    <property name="ToolTipSource"><![CDATA[]]></property>
+                    <property name="ButtonAction"><![CDATA[]]></property>
+                    <property name="TagData"><![CDATA[]]></property>
+                    <property name="Enabled"><![CDATA[True]]></property>
+                    <property name="ImageType"><![CDATA[Url]]></property>
+                    <property name="BackColor"><![CDATA[156, 194, 231]]></property>
+                    <property name="Height"><![CDATA[36]]></property>
+                    <property name="Width"><![CDATA[81]]></property>
+                    <property name="ForeColor"><![CDATA[Black]]></property>
+                    <property name="SimpleChineseTitle"><![CDATA[禁用礼物]]></property>
+                    <property name="ImageValue"><![CDATA[]]></property>
+                    <property name="Visible"><![CDATA[True]]></property>
+                    <property name="ComplexChineseTitle"><![CDATA[]]></property>
+                    <property name="JapaneseTitle"><![CDATA[]]></property>
+                    <property name="EnglishTitle"><![CDATA[]]></property>
+                  </propertys>
+                </control>
+                <control type="JGButton" permissionCtrl="false" name="启用礼物" desc="" code="JGButton5" id="eb80fd0196df4846b980d30042060dd3">
+                  <controls />
+                  <propertys>
+                    <property name="JapaneseTitle"><![CDATA[]]></property>
+                    <property name="Enabled"><![CDATA[True]]></property>
+                    <property name="Top"><![CDATA[13]]></property>
+                    <property name="TagData"><![CDATA[]]></property>
+                    <property name="Width"><![CDATA[81]]></property>
+                    <property name="BackColor"><![CDATA[156, 194, 231]]></property>
+                    <property name="ButtonAction"><![CDATA[]]></property>
+                    <property name="ImageValue"><![CDATA[]]></property>
+                    <property name="Visible"><![CDATA[True]]></property>
+                    <property name="Dock"><![CDATA[None]]></property>
+                    <property name="Name"><![CDATA[JGButton5]]></property>
+                    <property name="ImageObj"><![CDATA[]]></property>
+                    <property name="FontStyle"><![CDATA[{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}]]></property>
+                    <property name="EnglishTitle"><![CDATA[]]></property>
+                    <property name="ToolTipSource"><![CDATA[]]></property>
+                    <property name="Anchor"><![CDATA[Top, Left]]></property>
+                    <property name="SimpleChineseTitle"><![CDATA[启用礼物]]></property>
+                    <property name="ForeColor"><![CDATA[Black]]></property>
+                    <property name="ImageType"><![CDATA[Url]]></property>
+                    <property name="TabIndex"><![CDATA[4]]></property>
+                    <property name="Left"><![CDATA[264]]></property>
+                    <property name="ComplexChineseTitle"><![CDATA[]]></property>
+                    <property name="Height"><![CDATA[36]]></property>
+                  </propertys>
+                </control>
+                <control type="JGPaging" permissionCtrl="false" name="分页控件" desc="" code="JGPaging1" id="e6ecbfc2dbb0435ca77db4fd1ca01cce">
+                  <controls />
+                  <propertys>
+                    <property name="ValueLoadAction"><![CDATA[]]></property>
+                    <property name="RowCountPerPage"><![CDATA[30]]></property>
+                    <property name="IsSimpleMode"><![CDATA[False]]></property>
+                    <property name="SimpleChineseTitle"><![CDATA[分页控件]]></property>
+                    <property name="TagData"><![CDATA[]]></property>
+                    <property name="Enter"><![CDATA[]]></property>
+                    <property name="Width"><![CDATA[463]]></property>
+                    <property name="TabIndex"><![CDATA[5]]></property>
+                    <property name="Padding"><![CDATA[0, 0, 0, 0]]></property>
+                    <property name="KeyDown"><![CDATA[]]></property>
+                    <property name="Visible"><![CDATA[True]]></property>
+                    <property name="JapaneseTitle"><![CDATA[]]></property>
+                    <property name="MasterTableName"><![CDATA[]]></property>
+                    <property name="ComplexChineseTitle"><![CDATA[]]></property>
+                    <property name="Top"><![CDATA[13]]></property>
+                    <property name="Left"><![CDATA[438]]></property>
+                    <property name="Name"><![CDATA[JGPaging1]]></property>
+                    <property name="Leave"><![CDATA[]]></property>
+                    <property name="Anchor"><![CDATA[Top, Left]]></property>
+                    <property name="Dock"><![CDATA[None]]></property>
+                    <property name="EnglishTitle"><![CDATA[]]></property>
+                    <property name="Height"><![CDATA[34]]></property>
+                    <property name="LabelFontStyle"><![CDATA[{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}]]></property>
+                  </propertys>
+                </control>
+                <control type="JGDataGrid" permissionCtrl="false" name="列表" desc="" code="JGDataGrid1" id="51d69ab9ade643e69926261df2148cf0">
+                  <controls>
+                    <control type="JGTextBox" permissionCtrl="false" name="操作" desc="" code="JGTextBox4" id="159e52938a7d43b0accf1b13bb5349ca">
+                      <controls />
+                      <propertys>
+                        <property name="Visible"><![CDATA[True]]></property>
+                        <property name="TitleImage"><![CDATA[]]></property>
+                        <property name="DataImage"><![CDATA[]]></property>
+                        <property name="Enter"><![CDATA[]]></property>
+                        <property name="ValueFontStyle"><![CDATA[{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}]]></property>
+                        <property name="Parameter"><![CDATA[JGTextBox4]]></property>
+                        <property name="ComplexChineseTitle"><![CDATA[]]></property>
+                        <property name="Anchor"><![CDATA[Top, Left]]></property>
+                        <property name="ColumnName"><![CDATA[FieldData11]]></property>
+                        <property name="Width"><![CDATA[76]]></property>
+                        <property name="Dock"><![CDATA[None]]></property>
+                        <property name="EnglishTitle"><![CDATA[]]></property>
+                        <property name="LabelTextAlign"><![CDATA[Center]]></property>
+                        <property name="DisplayFormat"><![CDATA[{"numType":"0","displayFormat":"","Index":"0"}]]></property>
+                        <property name="Name"><![CDATA[JGTextBox4]]></property>
+                        <property name="Top"><![CDATA[0]]></property>
+                        <property name="ValueChangeAction"><![CDATA[]]></property>
+                        <property name="TableName"><![CDATA[]]></property>
+                        <property name="Left"><![CDATA[0]]></property>
+                        <property name="ButtonAction"><![CDATA[]]></property>
+                        <property name="TagData"><![CDATA[]]></property>
+                        <property name="SimpleChineseTitle"><![CDATA[操作]]></property>
+                        <property name="ValueBackColor"><![CDATA[White]]></property>
+                        <property name="Value"><![CDATA[]]></property>
+                        <property name="JapaneseTitle"><![CDATA[]]></property>
+                        <property name="KeyDown"><![CDATA[]]></property>
+                        <property name="TabIndex"><![CDATA[8]]></property>
+                        <property name="ValueTextAlign"><![CDATA[Left]]></property>
+                        <property name="ReadOnly"><![CDATA[False]]></property>
+                        <property name="ValueForeColor"><![CDATA[Black]]></property>
+                        <property name="IsDynamicColumn"><![CDATA[False]]></property>
+                        <property name="DynamicColumnName"><![CDATA[]]></property>
+                        <property name="AllowSort"><![CDATA[False]]></property>
+                        <property name="LabelFontStyle"><![CDATA[{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}]]></property>
+                        <property name="TextLength"><![CDATA[255]]></property>
+                        <property name="Leave"><![CDATA[]]></property>
+                        <property name="TitleWidth"><![CDATA[76]]></property>
+                        <property name="ValueMouse"><![CDATA[Default]]></property>
+                        <property name="LabelForeColor"><![CDATA[Black]]></property>
+                        <property name="IsMust"><![CDATA[False]]></property>
+                        <property name="ColumnLabelBackColor"><![CDATA[237, 238, 240]]></property>
+                        <property name="ValueMode"><![CDATA[1]]></property>
+                        <property name="TitleClick"><![CDATA[]]></property>
+                        <property name="Enabled"><![CDATA[True]]></property>
+                        <property name="TitleMouse"><![CDATA[Default]]></property>
+                        <property name="DynamicColumnNameEditor"><![CDATA[]]></property>
+                        <property name="TitleVisible"><![CDATA[True]]></property>
+                        <property name="DefaultValue"><![CDATA[]]></property>
+                        <property name="ValueLoadAction"><![CDATA[]]></property>
+                        <property name="Height"><![CDATA[20]]></property>
+                        <property name="ToolTipSource"><![CDATA[]]></property>
+                        <property name="LabelBackColor"><![CDATA[200, 225, 255]]></property>
+                      </propertys>
+                    </control>
+                    <control type="JGComboBox" permissionCtrl="false" name="状态" desc="" code="JGComboBox1" id="8630cd6d7c6c4ca8a87332133e79c14a">
+                      <controls />
+                      <propertys>
+                        <property name="DisplayFormat"><![CDATA[{"numType":"0","displayFormat":"","Index":"0"}]]></property>
+                        <property name="ColumnName"><![CDATA[FieldData10]]></property>
+                        <property name="LabelForeColor"><![CDATA[Black]]></property>
+                        <property name="TitleImage"><![CDATA[]]></property>
+                        <property name="ValueLoadAction"><![CDATA[]]></property>
+                        <property name="Height"><![CDATA[20]]></property>
+                        <property name="KeyDown"><![CDATA[]]></property>
+                        <property name="LabelBackColor"><![CDATA[200, 225, 255]]></property>
+                        <property name="ColumnValue"><![CDATA[]]></property>
+                        <property name="JapaneseTitle"><![CDATA[]]></property>
+                        <property name="ButtonAction"><![CDATA[]]></property>
+                        <property name="TableName"><![CDATA[]]></property>
+                        <property name="Enabled"><![CDATA[True]]></property>
+                        <property name="LabelTextAlign"><![CDATA[Center]]></property>
+                        <property name="TabIndex"><![CDATA[7]]></property>
+                        <property name="ComplexChineseTitle"><![CDATA[]]></property>
+                        <property name="ValueMouse"><![CDATA[Default]]></property>
+                        <property name="IsDynamicColumn"><![CDATA[False]]></property>
+                        <property name="Value"><![CDATA[]]></property>
+                        <property name="DataImage"><![CDATA[]]></property>
+                        <property name="TitleWidth"><![CDATA[76]]></property>
+                        <property name="Name"><![CDATA[JGComboBox1]]></property>
+                        <property name="Dock"><![CDATA[None]]></property>
+                        <property name="Enter"><![CDATA[]]></property>
+                        <property name="ValueMode"><![CDATA[2]]></property>
+                        <property name="DynamicColumnNameEditor"><![CDATA[]]></property>
+                        <property name="Text"><![CDATA[]]></property>
+                        <property name="Left"><![CDATA[0]]></property>
+                        <property name="ToolTipSource"><![CDATA[]]></property>
+                        <property name="IDColumnValue"><![CDATA[]]></property>
+                        <property name="ValueChangeAction"><![CDATA[]]></property>
+                        <property name="SimpleChineseTitle"><![CDATA[状态]]></property>
+                        <property name="ValueForeColor"><![CDATA[Black]]></property>
+                        <property name="TagData"><![CDATA[]]></property>
+                        <property name="ValueFontStyle"><![CDATA[{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}]]></property>
+                        <property name="ColumnLabelBackColor"><![CDATA[237, 238, 240]]></property>
+                        <property name="ValueBackColor"><![CDATA[White]]></property>
+                        <property name="TitleMouse"><![CDATA[Default]]></property>
+                        <property name="DropDownSourceEditor"><![CDATA[]]></property>
+                        <property name="AllowSort"><![CDATA[False]]></property>
+                        <property name="DynamicColumnName"><![CDATA[]]></property>
+                        <property name="LabelFontStyle"><![CDATA[{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}]]></property>
+                        <property name="EnglishTitle"><![CDATA[]]></property>
+                        <property name="IDColumnName"><![CDATA[FieldData9]]></property>
+                        <property name="DropDownSource"><![CDATA[]]></property>
+                        <property name="Parameter"><![CDATA[JGComboBox1-IDColumnName|JGComboBox1-ColumnName]]></property>
+                        <property name="IsMust"><![CDATA[False]]></property>
+                        <property name="TitleClick"><![CDATA[]]></property>
+                        <property name="Leave"><![CDATA[]]></property>
+                        <property name="Anchor"><![CDATA[Top, Left]]></property>
+                        <property name="Top"><![CDATA[0]]></property>
+                        <property name="ReadOnly"><![CDATA[False]]></property>
+                        <property name="Width"><![CDATA[76]]></property>
+                        <property name="Visible"><![CDATA[True]]></property>
+                      </propertys>
+                    </control>
+                    <control type="JGDateTimePicker" permissionCtrl="false" name="时间" desc="" code="JGDateTimePicker1" id="0e68c10813484677b9d046fdb5f92bc3">
+                      <controls />
+                      <propertys>
+                        <property name="TitleMouse"><![CDATA[Default]]></property>
+                        <property name="AllowSort"><![CDATA[False]]></property>
+                        <property name="Value"><![CDATA[]]></property>
+                        <property name="ColumnName"><![CDATA[FieldData7]]></property>
+                        <property name="TitleImage"><![CDATA[]]></property>
+                        <property name="LabelBackColor"><![CDATA[200, 225, 255]]></property>
+                        <property name="ValueLoadAction"><![CDATA[]]></property>
+                        <property name="TagData"><![CDATA[]]></property>
+                        <property name="LabelForeColor"><![CDATA[Black]]></property>
+                        <property name="ValueMode"><![CDATA[1]]></property>
+                        <property name="Width"><![CDATA[76]]></property>
+                        <property name="Height"><![CDATA[20]]></property>
+                        <property name="DataImage"><![CDATA[]]></property>
+                        <property name="Top"><![CDATA[0]]></property>
+                        <property name="ValueTextAlign"><![CDATA[Left]]></property>
+                        <property name="TabIndex"><![CDATA[6]]></property>
+                        <property name="LabelFontStyle"><![CDATA[{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}]]></property>
+                        <property name="TitleClick"><![CDATA[]]></property>
+                        <property name="ValueBackColor"><![CDATA[White]]></property>
+                        <property name="Parameter"><![CDATA[]]></property>
+                        <property name="MaxDate"><![CDATA[9998-12-31]]></property>
+                        <property name="SimpleChineseTitle"><![CDATA[时间]]></property>
+                        <property name="Visible"><![CDATA[True]]></property>
+                        <property name="TitleWidth"><![CDATA[76]]></property>
+                        <property name="DynamicColumnNameEditor"><![CDATA[]]></property>
+                        <property name="LabelTextAlign"><![CDATA[Center]]></property>
+                        <property name="JapaneseTitle"><![CDATA[]]></property>
+                        <property name="DefaultValue"><![CDATA[]]></property>
+                        <property name="EnglishTitle"><![CDATA[]]></property>
+                        <property name="ValueForeColor"><![CDATA[Black]]></property>
+                        <property name="ValueMouse"><![CDATA[Default]]></property>
+                        <property name="Enabled"><![CDATA[True]]></property>
+                        <property name="Dock"><![CDATA[None]]></property>
+                        <property name="MinDate"><![CDATA[1753-1-1]]></property>
+                        <property name="IsMust"><![CDATA[False]]></property>
+                        <property name="DynamicColumnName"><![CDATA[]]></property>
+                        <property name="ButtonAction"><![CDATA[]]></property>
+                        <property name="ToolTipSource"><![CDATA[]]></property>
+                        <property name="TableName"><![CDATA[]]></property>
+                        <property name="IsDynamicColumn"><![CDATA[False]]></property>
+                        <property name="ValueFontStyle"><![CDATA[{"Bold":false,"Family":"宋体","Italic":false,"Size":"10","Strikeout":false,"Underline":false}]]></property>
+                        <property name="ComplexChineseTitle"><![CDATA[]]></property>
+                        <property name="DisplayFormat"><![CDATA[{"numType":"0","displayFormat":"","Index":"0"}]]></property>
+                        <property name="ValueChangeAction"><![CDATA[]]></property>
+                        <property name="Left"><![CDATA[0]]></property>
+                        <property name="ColumnLabelBackColor"><![CDATA[237, 238, 240]]></property>
+                        <property name="Anchor"><![CDATA[Top, Left]]></property>
+                        <property name="ReadOnly"><![CDATA[False]]></property>
+                        <property name="Name"><![CDATA[JGDateTimePicker1]]></property>
+                      </propertys>
+                    </control>
+                    <control type="JGIntegerBox" permissionCtrl="false" name="数量" desc="" code="JGIntegerBox1" id="d141131d40084e5fb871dea0f33d5007">
+                      <controls />
+                      <propertys>
+                        <property name="LabelBackColor"><![CDATA[200, 225, 255]]></property>
+                        <property name="ValueTextAlign"><![CDATA[Left]]></property>
+                        <property name="Dock"><![CDATA[None]]></property>
+                        <property name="DisplayFormat"><![CDATA[{"numType":"0","displayFormat":"","Index":"0"}]]></property>
+                        <property name="DynamicColumnName"><![CDATA[]]></property>
+                        <property name="ValueBackColor"><![CDATA[White]]></property>
+                        <property name="LabelForeColor"><![CDATA[Black]]></property>
+                        <property name="TitleMouse"><![CDATA[Default]]></property>
+                        <property name="Width"><![CDATA[76]]></property>
+                        <property name="TagData"><![CDATA[]]></property>
+                        <property name="IsDynamicColumn"><![CDATA[False]]></property>
+                        <property name="ValueFontStyle"><![CDATA[{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}]]></property>
+                        <property name="Value"><![CDATA[0]]></property>
+                        <property name="TableName"><![CDATA[]]></property>
+                        <property name="ValueChangeAction"><![CDATA[]]></property>
+                        <property name="Top"><![CDATA[0]]></property>
+                        <property name="ValueLoadAction"><![CDATA[]]></property>
+                        <property name="TitleClick"><![CDATA[]]></property>
+                        <property name="Enter"><![CDATA[]]></property>
+                        <property name="DynamicColumnNameEditor"><![CDATA[]]></property>
+                        <property name="ColumnName"><![CDATA[FieldData6]]></property>
+                        <property name="ButtonAction"><![CDATA[]]></property>
+                        <property name="TitleWidth"><![CDATA[76]]></property>
+                        <property name="ComplexChineseTitle"><![CDATA[]]></property>
+                        <property name="Leave"><![CDATA[]]></property>
+                        <property name="Enabled"><![CDATA[True]]></property>
+                        <property name="TitleImage"><![CDATA[]]></property>
+                        <property name="SimpleChineseTitle"><![CDATA[数量]]></property>
+                        <property name="ColumnLabelBackColor"><![CDATA[237, 238, 240]]></property>
+                        <property name="DataImage"><![CDATA[]]></property>
+                        <property name="ValueMouse"><![CDATA[Default]]></property>
+                        <property name="ValueMode"><![CDATA[1]]></property>
+                        <property name="KeyDown"><![CDATA[]]></property>
+                        <property name="ValueForeColor"><![CDATA[Black]]></property>
+                        <property name="Anchor"><![CDATA[Top, Left]]></property>
+                        <property name="Parameter"><![CDATA[JGIntegerBox1]]></property>
+                        <property name="DefaultValue"><![CDATA[]]></property>
+                        <property name="LabelFontStyle"><![CDATA[{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}]]></property>
+                        <property name="Visible"><![CDATA[True]]></property>
+                        <property name="JapaneseTitle"><![CDATA[]]></property>
+                        <property name="Height"><![CDATA[21]]></property>
+                        <property name="AllowSort"><![CDATA[False]]></property>
+                        <property name="Name"><![CDATA[JGIntegerBox1]]></property>
+                        <property name="LabelTextAlign"><![CDATA[Center]]></property>
+                        <property name="ToolTipSource"><![CDATA[]]></property>
+                        <property name="Left"><![CDATA[0]]></property>
+                        <property name="EnglishTitle"><![CDATA[]]></property>
+                        <property name="ReadOnly"><![CDATA[False]]></property>
+                        <property name="TabIndex"><![CDATA[5]]></property>
+                        <property name="IsMust"><![CDATA[False]]></property>
+                      </propertys>
+                    </control>
+                    <control type="JGFloatBox" permissionCtrl="false" name="价格" desc="" code="JGFloatBox1" id="7dd9dd54f2af47319d5ad0566cb3579a">
+                      <controls />
+                      <propertys>
+                        <property name="Parameter"><![CDATA[JGFloatBox1]]></property>
+                        <property name="DynamicColumnNameEditor"><![CDATA[]]></property>
+                        <property name="DataImage"><![CDATA[]]></property>
+                        <property name="DisplayFormat"><![CDATA[{"numType":"1","displayFormat":"0.00;-0.00| 0","Index":"2|False|1"}]]></property>
+                        <property name="SimpleChineseTitle"><![CDATA[价格]]></property>
+                        <property name="KeyDown"><![CDATA[]]></property>
+                        <property name="ValueFontStyle"><![CDATA[{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}]]></property>
+                        <property name="TitleWidth"><![CDATA[76]]></property>
+                        <property name="TitleImage"><![CDATA[]]></property>
+                        <property name="Name"><![CDATA[JGFloatBox1]]></property>
+                        <property name="ValueMouse"><![CDATA[Default]]></property>
+                        <property name="LabelForeColor"><![CDATA[Black]]></property>
+                        <property name="ValueTextAlign"><![CDATA[Right]]></property>
+                        <property name="TableName"><![CDATA[]]></property>
+                        <property name="TagData"><![CDATA[]]></property>
+                        <property name="Top"><![CDATA[0]]></property>
+                        <property name="JapaneseTitle"><![CDATA[]]></property>
+                        <property name="PointLength"><![CDATA[2]]></property>
+                        <property name="ReadOnly"><![CDATA[False]]></property>
+                        <property name="ButtonAction"><![CDATA[]]></property>
+                        <property name="ValueForeColor"><![CDATA[Black]]></property>
+                        <property name="ValueLoadAction"><![CDATA[]]></property>
+                        <property name="Leave"><![CDATA[]]></property>
+                        <property name="EnglishTitle"><![CDATA[]]></property>
+                        <property name="Visible"><![CDATA[True]]></property>
+                        <property name="TitleClick"><![CDATA[]]></property>
+                        <property name="IsMust"><![CDATA[False]]></property>
+                        <property name="ValueMode"><![CDATA[1]]></property>
+                        <property name="Enter"><![CDATA[]]></property>
+                        <property name="ValueBackColor"><![CDATA[White]]></property>
+                        <property name="Left"><![CDATA[0]]></property>
+                        <property name="LabelBackColor"><![CDATA[200, 225, 255]]></property>
+                        <property name="LabelFontStyle"><![CDATA[{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}]]></property>
+                        <property name="Height"><![CDATA[20]]></property>
+                        <property name="ToolTipSource"><![CDATA[]]></property>
+                        <property name="TabIndex"><![CDATA[4]]></property>
+                        <property name="Anchor"><![CDATA[Top, Left]]></property>
+                        <property name="ValueChangeAction"><![CDATA[]]></property>
+                        <property name="ColumnName"><![CDATA[FieldData5]]></property>
+                        <property name="ComplexChineseTitle"><![CDATA[]]></property>
+                        <property name="Value"><![CDATA[0]]></property>
+                        <property name="AllowSort"><![CDATA[False]]></property>
+                        <property name="DefaultValue"><![CDATA[]]></property>
+                        <property name="Enabled"><![CDATA[True]]></property>
+                        <property name="Dock"><![CDATA[None]]></property>
+                        <property name="ColumnLabelBackColor"><![CDATA[237, 238, 240]]></property>
+                        <property name="TitleMouse"><![CDATA[Default]]></property>
+                        <property name="LabelTextAlign"><![CDATA[Center]]></property>
+                        <property name="DynamicColumnName"><![CDATA[]]></property>
+                        <property name="IsDynamicColumn"><![CDATA[False]]></property>
+                        <property name="Width"><![CDATA[76]]></property>
+                      </propertys>
+                    </control>
+                    <control type="JGTextBox" permissionCtrl="false" name="所属" desc="" code="JGTextBox3" id="0ffb791f1cc143858661fa7ae476a8b7">
+                      <controls />
+                      <propertys>
+                        <property name="TableName"><![CDATA[]]></property>
+                        <property name="Enter"><![CDATA[]]></property>
+                        <property name="TitleMouse"><![CDATA[Default]]></property>
+                        <property name="Left"><![CDATA[0]]></property>
+                        <property name="Dock"><![CDATA[None]]></property>
+                        <property name="ComplexChineseTitle"><![CDATA[]]></property>
+                        <property name="Width"><![CDATA[76]]></property>
+                        <property name="ColumnLabelBackColor"><![CDATA[237, 238, 240]]></property>
+                        <property name="SimpleChineseTitle"><![CDATA[所属]]></property>
+                        <property name="TitleImage"><![CDATA[]]></property>
+                        <property name="DefaultValue"><![CDATA[]]></property>
+                        <property name="Enabled"><![CDATA[True]]></property>
+                        <property name="IsDynamicColumn"><![CDATA[False]]></property>
+                        <property name="TabIndex"><![CDATA[3]]></property>
+                        <property name="JapaneseTitle"><![CDATA[]]></property>
+                        <property name="ValueMode"><![CDATA[1]]></property>
+                        <property name="Visible"><![CDATA[True]]></property>
+                        <property name="DynamicColumnNameEditor"><![CDATA[]]></property>
+                        <property name="Parameter"><![CDATA[JGTextBox3]]></property>
+                        <property name="TitleVisible"><![CDATA[True]]></property>
+                        <property name="ValueChangeAction"><![CDATA[]]></property>
+                        <property name="ValueMouse"><![CDATA[Default]]></property>
+                        <property name="AllowSort"><![CDATA[False]]></property>
+                        <property name="IsMust"><![CDATA[False]]></property>
+                        <property name="LabelForeColor"><![CDATA[Black]]></property>
+                        <property name="Top"><![CDATA[0]]></property>
+                        <property name="TitleClick"><![CDATA[]]></property>
+                        <property name="ToolTipSource"><![CDATA[]]></property>
+                        <property name="Leave"><![CDATA[]]></property>
+                        <property name="Value"><![CDATA[]]></property>
+                        <property name="DynamicColumnName"><![CDATA[]]></property>
+                        <property name="ReadOnly"><![CDATA[False]]></property>
+                        <property name="LabelFontStyle"><![CDATA[{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}]]></property>
+                        <property name="ButtonAction"><![CDATA[]]></property>
+                        <property name="EnglishTitle"><![CDATA[]]></property>
+                        <property name="KeyDown"><![CDATA[]]></property>
+                        <property name="LabelTextAlign"><![CDATA[Center]]></property>
+                        <property name="ColumnName"><![CDATA[FieldData4]]></property>
+                        <property name="ValueBackColor"><![CDATA[White]]></property>
+                        <property name="LabelBackColor"><![CDATA[200, 225, 255]]></property>
+                        <property name="ValueTextAlign"><![CDATA[Left]]></property>
+                        <property name="ValueForeColor"><![CDATA[Black]]></property>
+                        <property name="TagData"><![CDATA[{$categorysInfo[$vo['categoryId']]}]]></property>
+                        <property name="TextLength"><![CDATA[255]]></property>
+                        <property name="Anchor"><![CDATA[Top, Left]]></property>
+                        <property name="Height"><![CDATA[20]]></property>
+                        <property name="ValueFontStyle"><![CDATA[{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}]]></property>
+                        <property name="TitleWidth"><![CDATA[76]]></property>
+                        <property name="Name"><![CDATA[JGTextBox3]]></property>
+                        <property name="DisplayFormat"><![CDATA[{"numType":"0","displayFormat":"","Index":"0"}]]></property>
+                        <property name="ValueLoadAction"><![CDATA[]]></property>
+                        <property name="DataImage"><![CDATA[]]></property>
+                      </propertys>
+                    </control>
+                    <control type="JGTextBox" permissionCtrl="false" name="名称" desc="" code="JGTextBox2" id="bc117c08d99148dc9a5850d8df34bcc2">
+                      <controls />
+                      <propertys>
+                        <property name="TitleWidth"><![CDATA[76]]></property>
+                        <property name="ToolTipSource"><![CDATA[]]></property>
+                        <property name="Value"><![CDATA[]]></property>
+                        <property name="LabelTextAlign"><![CDATA[Center]]></property>
+                        <property name="Dock"><![CDATA[None]]></property>
+                        <property name="Width"><![CDATA[76]]></property>
+                        <property name="Visible"><![CDATA[True]]></property>
+                        <property name="Anchor"><![CDATA[Top, Left]]></property>
+                        <property name="ValueForeColor"><![CDATA[Black]]></property>
+                        <property name="Height"><![CDATA[20]]></property>
+                        <property name="TitleImage"><![CDATA[]]></property>
+                        <property name="LabelForeColor"><![CDATA[Black]]></property>
+                        <property name="TitleClick"><![CDATA[]]></property>
+                        <property name="AllowSort"><![CDATA[False]]></property>
+                        <property name="KeyDown"><![CDATA[]]></property>
+                        <property name="ComplexChineseTitle"><![CDATA[]]></property>
+                        <property name="Enter"><![CDATA[]]></property>
+                        <property name="ValueLoadAction"><![CDATA[]]></property>
+                        <property name="Leave"><![CDATA[]]></property>
+                        <property name="Top"><![CDATA[0]]></property>
+                        <property name="TagData"><![CDATA[{$vo.name}]]></property>
+                        <property name="DynamicColumnName"><![CDATA[]]></property>
+                        <property name="TitleMouse"><![CDATA[Default]]></property>
+                        <property name="LabelFontStyle"><![CDATA[{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}]]></property>
+                        <property name="SimpleChineseTitle"><![CDATA[名称]]></property>
+                        <property name="ReadOnly"><![CDATA[False]]></property>
+                        <property name="ValueMode"><![CDATA[1]]></property>
+                        <property name="JapaneseTitle"><![CDATA[]]></property>
+                        <property name="DynamicColumnNameEditor"><![CDATA[]]></property>
+                        <property name="ValueChangeAction"><![CDATA[]]></property>
+                        <property name="LabelBackColor"><![CDATA[200, 225, 255]]></property>
+                        <property name="DataImage"><![CDATA[]]></property>
+                        <property name="ColumnName"><![CDATA[FieldData3]]></property>
+                        <property name="Name"><![CDATA[JGTextBox2]]></property>
+                        <property name="EnglishTitle"><![CDATA[]]></property>
+                        <property name="IsMust"><![CDATA[False]]></property>
+                        <property name="ValueTextAlign"><![CDATA[Left]]></property>
+                        <property name="TextLength"><![CDATA[255]]></property>
+                        <property name="ButtonAction"><![CDATA[]]></property>
+                        <property name="TableName"><![CDATA[]]></property>
+                        <property name="IsDynamicColumn"><![CDATA[False]]></property>
+                        <property name="Left"><![CDATA[0]]></property>
+                        <property name="TitleVisible"><![CDATA[True]]></property>
+                        <property name="Enabled"><![CDATA[True]]></property>
+                        <property name="TabIndex"><![CDATA[2]]></property>
+                        <property name="DisplayFormat"><![CDATA[{"numType":"0","displayFormat":"","Index":"0"}]]></property>
+                        <property name="ValueBackColor"><![CDATA[White]]></property>
+                        <property name="ColumnLabelBackColor"><![CDATA[237, 238, 240]]></property>
+                        <property name="ValueMouse"><![CDATA[Default]]></property>
+                        <property name="ValueFontStyle"><![CDATA[{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}]]></property>
+                        <property name="Parameter"><![CDATA[JGTextBox2]]></property>
+                        <property name="DefaultValue"><![CDATA[]]></property>
+                      </propertys>
+                    </control>
+                    <control type="JGImage" permissionCtrl="false" name="预览" desc="" code="JGImage1" id="b9098cad9e59480282c119e9e4ef7e9e">
+                      <controls />
+                      <propertys>
+                        <property name="SimpleChineseTitle"><![CDATA[预览]]></property>
+                        <property name="TitleFontStyle"><![CDATA[宋体, 10pt]]></property>
+                        <property name="TitleTextAlign"><![CDATA[Center]]></property>
+                        <property name="TabIndex"><![CDATA[1]]></property>
+                        <property name="Dock"><![CDATA[None]]></property>
+                        <property name="DoLink"><![CDATA[]]></property>
+                        <property name="DoubleClickAction"><![CDATA[]]></property>
+                        <property name="TableName"><![CDATA[]]></property>
+                        <property name="Top"><![CDATA[0]]></property>
+                        <property name="Left"><![CDATA[0]]></property>
+                        <property name="TagData"><![CDATA[]]></property>
+                        <property name="ImageMouse"><![CDATA[Default]]></property>
+                        <property name="ColumnName"><![CDATA[FieldData2]]></property>
+                        <property name="Width"><![CDATA[76]]></property>
+                        <property name="ValueTextAlign"><![CDATA[Left]]></property>
+                        <property name="DataImage"><![CDATA[]]></property>
+                        <property name="Height"><![CDATA[135]]></property>
+                        <property name="TitleImage"><![CDATA[]]></property>
+                        <property name="Anchor"><![CDATA[Top, Left]]></property>
+                        <property name="ToolTipSource"><![CDATA[]]></property>
+                        <property name="Name"><![CDATA[JGImage1]]></property>
+                        <property name="ButtonAction"><![CDATA[]]></property>
+                        <property name="ImageValue"><![CDATA[]]></property>
+                        <property name="TitleForeColor"><![CDATA[Black]]></property>
+                        <property name="SizeMode"><![CDATA[Normal]]></property>
+                        <property name="ImageObj"><![CDATA[]]></property>
+                        <property name="Visible"><![CDATA[True]]></property>
+                      </propertys>
+                    </control>
+                    <control type="JGTextBox" permissionCtrl="false" name="ID" desc="" code="JGTextBox1" id="13761c9043ab4544bea0c9f233109636">
+                      <controls />
+                      <propertys>
+                        <property name="TagData"><![CDATA[{$vo.id}]]></property>
+                        <property name="ValueTextAlign"><![CDATA[Left]]></property>
+                        <property name="DisplayFormat"><![CDATA[{"numType":"0","displayFormat":"","Index":"0"}]]></property>
+                        <property name="IsDynamicColumn"><![CDATA[False]]></property>
+                        <property name="AllowSort"><![CDATA[False]]></property>
+                        <property name="Leave"><![CDATA[]]></property>
+                        <property name="Enter"><![CDATA[]]></property>
+                        <property name="SimpleChineseTitle"><![CDATA[ID]]></property>
+                        <property name="ValueLoadAction"><![CDATA[]]></property>
+                        <property name="ValueMode"><![CDATA[1]]></property>
+                        <property name="LabelForeColor"><![CDATA[Black]]></property>
+                        <property name="DynamicColumnName"><![CDATA[]]></property>
+                        <property name="TitleVisible"><![CDATA[True]]></property>
+                        <property name="TitleClick"><![CDATA[]]></property>
+                        <property name="Anchor"><![CDATA[Top, Left]]></property>
+                        <property name="Width"><![CDATA[76]]></property>
+                        <property name="Height"><![CDATA[20]]></property>
+                        <property name="Left"><![CDATA[0]]></property>
+                        <property name="ValueForeColor"><![CDATA[Black]]></property>
+                        <property name="LabelFontStyle"><![CDATA[{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}]]></property>
+                        <property name="Visible"><![CDATA[True]]></property>
+                        <property name="ValueChangeAction"><![CDATA[]]></property>
+                        <property name="TextLength"><![CDATA[255]]></property>
+                        <property name="DataImage"><![CDATA[]]></property>
+                        <property name="DynamicColumnNameEditor"><![CDATA[]]></property>
+                        <property name="ReadOnly"><![CDATA[False]]></property>
+                        <property name="JapaneseTitle"><![CDATA[]]></property>
+                        <property name="TitleMouse"><![CDATA[Default]]></property>
+                        <property name="ComplexChineseTitle"><![CDATA[]]></property>
+                        <property name="KeyDown"><![CDATA[]]></property>
+                        <property name="TitleWidth"><![CDATA[76]]></property>
+                        <property name="TableName"><![CDATA[]]></property>
+                        <property name="ToolTipSource"><![CDATA[]]></property>
+                        <property name="ButtonAction"><![CDATA[]]></property>
+                        <property name="Name"><![CDATA[JGTextBox1]]></property>
+                        <property name="ValueMouse"><![CDATA[Default]]></property>
+                        <property name="Dock"><![CDATA[None]]></property>
+                        <property name="ValueBackColor"><![CDATA[White]]></property>
+                        <property name="LabelBackColor"><![CDATA[200, 225, 255]]></property>
+                        <property name="ColumnName"><![CDATA[FieldData1]]></property>
+                        <property name="Value"><![CDATA[]]></property>
+                        <property name="TabIndex"><![CDATA[0]]></property>
+                        <property name="Enabled"><![CDATA[True]]></property>
+                        <property name="Parameter"><![CDATA[JGTextBox1]]></property>
+                        <property name="TitleImage"><![CDATA[]]></property>
+                        <property name="ColumnLabelBackColor"><![CDATA[237, 238, 240]]></property>
+                        <property name="DefaultValue"><![CDATA[]]></property>
+                        <property name="IsMust"><![CDATA[False]]></property>
+                        <property name="LabelTextAlign"><![CDATA[Center]]></property>
+                        <property name="Top"><![CDATA[0]]></property>
+                        <property name="EnglishTitle"><![CDATA[]]></property>
+                        <property name="ValueFontStyle"><![CDATA[{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}]]></property>
+                      </propertys>
+                    </control>
+                  </controls>
+                  <propertys>
+                    <property name="ColumnDesign"><![CDATA[]]></property>
+                    <property name="ValueLoadAction"><![CDATA[]]></property>
+                    <property name="ReadOnly"><![CDATA[False]]></property>
+                    <property name="ForeignKeyColumn"><![CDATA[MasterID]]></property>
+                    <property name="MasterTableName"><![CDATA[]]></property>
+                    <property name="Anchor"><![CDATA[Top, Left]]></property>
+                    <property name="FrozenCol"><![CDATA[0]]></property>
+                    <property name="SortField"><![CDATA[]]></property>
+                    <property name="TotalLine"><![CDATA[]]></property>
+                    <property name="GeneratTable"><![CDATA[True]]></property>
+                    <property name="TitleBackColor"><![CDATA[White]]></property>
+                    <property name="DefaultSelect"><![CDATA[True]]></property>
+                    <property name="ValueMode"><![CDATA[3]]></property>
+                    <property name="DynamicColumn"><![CDATA[0]]></property>
+                    <property name="GroupByFieldName"><![CDATA[]]></property>
+                    <property name="ChooseModelSetValue"><![CDATA[0]]></property>
+                    <property name="FrozenRow"><![CDATA[0]]></property>
+                    <property name="PrimaryKeyColumn"><![CDATA[id]]></property>
+                    <property name="RowHeight"><![CDATA[]]></property>
+                    <property name="AllowMerge"><![CDATA[False]]></property>
+                    <property name="DataChangeAction"><![CDATA[]]></property>
+                    <property name="RecordIndexChangeAction"><![CDATA[]]></property>
+                    <property name="Width"><![CDATA[920]]></property>
+                    <property name="ButtonAction"><![CDATA[]]></property>
+                    <property name="TabIndex"><![CDATA[6]]></property>
+                    <property name="BlankAreaBackColor"><![CDATA[242, 242, 242]]></property>
+                    <property name="ChooseModelSet"><![CDATA[单选(不显示单选框)]]></property>
+                    <property name="TableName"><![CDATA[]]></property>
+                    <property name="Name"><![CDATA[JGDataGrid1]]></property>
+                    <property name="DisplayColumnSettings"><![CDATA[<dsDisplayColumns><DisplayColumnTable><ID>13761c9043ab4544bea0c9f233109636</ID><TitleImage></TitleImage><DataImage></DataImage><ColumnName>FieldData1</ColumnName><Caption>ID</Caption><Width>76</Width><Editor>UIControlModel1.0|HongXiang.Windows.Forms.JGTextBox</Editor><Format>&lt;DisplayFormat&gt;&lt;Num Type='0'&gt;&lt;Index&gt;0&lt;/Index&gt;&lt;Format&gt;&lt;/Format&gt;&lt;/Num&gt;&lt;/DisplayFormat&gt;</Format><LabelTextAlign>Center</LabelTextAlign><ValueTextAlign>Left</ValueTextAlign><TextAlign></TextAlign><LabelForeColor> Black</LabelForeColor><ColumnLabelBackColor> 237, 238, 240</ColumnLabelBackColor><ValueForeColor> Black</ValueForeColor><ValueBackColor> White</ValueBackColor><ForeColor></ForeColor><BackColor></BackColor><LabelFontStyle>{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}</LabelFontStyle><ValueFontStyle>{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}</ValueFontStyle><FontStyle>{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}</FontStyle><TextAlign /><ShowSubtotal /><DefaultValue></DefaultValue><ColumnVisible>True</ColumnVisible></DisplayColumnTable><DisplayColumnTable><ID>b9098cad9e59480282c119e9e4ef7e9e</ID><TitleImage></TitleImage><DataImage></DataImage><ColumnName>FieldData2</ColumnName><Caption>预览</Caption><Width>76</Width><Editor>UIControlModel1.0|HongXiang.Windows.Forms.JGImage</Editor><Format></Format><LabelTextAlign></LabelTextAlign><ValueTextAlign>Left</ValueTextAlign><TextAlign></TextAlign><LabelForeColor></LabelForeColor><ColumnLabelBackColor></ColumnLabelBackColor><ValueForeColor></ValueForeColor><ValueBackColor></ValueBackColor><ForeColor></ForeColor><BackColor></BackColor><LabelFontStyle>{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}</LabelFontStyle><ValueFontStyle>{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}</ValueFontStyle><FontStyle>{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}</FontStyle><TextAlign /><ShowSubtotal /><DefaultValue></DefaultValue><ColumnVisible>True</ColumnVisible></DisplayColumnTable><DisplayColumnTable><ID>bc117c08d99148dc9a5850d8df34bcc2</ID><TitleImage></TitleImage><DataImage></DataImage><ColumnName>FieldData3</ColumnName><Caption>名称</Caption><Width>76</Width><Editor>UIControlModel1.0|HongXiang.Windows.Forms.JGTextBox</Editor><Format>&lt;DisplayFormat&gt;&lt;Num Type='0'&gt;&lt;Index&gt;0&lt;/Index&gt;&lt;Format&gt;&lt;/Format&gt;&lt;/Num&gt;&lt;/DisplayFormat&gt;</Format><LabelTextAlign>Center</LabelTextAlign><ValueTextAlign>Left</ValueTextAlign><TextAlign></TextAlign><LabelForeColor> Black</LabelForeColor><ColumnLabelBackColor> 237, 238, 240</ColumnLabelBackColor><ValueForeColor> Black</ValueForeColor><ValueBackColor> White</ValueBackColor><ForeColor></ForeColor><BackColor></BackColor><LabelFontStyle>{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}</LabelFontStyle><ValueFontStyle>{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}</ValueFontStyle><FontStyle>{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}</FontStyle><TextAlign /><ShowSubtotal /><DefaultValue></DefaultValue><ColumnVisible>True</ColumnVisible></DisplayColumnTable><DisplayColumnTable><ID>0ffb791f1cc143858661fa7ae476a8b7</ID><TitleImage></TitleImage><DataImage></DataImage><ColumnName>FieldData4</ColumnName><Caption>所属</Caption><Width>76</Width><Editor>UIControlModel1.0|HongXiang.Windows.Forms.JGTextBox</Editor><Format>&lt;DisplayFormat&gt;&lt;Num Type='0'&gt;&lt;Index&gt;0&lt;/Index&gt;&lt;Format&gt;&lt;/Format&gt;&lt;/Num&gt;&lt;/DisplayFormat&gt;</Format><LabelTextAlign>Center</LabelTextAlign><ValueTextAlign>Left</ValueTextAlign><TextAlign></TextAlign><LabelForeColor> Black</LabelForeColor><ColumnLabelBackColor> 237, 238, 240</ColumnLabelBackColor><ValueForeColor> Black</ValueForeColor><ValueBackColor> White</ValueBackColor><ForeColor></ForeColor><BackColor></BackColor><LabelFontStyle>{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}</LabelFontStyle><ValueFontStyle>{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}</ValueFontStyle><FontStyle>{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}</FontStyle><TextAlign /><ShowSubtotal /><DefaultValue></DefaultValue><ColumnVisible>True</ColumnVisible></DisplayColumnTable><DisplayColumnTable><ID>7dd9dd54f2af47319d5ad0566cb3579a</ID><TitleImage></TitleImage><DataImage></DataImage><ColumnName>FieldData5</ColumnName><Caption>价格</Caption><Width>76</Width><Editor>UIControlModel1.0|HongXiang.Windows.Forms.JGFloatBox</Editor><Format>&lt;DisplayFormat&gt;&lt;Num  Type='1'&gt;&lt;Index&gt;2|False|1&lt;/Index&gt;&lt;Format&gt;0.00;-0.00| 0&lt;/Format&gt;&lt;/Num&gt;&lt;/DisplayFormat&gt;</Format><LabelTextAlign>Center</LabelTextAlign><ValueTextAlign>Right</ValueTextAlign><TextAlign></TextAlign><LabelForeColor> Black</LabelForeColor><ColumnLabelBackColor> 237, 238, 240</ColumnLabelBackColor><ValueForeColor> Black</ValueForeColor><ValueBackColor> White</ValueBackColor><ForeColor></ForeColor><BackColor></BackColor><LabelFontStyle>{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}</LabelFontStyle><ValueFontStyle>{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}</ValueFontStyle><FontStyle>{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}</FontStyle><TextAlign /><ShowSubtotal /><DefaultValue></DefaultValue><ColumnVisible>True</ColumnVisible></DisplayColumnTable><DisplayColumnTable><ID>d141131d40084e5fb871dea0f33d5007</ID><TitleImage></TitleImage><DataImage></DataImage><ColumnName>FieldData6</ColumnName><Caption>数量</Caption><Width>76</Width><Editor>UIControlModel1.0|HongXiang.Windows.Forms.JGIntegerBox</Editor><Format>&lt;DisplayFormat&gt;&lt;Num Type='0'&gt;&lt;Index&gt;0&lt;/Index&gt;&lt;Format&gt;&lt;/Format&gt;&lt;/Num&gt;&lt;/DisplayFormat&gt;</Format><LabelTextAlign>Center</LabelTextAlign><ValueTextAlign>Left</ValueTextAlign><TextAlign></TextAlign><LabelForeColor> Black</LabelForeColor><ColumnLabelBackColor> 237, 238, 240</ColumnLabelBackColor><ValueForeColor> Black</ValueForeColor><ValueBackColor> White</ValueBackColor><ForeColor></ForeColor><BackColor></BackColor><LabelFontStyle>{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}</LabelFontStyle><ValueFontStyle>{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}</ValueFontStyle><FontStyle>{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}</FontStyle><TextAlign /><ShowSubtotal /><DefaultValue></DefaultValue><ColumnVisible>True</ColumnVisible></DisplayColumnTable><DisplayColumnTable><ID>0e68c10813484677b9d046fdb5f92bc3</ID><TitleImage></TitleImage><DataImage></DataImage><ColumnName>FieldData7</ColumnName><Caption>时间</Caption><Width>76</Width><Editor>UIControlModel1.0|HongXiang.Windows.Forms.JGDateTimePicker</Editor><Format>&lt;DisplayFormat&gt;&lt;Num Type='0'&gt;&lt;Index&gt;0&lt;/Index&gt;&lt;Format&gt;&lt;/Format&gt;&lt;/Num&gt;&lt;/DisplayFormat&gt;</Format><LabelTextAlign>Center</LabelTextAlign><ValueTextAlign>Left</ValueTextAlign><TextAlign></TextAlign><LabelForeColor> Black</LabelForeColor><ColumnLabelBackColor> 237, 238, 240</ColumnLabelBackColor><ValueForeColor> Black</ValueForeColor><ValueBackColor> White</ValueBackColor><ForeColor></ForeColor><BackColor></BackColor><LabelFontStyle>{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}</LabelFontStyle><ValueFontStyle>{"Bold":false,"Family":"宋体","Italic":false,"Size":"10","Strikeout":false,"Underline":false}</ValueFontStyle><FontStyle>{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}</FontStyle><TextAlign /><ShowSubtotal /><DefaultValue></DefaultValue><ColumnVisible>True</ColumnVisible></DisplayColumnTable><DisplayColumnTable><ID>8630cd6d7c6c4ca8a87332133e79c14a</ID><TitleImage></TitleImage><DataImage></DataImage><ColumnName>FieldData10</ColumnName><Caption>状态</Caption><Width>76</Width><Editor>UIControlModel1.0|HongXiang.Windows.Forms.JGComboBox</Editor><Format>&lt;DisplayFormat&gt;&lt;Num Type='0'&gt;&lt;Index&gt;0&lt;/Index&gt;&lt;Format&gt;&lt;/Format&gt;&lt;/Num&gt;&lt;/DisplayFormat&gt;</Format><LabelTextAlign>Center</LabelTextAlign><ValueTextAlign></ValueTextAlign><TextAlign></TextAlign><LabelForeColor> Black</LabelForeColor><ColumnLabelBackColor> 237, 238, 240</ColumnLabelBackColor><ValueForeColor> Black</ValueForeColor><ValueBackColor> White</ValueBackColor><ForeColor></ForeColor><BackColor></BackColor><LabelFontStyle>{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}</LabelFontStyle><ValueFontStyle>{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}</ValueFontStyle><FontStyle>{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}</FontStyle><TextAlign /><ShowSubtotal /><DefaultValue></DefaultValue><ColumnVisible>True</ColumnVisible></DisplayColumnTable><DisplayColumnTable><ID>159e52938a7d43b0accf1b13bb5349ca</ID><TitleImage></TitleImage><DataImage></DataImage><ColumnName>FieldData11</ColumnName><Caption>操作</Caption><Width>76</Width><Editor>UIControlModel1.0|HongXiang.Windows.Forms.JGTextBox</Editor><Format>&lt;DisplayFormat&gt;&lt;Num Type='0'&gt;&lt;Index&gt;0&lt;/Index&gt;&lt;Format&gt;&lt;/Format&gt;&lt;/Num&gt;&lt;/DisplayFormat&gt;</Format><LabelTextAlign>Center</LabelTextAlign><ValueTextAlign>Left</ValueTextAlign><TextAlign></TextAlign><LabelForeColor> Black</LabelForeColor><ColumnLabelBackColor> 237, 238, 240</ColumnLabelBackColor><ValueForeColor> Black</ValueForeColor><ValueBackColor> White</ValueBackColor><ForeColor></ForeColor><BackColor></BackColor><LabelFontStyle>{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}</LabelFontStyle><ValueFontStyle>{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}</ValueFontStyle><FontStyle>{"Bold":false,"Family":"宋体","Italic":false,"Size":"12","Strikeout":false,"Underline":false}</FontStyle><TextAlign /><ShowSubtotal /><DefaultValue></DefaultValue><ColumnVisible>True</ColumnVisible></DisplayColumnTable></dsDisplayColumns>]]></property>
+                    <property name="DoubleClickAction"><![CDATA[]]></property>
+                    <property name="Enabled"><![CDATA[True]]></property>
+                    <property name="Height"><![CDATA[314]]></property>
+                    <property name="TagData"><![CDATA[]]></property>
+                    <property name="ToolTipSource"><![CDATA[]]></property>
+                    <property name="Parameter"><![CDATA[JGDataGrid1_FieldData1|JGDataGrid1_FieldData2|JGDataGrid1_FieldData3|JGDataGrid1_FieldData4|JGDataGrid1_FieldData5|JGDataGrid1_FieldData6|JGDataGrid1_FieldData7|JGDataGrid1_FieldData10|JGDataGrid1_FieldData11]]></property>
+                    <property name="Top"><![CDATA[56]]></property>
+                    <property name="Left"><![CDATA[9]]></property>
+                    <property name="SimpleChineseTitle"><![CDATA[列表]]></property>
+                    <property name="Dock"><![CDATA[None]]></property>
+                    <property name="Visible"><![CDATA[True]]></property>
+                    <property name="RowsFixedCount"><![CDATA[1]]></property>
+                  </propertys>
+                </control>
+              </controls>
+              <propertys>
+                <property name="Width"><![CDATA[200]]></property>
+                <property name="Padding"><![CDATA[0, 0, 0, 0]]></property>
+                <property name="JapaneseTitle"><![CDATA[]]></property>
+                <property name="Anchor"><![CDATA[Top, Left]]></property>
+                <property name="Left"><![CDATA[0]]></property>
+                <property name="Height"><![CDATA[100]]></property>
+                <property name="ComplexChineseTitle"><![CDATA[]]></property>
+                <property name="TagData"><![CDATA[]]></property>
+                <property name="EnglishTitle"><![CDATA[]]></property>
+                <property name="BackColor"><![CDATA[240, 246, 247]]></property>
+                <property name="Name"><![CDATA[JGTabPage2]]></property>
+                <property name="UseVisualStyleBackColor"><![CDATA[True]]></property>
+                <property name="Dock"><![CDATA[None]]></property>
+                <property name="TabIndex"><![CDATA[1]]></property>
+                <property name="SimpleChineseTitle"><![CDATA[礼物管理]]></property>
+                <property name="Visible"><![CDATA[True]]></property>
+              </propertys>
+            </control>
+            <control type="JGTabPage" permissionCtrl="false" name="全局设置" desc="" code="JGTabPage1" id="33b77d554fac498b953b5b9bf2542a67">
+              <controls />
+              <propertys>
+                <property name="TabIndex"><![CDATA[0]]></property>
+                <property name="BackColor"><![CDATA[240, 246, 247]]></property>
+                <property name="Left"><![CDATA[0]]></property>
+                <property name="Anchor"><![CDATA[Top, Left]]></property>
+                <property name="UseVisualStyleBackColor"><![CDATA[True]]></property>
+                <property name="SimpleChineseTitle"><![CDATA[全局设置]]></property>
+                <property name="JapaneseTitle"><![CDATA[]]></property>
+                <property name="Padding"><![CDATA[0, 0, 0, 0]]></property>
+                <property name="Width"><![CDATA[200]]></property>
+                <property name="Visible"><![CDATA[True]]></property>
+                <property name="Name"><![CDATA[JGTabPage1]]></property>
+                <property name="ComplexChineseTitle"><![CDATA[]]></property>
+                <property name="Height"><![CDATA[100]]></property>
+                <property name="TagData"><![CDATA[]]></property>
+                <property name="Dock"><![CDATA[None]]></property>
+                <property name="EnglishTitle"><![CDATA[]]></property>
+              </propertys>
+            </control>
+          </controls>
+          <propertys>
+            <property name="Top"><![CDATA[49]]></property>
+            <property name="TagData"><![CDATA[]]></property>
+            <property name="Height"><![CDATA[398]]></property>
+            <property name="Name"><![CDATA[JGTabControl1]]></property>
+            <property name="Left"><![CDATA[3]]></property>
+            <property name="Anchor"><![CDATA[Top, Left]]></property>
+            <property name="Visible"><![CDATA[True]]></property>
+            <property name="Width"><![CDATA[1086]]></property>
+            <property name="TabIndex"><![CDATA[1]]></property>
+            <property name="SelectedIndex"><![CDATA[0]]></property>
+            <property name="TabIndexChangedAction"><![CDATA[]]></property>
+            <property name="Dock"><![CDATA[None]]></property>
+          </propertys>
+        </control>
+      </controls>
+      <ruleInstances />
+    </component>
+  </components>
+  <systemOptions>
+    <systemOption name="StartComponentID" value="5c0043ea145843f983ef5364e81b1456" desc="" />
+    <systemOption name="Administrator" value="" desc="" />
+    <systemOption name="SuperAdmin" value="" desc="" />
+    <systemOption name="EncryptionStrategy" value="AES" desc="" />
+  </systemOptions>
+  <codes />
+  <tables>
+    <privilegeObjRelas />
+  </tables>
+  <resources />
+  <permissions>
+    <ownerRelas />
+    <dataPrivileges />
+    <funcPrivileges />
+  </permissions>
+  <dimensionBusiness>
+    <dimensionBusinessRels />
+    <dimensionBusinessRelChains />
+    <dimensionWhiteLists />
+    <dimensionCmptRelas />
+  </dimensionBusiness>
+  <systemVariants>
+    <systemVariant name="tor_userName" chineseName="登录用户名称" initValue="" valueType="1" desc="" />
+    <systemVariant name="session_userId" chineseName="登录用户标识" initValue="" valueType="1" desc="" />
+  </systemVariants>
+  <taskplans />
+  <menus />
+  <frameParameters>
+    <frameParameter id="4683C08F-C5D3-415B-A992-47BCFC41E97D" name="SuperAdminStrategyBack" value="123456" />
+    <frameParameter id="561452B4-6172-4674-B0E4-B47A0C72EFC7" name="EntryPrivilegesObj" value="" />
+    <frameParameter id="7451E4FA-EFEB-402E-9D2D-1BF0DB674048" name="UserStrategySrcField" value="Passwd" />
+    <frameParameter id="774E44EF-28B6-43D5-8F34-4E27DF197840" name="SysAESKey" value="1234567890123456" />
+    <frameParameter id="7F775E1C-CCA8-48BD-8270-3A5460B327BD" name="FieldPrivilegeReplaceString" value="******" />
+    <frameParameter id="9A7B594E-ED62-4622-8C80-D4A2C7EFF2C0" name="SuperAdminStrategy" value="MD5" />
+    <frameParameter id="B01A9EA6-477B-41CE-8D50-6BFED4621174" name="UserDefaultPsw" value="yB5yjZ1ML2NvBn+JzBSGLA==" />
+    <frameParameter id="B25A38BF-A2A1-4802-A4EF-906C21A6E5FA" name="UserStrategyTable" value="sys_user" />
+    <frameParameter id="BF5C6BDE-3B07-4A20-A774-2E1807AAE105" name="UserStrategyBackField" value="id" />
+    <frameParameter id="C8B0744C-C9EC-4739-BF2A-18B68656A343" name="UserStrategyBack" value="0" />
+    <frameParameter id="DC1AE790-3947-4C47-BF1F-729C3C34BFC6" name="SuperAdminPsw" value="yB5yjZ1ML2NvBn+JzBSGLA==" />
+    <frameParameter id="E84CB847-2EBE-4FA2-A0D3-A654F2F4F457" name="UserStrategy" value="MD5" />
+    <frameParameter id="F64B363A-881F-4329-8799-CABC30B78BC3" name="SuperAdminAccount" value="sa" />
+  </frameParameters>
+</package>

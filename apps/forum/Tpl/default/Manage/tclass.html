@@ -1,0 +1,118 @@
+<include file="../Public/manage_top" />
+<link href="../Public/css/bbs.css" rel="stylesheet" type="text/css" />
+<link href="../Public/css/layout.css" rel="stylesheet" type="text/css" />
+<link href="../Public/css/public.css" rel="stylesheet" type="text/css" />
+	<style>
+	.ui-state-highlight { height: 1.5em; line-height: 1.2em;background-color:#FFEC86}
+</style>	
+<div class="content zbg">
+  <div class="bbs_left">
+ 	<include file="../Public/manage_left" />
+  </div>
+  <div class="bbs_main">
+    <div class="top_address">
+<span class="edi_adder">
+			{$_topnav}
+	  </span></div>
+      <div class="tit_line">{:L('base_nav_tclass')}</div>
+<form action="{:U('forum/Manage/dotclass',array('class'=>$fid))}" method="post" autocomplete="off">
+<input type="hidden" name="type" value="saveCategory">
+
+    <div class="list_box">
+      <dl id="sortable">
+        <dt>
+          <div style="width: 40%;" class="cl">{:L('tclass_name')}</div>
+          <div style="width:34%;" class="cl">{:L('tclass_thread_num')}</div>
+          <div style="width: 25%;" class="cr">{:L('operation')}</div>
+        </dt>
+<volist id="vo" name="list">	 
+       <dd id="cate_{$vo.id}"  class="ui-state-disabled">
+          <div style="width: 40%;" class="cl">
+		  		<input type="text" value="{$vo.name}" class="in_put cl06" style="width: 150px; margin-top:2px;" name="name[{$vo.id}]"/>
+		  </div>
+          <div style="width: 34%;" class="cl">{$vo.count}</div>
+          <div style="width: 25%;" class="cr">
+          	<a href="javascript:void(0)" onclick="deletetclass({$vo.id})">[ {:L('tclass_delete')} ]</a>
+			<a href="javascript:void(0)" onclick="classPepodom({$vo.id})">[ 权限 ]</a>
+			<a href="javascript:void(0)" onclick="classTemplate({$vo.id})">[ 帖子模板 ]</a>
+          </div>
+          <div class="C"></div>
+        </dd>
+</volist>	
+        <dd class="det_l" id="addnewInput">
+          <div style="width: 40%;" class="cl"><input type="text" value="" class="in_put cl06" style="width: 150px;margin-top:2px;" name="newaddname[]"/></div>
+          <div style="width: 34%;" class="cl">&nbsp;</div>
+          <div style="width: 25%;" class="cr lh30"><a href="javascript:addnew( this )">[ {:L('tclass_add')} ]</a></div>
+          <div class="C"></div>
+        </dd>
+      </dl>
+	  <div id="catelist" class="mt10"><input type="submit" class="btn_sea"  id="button2" value="确定" /><font color="red" class="ml10">{:L('tclass_save_info')}</font></div>
+    </div>
+</form>
+  </div><div class="C"></div>
+</div>
+<script src="../Public/js/jquery-1.4-and-jquery-ui-core-1.7.2.js"></script>
+<script src="../Public/js/sortale.js" type="text/javascript"></script>
+<script src="../Public/js/lang.js" type="text/javascript"></script>
+<script> var LANGUAGE_NAME = 'zh-cn'; </script>
+<script type="text/javascript">
+	/* 全局JS常量 */
+	var THEME = "__THEME__";
+	var APP    = "__APP__";
+	var URL    = "__URL__";
+	var JS_DIR     = "__PUBLIC__/js";
+	var PUBLIC = "../Public";
+	var SITE_URL = "<php>echo SITE_URL</php>";
+	var EDITER_BASE = JS_DIR+"/kissy/";
+	var EDITER_UPLOAD = "{:U('home/Attach/index')}";
+</script>
+<script src="../Public/js/tbox/tbox.js" type="text/javascript"></script>
+<script type="text/javascript">
+function classPepodom(id) {
+	$.tbox.popup("{:U('forum/Manage/classPepodom')}"+"&id="+id,"操作权限",{ok:"setClassPopedom"});
+}
+function setClassPopedom(){
+	$('#addClassPopedom').submit();
+}
+
+function classTemplate(id){
+	$.tbox.popup("{:U('forum/Manage/classTemplate')}"+"&id="+id,"选择模板",{ok:"setClassTemplate"});
+}
+
+function setClassTemplate(){
+	$('#addClassTemplate').submit();
+}
+var tid ;
+function deletetclass(id){
+	tid = id;
+	$.tbox.confirm("你确定要删除此分类吗？","提示",{ok:"del"});
+	}
+
+function del(){
+	
+		$.post("{:U('forum/Manage/dotclass',array('class'=>$fid) )}",{type:'deleteCategory',id:tid},function(txt){
+			txt = eval('('+txt+')');
+			if(txt.status){
+				$.tbox.yes('{:L("tclass_delete_success")}');
+				setTimeout('$.tbox.close()',1500);
+				$("#cate_"+tid).remove();
+			}else{
+				$.tbox.no('{:L("tclass_delete_error")}');
+				setTimeout('$.tbox.close()',1500);
+			}
+		});
+}
+function addnew(o){
+	$("#catelist").before( '<div class="det_l" style="padding: 3px 0pt 2px 5px;border-bottom:1px dashed #CCCCCC">'+$("#addnewInput").html()+'</div>' );
+
+}
+
+$(function() {
+	$("#sortable").sortable({
+		items: '.ui-state-disabled',
+		placeholder: 'ui-state-highlight'
+	});
+});
+$("#sortable dd").disableSelection();	
+</script>	
+<include file="__THEME__/footer" /> 

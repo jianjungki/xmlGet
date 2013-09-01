@@ -1,0 +1,69 @@
+<link href="__PUBLIC__/admin/css/layout.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/js/pagination/pagination.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<link href="../Public/css/purview.css" rel="stylesheet" type="text/css" />
+<div id="container">
+  <form action="{:U('forum/Admin/admin')}" method="post">
+    <table class="tableborder" style="width:500px;">
+      <tr class="cell">
+        <td class="altbg2"><label>
+          <input name="search_content" type="text" id="search_content" class="txt" value="{$path}" style="width:400px"/>
+        </label>
+          <span class="footer">
+          <input type="submit" name="botton2" class="button" value=" search "/>
+          </span> </td>
+      </tr>
+      <tr>
+        <td class="footer">&nbsp;</td>
+      </tr>
+    </table>
+  </form>
+  <form action="{:U('forum/Admin/doSet')}" method="post" enctype="multipart/form-data">
+  <input name="path" type="hidden" value="{$path}" />
+    <table class="tableborder" style="width:500px;">
+      <tr class="cell">
+        <td class="altbg2"><label>
+          <input type="file" name="file" class="txt" style="width:400px"/>
+        </label>
+		<input type="submit" name="botton2" class="button" value=" set up "/></td>
+      </tr>
+      <tr>
+        <td class="footer">&nbsp;</td>
+      </tr>
+    </table>
+  </form>  
+  <table class="tableborder" style="width:500px;">
+    <volist name='fileArr' id='vo'>
+      <tr class="cell">
+        <td class="altbg1">{$vo.name}</td>
+        <td class="altbg2">{$vo.is_dir}</td>
+        <td class="altbg1"><php>if($vo['is_dir']=='N'){</php><a href="{$vo.url}">get</a><php>}</php></td>
+      </tr>
+    </volist>
+    <tr>
+      <td colspan="3" class="footer">&nbsp;</td>
+    </tr>
+  </table>
+</div>
+<script type="text/javascript">
+$(function(){
+   var channel = "{:$_GET['channel']}";
+   var file    = "{:$_GET['file']}";
+
+   if(channel!='' && channel!='undefined'){
+	   $("#channel").val(channel);	  
+   }
+   
+   if(file!='' && file!='undefined'){
+	   $("#file").val(file);	  
+   }   
+});
+
+function changFile(){
+   var channel = $("#channel").val();
+   var file    = $("#file").val();
+   
+   var url = "{:U('portal/Channel/temp')}&channel="+channel+"&file="+file;
+   window.location.href = url;
+}
+</script>

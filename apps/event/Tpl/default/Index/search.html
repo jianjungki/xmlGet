@@ -1,0 +1,84 @@
+<include file="__THEME__/header" />
+<link rel="stylesheet" href="../Public/event.css" type="text/css" media="screen" charset="utf-8" />
+<script type="text/javascript" src="../Public/js/event.js"></script>
+<div class="content_holder">
+<div class="content no_bg">
+<include file="../Public/_mainNav" />
+  <div class="main no_l">
+    <!-- 画布 begin  -->
+    <div class="mainbox">
+      <include file="../Public/_isHotList" />
+      
+      <div class="mainbox_appC">
+        
+        <div class="tab-menu">
+          <!-- 切换标签 begin  -->
+          <ul>
+        		<li><a class="on"><span>搜索{$ts['app']['app_alias']}</span></a></li>
+        		<include file="../Public/_searchBar" />
+          </ul>
+        </div>
+        <!-- 切换标签 end  -->
+        <div class="groupBox">
+          
+          <!-- 活动列表 begin  -->
+          <div class="boxL">
+            <include file="../Public/_eventList" />
+          </div>
+          <!-- 活动列表 end  -->
+        <div class="c"></div>
+        </div>
+      </div>
+      <div class="c"></div>
+    </div>
+  </div>
+</div>
+</div>
+<!-- 右侧内容 end  -->
+<include file="__THEME__/footer" /> 
+
+<script type="text/javascript">
+/*
+	-需要：引入一个jquery的包
+	-原理：
+		隐藏第一组<span></span>标签（包含里面的内容），然后用slideDown效果渐渐下滑显示出来
+		再把最后一组<span></span>标签插入到最前面并隐藏，形成循环
+*/
+$(function() {
+var label='';	
+$('li','#activity').each(function(i,o){
+	label = label + "<span class='num'>" + (i+1) +"</span>";
+});
+$('#item').html(label);
+var interval = 4000;
+var slide    =  setInterval(slideIt,interval);
+	function slideIt() {
+	  var obj = $('li','#activity');//定义一个变量obj，把id为guduk里的所有<span></span>标签赋给它
+/*	  obj.last().hide().prev().fadeOut(3000);//倒数2个隐藏
+	  obj.last().insertBefore(obj.first()).fadeIn(3000);//把id为guduk里的最后一组<span></span>标签插到最前面（这样容器里的<span></span>标签就可以循环起来）
+	  obj.last().prev().fadeOut(3000);//第5个span淡出
+*/
+	obj.last().hide().insertBefore(obj.first()).show();//.fadeIn(2000);//
+
+	};
+
+	$('#activity').mouseover(function() {
+		clearInterval(slide);//当鼠标移上去的时候停止下滑
+	}).mouseout(function() {
+		slide = setInterval(slideIt,interval);//当鼠标移开的时候继续下滑
+	});
+
+	slideIt();
+
+$('.num').click(function(){
+	
+	var id = "pic_"+$(this).text();
+	// clearInterval(slide);	var pic = $('li','#activity');
+	// alert(id+'=='+pic.first().attr('id'));	if(id == pic.first().attr('id')){
+		return;
+		}	$("#pic_"+$(this).text()).hide().insertBefore(pic.first()).show();//.fadeIn(2000);//
+	// slide = setInterval(slideIt,interval);});
+
+});
+
+</script>

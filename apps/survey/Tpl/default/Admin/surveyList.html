@@ -1,0 +1,118 @@
+<include file="public/admin/header.html" />
+<script type="text/javascript">
+var ctrl = function(name){
+}
+ctrl.prototype = {
+		del:function(id){
+			var id = id ? id : getChecked();
+			id = id.toString();
+			if(id=='' || id==0){
+				ui.error('没有指定问卷');
+				return false;
+			}
+		    if (confirm("确认删除选定的问卷？")) {
+		        $.post( '{:U('survey/Admin/deleteSurvey')}',{id:id},function(txt){
+		        	txt = eval('(' + txt + ')');
+		        	if (1 == txt.status) {
+		                var id_list = id.split( ',' );   
+		        		if (id_list.length > 1) {
+			                for (var j=0 ; j< id_list.length ; j++) {
+			                	$('#list_' + id_list[j]).remove(); 
+			                }
+		        		} else {
+			                $('#list_' + id).remove();
+		        		}
+		                ui.success( "操作成功" );
+		            } else {
+		            	ui.error(txt.info);
+		            }
+		        });
+		    }
+		}
+	}
+var c = null;
+</script>
+<div class="so_main">
+<include file="_tab" />
+
+  <!-------- 搜索 -------->
+  <div id="search" <neq name="type" value="searchUser">style="display:none;"</neq>>
+  	<div class="page_tit">搜索问卷 [ <a href="javascript:void(0);" onclick="toggleBlock('search');">隐藏</a> ]</div>
+
+	<div class="form2">
+	<form method="post" action="{:U('survey/Admin/surveyList')}">
+    <dl class="lineD">
+      <dt>ID：</dt>
+      <dd>
+        <input name="question_id" type="text" value="{$question_id}">
+      </dd>
+    </dl>
+
+    <dl class="lineD">
+      <dt>标题：</dt>
+      <dd>
+        <input name="title" type="text" value="{$title}">
+      </dd>
+    </dl>
+
+    <dl class="lineD">
+      <dt>描述：</dt>
+      <dd>
+        <input name="description" type="text" value="{$description}">
+      </dd>
+    </dl>
+
+    <div class="page_btm">
+      <input type="submit" class="btn_b" value="确定" />
+    </div>
+	</form>
+  </div>
+  </div>
+
+<div class="Toolbar_inbox">
+	<div class="page right">{$list['html']}</div>
+    <!-- <a href="javascript:void(0);" class="btn_a" onclick="toggleBlock('search');"><span>搜索问卷</span></a> -->
+	<a href="{:U('survey/Admin/editSurvey')}" class="btn_a"><span>添加问卷</span></a>
+	<a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除问卷</span></a>
+</div>
+
+<div class="list">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<th style="width: 30px;">
+			<input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+			<label for="checkbox"></label>
+		</th>
+		<th class="line_l">ID</th>
+		<th class="line_l" style="width:680px;">调查标题</th>
+		<th class="line_l">参与人数</th>
+		<th class="line_l">创建日期</th>
+        <th class="line_l">操作</th>
+	</tr>
+	<volist name="list['data']" id='fetch'>
+	<tr id="list_{$fetch.survey_id}">
+		<td><input type="checkbox" name="checkbox" onclick="checkon(this)" value="{$fetch.survey_id}"></td>
+		<td>{:++$list['firstRow']}</td>
+		<td>{$fetch['title']}</td>
+		<td>{$fetch['join_num']}</td>
+		<td>{$fetch['mtime']|friendlyDate=###, 'full'}</td>
+		<td><a href="{:U('survey/Admin/editSurvey', array('id'=>$fetch['survey_id']))}">编辑</a>
+		<a href="{:U('survey/Admin/surveyResult', array('id'=>$fetch['survey_id']))}">查看</a>
+		<a href="{:U('survey/Admin/exportSurvey', array('id'=>$fetch['survey_id']))}">导出</a>
+		<a href="javascript:void(0)" onclick="c.del({$fetch.survey_id})">删除</a></td>
+	</tr>
+	</volist>
+</table>
+</div>
+
+<div class="Toolbar_inbox">
+	<div class="page right">{$list['html']}</div>
+    <!-- <a href="javascript:void(0);" class="btn_a" onclick="toggleBlock('search');"><span>搜索问卷</span></a> -->
+	<a href="{:U('survey/Admin/editSurvey')}" class="btn_a"><span>添加问卷</span></a>
+	<a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除问卷</span></a>
+</div>
+
+<include file="public/admin/footer.html" />
+<script type="text/javascript">
+c = new ctrl();
+</script>

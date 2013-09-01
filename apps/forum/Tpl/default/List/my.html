@@ -1,0 +1,107 @@
+<include file="__THEME__/header" />
+<include file="../Public/forum_header" />
+
+<div class="content line_bule" style="padding:5px 0;">
+  <div class="list_h">
+    <div class="page R">{$html}</div>
+    <php>if($popedom->check("allow_post") || $popedom->check("allow_post_vote")){</php>
+    <div style="margin-bottom:1px; padding-left:10px">
+      <php>if(isset($_GET['cate'])){</php>
+	      <php>if($popedom->check("allow_post")){</php>
+	      <input class="text_button mt5" onClick="location.href='{:U('forum/Index/post',array('class'=>$fid,'cate'=>$_GET['cate']))}'" type="button" value="发表新帖" />
+	      <php>}</php>
+      <php>}else{</php>
+	      <php>if($popedom->check("allow_post")){</php>
+	      <input class="text_button mt5" onClick="location.href='{:U('forum/Index/post','class='.$fid)}'" type="button"	 value="发表新帖" />
+	      <php>}</php>
+      <php>}</php>
+      <php>if($popedom->check("allow_exalt")){</php>
+     	 <input class="text_button mt5 " onClick="location.href='{:U('forum/Index/special',array('class'=>$fid,'special'=>1))}'" type="button" value="发表公告" />
+      <php>}</php>
+    </div>
+    <php>}</php>
+    <div class="C"></div>
+  </div>
+  <div class="list_nv">
+    <ul>
+<li <php>if(!isset($_GET['special'])){</php> class="on" <php>}</php> ><a href="{$url}">全部主题</a></li><li <php>if($_GET['sign'] == 28){</php> class="on" <php>}</php> ><a href="{$url}&special=sign&sign=28">公告</a></li><li <php>if($_GET['sign'] == 5){</php> class="on"<php>}</php> ><a href="{$url}&special=sign&sign=5">精华帖</a></li><li <php>if(isset($_GET['special']) && $_GET['type'] == "topic"){</php> class="on" <php>}</php> ><a href="{$url}&type=topic&special=my">我的主题</a></li><li <php>if(isset($_GET['special']) && $_GET['type'] == "reply"){</php> class="on" <php>}</php> ><a href="{$url}&type=reply&special=my">我的回复</a></li></ul>
+	<php> foreach($tclasslist as $key=>$value){
+      if($value['template'] == 1) unset($tclasslist[$key]);
+      } </php>
+    <div class="nav_mu no"><php>$tClassCount = count($tclasslist);</php><php>if(!empty($tclasslist)){</php><volist name="tclasslist" key="voKey" id="vo"><php>if($voKey < $tClassCount){</php><p><php>}else{</php><p class="no"><php>}</php><a href="{$signUrl}&cate={$key}" <php>if(isset($_GET['cate']) && $_GET['cate'] == $key){</php> class="on"<php>}</php> >{$vo.name}</a></p></volist>
+      <php>}else{</php>
+      <div style="height:26px;">&nbsp</div>
+      <php>}</php>
+    </div>
+  </div>
+  <div class="bbs_list ta_list">
+	    <div class="list_2_tit">
+	      <php>if(isset($_GET['cate']) && !empty($_GET['cate'])) $cateUrlParse = "&cate=".$_GET['cate'];$cateUrlParse;</php>
+	        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+		      <tr>
+		        <td align="left" style="width: 38%; padding:0 10px"><strong>版块主题</strong> <php>if(!is_array($data)) $data= array();</php>
+	        <strong class="cl_b"> （{$data|count}/{$count}）</strong>
+				  </td>
+		        <td align="center" style="width: 7%;">作者</td>
+		        <td align="center" style="width: 6%"><a	class="mr5  <php>if($_GET['order'] == "replycount"){
+		          </php>
+		          on icon_order
+		          <php>}</php>
+		          " href="{$signUrl}&order=replycount{$cateUrlParse}">回复</a>/<a
+					class="ml5 <php>if($_GET['order'] == "viewcount" ){
+		          </php>
+		          on icon_order
+		          <php>}</php>
+		          " href="{$signUrl}&order=viewcount{$cateUrlParse}">查看</a></td>
+		        <td align="right" style="width: 10%; padding-right: 10px;"><a
+					class="mr5 <php>if($_GET['order'] == "rTime"  || !isset($_GET['order'])){
+		          </php>
+		          on icon_order
+		          <php>}</php>
+		          " href="{$signUrl}&order=rTime{$cateUrlParse}">最后回复</a>/<a class="ml5 <php>if($_GET['order'] == "cTime"){
+		          </php>
+		          on icon_order
+		          <php>}</php>
+		          "
+		          href="{$signUrl}&order=cTime{$cateUrlParse}">发表时间</a></td>
+		      </tr>
+		    </table>
+	    </div>
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" class="ta_list">
+      <php>if(!empty($data)){</php>
+      <volist name="data" id="vo">
+      	<php>
+      	if(isset($_GET['special']) && $_GET['type'] == "reply"){
+      		$topicUrl = U('forum/Index/gopost',array('id'=>$vo['tid'],'pid'=>$vo['pid']));
+      	}else{
+      		$topicUrl = U('forum/Detail/index',array('id'=>$vo['tid']));
+      	}
+      	</php>
+        <php> $signIcon = $vo['sign']; </php>
+        <tr class="list_bm  <php>if($key%2==0){ echo "no_bg";}
+        </php>
+        ">
+        <td align="left" style="width: 41%;border-left:none">
+           <div style="height:40px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
+            <php>if(!empty($vo['cate'])){</php><span class="tit"> <a href="{$url}&cate={$vo['cate'].id}">[{$vo['cate'].name}]</a> </span><php>}</php><volist name="signIcon" id="so"><php>if($so['signid'] != 10 ){ </php><img <php>if($vo['affiche'] == 1 && $so['signid'] == 3){</php> style="display:none"<php>}</php> title="{$so.name}" align="absmiddle" src="{$so.icon}" /><php>}</php></volist><span class="pr20"><a <php>if($vo['highlight']){</php> style="color:{$vo['highlight']};font-weight:bold;" <php>}</php> href="{$topicUrl}" title="{$vo.title}" target="_blank">{$vo.title}</a></span></div></td>
+          <td align="center" class="del_name" style="width: 7%;"><php>$uname = getForumUserName($vo['uid'],$setting,$Core['siteSetting'],$vo['maskId']);</php>
+            {$uname} </td>
+          <td align="center" style="width: 6%;">{$vo.replycount}/{$vo.viewcount}</td>
+          <td align="right" style="width: 10%; padding-right: 10px;"><php>if(isset($_GET['order']) && $_GET['order'] == 'cTime'){</php>
+            {$vo.cTime|friendlyDate=###,'full'}
+            <php>}else{</php>
+            {$vo.rTime|friendlyDate=###,'full'}
+            <php>}</php></td>
+        </tr>
+      </volist>
+      <php>}else{</php>
+      <div class="list_clew">本版块或指定的范围内尚无指定的帖子</div>
+      <php>}</php>
+    </table>
+  </div>
+  <div class="list_h mt5">
+    <div class="page R">{$html}</div>
+    <div class="C"></div>
+  </div>
+</div>
+<include file="__THEME__/footer" /> 

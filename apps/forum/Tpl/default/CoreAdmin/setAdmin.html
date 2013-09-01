@@ -1,0 +1,23 @@
+
+<div class="supplement_box">
+    <dl>
+    		<dt>{$category}</dt>
+      <dd style="width:100%;">
+        {:W("SearchUsers",array('class'=>'line lh25','name'=>'selectedTo','reg'=>true,'user'=>$userList,'userId'=>$userId)) }
+      </dd>
+      <dd style="width:100%;" class="lh18">输入你想提问的对象 如：刘晓庆</dd>
+    </dl>
+</div>
+<script>
+function confirmExpert(){
+		var tagid = '{$tagid}';
+		$.post("{:U('bbs/Admin/dosetAdmin')}",{tagid:tagid,selectUid:hasSelectedUserId},function(txt){
+			txt = eval('(' + txt + ')' );
+			if(txt.status){
+				$("td[rel='"+tagid+"']").html(txt.info);
+			}else{
+				alert(txt.info);
+			}
+		})
+}
+</script>

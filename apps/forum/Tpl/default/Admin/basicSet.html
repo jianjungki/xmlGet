@@ -1,0 +1,122 @@
+<include file="_header" />
+
+<script type="text/javascript" src="../Public/js/calender.js" ></script>
+<link href="../Public/style.css" rel="stylesheet" type="text/css">
+
+<form action="{:U('forum/Admin/doBasicSet',array('fid'=>$fid))}" enctype="multipart/form-data" method="post">
+
+<div class="so_main">
+	<div class="page_tit">版块设置   当前版块：{$forum['name']}</div>
+	<div class="form">
+	<div class="tab">
+	<ul>
+		<li <eq name="ACTION_NAME" value="basicSet">class="on"</eq>><a href="{:U('forum/Admin/basicSet',array('fid'=>$fid))}">基本设置</a></li>
+		<li <eq name="ACTION_NAME" value="popedomSet">class="on"</eq>><a href="{:U('forum/Admin/popedomSet',array('fid'=>$fid,'type'=>'user'))}">权限管理</a></li>
+	</ul>
+	</div>
+	<dl> 
+        <dt>允许附件上传类型：</dt>
+        <dd>
+        <label>
+		<input class="txt" type="text" name="attach_type" value="{$forum.attach_type}"><span class="cGray2 ml5">类型之间用","分隔</span>
+        </label>
+      </dd>
+    </dl>
+    <dl> 
+       <dt>允许附件上传大小：</dt>
+      <dd>
+        <label>
+   			<input class="txt" type="text" name="attach_size" value="{$forum.attach_size}" maxlength="11"   onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"><span class="cGray2 ml5">大小以"MB"为单位,附件大小不能超过站点附件设置</span>
+         </label>
+      </dd>
+    </dl>
+	 <dl> 
+       <dt>版块名称：</dt>
+      <dd>
+        <label>
+   			<input class="txt" type="text" name="name" value="{$forum['name']}">
+         </label>
+      </dd>
+    </dl>
+    <dl> 
+       <dt>版块图标：</dt>
+      <dd>
+        <label>
+   			<input type="file" name="icon" /><span class="cGray2 ml5">上传的版块图标需为图片格式，且最好为64*64pt正方形图标，以免发生变形。
+</span>
+         </label>
+      </dd>
+    </dl>
+    </dl>
+
+</div>
+<div class="sea_left"><input class="btn_b" type="submit" value="提交"></input></div>
+</div>
+	</form>
+	
+<include file="_footer" />
+
+<script type="text/javascript">
+var fid = "{$fid}";
+function addTime(){
+	$.tbox.popup("{:U('forum/admin/timeSet')}"+"&fid="+fid);
+    var button = '<p><input class="btn_b" id="savemodel"  name="" type="button" value="确定" /><input class="btn_w ml5" name="" id="cannel" type="button" value="取消"/></p>';
+    $('#tbox .tb_button_list').show().html(button);
+    $('#savemodel').click(function(){
+        addTimeAjax();
+    });
+    $('#cannel').click(function(){
+        $.tbox.close();
+    });
+ }
+
+function addTimeAjax(){
+    var userGroup = $('#userGroup').val();
+    var temp = new Array();
+    for(var one in userGroup){
+    	temp.push($('#userGroup option[value='+userGroup[one]+']').html());
+	}
+
+	var startTime = $('#sfromTime').val()+":"+$('#stoTime').val();
+	var endTime = $('#efromTime').val()+":"+$('#etoTime').val();
+	var status = $('#status').val();
+	$.post("{:U('forum/admin/addTimeSet')}",{sTime:startTime,eTime:endTime,fid:fid,status:status,userGroupId:userGroup,userGroupName:temp},function(result){
+		if(result == 1){
+			$.tbox.close();
+	        location.reload();
+		}else{
+			result = eval("("+result+")");
+			alert(result.info);
+		}
+	});
+}
+
+function delTimeRule(i,fid){
+$.post("{:U('forum/Admin/doDelTimeRule')}",{key:i,fid:fid},function(txt){
+    location.reload();
+	});
+}
+
+$(function(){
+  var check = $('#usertime').attr("checked");
+	if(check){
+		$('#time').css('display','');
+		}
+
+});
+
+$(function() {
+  $('#usetime').click(function(){
+	  if($('#usetime').attr("checked","checked"))
+		$('#time').css('display','');
+	});
+	$('#notused').click(function(){
+		if($('#notused').attr("checked","checked"))
+		$('#time').css('display','none');
+	});
+});
+
+function clean() {
+	$.tbox.popup("{:U('forum/Admin/cleancache')}","清理缓存");
+}
+</script>

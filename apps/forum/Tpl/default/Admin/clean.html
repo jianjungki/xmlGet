@@ -1,0 +1,46 @@
+<include file="../Public/header" />
+<link href="../Public/style.css" rel="stylesheet" type="text/css">
+<div class="so_main">
+<style>
+.form dt {padding-top:9px;_padding-top:14px;}
+</style>
+<div class="page_tit">数据清理</div>
+<div id="container" class="form">
+    <form method="POST" action="{:U('forum/Admin/doClean')}">
+       
+               <dl>
+             
+                <dt><input name="type" type="radio" value="0" checked="checked"/></dt>
+                    <dd>默认值清除应用缓存，数据库字段缓存。（修改表结构，应用代码后）</dd>
+          </dl>
+               <dl>
+             
+                <dt><input name="type" type="radio" value="site" /></dt>
+                    <dd>只清除网站配置（后台修改了网站的配置时，如 白名单）</dd>
+           </dl>
+                <dl>
+            
+                <dt><input name="type" type="radio" value="portal" /></dt>
+                    <dd>清除门户缓存</dd>
+          </dl>
+            <dl>
+               
+                <dt><input name="type" type="radio" value="all" /></dt>
+                   <dd> 清除网站配置，模板缓存，数据库字段缓存，应用配置缓存(全部缓存)</dd></dl>
+          
+
+        <div class="sea_left"><input type="submit" class="btn_b" value="开始清理" /></div>
+    </form>
+</div>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<script type="text/javascript">
+function cleancache(){
+	 var type = $("input[name='type']:checked").val();
+	 var url = "{:U('forum/Admin/doClean')}";
+	 if(type!=0){
+		 url += "?"+type;
+	 }
+	 window.location.href = url;
+}
+</script>

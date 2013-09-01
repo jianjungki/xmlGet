@@ -1,0 +1,137 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/weibo.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.autocomplete.js"></script>
+<script src="../Public/js/slides.min.jquery.js"></script>
+<link href="__PUBLIC__/js/editor/editor/theme/change.css" rel="stylesheet"/>
+<script>
+	function catchit(param){
+		switch(param){
+			case 1:
+				$('#img_tab2').fadeOut("slow");$("#talkPop").css("height","209px");$('#img_tab1').fadeIn("slow");break;
+			case 2:
+				$('#img_tab1').fadeOut("slow");$("#talkPop").css("height","90px");$('#img_tab2').fadeIn("slow");break;
+		}
+	}
+	function setimginto(){
+		$('#upload_list').insertBefore();
+		
+	}
+</script>
+
+
+<div class="t_column iepng">
+  <div class="t_column_left"><img src="__PUBLIC__/js/editor/editor/theme/images/icon/message.png" width="128" height="39"/></div>
+  <div class="t_column_right">
+   <ul>
+   <li><div class="sixin_right"><a href="javascript:void(0)" onclick="ui.sendmessage();"></a></div></li>
+   </ul>
+  </div>
+</div>
+<div class="p_main"> 
+		<div class="project_left">
+       <div class="p_nav">
+         <ul>
+           <li id="p_nav_3"><a href="{:U('home/Message/index')}">查看私信</a></li>
+           <li id="p_nav_1"><a href="{:U('home/User/new_atme')}">查看@我</a></li>
+           <li id="p_nav_3"><a href="{:U('home/User/new_comments')}">查看评论</a></li>
+           <li id="p_nav_3"><a href="{:U('home/Message/notify')}">系统通知</a></li>
+           <li id="p_nav_3"><a href="{:U('home/Message/appmessage')}">应用消息</a></li>
+           <li id="p_nav_3"><a href="javascript:void(0)" onclick="ui.sendmessage();">发私信</a></li>
+         </ul>
+       </div>
+      
+   </div>
+
+         <div class="project_right"  style="text-align: left;"> 
+         	
+         	<div class="mainbox_C" style="margin:20px;">
+      <div class="clearfix">
+      	<div class="tab-menu">
+              <ul>
+                <li><a href="###" class="on"><span>提到我的</span></a></li>
+              </ul>
+       </div>
+		<!-- 微博列表 feedbox  -->
+        <div class="feedBox">
+            <div id="countNew"></div>
+            <php>if($gid){</php>
+                    {:W('WeiboList', array('mid'=>$mid, 'list'=>$list['data'], 'insert'=>1,'simple'=>2))}
+            <php>}else{</php>
+                    {:W('WeiboList', array('mid'=>$mid, 'list'=>$list['data'], 'insert'=>1))}
+            <php>}</php>
+                    <div class="page">{$list['html']}</div>
+            
+        </div>
+		<!-- 微博列表 feedbox end  -->
+		</div>
+		</div>
+        </div>
+        <div class="c"></div>
+      </div>
+<!-- 用@提到的人 end --> 
+<include file="__THEME__/footer" /> 
+<script>
+$(document).ready(function(){
+	$(".header_dropdown").hover(
+		function(){ $(this).addClass("hover"); },
+		function(){ $(this).removeClass("hover"); }
+	);
+	$.post("{:U('home/Public/replaceUser')}", {limit:6,count:0,type:'orguser'}, function(res){
+		                $('#orguser_list').html('');
+		                $('#orguser_list').html(res);
+	           }
+	);
+});
+
+var weibo = $.weibo({
+      sinceId: parseInt('{$sinceId}'),
+      
+	  <php>if(ACTION_NAME=="index"){</php>
+      timeStep : 30000,
+      initForm:true,
+      <php>}</php>
+
+      lastId:parseInt('{$lastId}'),
+      show_feed:parseInt('{$show_feed}'),
+      follow_gid:parseInt('{$follow_gid}'),
+      gid:parseInt('{$gid}'),
+      weiboType:'{$weibo_type}',
+      type:parseInt('{$type}'),
+      typeList:{
+          WEIBO:parseInt(<php>echo UserAction::INDEX_TYPE_WEIBO;</php>),
+          GROUP:parseInt(<php>echo UserAction::INDEX_TYPE_GROUP;</php>),
+          ALL:parseInt(<php>echo UserAction::INDEX_TYPE_ALL;</php>)
+      }
+});
+	
+function close_announcement() {
+	$('#announcement').hide('slow');
+	$.post("{:U('home/User/closeAnnouncement')}",{},function(res){});
+}
+var numcount = 1;
+function otherusers(param,limit){
+	$.post("{:U('home/Public/replaceUser')}", {limit:limit,count:numcount,type:param}, function(res){
+		                $('#orguser_list').html('');
+		                $('#orguser_list').html(res);
+		                if($('#orguser_list li').size()<6)
+		                	numcount = 0;
+		                else 
+		                	numcount++;
+	       });
+}
+function submitinfo(){
+	imgurl = $('#picurl').val();
+     var tomatch= /http:\/\/[A-Za-z0-9\.-]{3,}\.[A-Za-z]{3}/
+     if (!tomatch.test(imgurl)){
+		alert("此链接地址无效");
+		$('.talkPop').remove();
+		return false;
+	 }
+	 $('#imgurl').val(imgurl);
+	$('#content_publish').val("图片微博");
+	$('.talkPop').remove();
+	return true;
+}
+</script>
+{:Addons::hook('weibo_js_plugin')}

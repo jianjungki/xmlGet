@@ -1,0 +1,98 @@
+<script>
+	function addremark (type,myuid) {
+		var label = '增加备注';
+		if(type==2){
+			label = '增加印象';
+		}
+		ui.box.load(U('home/space/addRemark',["type="+type,"uid="+myuid]),{title:label});
+	}
+</script>
+<php>if ($user['deputyoriid']){</php>
+					<php>if (!$orgid&&$uid){</php>
+					<div style="padding: 10px;line-height: 21px;margin: 0 0 10px;_zoom:1;float:right;">
+					<php>if(!in_array($user['deputyoriid'],$attenid)){</php>
+						<div style="float:left;margin-right: 15px;"><a href="{:U('home/Public/AttendTo')}&orgid={$user.deputyoriid}&uid={$user.uid}" class="add_atn">加入我们</a></div>
+					<php>}else{</php>
+						<div ><a href="{:U('home/Public/Backout')}&orgid={$user.deputyoriid}&uid={$user.uid}">退出组织</a></div>
+					<php>}</php>
+					</div>
+					<php>}</php>
+				<php>}</php>
+<dl class="friend_info_left">
+  <dt><space uid="uid">{uavatar=b}</space></dt>
+                <php>if($mid!=$uid && $mid!=0){</php>
+                    <php>if($isBlackList){</php>
+                     <dd style="width:90%; text-align:center; padding-top:20px" >
+                     已加入黑名单， <a href="javascript:void(0)" onclick="ui.confirm(this,'确定要将此用户从你黑名单中解除?')" callback="setBlacklist({$uid},'del')">解除</a></dd>
+                    <php>}else{</php>
+                    <dd style="width:90%; text-align:center; padding-top:20px" id="follow_state">
+                    <script>document.write(followState('{$followstate}'))</script>
+                    </dd>
+                    <php>}</php>
+                
+                <php>}</php>
+     </dl>
+          <div class="friend_info_right">
+          	<h2 style="float: left"><strong>{:GetUserRemark($uid,$mid)}</strong><php>Addons::hook('user_name_end', array('uid'=>$uid, 'html'=>& $user_name_end));echo $user_name_end;</php>{$uid|getUserGroupIcon}</h2>
+            <div style="margin-left: 150px;padding-top: 15px">
+				<span style="color: #3B5998;cursor: pointer;float:left" onclick="addremark(1,{$uid})" onmouseover="$(this).css('color','#B85B05')" onmouseout="$(this).css('color','#3B5998')">
+					增加备注
+				</span>
+	<!--			<i class="vline">|</i>
+				<span style="color: #3B5998;cursor: pointer" onclick="addremark(2)" onmouseover="$(this).css('color','#B85B05')" onmouseout="$(this).css('color','#3B5998')">
+					增加印象
+				</span>        
+	-->    		
+            </div>
+            
+            <div class="info_deta">
+            	<dl>
+              <dd>
+                  <php>
+                    foreach($user_credit as $k => $v) {
+                  </php>
+                    <div class="c1">{$v['alias']}:</div><div class="c2"><a href="{:U('home/Account/credit')}" title="{$v['credit']}"><span class="cRed">{$v['credit']}</span></a></div>
+                  <php>
+                      }
+                      unset($user_credit);
+                  </php>
+              </dd>
+            	<volist name="userinfo" id="vo">
+            		<dd><div class="c1">{$key}:</div><div class="c2">{$vo}</div></dd>
+            	</volist>
+            <dd class="pb10 cGray2 left" style="heiht:30px;margin-left:30px;">
+                <a href="{:U('home/space/profile',array('uid'=>$uid))}">详细资料</a>
+                <php>if ($mid > 0 && !$privacy['blacklist']) {</php>
+                    <i class="vline">|</i><a href="javascript:void(0)" onclick="weibo.quickpublish('快来看看 @{$uid|getUserName} 的微博')">推荐给朋友</a>
+                <php>}</php>
+                
+                <php>if ($mid > 0 && $privacy['message'] && $mid != $uid && isFans($uid,$mid)) {</php>
+                    <i class="vline">|</i><a href="javascript:void(0)" onclick="ui.sendmessage({$uid})">发私信</a>
+                <php>}</php>
+                
+                <php>if ($mid > 0 && $mid != $uid && $followstate != 'unfollow') {</php>
+                    <i class="vline">|</i>
+                    <a href="javascript:void(0)" onclick="weibo.quickpublish('@{$uid|getUserName} ')">@TA</a>
+                    <i class="vline">|</i>
+                    <a href="javascript:void(0)" onclick="followGroupSelectorBox('{$uid}')">设置分组</a>
+                <php>}</php>
+
+                <php>if ($mid > 0 && $mid != $uid && $isBlackList == false) {</php>
+                    <i class="vline">|</i>
+                    <a href="javascript:void(0)" onclick="ui.confirm(this,'您确定要将此用户加入黑名单?')" callback="setBlacklist({$uid},'add')">加入黑名单</a>
+                <php>}</php>
+             </dd>
+         </div>
+</div>
+
+<php>if ($user['deputyoriid']){</php>
+	<div class="space_mod_announcement">
+        <div class="right">
+              <php>if ($orgid == $user['deputyoriid']&&$orgid) {</php>
+              	<a href="{:U('home/OrgAccount/statementact', array('op'=>'edit'))}&orgid={$stateinfo.orgid}&statid={$stateinfo.id}">修改</a>
+              <php>}</php>
+        </div>
+        <h4 class="titround_Ann">最新公告</h4>
+        <span>{$stateinfo.postcontent}</span>
+    </div>
+<php>}</php>

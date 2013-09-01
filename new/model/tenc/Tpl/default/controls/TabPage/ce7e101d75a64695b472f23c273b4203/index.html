@@ -1,0 +1,31 @@
+ <div class="tab-menu" > 
+   <ul >
+		 <volist name = 'categorys' id = 'category'><li><a href="javascript:void(0)" class="" onclick='selectItems({$category['id']})' id='item{$category['id']}' ><span>{$category['name']}</span></a></li></volist>
+   </ul>
+ </div>
+ <div class="giftBox">
+           <php>if($uid&&$uid!=$mid){</php>
+          <div style="font-size:16px;font-weight:bold;color:#666;margin-top:10px;">已选定获赠者： <img src="{:SITE_URL}/thumb.php?w=30&h=30&url={$uid|getUserFace}" /> {$uid|getUserName}</div>
+          <php>}</php>
+          <div class="f14px fB lh35">选择一个礼物:</div>
+          
+			  <volist name = 'categorys' id = 'category'>
+				  <div class="giftblock" id='gifts{$category['id']}' style="display:none;" >
+					  <ul>
+						<volist name = "category['gifts']" id='gift'>
+						  <li class='gifts hand' title="点击选择" onclick='sendGift({$gift['id']})' id='gift{$gift['id']}'>
+						  <img src="{$gift['img']|realityImageURL}" /><br />
+						  {$gift['name']}<br />
+						  限量：{$gift['num']}个<br />
+						  {$gift['price']}点{$money.alias}
+						  </li>
+						</volist>
+						<div class="c"></div>
+					  </ul>
+				</div>
+			</volist>
+			<a name="sendto" id="sendto"></a>
+			<div id='gift_info'></div>
+			【$V3UNDER】
+
+</div>

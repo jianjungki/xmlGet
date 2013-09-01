@@ -1,0 +1,83 @@
+<!--begin附件-->
+<div class="dow_list mb10">
+<volist name="data" id="vo">
+<div class="img_resize mb5 mt10" style="width:776px;overflow-x:hidden;">
+{*是否被删除*}
+<php>if($vo['del']==1):</php>
+	<!--  <p class="mb5 pl5"><span class="dow_icon">{$vo.name} ( This file has been deleted! )</span></p>-->
+<php>else:</php>
+	<php>
+	$lazyImage = UPLOAD_URL."/2010/1107/17/4cd670dbf4144.gif";
+	$isimage	=	0;
+	//附件下载地址
+	$trueurl	=	U('home/attach/download',array('id'=>$vo['id'],'uid'=>$vo['userId'],'hash'=>$vo['hash']),false,UPLOAD_URL);
+	//$trueurl	=	UPLOAD_URL.'/download-'.$vo['id'].'-'.$vo['uid'].'-'.$vo['hash'].'.bin';
+	
+	//审核通过或者当前用户有审核权限。则显示链接地址。
+	if( $vo['status']==1 || $allow_check_attach==1 ){
+		$url	=	$trueurl;
+	
+	//其他情况不显示链接地址
+	}else{
+		$url	=	'###';
+	}
+	$attachType = array('jpg','gif','doc','docx','exe','file','flv','gz','mp3','ot','pdf','png','ppt','pptx','rar','rm','rss','swf','txt','xls','xlsx','zip');
+	$imagetype	=	array('jpg','png','gif','bmp','jpeg');
+	if( in_array( strtolower($vo['extension']) , $imagetype ) )	{
+		$isimage	=	1;
+		$imageurl	=	U('home/attach/showimage',array('id'=>$vo['id'],'uid'=>$vo['uid'],'thumb'=>"1",'hash'=>$vo['hash']),false,UPLOAD_URL);
+		$imageurl2	=	U('home/attach/showimage',array('id'=>$vo['id'],'uid'=>$vo['uid'],'thumb'=>"0",'hash'=>$vo['hash']),false,UPLOAD_URL);
+		//$imageurl	=	UPLOAD_URL.'/showimage-'.$vo['id'].'-'.$vo['uid'].'-'.$vo['hash'].'.jpg';
+	}
+	
+	$pageAttachList = implode(',',$pageAttach);
+	</php>
+	{*等待审核*}
+	<eq name="vo.status" value="0">
+		<p class="pl5 pb5 pt5" style="border:1px dashed #f80000; background:#ffffc8">
+			<span>{* 未审核的就不要A标签了 *}
+			<php>if(in_array(strtolower($vo['extension']),$attachType)){</php>
+				<img style="border:0" align="absmiddle" src="../Public/images/ICON/{$vo.extension|strtolower}.gif" />
+			<php>}else{</php>
+				<img style="border:0" align="absmiddle" src="../Public/images/ICON/fu_icon.gif" />
+			<php>}</php>
+			<php>if( $vo['status']==1 || $allow_check_attach==1 ):</php>
+				<a href="{$trueurl}" title="点击下载">{$vo.name}</a>
+			<else />
+				{$vo.name}
+			<php>endif;</php>
+			</span>
+			<span style="color:#999;"> ( <span style="color:red">等待审核...</span>&nbsp;{$vo.size|byte_format} ) 
+			<php>if($allow_check_attach==1):</php>
+				<a href="javascript:void(0)" onclick="checkattach('{$vo.id}');">审核附件</a>&nbsp&nbsp<a  href="javascript:void(0)" onClick="checkattach('{$pageAttach}')">批量审核</a>
+				<!-- <php>if(in_array( strtolower($vo['extension'] ), $imagetype )){</php><br /><span><img  class="mt5" data-ks-lazyload="{$imageurl}"  onclick="tb_show('', '{$imageurl2}', false);" /></span><php>}</php> -->
+			<php>endif;</php>
+		</span></p>
+	{*审核通过*}
+	<else />
+		<php>if( $allow_read_attach == 1 ):</php>
+		<p class="pl5">
+			<php>if(in_array(strtolower($vo['extension']),$attachType)){</php>
+				<img style="border:0" align="absmiddle" src="../Public/images/ICON/{$vo.extension|strtolower}.gif" />
+			<php>}else{</php>
+				<img style="border:0" align="absmiddle" src="../Public/images/ICON/fu_icon.gif" />
+			<php>}</php>
+		<span><a href="{$url}" title="点击下载">{$vo.name}</a></span><span style="color:#999;"> ( {$vo.size|byte_format} ) </span>
+		<php>if(!$needShowImage){</php>
+			<a href="javascript:void(0)" onclick="tb_show('', '{$imageurl2}', false);" title="您已设置图片不显示，点击预览图片">[看图]</a>
+		<php>}</php>
+		<php>if($allow_check_attach==1):</php>
+		<a style="color:red" href="javascript:void(0)" onclick="cacleCheck('{$vo.id}');">取消审核</php></a> <font color="blue">{$vo.uname} </font>
+		<php>endif;</php></p>{*单独显示图片*}
+		<!--
+		<php>if( $isimage && $allow_read_image ==1 && $needShowImage ):</php>
+			<p style="padding-left:6px;padding-top:5px;"><img data-ks-lazyload="{$imageurl}" onclick="tb_show('', '{$imageurl2}', false);" /></p>
+		<php>endif;</php>
+		-->
+		<php>endif;</php>
+	</eq>
+<php>endif;</php>
+</div>
+</volist>
+</div>
+<!--end 附件-->

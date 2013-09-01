@@ -1,0 +1,25 @@
+<include file="__THEME__/header" />
+<link href="../Public/css/survey.css" rel="stylesheet" type="text/css"  />
+<div class="content_holder">
+<div class="content no_bg">
+<!--路径-->
+<!-- <div class="path"><span>首页</span><span>&gt;&gt;</span><span><a href="{:U('survey/Index/index')}">问卷调查</a></span></div> -->
+<include file="../Public/_mainNav" />
+<!--end 路径-->
+<!--列表-->
+<div class="survey_list">
+<div class="tab_Squ">
+    <ul><li>调查列表</li></ul>
+</div>
+    <ul>
+        <volist name="list['data']" id='fetch'>
+            <li><span>{$fetch['mtime']|friendlyDate=###, 'full'}</span><a target="_blank" href="{:U('survey/Survey/index', array('id'=>$fetch['survey_id']))}">{$fetch['title']}</a></li>
+        </volist>
+    </ul>
+    <div class="page">{$list['html']}</div>
+</div>
+<!--end 列表-->
+</div>
+</div>
+
+<include file="__THEME__/footer" />

@@ -1,0 +1,124 @@
+<include file="__THEME__/header" />
+<link href="../Public/account.css" rel="stylesheet" type="text/css" />
+<link href="../Public/js/setavatar/css/imgareaselect-default.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="../Public/js/avatar/avatar.js"></script>
+<script type="text/javascript" src="../Public/js/account.js"></script>
+<script type="text/javascript" src="../Public/js/setavatar/jquery.imgareaselect.min.js"></script>
+<div class="content_holder">
+<div class="content"><!-- 内容 begin  --> 
+  <div class="main no_l"> <!-- 右侧内容 begin  -->
+    <div class="mainbox">
+      <div class="mainbox_appC no_r">
+    <include file="_tab" />
+    <!-- 切换标签 end  -->
+     <div style="display: block;" class="setItemsInfo">
+     		<div class="setFold setUnfold" rel="verified" >
+              <h2>认证资料<span id="verified_tips" class="cRed" style="font-weight:normal;"><php>
+              	  if ('1' == $verinfo['verified']) {</php>(认证成功)</span><php>
+              	  } else if ('0' === $verinfo['verified']) {
+              	  </php>(认证中……)<php>}</php></span></h2>
+            </div>
+				<div class="right" style="width:250px;padding:0 0 0 20px;line-height:20px;">{$verifyruler['verifyruler']|nl2br}</div>
+		      	<div class="data" style="border-right:1px solid #ddd">
+		            <form action="{:U('home/OrgAccount/verifyinfo')}" method="POST" id="form_verified" class="form_validator" enctype="multipart/form-data">
+		                <ul>
+		                <li>
+		                    <div class="left" style="width: 15%;text-align:right;display:block">联系人姓名：<span class="cRed pr5">*</span></div>
+		                    <div class="left" style="width: 50%;">
+		                      <div class="left mr5">
+		                          <input name="username" type="text" value="{$verinfo.realname}" class="text" style="width:200px;" onfocus="this.className='text2'" onblur="this.className='text'" /><br />
+		                          不会公开显示
+		                      </div>
+		                    </div>
+		                </li>
+		                <li>
+		                    <div class="left" style="width: 15%;text-align:right;display:block">联系人电话：<span class="cRed pr5">*</span></div>
+		                    <div class="left" style="width: 50%;">
+		                      <div class="left mr5">
+		                          <input name="telephone" type="text" value="{$verinfo.phone}" class="text" style="width:200px;" onfocus="this.className='text2'" onblur="this.className='text'" /><br />
+		                          不会公开显示
+		                      </div>
+		                    </div>
+		                </li>
+		                <li>
+		                    <div class="left" style="width: 15%;text-align:right;display:block">认证资料：<span class="cRed pr5">*</span></div>
+		                    <div class="left" style="width: 50%;">
+		                      <div class="left mr5"><textarea name="content" cols="40" rows="3" onfocus="this.className='text2'" onblur="this.className='text'">{$verinfo.reason}</textarea></div>
+		                    </div>
+		                </li>
+		                 <li>
+		                    <div class="left" style="width: 15%;text-align:right;display:block">组织凭证：</div>
+		                    <div class="left mr5" style="width: 50%;">
+		                    	{:W('UploadAttach',array('limit' =>'1'))}
+		                    	<div><br>请上传组织相关扫描件、或其他能有效证明组织身份的资料！</div>
+		                    </div>		                    
+		                </li>
+		                <li>
+		                	<div class="left" style="width: 15%;text-align:right;display:block">&nbsp;</div>
+		                	<div class="left" style="width: 50%;">
+		                		<input type="hidden" name="id" value="{$verinfo.uid}" />
+		                		<input type="button" id="btn_submit" class="btn_b" value="保存" onclick="return modifyVerified();" />
+		                		<!-- <input type="submit" value="保存" /> -->
+		                	</div>
+		                	<div class="left" style="width: 15%;"></div>
+		                </li>
+		                </ul>
+		            </form>
+		        </div>
+            </div>
+      </div>
+    </div>
+  </div>
+  <!-- 右侧内容 end  -->
+  <div class="c"></div>
+</div>
+</div>
+<!-- 内容 end --> 
+<include file="__THEME__/footer" />
+<script>
+	function modifyVerified(o)
+	{
+
+		var $btn_submit = $('#btn_submit');
+		var $username = $('input[name="username"]');
+		var $telephone = $('input[name="telephone"]');
+		var $content = $('textarea[name="content"]');
+		var username = $username.val();
+		var telephone = $telephone.val();
+		var content = $content.val();
+		var id = $('input[name="id"]').val();
+
+		if (!username.match(/^[\u4e00-\u9fa5]+$|^[a-zA-Z\.·]+$/)) {
+			ui.error('请输入真实姓名');
+			$username.focus();
+			return false;
+		} else if (!telephone.match(/^[\d]{11}$/)) {
+			ui.error('请输入正确的手机号');
+			$telephone.focus();
+			return false;
+		} else if (content.length <= 0) {
+			ui.error('请输入认证资料');
+			$content.focus();
+			return false;
+		}
+
+		<if condition="$verified['verified'] eq 1">
+		if (!confirm('确定重新申请认证？申请后您原有的认证标识将被收回，通过后即可恢复。')) {
+			return false;
+		}
+		</if>
+
+		document.getElementById('form_verified').submit();
+		// $btn_submit.attr('disabled','true');
+		// $.post('{:Addons::createAddonUrl('UserVerified', 'home_account_do')}', {realname:realname,phone:phone,reason:reason,id:id},function(txt){
+		// 	if( 1 == txt ){
+		// 		$("#verified_tips").html('(成功提交资料，请等待认证。)');
+		// 		ui.success('操作成功,等待认证');
+		// 	}else{
+		// 		ui.error('操作失败,请稍后再试');
+		// 	}
+		// 	$btn_submit.removeAttr('disabled');			
+		// });
+	}
+</script>

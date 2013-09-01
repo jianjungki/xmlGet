@@ -1,0 +1,57 @@
+<include file="__THEME__/admin" />
+<link href="../Public/style.css" rel="stylesheet" type="text/css">
+<link href="../Public/css/admin_forum.css" rel="stylesheet" type="text/css" />
+<body>
+
+<div class="so_main">
+<div class="page_tit">敏感词管理</div>
+  <form action="{:U('forum/Admin/doAddFilter')}" method="POST" onSubmit="return checkForum();">
+  <!--表单设置修改模块 begin -->
+  <div class="form">
+    <dl>
+     <dt>输入敏感词：</dt>
+      <dd>
+        <textarea style="width:500px;" id="words" name="words" rows="5" cols="120"></textarea>
+        <p>输入的一个敏感词在页面将用"*"代替，敏感词之间请用","分隔！</p></dd>
+    </dl>
+     <div class="sea_left">  <input class="btn_b" type="submit" value="添加"></input></div>
+    </div>
+    </form>
+  <div class="tagList">
+ <div class="page_tit"><div class="cl">查找敏感词</div><div class="cl pt10 ml10"><form method="post" action="{:U('forum/Admin/filterWord')}">  <input class="txt" name="words"  type="text" value="{$search.words}"><input class="btn_b ml10" value="查找" type="submit"></input></form></div><div class="C"></div></div>
+ <div class="form">
+  	<ul>
+  		<volist name="list" id="vo">
+	<li rel="tags" onMouseOver="this.className='bg';" onMouseOut="this.className='';" id="tag_{$vo.id}" class="a1"><a href="#" class="a1">{$vo.name}</a><a title="删除" onClick="delTag({$vo.id})" class="a2" href="javascript:void(0)">
+	<img title="删除" src="__ROOT__/apps/forum/Tpl/default/Public/images/transparent_03.gif"></a></li>
+  		  		</volist>
+  		</ul>
+  		</div>
+	</div>
+    </div>
+</body>
+
+<script type="text/javascript">
+function delTag(tagId,tagName){
+	if(!confirm("你确定要删除此敏感词吗？")) return false;
+	$.post('{:U("forum/Admin/doDelWord")}',{tagid:tagId},function(txt){
+		if(txt){
+			$("#tag_"+tagId).html('<font color=red>删除成功</font>');
+			$("#tag_"+tagId).fadeTo(1000, 0.25, function(){
+				$("#tag_"+tagId).remove();
+			});			
+		}else{
+			$.tbox.no('失败');
+		}
+	});
+}
+
+function checkForum(){
+	if($.trim($('#words').val()).length < 1 || $.trim($('#words').val()) == "&nbsp"){
+		$.tbox.no("请输入敏感词");
+		setTimeout("$.tbox.close()",1500);
+		return false;
+	}
+	
+}
+</script>

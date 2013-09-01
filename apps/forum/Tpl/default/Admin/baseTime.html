@@ -1,0 +1,219 @@
+<include file="__THEME__/admin" />
+<meta http-equiv="content-type" content="text/html;charset=utf-8">
+<div class="so_main">
+<div class="page_tit">上班日历设置</div>
+<div class="form"><p style="line-height:30px; float:left; padding-left:12px;">
+<input type="checkbox" name="w1" id="w1" onclick="selectWeek(1,$(this))" />
+每周1
+<input type="checkbox" name="w1" id="w2" onclick="selectWeek(2,$(this))" />
+每周2
+<input type="checkbox" name="w1" id="w3" onclick="selectWeek(3,$(this))" />
+每周3
+<input type="checkbox" name="w1" id="w4" onclick="selectWeek(4,$(this))" />
+每周4
+<input type="checkbox" name="w1" id="w5" onclick="selectWeek(5,$(this))" />
+每周5
+<input type="checkbox" name="w1" id="w5" onclick="selectWeek(6,$(this))" />
+每周6
+<input type="checkbox" name="w1" id="w5" onclick="selectWeek(0,$(this))" />
+每周日
+<input type="checkbox" name="w1" id="w7" onclick="selectWeek(7,$(this))"/>
+每周1-5
+<span style="color:red;padding-left:10px;">设置时间规则后请清理缓存。<a href="javascript:void(0)" onClick="clean()">点此进行清理</a></span>
+</p>
+</div>
+<div class="clear"></div>
+</div>
+<style>
+.month { float:left; width:300px; height:300px; }
+table{ margin:10px 10px; height:292px; border-collapse:collapse; }
+table td{ border:1px solid #ddd; padding:0 5px; height:28px; }
+</style>
+<?php  
+if(!empty($_GET)){  
+    $year = $_GET['year'];  
+    $month = $_GET['month'];  
+}  
+if(empty($year)){  
+    $year = date('Y');  
+}  
+if(empty($month)){  
+    $month = date('m');  
+}
+for($month= 1;$month < 13;$month ++ ){  
+$start_weekday = date('w',mktime(0,0,0,$month,1,$year));  
+//echo $start_weekday;  
+$days = date('t',mktime(0,0,0,$month,1,$year));  
+//echo $days;  
+$week = array('星期日','星期一','星期二','星期三','星期四','星期五','星期六');  
+$i = 0;  
+$k = 1;  
+$j = 0;  
+echo '<div class="month">';
+echo '<table border = "1">';  
+echo '<tr><td colspan = 7 style = "text-align:center">'.$year.'年'.$month.'月'.'</td></tr>';  
+echo '<tr>';  
+for($i = 0;$i < 7;$i++){  
+    echo '<td>'.$week[$i].'</td>';  
+}  
+echo '</tr>';  
+echo '<tr>';  
+for($j = 0;$j < $start_weekday;$j++){  
+    echo '<td style="color:#FFFFFF">'.$j.'</td>';  
+}  
+while($k <= $days){
+	$tempDate = $year.'-'.$month.'-'.$k;
+	if(isset($dbDate[$tempDate])){
+		if($dbDate[$tempDate][0]['login'] == 1){
+    		echo '<td selected="selected" style="background: none repeat scroll 0% 0% #dee4ed;" rel="'.$tempDate.'" class="w'.(($j) % 7).'" onClick="switchData($(this))">'.$k.'</td>';  
+		}else{
+			echo '<td rel="'.$tempDate.'" class="w'.(($j) % 7).'" onClick="switchData($(this))">'.$k.'</td>';  
+		}
+	}else{
+    	echo '<td rel="'.$tempDate.'" class="w'.(($j) % 7).'" onClick="switchData($(this))">'.$k.'</td>';  
+	}
+    if(($j+1) % 7 == 0){  
+        echo '</tr>';  
+    }  
+    $j++;  
+    $k++;  
+}  
+while($j % 7 != 0){  
+    echo '<td style="color:#FFFFFF">'.$j.'</td>';  
+    $j++;  
+}  
+ echo '</tr>';  
+ echo '</table></div>';  
+}
+   
+ function lastYear($year,$month){  
+  $year = $year-1;  
+  return "year=$year&month=$month";  
+ }  
+ function lastMonth($year,$month){  
+  if($month == 1){  
+   $year = $year -1;  
+   $month = 12;  
+  }else{  
+   $month--;  
+  }  
+  return "year=$year&month=$month";  
+ }  
+ function nextYear($year,$month){  
+  $year = $year+1;  
+  return "year=$year&month=$month";  
+ }  
+ function nextMonth($year,$month){  
+  if($month == 12){  
+   $year = $year +1;  
+   $month = 1;  
+  }else {  
+  $month++;  
+  }  
+  return "year=$year&month=$month";  
+ } 
+?>
+
+<script>
+	function switchData(obj) {
+		var select = obj.attr('selected');
+		if (select == "selected") {
+			deleteTimeData(obj.attr('rel'),true);
+			obj.removeAttr('selected');
+			obj.css('background','#fff');
+		}else{
+			saveTimeData(obj.attr('rel'),true);
+			obj.attr('selected', 'selected');
+			obj.css('background','#dee4ed');
+		}
+	}
+	var selectedWeek = 0;
+	function selectWeek(week, obj) {
+		var checked = obj.attr('checked');
+		if (week == 7) {
+			for ( var i = 1; i < 6; i++) {
+				if (checked) {
+					$('#w' + i).attr('checked', 'checked');
+					$('.w' + i).css('background', '#dee4ed');
+					$('.w' + i).attr('selected', 'selected');
+					saveTimeData($('.w' + i),false);
+				} else {
+					$('#w' + i).removeAttr('checked');
+					$('.w' + i).removeAttr('selected');
+					$('.w' + i).css('background', '#fff');
+					deleteTimeData($('.w' + i),false);
+				}
+			}
+		} else {
+			if (checked) {
+				$('.w' + week).css('background', '#dee4ed');
+				$('.w' + week).attr('selected', 'selected');
+
+				saveTimeData($('.w' + week),false);
+				if (week >= 1 && week <= 5) {
+					selectedWeek += week;
+					if (selectedWeek == 15)
+						$('#w7').attr('checked', 'checked');
+				}
+
+			} else {
+				if ($('#w7').attr('checked') && (week >= 1 && week <= 5)) {
+					$('#w7').removeAttr('checked');
+				}
+				if (week >= 1 && week <= 5) {
+					selectedWeek -= week;
+				}
+				deleteTimeData($('.w' + week),false);
+				$('.w' + week).css('background', '#fff');
+				$('.w' + week).removeAttr('selected');
+
+			}
+		}
+	}
+
+	function saveTimeData(obj, one) {
+		var selectData = new Array();
+		if (one == true) {
+			selectData.push(obj);
+		} else {
+			obj.each(function() {
+				selectData.push($(this).attr('rel'));
+			});
+		}
+		$.tbox.yes("正在生成规则，请稍等");
+		$.post('{:U("forum/admin/baseTimeSetting")}', {
+			data : selectData
+		}, function(result) {
+			if (result == -1) {
+				setTimeout("$.tbox.close()", 1000);
+			} else {
+				alert(result);
+			}
+		});
+	}
+
+	function deleteTimeData(obj, one) {
+		var selectData = new Array();
+		if (one == true) {
+			selectData.push(obj);
+		} else {
+			obj.each(function() {
+				selectData.push($(this).attr('rel'));
+			});
+		}
+		$.tbox.no("正在删除规则，请稍等");
+		$.post('{:U("forum/admin/delBaseTimeSetting")}', {
+			data : selectData
+		}, function(result) {
+			if (result == -1) {
+				setTimeout("$.tbox.close()", 1000);
+			} else {
+				alert(result);
+			}
+		});
+	}
+
+	function clean(){
+		$.tbox.popup("{:U('forum/Admin/cleancache')}","清理缓存");
+	}
+</script>

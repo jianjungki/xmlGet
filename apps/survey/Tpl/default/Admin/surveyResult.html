@@ -1,0 +1,32 @@
+<include file="public/admin/header.html" />
+<div class="so_main">
+  <div id="editTpl_div">
+  	<div class="page_tit">调查统计：{$title}</div>
+  	<div class="lh180 c666" ><span style="vertical-align:top">详细说明：</span><span style="width:500px; display:inline-block">{$description}</span></div>
+  	<div class="mt10 mb10 c666">链接地址：<input type="text" class="text" id="url" value="{$url}" style="width:567px;" />
+  	<a class="ml5" href="javascript:;" onclick="copy_clip(document.getElementById('url').value)">复制到剪贴板</a>
+  	<a class="ml5" href="{$url}" target="_blank">前台查看展示页</a></div>
+
+	<div class="list">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<th class="line_l">ID</th>
+				<th class="line_l">用户</th>
+				<th class="line_l">提交时间</th>
+		        <th class="line_l">操作</th>
+			</tr>
+			<volist name="list" id='fetch'>
+			<tr id="list_{$fetch.uid}">
+				<td>{:++$firstRow}</td>
+				<td><space uid="fetch['uid']" target="_blank">{uname}</space></td>
+				<td>{$fetch.mtime|friendlyDate=###, 'full'}</td>
+				<td><a href="{:U('survey/Admin/survey', array('id'=>$survey_id, 'uid'=>$fetch['uid']))}" target="_blank">查看</a></td>
+			</tr>
+			</volist>
+		</table>
+	</div>
+
+  </div>
+  </div>
+</div>
+<include file="public/admin/footer.html" />

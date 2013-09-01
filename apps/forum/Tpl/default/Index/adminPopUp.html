@@ -1,0 +1,73 @@
+<div class="postbox">
+<ul class="listtopicadmin">
+	<li id="itemcp_stick" fwin="mods">
+	<table cellspacing="0" cellpadding="5">
+		<tbody>
+			<tr>
+				<td width="15"><input type="checkbox" value="stick"
+					onclick="if(this.checked) switchitemcp('itemcp_stick')"
+					name="operations[]"></td>
+				<td><label class="labeltxt"
+					onclick="switchitemcp('itemcp_stick')">置顶</label>
+				<div class="detailopt"><select name="sticklevel">
+					<option value="0">无</option>
+					<option value="1">本版置顶</option>
+					<option value="2">分类置顶</option>
+					<option value="3">全局置顶</option>
+				</select></div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	</li>
+	<li id="itemcp_digest" fwin="mods">
+	<table cellspacing="0" cellpadding="5">
+		<tbody>
+			<tr>
+				<td width="15"><input type="checkbox" value="digest"
+					onclick="if(this.checked) switchitemcp('itemcp_digest')"
+					name="operations[]"></td>
+				<td><label class="labeltxt"
+					onclick="switchitemcp('itemcp_digest')">精华</label>
+				<div class="detailopt"><select name="digestlevel">
+					<option value="0">解除</option>
+					<option value="1">精华 1</option>
+					<option value="2">精华 2</option>
+					<option value="3">精华 3</option>
+				</select></div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	</li>
+	<li>
+	<table cellspacing="0" cellpadding="5">
+		<tbody>
+			<tr>
+				<td width="15"><input type="checkbox" value="bump"
+					name="operations[]"></td>
+				<td><label for="">提升</label></td>
+			</tr>
+		</tbody>
+	</table>
+	</li>
+	<li id="itemcp_highlight" fwin="mods" class="currentopt">
+	<table cellspacing="0" cellpadding="5">
+		<tbody>
+			<tr>
+				<td width="15"><input type="checkbox" checked="checked"
+					value="highlight"
+					onclick="if(this.checked) switchitemcp('itemcp_highlight')"
+					name="operations[]"></td>
+				<td><label class="labeltxt">高亮</label>
+				<div class="detailopt"><span class="hasdropdownbtn"> <input
+					type="hidden" value="0" name="highlight_color" id="highlight_color"
+					fwin="mods">
+				</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	</li>
+</ul>
+</div>

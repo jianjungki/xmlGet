@@ -1,0 +1,27 @@
+<div class="mainbox_appR">
+        <div class="right_box app_lineB">
+         <h4>推荐大屏幕</h4>
+        <ul class="screen_listRec">
+            <volist name="recommend" id="vo">
+              <eq name="vo.src" value="">
+                <li>
+                  <div class="userFace"><a href="{:U('screen/index/detail',array('id'=>$vo['screen_id']))}" class="username"><img src="__PUBLIC__/themes/newstyle/images/ts.png" /></a></div>
+                  <div class="userInfo">
+                    <h4><a href="{:U('screen/index/detail',array('id'=>$vo['screen_id']))}">{$vo.title}</a></h4>
+                    <h5><space uid="vo.uid">{uname}</space></h5>
+                  </div>
+              </li>
+              </eq>
+              <neq name="vo.src" value="">
+              <li>
+                  <div class="userFace"><a href="{:U('screen/index/detail',array('id'=>$vo['screen_id']))}" class="username"><img src="__UPLOAD__/{$vo.src}" /></a></div>
+                  <div class="userInfo">
+                    <h4><a href="{:U('screen/index/detail',array('id'=>$vo['screen_id']))}">{$vo.title}</a></h4>
+                    <h5><space uid="vo.uid">{uname}</space></h5>
+                  </div>
+              </li>
+            </neq>
+              </volist> 
+          </ul>
+         </div>
+</div>

@@ -1,0 +1,112 @@
+
+
+<div class="content_right" style="position:relative;float:right;">
+	<div style="text-align:center;width:278px;border: solid #F0F0F0 1px;height:150px;padding-top: 80px;">
+            	<php>if($topics_info['status']==0){</php>
+	            	<span class="character1">
+	            		<img src="__PUBLIC__/Noname.bmp" style="width:150px;">
+	            	</span><br>
+	            	<span class="character1" >
+	            		开始时间：<font color="grey">{$topics_info['time_start']|date='Y年m月d日 H:i',###} ~  {$topics_info['time_end']|date='H:i',###}</font>
+	            	</span>
+	            <php>}else if($topics_info['status']==1){</php>
+	            	<span class="character1"><img src="__PUBLIC__/begin.png" style="width:150px;"></span><br>
+	            	<span class="character1" >
+	            		开始时间：<font color="grey">{$topics_info['time_start']|date='Y年m月d日 H:i',###} ~  {$topics_info['time_end']|date='H:i',###}</font>
+	            	</span>
+	            <php>}else if($topics_info['status']==2){</php>
+	            	<span class="character1"><img src="__PUBLIC__/end.bmp" style="width:150px;"></span><br>
+	            	<span class="character1" >
+	            		开始时间：<font color="grey">{$topics_info['time_start']|date='Y年m月d日  H:i',###} ~  {$topics_info['time_end']|date='H:i',###}</font>
+	            	</span>
+	            <php>}</php>
+    </div>
+	<div style="width:278px;border: solid #F0F0F0 1px;border-top: solid #FFFFFF 1px;">
+		<div style="position: relative;margin-top:30px;left:20px;width:90%;height:80%">
+			<span style="line-height: 30px;"><b>访谈嘉宾</b></span>
+			<volist name="guests" id="vo">
+				
+				<div class="card_content">
+					<div class="card_name clearfix">
+						<dl class="name clearfix">
+							<dt><img class="picborder_r" title="{$vo.uname}" uid="{$vo.uid}" imgtype="head" src="{$vo.face}"></dt>
+							<dd  style="width:150px;">
+							<p class='parag'>{$vo.space_link}</p>
+
+							<p class='parag'><a href="{$vo.follower_url}">粉丝</a><b>{$vo.followers_count}</b>人</p>
+							<php>if($mid){</php>
+								<php>if($vo['follow_state']=="unfollow"){</php>
+									<p><a href="javascript:void(0);" class="guanzhu" onclick="subscribe('{$vo['uid']}')">加关注</a></p></case>
+								<php>}else if($vo['follow_state']=="havefollow"){</php>	
+									<p><a href="javascript:void(0);" class="guanzhu" >已关注</a></p></case>
+								<php>}else if($vo['follow_state']=="eachfollow"){</php>
+									<p><a href="javascript:void(0);" class="guanzhu" >互相关注</a></p></case>
+								<php>}</php>
+							<php>}</php>
+							</dd>
+						</dl>
+						<dl class="infoset clearfix">
+						<dt></dt>
+						<dd>
+						<p>嘉宾介绍：</p>
+						<p>{$vo.introduce}</p>
+					  </dl>
+					</div>
+				</div>
+			</volist>
+		</div>
+	</div>
+	<div style="width:278px;border: solid #F0F0F0 1px;border-top: solid #FFFFFF 1px;">
+		<div style="position: relative;margin-top:30px;left:20px;width:90%;height:80%">
+			<span style="line-height: 30px;"><b>主持人</b></span>
+			<volist name="hosts" id="vo">
+				
+				<div class="card_content">
+					<div class="card_name clearfix">
+						<dl class="name clearfix">
+							<dt><img class="picborder_r" title="{$vo.uname}" uid="{$vo.uid}" imgtype="head" src="{$vo.face}"></dt>
+							<dd  style="width:150px;">
+							<p class='parag'>{$vo.space_link}</p>
+
+							<p class='parag'><a href="{$vo.follower_url}">粉丝</a><b>{$vo.followers_count}</b>人</p>
+							<php>if($mid){</php>
+								<php>if($vo['follow_state']=="unfollow"){</php>
+									<p><a href="javascript:void(0);" class="guanzhu" onclick="subscribe('{$vo['uid']}')">加关注</a></p></case>
+								<php>}else if($vo['follow_state']=="havefollow"){</php>	
+									<p><a href="javascript:void(0);" class="guanzhu" >已关注</a></p></case>
+								<php>}else if($vo['follow_state']=="eachfollow"){</php>
+									<p><a href="javascript:void(0);" class="guanzhu" >互相关注</a></p></case>
+								<php>}</php>
+							<php>}</php>
+							</dd>
+						</dl>
+						<dl class="infoset clearfix">
+						<dt></dt>
+						<dd>
+						<p>主持人介绍：</p>
+						<p>{$vo.introduce}</p>
+					  </dl>
+					</div>
+				</div>
+			</volist>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+    function subscribe(uid) {
+    	alert(uid);
+        $.post("{:U('home/Widget/doFollowRelatedUser')}", {uid:uid}, function(res){
+        	if('14' == res){
+        		ui.error('关注人数已超过配置最大数量，关注失败！');
+        	}else{
+	            if ('0' == res) {
+	                ui.error('关注失败');
+	            }else{
+					//followGroupSelectorBox(uid);
+					$(".guanzhu").html("已关注");
+	                ui.success('关注成功');
+	            }
+        	}
+        });
+    }
+</script>

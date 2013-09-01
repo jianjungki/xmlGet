@@ -1,0 +1,27 @@
+<!-- <div class="tab_Squ">
+	<div class="celerity_menu">
+		<ul>
+		<li><a href="{:U('home/Square/tgSquare')}" <if condition="'index' eq ACTION_NAME">class="on"</if>
+		  ><span class="ico_side ico_square<if condition="'tgSquare' eq ACTION_NAME">_on</if>"></span>广场首页</a></li>
+		<li><a href="{:U('home/Square/top')}" <if condition="'top' eq ACTION_NAME">class="on"</if>
+		  ><span class="ico_side ico_billboard"></span>风云榜</a></li>
+		<li><a href="{:U('home/Square/star')}" <if condition="'star' eq ACTION_NAME">class="on"</if>
+		  ><span class="ico_side ico_hall<if condition="'star' eq ACTION_NAME">_on</if>"></span>专家</a></li>
+		<volist name="expend_menu" id="vo">
+				<li><a href="{:U('home/Square/' . $vo['act'], $vo['param'])}" <if condition="ACTION_NAME eq $vo['act']">class="on"</if>
+				  ><span class="ico_side ico_{$vo['act']}<if condition="$vo['act'] eq ACTION_NAME">_on</if>"></span>{$vo['name']}</a></li>
+		</volist>
+		</ul>
+	</div>
+</div> -->
+<div id="s_column">
+  <ul>
+        <li <if condition="'tgSquare' eq ACTION_NAME">class="square_on"<else />class="squarecol"</if>><a href="{:U('home/Square/tgSquare')}"></a></li>
+        <li <if condition="'top' eq ACTION_NAME">class="top_on"<else />class="topcol"</if>><a href="{:U('home/Square/top')}"></a></li>
+        <li <if condition="'star' eq ACTION_NAME">class="star_on"<else />class="starcol"</if>><a href="{:U('home/Square/star')}"></a></li>
+        <volist name="expend_menu" id="vo">
+			<li <if condition="ACTION_NAME eq $vo['act']">class="{$vo['act']}_on"<else />class="{$vo['act']}col"</if>><a href="{:U('home/Square/' . $vo['act'], $vo['param'])}"></a></li>
+		</volist>
+<!--         <li id="s_columnright">&nbsp;</li> -->
+  </ul>
+</div>

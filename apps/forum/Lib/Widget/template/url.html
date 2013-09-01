@@ -1,0 +1,16 @@
+<tr height="30">
+          <td align="right" class="pt10" width="15%"><eq name="must" value="1"><font color="red">*</font>&nbsp;</eq>{$label}：</td>
+          <td align="left" class="pt10">
+			<input type="text" id="{$field}_opt" name="template[{$field}]" maxlength="50" class="in_put" style="width: 57%; " value="<php>if(isset($hasData) && !empty($hasData[$field])){</php>{$hasData[$field]}<php>}</php>"/>
+		 		  <input type="hidden" name="widgetType[{$field}]" value="{$widget}" />
+		  <eq name="must" value="1">
+		  	<input type="hidden" name="must[{$label}]" value="{$field}" />
+		  	<script>
+		  	 mustCheck["{$field}"] = '{$label}';
+		  	</script>
+		  </eq>
+				  <span class="ml5 c999">
+				  	{$info}
+				  </span>
+		  </td>        
+</tr>

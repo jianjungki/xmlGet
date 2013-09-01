@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>{&SITE_TITLE}</title>
+	<link href="__PUBLIC__/admin/css/layout.css" rel="stylesheet" type="text/css" />
+	<link href="__PUBLIC__/js/pagination/pagination.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="__PUBLIC__/language/{$lang}/lang.js" ></script>
+	<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+	<script type="text/javascript">
+		var ctrl = function(name){
+			this.elements = document.getElementsByName('id[]');
+			this.length = this.elements.length;
+		}
+		ctrl.prototype = {
+			reverse:function(){
+				for(i=0;i<this.length;i++){
+					this.elements[i].checked= !this.elements[i].checked;
+				}
+			},
+			all:function(){
+				for(i=0;i<this.length;i++){
+					this.elements[i].checked = true;
+				}
+			},
+			unAll:function(){
+				for(i=0;i<this.length;i++){
+					this.elements[i].checked = false;
+				}
+			},
+			toggle:function(obj){
+				this[obj.checked ? 'all' : 'unAll']();
+			},
+			del:function(id){
+				if(id==undefined){
+					id = [];
+					for(i=0;i<this.length;i++){
+						this.elements[i].checked && id.push(this.elements[i].value);
+					}
+					id = id.join(',');
+				}
+				location.href = "{:U('bbs/Admin/deleteBBS')}&id="+id;
+			},
+//			edit:function(id){
+//				location.href = "__URL__/edit/id/"+id;
+//			},
+//			commend:function(gid,type){
+//				location.href = "{:U('group/Admin/commend')}&gid="+gid+"&type="+type;
+//			},
+//			active:function(gid,type){
+//				location.href = "{:U('group/Admin/active')}&gid="+gid+"&type="+type;
+//			},
+//			reject:function(gid){
+//				location.href = "{:U('group/Admin/reject')}&gid="+gid;
+//			}
+		}
+		var c = null;
+	</script>
+	</head>
+	<body>
+		<div id="container">
+<div class="tab">
+	<ul>
+		<volist id="vo" name="menulist">
+			<php>$class=($key==ACTION_NAME)?'class="on"':''</php>
+			<li><a {$class} href="{:U('bbs/Admin/'.$key)}">{$vo}</a></li>
+		</volist>
+	</ul>
+</div>
+		
+    <table class="tableborder" width="100%">
+    	<form method="POST" action="{:U('bbs/Admin/index')}">
+          <tbody>
+            <tr class="top">
+              <td class="border" colspan="2"></td>
+            </tr>
+            <tr>
+              <th class="header" colspan="2">查询</th>
+            </tr>
+            <tr class="label">
+              <th>说明</th>
+              <th>条件</th>
+            </tr>
+		
+            <tr class="cell">
+                <td class="altbg1">
+                    <b>标题</b>
+                    <br/>
+                    <span class="smalltxt">根据标题搜索</span>
+                    </td>
+                <td class="altbg2"><input name="title" class="txt" value="{$title}"/></td>
+            </tr>
+            <tr class="cell">
+                <td class="altbg1">
+                    <b>用户ID</b>
+                    <br/>
+                    <span class="smalltxt">根据用户id</span>
+                    </td>
+                <td class="altbg2"><input name="uid" class="txt" value="{$uid}"/> 多个用户用逗号隔开</td>
+            </tr>
+            <tr class="cell">
+                <td class="altbg1">
+                    <b>结果排序</b>
+                    <br/>
+                    </td>
+                <td class="altbg2">
+                    <select name="field">
+                        <option value = "cTime" <eq name="field" value="cTime">selected</eq> >注册时间排序</option>
+                        <option value = "id" <eq name="field" value="id">selected</eq> >注册id排序</option>
+                        </select>
+                    <select name="order">
+                        <option value = "DESC" <eq name="order" value="DESC">selected</eq> >降序</option>
+                        <option value = "ASC" <eq name="order" value="ASC">selected</eq> >升序</option>
+                        </select>
+                    <select name="limit">
+                        <option value = "10" <eq name="limit" value="10">selected</eq> >每页显示10条</option>
+                        <option value = "20" <eq name="limit" value="20">selected</eq> >每页显示20条</option>
+                        <option value = "30" <eq name="limit" value="30">selected</eq> >每页显示30条</option>
+                        </select>
+                    </td>
+            </tr>            
+            <tr>
+              <td class="footer" colspan="2">
+                <input type="submit" class="button mb10 mt10" value="提交" />
+              </td>
+            </tr>
+          </tbody>
+          </form>
+        </table>
+
+
+<table class="tableborder" width="100%">
+<form id="userform" action="{:U('bbs/Admin/doBatch')}" method="POST">
+				<tbody>
+					<tr class="top">
+						<td class="border" colspan="5"></td>
+					</tr>
+					<tr>
+						<th class="header" colspan="5">标题</th>
+					</tr>
+					<tr>
+					
+						<td class="footer" colspan="5" style="text-align:left;color:blue;">
+						一共有 <font color="red">{$count}</font> 帖子
+						</td>
+					</tr>					
+					<tr class="label">
+						<th> 选择 <input type="checkbox" onclick="c.toggle(this)" class="checkbox"/></th>
+						<th>标题</th>
+						<th>用户</th>
+						<th>发布时间</th>
+						<th>操作</th>
+					</tr>
+<volist id="vo" name="data">					
+					<tr class="cell altbg1">
+						<td style="text-align:center;"><input type="checkbox" class="checkbox" name="id[]" value="{$vo.id}" /></td>
+						<td><a href="{:U('bbs/Index/detail',array('id'=>$vo['id']))}" target="_blank">{$vo.title}</a></td>
+						<td><a href="{:U('space/View/index',array('uid'=>$vo['uid']))}" target="_blank">{$vo.uid|getUserName}</a></td>
+						<td>{$vo.cTime|date="Y-m-d",###}</td>
+						<td><button type="button" onclick="c.del({$vo.id})">删除</button></td>
+					</tr>
+</volist>
+					<tr class="bottom">
+						<td class="border" colspan="3"> </td>
+					</tr>
+					<tr>
+					<td colspan="3"><div style="float:left">全选<input type="checkbox" onclick="c.toggle(this)" class="checkbox"/>&nbsp;&nbsp;&nbsp;
+<button type="button" onclick="c.del()">删除</button>
+						
+					</div>
+					
+					</td>
+						<td class="footer" colspan="2">
+						<div class="page mt5 alR mb20" style="float:right;">
+							{$html}
+						</div>
+						</td>
+					</tr>
+					<tr class="bottom">
+						<td class="border" colspan="3">&nbsp;</td>
+					</tr>
+				</tbody>
+				</form>
+			</table>        
+		</div>
+		<script type="text/javascript">
+
+			function changeDoType(o){
+				var obj= $("span[name=grouplists]");
+				if($(o).val()=='movegroup'){
+					obj.show();
+				}else{
+					obj.hide();
+				}
+			}
+			c = new ctrl('id[]');
+		</script>
+	</body>
+</html>

@@ -1,0 +1,95 @@
+
+<div>
+	
+   <div class="u_left">
+       <div class="u_nav">
+         <ul >
+           <li <eq name="pro_index_class" value="on">class="p_nav_1"<else/>class="p_nav_4"</eq>><a href="{:U('home/User/orgindex')}" >组织首页</a></li>
+           <li id="dropdown_my_group_main"  <eq name="my_class" value="on">class="p_nav_3"<else/>class="p_nav_2"</eq>>
+				<div><a href="{:U('group/SomeOne/orgIndex',array('grouptype'=>2))}" class="p_tit">我的组织 </a></div>
+				<div id="m_project" class="{$my_class}_mg_lapinfo" style="display: none">
+				    <volist name="my_group_list['org']" id="vo">
+					  <a href="{:U('group/Group/index',array('gid'=>$vo['id']))}" class="pro">
+						<div>
+							<img src="__ROOT__/thumb.php?w=14&h=14&url={$vo['logo']|get_photo_url}" class="mg_lpimg">
+							   {$vo.name|getShort=11,'...'}
+					    </div>
+					  </a>
+					  <php>if($key>=4){
+					      $hasMoreGroup = true;
+					      break;
+					      }</php>
+			    	</volist>
+			  	  <if condition="$config['createGroup']">
+			      <php>$_class = empty($my_group_list['project']) ? '' : 'lineS_top';</php>
+			  	  <div class="{$_class} group_add">
+			  	    <php>if($hasMoreGroup){</php><a href="{:U('group/SomeOne/projectIndex',array('grouptype'=>1))}" class="pro right" style="width: 60px">查看»</a><php>}</php>
+<!-- 			  		<a href="{:U('group/Index/addPro')}" class="pro" style="width: 60px">创建项目</a> -->
+			  	  </div>
+			  	  </if>
+			</div>
+			</li>
+			
+			<li id="dropdown_group_massage_main" <eq name="message_class" value="on">class="p_nav_3"<else/>class="p_nav_2"</eq>>
+		    	<div><a href="{:U('group/Index/orgMessage')}" class="p_tit">组织消息 </a></div>
+		    	<div id="p_msg" class="{$message_class}_mg_lapinfo" style="display: none">
+				  <a href="{:U('group/Index/orgComment')}" class="pro">评论</a>
+				  <a href="{:U('group/Index/orgAtme')}" class="pro">@提到我的</a>
+				  <a href="{:U('group/Index/orgBbsNotify')}" class="pro">帖子消息</a>
+			</div>
+		    </li>
+		    
+<!-- 		    <li <eq name="ACTION_NAME" value="addPro">class="p_nav_1"<else/>class="p_nav_4"</eq>><a href="{:U('group/Index/addPro')}">创建项目</a></li> -->
+<!-- 		    <li class="p_nav_4"><a href="#">项目Q&A</a></li> -->
+         </ul>
+       </div>
+	
+    
+	<php>if($gid>0){</php>	   
+    <include file="../Public/_groupInfo" />
+    <php>}</php>
+   </div>
+</div>
+
+
+
+
+
+
+<script>
+
+$(document).ready(function(){
+	
+	$(".mainbox").addClass("u_main p_main");
+	$(".mainbox_appC").addClass("u_right p_right");
+	
+	$("#dropdown_my_group_main").hover(
+		function(){ $('#m_project').show(); },
+	    function(){ $('#m_project').hide(); }
+	);
+	$("#m_project").hover(
+		function(){ 
+			$('#m_project').show();
+			if($('#m_project').attr('class')=='off_mg_lapinfo'){
+				$("#dropdown_my_group_main a").css('background-color','#17629c')
+			}
+		},
+	    function(){ $('#m_project').hide();$("#dropdown_my_group_main a").css('background-color','') }
+	);
+	
+	$("#dropdown_group_massage_main").hover(
+		function(){ $('#p_msg').show(); },
+	    function(){ $('#p_msg').hide(); }
+	);
+	
+	$("#p_msg").hover(
+		function(){ 
+			$('#p_msg').show();
+			if($('#p_msg').attr('class')=='off_mg_lapinfo'){
+				$("#dropdown_group_massage_main a").css('background-color','#17629c')
+			}
+		},
+	    function(){ $('#p_msg').hide();$("#dropdown_group_massage_main a").css('background-color','') }
+	);
+});
+</script>   

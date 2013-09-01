@@ -1,0 +1,18 @@
+
+<div class="mainbox_appR2">
+
+	    <div class="mt10 mb10">
+	        <div style="width:320px;height:320px;">
+				<!--<iframe src="" scrolling=no frameborder=0 height=90%></iframe>-->
+				<dd>
+					<volist name="data" id="message"> 
+						<div style="float:left;position:relative;padding-bottom: 10px;"><span style="float:left;position:relative;padding-right:10px;"><space uid="message['uid']" target="_blank">{uavatar=s}</space></span><div style="margin-top: 8px;position: relative;float:left;"><space uid="message.uid" class="fn" target="_blank">{uname}</space></div></div>
+						<div class="c2" style="position:relative;float:left;margin-left:20px;font-size: 15px;line-height: 30px;">{$message['commentinfo']}</div>
+						<hr style="width:100%;border:1px;border-style: dashed;"></hr>
+					</volist>
+					{$html}
+				</dd>
+			</div>
+		</div>
+    <div class="mod_interest" id="interesting_group_list"></div>
+</div>

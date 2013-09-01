@@ -1,0 +1,9 @@
+          
+            <volist name="data" id="vo">
+            <p>
+              <label>
+                  <input type="checkbox" name="question[{$id}][]" value="{$key}" <if condition="in_array($key, $result)">checked</if> {$disabled} />{$vo}
+              </label>
+              </p>
+            </volist>
+            

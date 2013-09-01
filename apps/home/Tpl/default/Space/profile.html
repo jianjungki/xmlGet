@@ -1,0 +1,136 @@
+<include file="__THEME__/header" />
+<link href="../Public/css/space.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<!--<script type="text/javascript" src="{:U('weibo/plugins/init')}"></script>-->
+<script type="text/javascript" src="__PUBLIC__/js/weibo.js"></script>
+<link href="__PUBLIC__/js/editor/editor/theme/change.css" rel="stylesheet"/>
+<style>
+.autoimage{
+	max-width: 420px;
+	height:auto;
+	width:expression(this.width > 420 ? "420px" : this.width);
+}
+.mainbox_appR{background:none;border:none;}
+.content{width:1002px;}
+</style>
+<php>if ($userInfo['detail']['deputyoriid']){</php>
+<div class="t_column">
+  <div class="t_column_left"><img id="icon" src="__PUBLIC__/js/editor/editor/theme/images/org.png" width="128" height="39"></div>
+  <div class="org_right">
+   <ul>
+   <li><a href="{:U('home/space/follow',array('uid'=>$uid,'type'=>'following'))}">关注 {$spaceCount.following|intval}</a></li>
+   <li>|</li>
+   <li><a href="{:U('home/space/follow',array('uid'=>$uid,'type'=>'follower'))}">粉丝 {$spaceCount.follower|intval}</a></li>
+   <li>|</li>
+   <li><a href="{:U('home/Space/index',array('uid'=>$uid))}">微博 {$spaceCount.miniblog|intval}</a></li>
+   </ul>
+  </div>
+</div>
+<php>}</php>
+<div class="content_holder">
+<div class="content"><!-- 内容 begin  --> 
+  <div class="main no_l">
+    <div class="mainbox boxspace">
+      <div class="mainbox_appR">
+		<include file="../Space/space_right" />
+      </div>
+      <div class="mainbox_appC boxspace_L">
+        <div class="friend_info">
+         <include file="../Space/userMenu" />
+		</div>
+		  {:Addons::hook('home_space_profile_middle', array($uid))}
+		  <eq name="usertype" value="user">
+          <div class="friend_info_right">
+            <div class="info_deta lineS_top">
+                <dl class="lineD_top">
+                	<dt>个人情况</dt>
+					<volist id="vo" name="userInfo.intro.list">
+                    	<php>if($vo['value']){</php>
+                    		<dd><div class="c1">{$vo.name}:</div><div class="c2">{$vo.value}</div></dd>
+                    	<php>}</php>
+					</volist>
+                </dl>
+                <dl class="lineD_top">
+                	<dt>联系方式</dt>
+					<volist id="vo" name="userInfo.contact.list">
+                    	<php>if($vo['value']){</php></php><dd><div class="c1">{$vo.name}:</div><div class="c2">{$vo.value}</div></dd><php>}</php>
+					</volist>
+                </dl>
+                <php>if($userInfo['profile'] && $userInfo['profile']['list']){</php>
+                <dl class="lineD_top">
+                  <dt>教育、工作情况</dt>
+                  <volist id="vo" name="userInfo.profile.list"></php>
+                      <dd>
+                          <switch name="vo['module']">
+                              <case value="education">
+                                  <div class="projectlist">
+                                      <h3>
+                                      [教育]&nbsp;&nbsp;<a target="_blank">{$vo.school}</a>
+                                      </h3><p>{$vo.year}入学 - {$vo.classes}</p>
+                                  </div>
+                              </case>
+                              <case value="career">
+                                  <div class="projectlist">
+                                      <h3>
+                                      [公司/机构]&nbsp;&nbsp;<a target="_blank">{$vo.company}</a>
+                                      </h3><p>{$vo.begintime} 至 {$vo.endtime}<br>{$vo.position}</p>
+                                  </div>
+                              </case>
+                          </switch>
+                      </dd>
+                  </volist>
+                </dl>
+                <php>}</php>
+            </div>
+          </div>
+          </eq>
+          <eq name="usertype" value="org">
+          	<div class="friend_info_right">
+            <div class="info_deta lineS_top">
+                <dl class="lineD_top">
+                    	<dd><div class="c1">所在地:</div><div class="c2">{:getLocation($userInfo['detail']['province'],$userInfo['detail']['city'])}</div></dd>
+                    	<dd><div class="c1">组织全称:</div><div class="c2">{$OrguserInfo.Orgdetail.unitFullName}</div></dd>
+                    	<dd><div class="c1">组织简称:</div><div class="c2">{$OrguserInfo.Orgdetail.unitShortName}</div></dd>
+                    	<dd><div class="c1">行业类别:</div><div class="c2">{$OrguserInfo.Orgdetail.category}</div></dd>
+                    	<php>if(
+                    		$uid==$mid||
+                    		(isShowInfo($uid,"person")==2&&in_array($Udata['deputyoriid'],$attenid))||
+                    		((getFollowState($uid,$mid)=="havefollow"||getFollowState($uid,$mid)=="havefollow")&&isShowInfo($uid,"person")==1||
+                    		(isShowInfo($uid,"person")==0))){
+                       </php>
+                    	<dd><div class="c1">联系人姓名:</div><div class="c2">{$OrguserInfo.Orgdetail.username}</div></dd>
+                    	<php>}</php>
+                    	<php>if(
+                    		$uid==$mid||
+                    		(isShowInfo($uid,"tele")==2&&in_array($Udata['deputyoriid'],$attenid))||
+                    		((getFollowState($uid,$mid)=="havefollow"||getFollowState($uid,$mid)=="havefollow")&&isShowInfo($uid,"tele")==1||
+                    		(isShowInfo($uid,"tele")==0))){
+                       </php>
+                    	<dd><div class="c1">联系人电话:</div><div class="c2">{$OrguserInfo.Orgdetail.telephone}</div></dd>
+                    	<php>}</php>
+                    	<dd><div class="c1">公司网址:</div><div class="c2">{$OrguserInfo.Orgdetail.website}</div></dd>
+                    	<dd><div class="c1">组织介绍:</div><br>
+                    		<div class="c2">{$OrguserInfo.Orgdetail.aboutit}</div></dd>
+                </dl>
+                
+               
+            </div>
+          </div>
+          </eq>
+          <div class="c"></div>
+		  {:Addons::hook('home_space_profile_bottom', array($uid))}
+      </div>
+
+    </div>
+  </div>
+  <div class="clear"></div>
+</div>
+</div>
+<!-- 内容 end --> 
+<script>
+var weibo = $.weibo({
+      timeStep : 10000
+});
+</script>
+{:Addons::hook('weibo_js_plugin')}
+<include file="__THEME__/footer" /> 

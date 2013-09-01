@@ -1,0 +1,107 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="../Public/js/miniblog.js"></script>
+<link href="__PUBLIC__/js/editor/editor/theme/change.css" rel="stylesheet"/>
+<!--[if IE 6]>
+<script type="text/javascript" src="..Public/js/png.js"></script>
+<script type="text/javascript">
+		DD_belatedPNG.fix('.logo,.squareicon,.line,#icon,#button');
+</script>
+<![endif]-->
+<div class="t_column  iepng">
+  <div class="t_column_left"><img src="__PUBLIC__/js/editor/editor/theme/images/icon/message.png" width="128" height="39" id="icon" /></div>
+  <div class="t_column_right">
+   <ul>
+   <li><div class="sixin_right"><a href="javascript:void(0)" onclick="ui.sendmessage();"></a></div></li>
+   </ul>
+  </div>
+</div>
+<div class="p_main">
+   <div class="project_left">
+       <div class="p_nav">
+         <ul>
+           <li id="p_nav_3"><a href="{:U('home/Message/index')}">查看私信</a></li>
+           <li id="p_nav_3"><a href="{:U('home/User/new_atme')}">查看@我</a></li>
+           <li id="p_nav_3"><a href="{:U('home/User/new_comments')}">查看评论</a></li>
+           <li id="p_nav_1"><a href="{:U('home/Message/notify')}">系统通知</a></li>
+           <li id="p_nav_3"><a href="{:U('home/Message/appmessage')}">应用消息</a></li>
+           <li id="p_nav_3"><a href="javascript:void(0)" onclick="ui.sendmessage();">发私信</a></li>
+         </ul>
+       </div>
+      
+   </div>
+   <div class="project_right">
+      <div class="mainbox_C no_r boxMessage" style="position:relative;margin:20px;">
+        <div class="tab-menu">
+			<include file="_tab" />
+        </div>
+        <div style=" overflow: hidden; width: 100%;">
+          <ul class="feed_list"  style="text-align: left;">
+          	<volist id="vo" name="data">
+            <li class="lineD_btm" id="notify_{$vo.notify_id}">
+              <neq name="vo['from']" value='0'>
+              <div class="userPic"><space uid="vo['from']" target="_blank">{uavatar=m}</space></div>
+              </neq>
+
+              <div class="feed_c hover">
+                <h3>
+                  <div class="right alR" style="line-height:20px">
+                    <div class="left"><em>{$vo.ctime|friendlyDate}</em></div>
+                    <div class="left"><a style="margin-top: 2px" class="del" href="javascript:deleteNotify({$vo.notify_id})" title="删除"></a></div>
+                  </div>
+                  <span class="lh20 f12px">
+                    <eq name="vo['type']" value='gift_send'><eq name="vo['from']" value='0'>神秘人物</eq></eq>
+                    {$vo.title}</span></h3>
+                <div class="feed_c_btm">
+                  {$vo.body}
+                </div>
+				<div style="margin-top: 15px;"> {$vo.other} </div>
+                <php>if(false && in_array($vo['type'], array('home_addComment','home_replyComment'))) {</php>
+				<div class="feed_quote feed_wb" style="display:none;">
+				    <img src="__THEME__/images/zw_img.gif" class="q_ico_arrow2">
+                    <div class="q_tit"><img src="__THEME__/images/zw_img.gif" class="q_tit_l"></div>
+                    <div class="q_con">
+                    <div id="comment_list_before_1459" class="new_position">
+                    <form method="post" action="">
+                        <input type="hidden" name="notify_id" value="{$vo['notify_id']}">
+                        <input type="hidden" id="replyid_450" name="reply_comment_id" value="450">    	
+                        <a target_set="comment_450" onclick="ui.emotions(this)" href="javascript:void(0)" class="faceicon1"></a>
+                        <textarea id="comment_450" style="overflow: hidden; height: 15px;" rows="1" name="comment_content" class="left text"></textarea>
+                        <input type="submit" style="" value="确定" class="N_but">
+                    </form>
+                    </div>
+                    <div class="c"></div>
+                    </div>
+                    <div class="q_btm"><img src="__THEME__/images/zw_img.gif" class="q_btm_l"></div>
+                </div>
+                <php>}</php>
+              </div>
+            </li>
+			</volist>
+          </ul>
+        </div>
+        <div class="c"></div>
+        <div class="page">{$html}</div>
+      </div>
+    </div>
+  </div>
+<!-- 内容 end --> 
+<script>
+var weibo = $.weibo({
+  timeStep : 60000
+});
+	function deleteNotify(notify_id){
+		$.post( U('home/Message/delnotify'),{notify_id:notify_id},function(txt){
+			if(txt){
+				$("#notify_"+notify_id).slideUp("fast",function(){
+					$(this).remove();
+ 				}); 
+			}else{
+				alert('删除失败');
+			}
+		});
+	}
+
+</script>	
+{:Addons::hook('weibo_js_plugin')}
+<include file="__THEME__/footer" /> 

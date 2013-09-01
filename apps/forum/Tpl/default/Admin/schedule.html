@@ -1,0 +1,184 @@
+<include file="__THEME__/admin" />
+<script type="text/javascript" src="../public/calender.js" ></script>
+<link href="../Public/style.css" rel="stylesheet" type="text/css">
+<div class="so_main">
+<div class="page_tit">计划任务</div>
+	<form action="{:U('forum/Admin/doAddSchedule')}" method="post">
+<div class="form"  id="container_s">
+    <dl>
+    <dt>简介：</dt>
+    <dd><p><input style="width:250px;" name="info" class="txt mr10" value="" /><span id="tip"></span><span class="cGray2 ml5">对计划任务的简要描述</span></p></dd>
+    </dl>
+    <dl>
+    <dt><font color="red">*</font> 任务函数：</dt>
+    <dd><p><input name="task_to_run" style="width:250px;" class="txt" value ="" /><span class="cGray2 ml5">计划任务执行的函数，格式为：app/Model/method</span></p></dd>
+    </dl>
+    <dl>
+    <dt><font color="red">*</font> 计划任务类型：</dt>
+    <dd><p><input name="schedule_type" style="width:250px;" class="txt" value ="" /><span class="cGray2 ml5">ONCE、MINUTE、HOURLY、DAILY、WEEKLY、MONTHLY 之一</span></p></dd>
+    </dl>
+    <dl>
+    <dt>计划频率：</dt>
+    <dd><p><input name="modifier" style="width:250px;" class="txt" value ="" /><span class="cGray2 ml5">类型为MONTHLY时必须；ONCE时无效；其他时为可选，默认为1。</span></p></dd>
+    </dl>
+    <dl>
+    <dt>dirlist：</dt>
+    <dd><p><input name="dirlist" style="width:250px;" class="txt" value ="" /><span class="cGray2 ml5">指定周或月的一天或多天。只与WEEKLY和MONTHLY共同使用时有效，其他时忽略。</span></p></dd>
+    </dl>
+        <dl>
+    <dt>month：</dt>
+    <dd><p><input name="month" style="width:250px;" class="txt" value =""/><span class="cGray2 ml5">指定一年中的一个月或多个月.只在schedule_type=MONTHLY时有效，其他时忽略。当modifier=LASTDAY时必须，其他时可选。有效值：Jan - Dec，默认为*(每个月)</span></p></dd>
+    </dl>
+        <dl>
+    <dt><font color="red">*</font> 开始时间：</dt>
+    <dd><p><input name="start_datetime" style="width:250px;" class="txt" value ="" /><span class="cGray2 ml5">任务启动时间，使用“Y-m-d H:i:s”格式</span></p></dd>
+    </dl>
+        <dl>
+    <dt>失效时间：</dt>
+    <dd><p><input name="end_datetime" style="width:250px;" class="txt" value ="" /><span class="cGray2 ml5">失效时间，使用“Y-m-d H:i:s”格式</span></p></dd>
+    </dl>
+    <div class="sea_left"><input type="submit" class="btn_b"  value="提交" /></div>
+</div>
+	</form>
+<div class="page_tit">计划任务管理：</div>
+<div class="form">
+<div class="Toolbar_inbox">
+     <a href="javascript:void(0)" class="btn_a"  onClick="deleteSchedule()"><span>删除计划任务</span></a>
+  </div>
+	<form method="post" id="form_all" name="form_all" action="{:U('forum/Admin/doSaveAllSchedule')}">
+    <div class="list">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th style="width:30px;">
+		<input type="checkbox" id="checkbox_handle" class="checkbox"  value="0">
+    	<label for="checkbox"></label>
+	</th>
+    <th class="line_l">ID</th>
+    <th class="line_l">任务</th>
+   <th class="line_l">任务简介</th>
+    <th class="line_l">任务类型</th>
+    <th class="line_l">计划频率</th>
+    <th class="line_l">dirlist</th>
+    <th class="line_l">month</th>
+    <th class="line_l">开始时间</th>
+    <th class="line_l">失效时间</th>
+    <th class="line_l">上次执行时间</th>
+    <th class="line_l">&nbsp;</th>
+    <th class="line_l">&nbsp;</th>
+  </tr>
+  <volist name="list" id="vo">
+				<tr class="cell altbg1" id="list_{$vo['id']}">
+					<td>
+						<input type="checkbox" id="schedule_{$vo['id']}" class="checkbox2" rel="0" value="{$vo['id']}">
+						
+					</td>
+                    <td>{$vo['id']}</td>
+					<td><input id="method_{$vo['id']}"	 type="text" class="large bLeftRequire" name="task_to_run[{$vo['id']}]"		style="width:150px;" value="{$vo['method']}" /></td>
+					<td><input id="info_{$vo['id']}"	 type="text" class="large bLeftRequire" name="info[{$vo['id']}]"			style="width:80px;"  value="{$vo['info']}" /></td>
+					<td><input id="type_{$vo['id']}"	 type="text" class="large bLeftRequire" name="schedule_type[{$vo['id']}]"	style="width:40px;"  value="{$vo['schedule_type']}" /></td>
+					<td><input id="modifier_{$vo['id']}" type="text" class="large bLeftRequire" name="modifier[{$vo['id']}]"		style="width:40px;"  value="{$vo['modifier']}" /></td>
+					<td><input id="dirlist_{$vo['id']}"  type="text" class="large bLeftRequire" name="dirlist[{$vo['id']}]"			style="width:40px;"  value="{$vo['dirlist']}" /></td>
+					<td><input id="month_{$vo['id']}"	 type="text" class="large bLeftRequire" name="month[{$vo['id']}]"			style="width:40px;"  value="{$vo['month']}" /></td>
+					<td><input id="start_{$vo['id']}"	 type="text" class="large bLeftRequire" name="start_datetime[{$vo['id']}]"	style="width:120px;" value="{$vo['start_datetime']}" /></td>
+					<td><input id="end_{$vo['id']}"		 type="text" class="large bLeftRequire" name="end_datetime[{$vo['id']}]"	style="width:120px;" value="{$vo['end_datetime']}" /></td>
+					<td><input id="last_{$vo['id']}"	 type="text" class="large bLeftRequire" name="last_run_time[{$vo['id']}]"	style="width:120px;" value="{$vo['last_run_time']}" /></td>
+					<td><input type="button" onClick="edit_one({$vo['id']});" value="保存" class="btn_b" /></td>
+				</tr>
+				</volist>
+			</tbody>
+		</table>
+        </div>
+     <!--    <input type="submit" value="保存全部" class="btn_a" />--> 
+	</form>
+    <div class="Toolbar_inbox">
+	<div class="page right">{$html}</div>
+     <a href="javascript:void(0)" class="btn_a"  onClick="deleteSchedule()"><span>删除计划任务</span></a>
+  </div>
+    </div>
+	<!-- 所有计划任务 BEGIN -->
+<!-- 前台管理 BEGIN -->
+<div id="schedule_admin" style="display:none;">
+	
+</div>
+</div>
+<!-- 前台管理 END -->
+
+<!-- 页面JS BEGIN -->
+<script type="text/javascript">
+	//加载前台管理工具
+	/*$(function(){
+		$.fn.admin({
+			prefix:'schedule_',
+			checkClass:'schedule_admin_check',
+			hiddenId:'schedule_admin',
+			lMinOffset:1,
+			type:false,
+			position:'right'
+		});
+	});*/
+
+	//编辑一条计划任务
+	function edit_one(sid) {
+		met = $('#method_'+sid).val();
+		inf = $('#info_'+sid).val();
+		typ = $('#type_'+sid).val();
+		mod = $('#modifier_'+sid).val();
+		dirl = $('#dirlist_'+sid).val();
+		mon = $('#month_'+sid).val();
+		sta = $('#start_'+sid).val();
+		end = $('#end_'+sid).val();
+		las = $('#last_'+sid).val();
+		$.post("{:U('forum/Admin/doSaveOneSchedule')}", {id:sid, task_to_run:met, info:inf, schedule_type:typ, modifier:mod, dirlist:dirl, month:mon, start_datetime:sta, end_datetime:end, last_run_time:las}, function(result){
+			if(result == 1) {
+				$.tbox.yes('保存成功',"提示");
+				setTimeout("$.tbox.close()",1500);
+			}else{
+				$.tbox.no('保存失败',"提示");
+				setTimeout("$.tbox.close()",1500);
+			}
+		});
+	}
+
+	function deleteSchedule(){
+		$.tbox.confirm("确认要删除所选择的计划任务吗？","提示",{ok:"doDeleteSchedule"});
+		}
+	//删除
+	function doDeleteSchedule() {
+		var postId = new Array();
+		$('.checkbox2').each(function(){
+			if($(this).attr("checked")){
+				postId.push($(this).val());
+			}
+		});
+			$.post("{:U('forum/Admin/doDeleteSchedule')}", {id:postId}, function(result){
+				if(result == 1) {
+					
+					postId  = postId.toString();
+					postId = postId.split(',');
+					for(var i = 0; i < postId.length; i++) {
+						$('#list_'+postId[i]).remove();
+					}
+					$.tbox.yes('删除成功',"提示");
+					setTimeout("$.tbox.close()",1500);
+				}else{
+					$.tbox.no('删除失败',"提示");
+					setTimeout("$.tbox.close()",1500);
+				}
+			});
+		}
+	$(function(){
+		$('.checkbox').click(function(){
+			var check = $('.checkbox2').attr("checked");
+			if(!check){
+				$('.checkbox2').attr("checked","checked");
+			}else{
+				
+				$('.checkbox2').removeAttr("checked");
+			}
+		});
+	});
+</script>
+<!-- 页面JS END -->
+
+</body>
+</html>

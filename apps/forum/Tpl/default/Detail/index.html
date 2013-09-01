@@ -1,0 +1,275 @@
+<include file="__THEME__/header" />
+<include file="../Public/forum_header" />
+
+<script type="text/javascript" >
+function gotoReply(){
+	scroller('sendto', 1000);
+	E._focusToEnd();
+}
+</script>
+<style>
+.quote_user {
+	color:#D2D2D2;
+	margin-left:5px;
+}
+</style>
+<div class="path"> {:L('current_position')}：{$_topnav} > <a href="{:U('bbs/Index/detail',array('id'=>$topic['id']))}">{$topic.title}</a></div>
+<div class="add_bes"><span>
+	<neq name="topic.lock" value="1"> <a class="add" onclick="gotoReply()">{:L('base_reply')}</a> </neq>
+	<a class="add" href="{:U('bbs/Index/post',array('class'=>$topic['board']))}">{:L('new_thread')}</a></span></div>
+<div class="contents mt5">
+  <div class="bbs_de_bg">
+      <volist id="post" name="list['data']">
+      <php>if( $post['istopic'] ){</php>
+	<div class="floorBox">
+      <div class="lCon pb10" id="p{$post.id}">
+        <div class="P_l"><p class="bbs_headpic50"><a href="{:U('space/View/index',array('uid'=>$post['uid']))}"><img src="{$post.uid|getUserFace='s'}" width="45"  /></a></p>
+          <p class="pl5 lh25"><a href="{:U('space/View/index',array('uid'=>$post['uid']))}" rel="{$post['uid']}" class="preview">{$post.uid|getUserName}</a></p>
+          <p class="pl5">{$post.uid|getUserTitle}</p>
+        </div>
+      </div>
+      <div class="rCon">
+        <div class="hour"><span class="R cl06">1{:L('thread_floor')}</span><span class="R cl06 mr20">{:L('thread_fontsize')} | <img class="alM" src="../Public/images/text_common.gif" onclick="changeFontSize(14)" align="absmiddle"><img class="alM" src="../Public/images/text_zoom.gif" onclick="changeFontSize(16)" align="absmiddle"></span>{:L('thread_add_in')} {$topic.cTime|friendLydate} |
+          <eq name="isReadAuther" value="1"> <a href="{:U('bbs/Index/detail',array('id'=>$topic['id'],'page'=>$p))}" >{:L('thread_view_all')}</a>
+            <else />
+            <a href="{:U('bbs/Index/detail',array('id'=>$topic['id'],'page'=>$p,'auther'=>1))}" >{:L('thread_view_author')}</a> </eq>
+        </div>
+        <div class="defaultpost">
+          <h3>{$topic.title}
+		  		<span class="f12">
+					<eq name="topic['dist']" value="1"><span class="zd" title="{:L('thread_soul')}">&nbsp;</span></eq>
+					<eq name="topic['top']" value="1"><span class="jh" title="{:L('thread_top')}">&nbsp;</span></eq>
+					<eq name="topic['lock']" value="1"><span class="suo" title="{:L('thread_lock')}">&nbsp;</span></eq>
+				</span>
+			</h3>
+          <div class="restore_C gut_style img_resize" rel="content">
+            {$post.content}
+		  </div>
+		  
+		  <!-- 投票位 -->
+		  <div id="vote">{:W('Vote',array('app'=>'bbs', 'field'=>'id', 'fieldId'=>$topic['id'], 'type'=>'detail', 'tpl'=>'Vote'))}</div>
+
+		  <php>if($post['muid']){</php>
+          	<div class="lh30" style="color:#000"><i>[  {:L('thread_last_edit')} {$post.muid|getUserName}  {$post.mTime|date="Y-m-d H:i:s",###} {:L('thread_edit')} ]</i></div>
+		  <php>}</php>
+		  
+          <php>
+		  //附件下载
+		  if($post['attach']){ 
+			 foreach($post['attach'] as $attaches){
+				$bbs_aids[]	=	$attaches['id'];
+			 }
+			 W('ShowAttach',$bbs_aids);
+			 unset($bbs_aids);
+		  }
+		  </php>	  
+
+
+          {:W('Share',array('title'=>$topic['title'],'url'=>$currentUrl,"intro"=>msubstr(0,250,strip_tags($post['countent'])),'uid'=>$mid,'fromUid'=>$topic['uid'],'aimId'=>$topic['id'],data=>$sharedata,'temp'=>'share_topic','tpl'=>'Share_digg','digCount'=>$topic['dig'],'hasToGroup'=>true))} 
+          <div class="bbs_app">
+          
+<neq name="topic.lock" value="1">           	
+          <a class="fastreply" href="javascript:void(0)" onclick="doreply({$post.id})">{:L('thread_reply')}</a>
+		  <a class="repquote" href="javascript:void(0)" onclick="doquote({$post.id})">{:L('thread_quote')}</a>
+</neq>		  
+		  <php>if($Core['isAdmin'] || $post['uid']==$mid){</php>
+			  <a class="editpost" href="{:U('bbs/Index/edit',array('pid'=>$post['id']))}">{:L('thread_edit')}</a>
+			
+		  <php>}</php>
+		  <php>if($Core['isAdmin']){</php>
+		  	<a class="delicon" href="javascript:void(0)" onclick="del({$post.id},'true')">{:L('thread_del')}</a>
+		  <php>}</php>
+		  <php>
+			$rel = $Core['isWebAdmin'] ? "0,1,2,3":"1,2,3";
+		  </php>
+		  <php>if($Core['isAdmin'] || $Core['isWebAdmin']){</php>
+			 <span class="fn">
+	            <input  name="" class="topicadmincss" type="checkbox" rel="{$rel}" dataId="{$post.id}" />
+	            {:L('thread_admin')}</span> 
+		  <php>}</php>	
+			</div>
+        </div>
+      </div>
+      <div class="C"></div>
+    </div>
+    <php>}else{</php>
+	
+    <div class="floorBox_2" >
+      <div class="lCon pb10 left_bg_h" id="p{$post.id}">
+        <div class="P_l"><p class="bbs_headpic50_ash"><a href="{:U('space/View/index',array('uid'=>$post['uid']))}"><img src="{$post.uid|getUserFace='s'}" width="45" /></a></p>
+          <p class="pl5 lh25"><a href="{:U('space/View/index',array('uid'=>$post['uid']))}" rel="{$post['uid']}" class="preview">{$post.uid|getUserName}</a></p>
+          <p class="pl5">{$post.uid|getUserTitle}</p>
+        </div>
+      </div>
+      <div class="rCon rCon_line">
+        <div class="hour"><span class="R cl06">
+          <php>$p = $list['nowPage']; echo intval($p-1)*$limit+$key+1</php>
+          {:L('thread_floor')}</span>{:L('thread_add_in')} {$post.cTime|friendLydate}</div>
+		  <div class="f12 fB">{$post.title}</div>
+
+        <div class="defaultpost">
+        <php>if($post['isdel']){</php>
+			<div class="restore_C gut_style img_resize"  rel="content"> --------- {:L('post_have_deleted')} ---------</div>
+		<php>}else{</php>
+        	<div class="restore_C gut_style img_resize"  rel="content"> {$post.content|getBBSContent}</div>
+			<php>if($post['muid']){</php>
+	          	<div class="lh30" style="color:#000"><i>[ {:L('thread_last_edit')} {$post.muid|getUserName} {$post.mTime|date="Y-m-d H:i:s",###} {:L('thread_edit')} ]</i></div>
+			<php>}</php>            
+			  <php>
+			  //附件下载
+			  if($post['attach']){ 
+				 foreach($post['attach'] as $attaches){
+					$bbs_attach['ids'][]	=	$attaches['id'];
+				 }
+				 W('ShowAttach',$bbs_attach);
+				 unset($bbs_attach);
+			  }
+			  </php>
+
+		
+			<div class="bbs_app">
+				  <neq name="topic.lock" value="1">        	
+			          <a class="fastreply" href="javascript:void(0)" onclick="doreply({$post.id})">{:L('thread_reply')}</a>
+					  <a class="repquote" href="javascript:void(0)" onclick="doquote({$post.id})">{:L('thread_quote')}</a>
+				  </neq>
+				  <php>if($Core['isAdmin'] || $post['uid']==$mid){</php>
+				  	<a class="editpost" href="{:U('bbs/Index/edit',array('pid'=>$post['id']))}">{:L('thread_edit')}</a>
+				  <php>}</php>
+				  <php>if($Core['isAdmin']){</php>
+				  	<a class="delicon" href="javascript:void(0)" onclick="del({$post.id},'false')">{:L('thread_del')}</a>
+				  <php>}</php>
+			 </div>
+		<php>}</php>
+		  </div>
+        </div>
+      </div>
+	  
+    <php>}</php>
+    </volist>
+    <div class="page alR mb5 mt5">{$list['html']}</div>
+	
+<neq name="topic.lock" value="1">	
+    <div class="h_f_b" id="doreply">
+    <a name="sendto" id="sendto"></a>
+      <form action="{:U('bbs/Do/reply')}" method="post">
+        <input type="hidden" name="tid" value="{$topic.id}">
+        <table width="96%">
+          <tr class="mb10">
+            <td  valign="top" align="center" class="fB pt10" width="14%">{:L('thread_reply')}</td>
+            <td><textarea  class="in_put" name="content"  cols="" rows="20" id="content" style="width:720px; height:200px;" ></textarea></td>
+          </tr>
+		  
+        <tr>
+          <td align="right" valign="top" class="pt15">{:L('thread_attach')}：</td>
+          <td align="left" valign="top" class="pt10">
+              {:W( 'UploadAttach',array( 'uid'=>$mid , 'type'=>'bbs' , 'callback'=>'attach_upload_success' , 'edit'=>$postInfo['attach'] ) )}
+			  <div class="attach"></div>
+           </td>
+	   </tr>				  
+          <tr height="45">
+            <td></td>
+            <td><input class="btn_sea" name="" type="submit"  value="{:L('add_post')}"/></td>
+          </tr>
+        </table>
+      </form>
+    </div>
+</neq>
+  </div>
+  <div class="C"></div>
+</div>
+</div>
+<div id="topicadmin" style="display:none;">
+    <eq name="topic['top']" value="2">
+  		<a href="javascript:void(0)" id="topic_top" onclick="setAdmin('{$topic.id}','alltop',0)">{:L('thread_all_untop')}</a> 
+    <else />
+		<a href="javascript:void(0)" id="topic_top" onclick="setAdmin('{$topic.id}','alltop',2)">{:L('thread_all_top')}</a>
+	</eq>
+	
+    <eq name="topic['top']" value="1">
+  		<a href="javascript:void(0)" id="topic_top" onclick="setAdmin('{$topic.id}','top',0)">{:L('thread_board_untop')}</a> 
+    <else />
+		<a href="javascript:void(0)" id="topic_top" onclick="setAdmin('{$topic.id}','top',1)">{:L('thread_board_top')}</a>
+	</eq>	
+	
+  <eq name="topic['dist']" value="0"> <a href="javascript:void(0)" id="topic_top" onclick="setAdmin('{$topic.id}','dist',1)">{:L('thread_soul')}</a>
+    <else />
+    <a href="javascript:void(0)" id="topic_top" onclick="setAdmin('{$topic.id}','dist',0)">{:L('thread_unsoul')}</a> </eq>
+  <eq name="topic['lock']" value="0"> <a href="javascript:void(0)" id="topic_top" onclick="setAdmin('{$topic.id}','lock',1)">{:L('thread_lock')}</a>
+    <else />
+    <a href="javascript:void(0)" id="topic_top" onclick="setAdmin('{$topic.id}','lock',0)">{:L('thread_unlock')}</a> </eq>
+</div>
+<script> 
+$(document).ready(function(){
+	var deltid=0;
+	
+<neq name="topic.lock" value="1">	
+		E = KISSY.Editor( "content" );
+</neq>
+	
+	var doadminurl = "{:U('group/Forum/doadmin',array('gid'=>$gid))}";
+    $(function(){
+	     $.fn.admin({
+		     prefix:'topic_',
+		     checkClass:'topicadmincss',
+		     hiddenId:'topicadmin',
+			 lMinOffset:1,
+			 type:false
+	     });
+		 photo_size('.img_resize');
+    });		
+});
+ 
+function setAdmin(tid,type,status){
+	var board = '{$topic.board}';
+	$.post('{:U("bbs/Do/doAdminStatus")}',{board:board,tid:tid,type:type,status:status},function(txt){
+		txt = eval('('+ txt + ')');
+		if(txt.status){
+			$("#topic_"+type).html('<font color="red">'+txt.info+'</font>');
+			window.location.reload()
+		}else{
+			alert(txt.info);
+		}
+	});
+}
+ 
+function del(tid,istopic){
+	deltid = tid;
+	var message = new Array();
+	if(istopic=='true'){
+		message[0] = "{:L('message_del_topic_info')}";
+		message[1] = "{:L('message_del_topic')}";
+	}else{
+		message[0] = "{:L('message_del_post_info')}";
+		message[1] = "{:L('message_del_post')}";
+	}
+	$.tbox.confirm( message[0] , message[1] , {ok:'confirmdel'} );
+
+}
+
+function confirmdel(){
+	$.post("{:U('bbs/Do/dodel')}",{tid:deltid},function(txt){
+		if(txt=='1'){
+			window.location.href='{:U("bbs/Index/forumlist",array('class'=>$topic['board']))}';
+		}else{
+			window.location.reload()
+		}
+	});
+}
+ 
+function doreply(id){
+	$.tbox.popup("{:U('bbs/Index/reply',array('fast'=>1))}&id="+id,"{:L('message_reply')}",'','updataContent');
+}
+ 
+function doquote(id){
+	$.tbox.popup("{:U('bbs/Index/reply',array('fast'=>1,'quote'=>1))}&id="+id,"{:L('message_reply')}",'','updataContent');
+}
+ 
+function changeFontSize(size){
+	$("div[rel='content']").css("font-size",size);
+}
+
+function updataContent(){
+		KISSY.Editor("reply_content");
+}
+</script>
+<include file="__THEME__/footer" /> 

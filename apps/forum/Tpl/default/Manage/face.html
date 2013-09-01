@@ -1,0 +1,98 @@
+<include file="../Public/manage_top" />
+<link href="../Public/css/bbs.css" rel="stylesheet" type="text/css" />
+<link href="../Public/css/layout.css" rel="stylesheet" type="text/css" />
+<link href="../Public/css/public.css" rel="stylesheet" type="text/css" />
+<!--中间内容-->
+
+<div class="content zbg">
+  <div class="bbs_left"> <include file="../Public/manage_left" /> </div>
+  <include file="nav" />
+  <div class="bbs_main">
+  <div class="tit_line">头像审核</div>
+  <php>if(empty($data)){</php>
+  <div class="no_data">暂无数据</div>
+  <php>}</php>
+    <ul style="display: inline-block">
+      <volist name="data" id="vo">
+        <li id="face_{$vo.id}"style="width:90px; text-align:center" class="L mb10">
+          <span class="headpic63"> <img src="{$vo.path|getGroupIcon}" id="showface_171"></span>
+            <p>
+              <input class="checkface mr5" type="checkbox" value={$vo.id}>
+              </input>
+              <a onclick="checkFaces({$vo['id']})" href="javascript:void(0)" id="used_171">审核通过</a></p>
+        </li>
+      </volist>
+    </ul>
+     <php>if($data){</php>
+        <div style="border-top:1px solid #ddd; padding-top:10px;">
+    <php>}</php>
+      <div class="page R">{$html}</div>
+      
+      <div   <php>if(empty($data)){</php> style="display:none" <php>}</php>><input type="checkbox" id="allcheck" onClick="check(this)">
+      全选
+      </input>
+      <input class="btn_sea mb5" type="button" onClick="checkFaces(0)" id="checkall" value="审核通过">
+      </input>
+    </div>
+    <div class="C"></div>
+  </div>
+  </div>
+  <div class="C"></div>
+</div>
+<script>
+ function check(o){
+		if( o.checked == true ){
+			$('.checkface').attr('checked','true');
+		}else{
+			$('.checkface').removeAttr('checked');
+		}
+	}
+//获取已选择用户的ID数组
+ function getChecked() {
+ 	var postId = new Array();
+ 	$('.checkface').each(function(i, n){
+ 		if($(this).attr("checked")){
+ 			postId.push( $(this).val() );
+ 			}
+ 		
+ 	});
+ 	return postId;
+ }
+ <php>$temp = $_GET['class'];</php>
+ function checkFaces(id){
+		var url = "{:U('forum/Manage/doCheckFace')}";
+		var fid = {$temp};
+		var postId;
+		if(id != 0){
+			postId =  id;
+		}else{
+			postId = getChecked();
+			status = 0;
+		}
+		if (!postId){
+			$.tbox.no('请选择需要审核的头像！');
+			setTimeout("$.tbox.close()",1500);
+			return false;
+		}
+		$.post(url,{fid:fid,pid:postId},function(result){
+			if(result){
+				postId  = postId.toString();
+				postId = postId.split(',');
+				for(var i = 0; i < postId.length; i++) {
+					$('#face_'+postId[i]).remove();
+				}
+				//$.tbox.yes("审核成功");
+			//	setTimeout('reloadWindow();',1500);
+				location.reload();
+			}else{
+				$.tbox.no('审核失败');
+				}
+			
+		});
+	}
+ function reloadWindow(){
+		$.tbox.close();
+		window.location.reload();
+	}
+ </script>
+<include file="__THEME__/footer" /> 

@@ -1,0 +1,21 @@
+<div class="tab_square">
+	<div class="tab_square_bg">
+	<div class="square_menu">
+		<ul>
+		<li><a href="{:U('home/Square/index')}"><span class="ico_side ico_square"></span>广场首页</a></li>
+		<li><a href="{:U('home/Square/top')}"><span class="ico_side ico_billboard"></span>风云榜</a></li>
+		<li><a href="{:U('home/Square/star')}"><span class="ico_side ico_hall"></span>专家</a></li>
+		<li><a href="{:U('screen/Index/index')}" class="on"><span class="ico_side ico_screen_on"></span>大屏幕</a></li>
+		</ul>
+	</div>
+	<div class="square_menu app_line">
+		<ul>
+			<volist name="expend_menu" id="vo">
+				<li><a href="{:U('home/Square/' . $vo['act'], $vo['param'])}" <if condition="ACTION_NAME eq $vo['act']">class="on"</if>
+				  ><span class="ico_side ico_{$vo['act']}<if condition="$vo['act'] eq ACTION_NAME">_on</if>"></span>{$vo['name']}</a></li>
+			</volist>
+		</ul>
+	</div>
+	</div>
+</div>
+

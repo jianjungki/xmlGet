@@ -1,0 +1,81 @@
+<include file="__THEME__/admin" />
+<link href="../Public/style.css" rel="stylesheet" type="text/css">
+<div class="so_main">
+<div class="page_tit">工号切换</div>
+<!--表单设置修改模块 begin -->
+<div class="form2">
+<form action="{:U('forum/Admin/doChangeCardId')}" method="post">
+<dl>
+	<dt><font color="red">*</font> 旧工号：</dt>
+	<dd><input class="txt" name="oldCardId" type="text"> <span
+		class="cGray2 ml5">（如：00141653）</span></dd>
+</dl>
+
+<dl>
+	<dt><font color="red">*</font> 新工号：</dt>
+	<dd><input class="txt" name="newCardId" type="text"></dd>
+</dl>
+<div class="sea_left"><input class="btn_b" type="submit"
+	value="提交"></input>
+</div>
+</form>
+
+<div class="page_tit">批量切换</div>
+<div class="form2">
+<div>
+	<div class="cr" style="width:170px;padding:5px 0 0;"><font color="red">*</font> 上传文件：</div>
+	<div style="padding:0px 0 0px 10px; float:left;">{:W( 'UploadAttach',array( 'uid'=>$mid , 'type'=>'system' , 'callback'=>'parseCsv','limit'=>1,'allow_exts'=>"csv") )}</div>
+    <div class="C"></div>
+</div>
+<div style="padding-left:180px;line-height:30px;"><a href="{:U('forum/admin/download')}">下载模板</a><span class="cGray2 ml5">注意：旧工号必须已经在本站激活，新旧工号都不能为版主，如果上述条件不满足，将忽略该条记录的工号切换</span></div>
+<div id="plane" style="display:none; padding-left:180px;">
+</div>
+<dl class="selection" id="CsvData" style="width:600px;">
+	<dt class="selection_left" style="text-align:left; padding:0 10px; width:220px;"></dt>
+	<dd class="selection_right" style=" margin-left:240px;"></dd>
+</dl>
+<div class="sea_left">
+<form action="{:U('forum/Admin/doChangeMoreCardId')}" method="post" onsubmit="return checkForum();">
+	<input type="hidden" id="attachId" name="id"/>
+	<input class="btn_b" type="submit" value="提交"></input>
+	<input class="btn_b" type="button" id="reUpload" style="display:none" value="重新上传" onclick="location.reload()" />
+	
+</form>
+</div>
+</div>
+<script>
+var item;
+$(function(){
+	item = $('#CsvData').clone();
+	$('#CsvData').remove();
+});
+function parseCsv(info){
+	var csvId = info.id;
+	var plane = $('#plane');
+	$('#plane').html("").show();
+	var tempItem = item.clone();
+	$.post('{:U("forum/admin/parseCsv")}',{id:csvId},function(result){
+		result = eval('('+result+')');
+		for(var one in result){
+			if(result[one][2] == 1){
+				tempItem.children('dt').html(result[one][0]);
+			}else{
+				tempItem.children('dt').html(result[one][0]+'<font color="red" style="padding-left:10px;">(该工号不存在)</font>');
+			}
+			if(result[one][3] == 0){
+				tempItem.children('dd').html(result[one][1]);
+			}else{
+				tempItem.children('dd').html(result[one][1]+'<font color="red" style="padding-left:10px;">(该工号已存在)</font>');
+			}
+			plane.append(tempItem.clone());
+		}
+		$('#attachId').val(info.id);
+		$('#reUpload').show();
+	})
+}
+function checkForum(){
+	return true;
+}
+</script>
+</div>
+</div>

@@ -1,0 +1,43 @@
+<script type="text/javascript" src="../Public/Js/group.info.form.js" ></script>
+<php>if($title==1){
+	   $lab = '备注';
+	}else{
+	  $lab = '印象';
+}
+</php>
+<script>
+	function addsubmit() {
+		var remarkinfo = $('#remark').val();
+		if (remarkinfo == "" || remarkinfo == undefined) {
+			ui.error("请输入{$lab}");
+			return ;
+		}
+		
+		if (confirm('确认增加{$lab}？')) {
+			$.ajax({
+	 			type: "POST",
+	 			url: U('home/Space/doAddRemark'),
+	 			data:   "uid={$touid}&remark=" + remarkinfo,
+	 			success: function(msg){
+	 				if (msg == '1') {
+		 				ui.success("操作成功");
+	 				} else {
+						ui.error("操作失败");
+	 				}
+	 				ui.box.close();
+	 			} 
+			});
+		}
+	}
+</script>
+
+    <!--解散群组弹窗-->
+    <dl class="pop_group" id="pop1" style="margin: 10px 30px">
+        <dt class="left_text" style="margin: 6px 10px;float: left">
+        	{$lab}：<input name="remark" type="text" class="text" id="remark" style="width:70px;vertical-align:middle" /></dt>
+        <dd>
+            <input name="input" type="button" class="btn_b" value="确 定" onclick="addsubmit();"/>
+            <input name="input2" type="button" class="btn_w" value="取 消" onclick="javascript:ui.box.close();"/>
+        </dd>
+    </dl>
+    <!--End 解散群组弹窗-->

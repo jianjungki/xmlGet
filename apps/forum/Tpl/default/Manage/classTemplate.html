@@ -1,0 +1,20 @@
+<form id="addClassTemplate" action="{:U('forum/Manage/doCateTemplate',array('cid'=>$id))}"
+	method="post">
+<table class="tab_popedom" style="width:300px; margin:20px; margin-bottom:0" cellpadding="0" cellspacing="0"
+	border="0">
+	<tr>
+		<td align="right" style="width:100px">请选择绑定模板：</td>
+		<td align="left" style="width:200px">
+			<select name="template">
+				<option  value="0" <php>if(!isset($selectedTemplate)){</php>selected<php>}</php>>默认发帖</option>
+				<volist name="template" id="vo">
+					<label>
+						<option  value="{$vo.id}" <php>if($selectedTemplate == $vo['id']){</php>selected<php>}</php>> {$vo.name}</option>
+					</label>
+				</volist>
+			</select>
+			
+		</td>
+	</tr>
+</table>
+</form>

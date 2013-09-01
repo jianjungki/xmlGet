@@ -1,0 +1,115 @@
+<include file="_header" />
+<link href="../Public/style.css" rel="stylesheet" type="text/css">
+<link href="../Public/css/admin_forum.css" rel="stylesheet" type="text/css" />
+ 
+<style>
+#policyIcon .lh25{ padding-bottom:5px;}
+</style>
+  <script type="text/javascript">
+  	$(function(){
+  	  	$('.policy').click(function(){
+   	  	   var name = $(this).attr('name');
+  	  	   var value = $(this).attr('ref');
+  	  	 	$("#policy").val($("#policy").val()+value);
+  	  	});
+  	});
+  </script>
+<form action="{:U('forum/Admin/doEditPolicy',array('signid'=>$signid))}" method="post">
+<div class="so_main">
+<div class="page_tit">特殊帖</div>
+ <div class="form">
+    
+	 <dl> 
+       <dt><font color="red">*</font> 名称：</dt>
+      <dd>
+        <label>
+   			<input class="txt" type="text" name="name" value="{$name}"></input>
+         </label>
+      </dd>
+    </dl>
+    <div>
+       <div class="cr" style="width:170px;padding:5px 0 0;"><font color="red">*</font> 策略图标：</div>
+      <div style="padding:0px 0 8px 10px; float:left;"> 
+          <label>
+   			<img id="icon" align="absmiddle" width="17" height="17" src="{$icon}"></img><span class="ml5"><a href="javascript:void(0)" onClick="changePolicyIcon()">修改</a></span>  
+         </label>
+         	<div id="policyIcon" style="display:none;" class="mt5">
+   			{:W( 'UploadAttach',array( 'uid'=>$mid , 'type'=>'system' , 'callback'=>'face_upload_success','limit'=>1,'allow_exts'=>'gif','allow_size'=>500) )}
+   			</div>
+      </div>
+         </label>
+          <div class="C"></div>
+    </div>
+    	<div class="sea_left">
+   		<input type="hidden" name="signid" value="{$signid}"/>
+       <input class="btn_b" type="submit" value="修改"></input></div>
+    </form>
+    </div>
+    </div>
+<include file="_footer" />
+    
+<script type="text/javascript">
+function changePolicyIcon() {
+	$('#policyIcon').css('display','');
+}
+ 	 
+ 	var usedurl = $('#icon').attr('src');
+ 	function deleteAttach(id){
+ 		if(confirm('{:L('upload_attach_delete')}')){
+ 			subPageCount();
+ 			$('#attach_upload_data .attach'+id).remove();
+ 			$('#icon').attr('src',usedurl);
+ 		}
+ 	}
+ 	$(function(){
+		$('.checkbox').click(function(){
+			var check = $('.checkbox2').attr("checked");
+			if(!check){
+				$('.checkbox2').attr("checked","checked");
+			}else{
+				
+				$('.checkbox2').removeAttr("checked");
+			}
+		});
+	});
+ 	function face_upload_success(info){
+ 		var attachInfo = '<input class="attach'+info.id+'"  type="hidden" name="attach[]" value="'+info.id+'|'+info.name+'"/>'+'<p class="attach'+info.id+'"><a class="attach'+info.id+'" href= javascript:void(0) onclick="deleteAttach('+info.id+')">[ 删除 ]</a>&nbsp;<span class="attach'+info.id+'"> '+info.name+'</span></p>';
+ 		$('#attach_upload_data').append(attachInfo);
+ 		$('#icon').attr('src','<php>echo UPLOAD_URL;</php>/'+info.savepath+info.savename);
+ 		}
+	
+	function delPolicy(){
+		var signid = new Array();
+		$('.checkbox2').each(function(){
+			if($(this).attr("checked")){
+				 signid.push($(this).val());
+			}
+		});
+		$.post("{:U('forum/Admin/delPolicy')}",{type:'p',signid:signid},function(txt){
+			if(txt){
+				$.tbox.yes("成功");
+			}else{
+				$.tbox.no("失败");
+			}
+		});
+	}
+
+	$(function(){
+		if($('#check2').attr("checked","checked")){
+			$('#tempSelect').show();
+			}else{
+				$('#tempSelect').hide();
+			}
+		$('#check1').click(function(){
+			$('.check1').attr("checked","checked");
+			$('.check2').removeAttr("checked");
+			$('#tempSelect').hide();
+		});
+		$('#check2').click(function(){
+			$('.check2').attr("checked","checked");
+			$('.check1').removeAttr("checked");
+			$('#tempSelect').show();
+		});
+	});
+ 
+ </script>

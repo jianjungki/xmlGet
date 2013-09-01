@@ -1,0 +1,214 @@
+<include file="__THEME__/header" />
+<link href="../Public/account.css" rel="stylesheet" type="text/css" />
+<link href="../Public/js/setavatar/css/imgareaselect-default.css" rel="stylesheet" type="text/css" />
+<link href="../Public/css/orgstyle.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="../Public/js/avatar/avatar.js"></script>
+<script type="text/javascript" src="../Public/js/account.js"></script>
+<script type="text/javascript" src="../Public/js/setavatar/jquery.imgareaselect.min.js"></script>
+<script>
+	function manageBatch(op) {
+		var uidJson = new Array();
+		$('input[rel="member"]').each(function() {
+			if($(this).attr('checked') == true && $(this).val() != 0) {
+				uidJson.push($(this).val());
+			}
+		});
+		if(uidJson.length == 0) {
+			alert('请选择用户');
+			return;
+		}
+		var v_prompt = "";
+		if(op == "admin") {
+			v_prompt = '你确定设置该用户成为管理员';
+		} else if(op == "out") {
+			v_prompt = '你确定要踢出该用户';
+		}
+		if(v_prompt.length != 0) {
+			if(!confirm(v_prompt)) {
+				return;
+			}
+		}
+		document.actionform.uid.value = uidJson;
+		document.actionform.op.value = op;
+		document.actionform.submit();
+	}
+	function manage(uid,op) {
+		v_prompt = "";
+		if(op == 'admin') {
+			v_prompt = '你确定设置该用户成为管理员';
+		}else if(op == 'normal'){
+			v_prompt = '你确定设置该用户成为普通会员';
+		}else if(op == 'out'){
+			v_prompt = '你确定要踢出该用户';
+		}else if(op == 'allow'){
+			v_prompt = '你确定设置该用户成为该组织成员'
+		}else if(op == 'black'){
+			v_prompt = '你确定设置该用户成为黑名单'
+		}
+		if(v_prompt.length){
+			if (!confirm(v_prompt))
+			{
+				return;
+			}
+		}
+		document.actionform.uid.value = uid;
+		document.actionform.op.value = op;
+		document.actionform.submit();
+	}
+	function checkAll(o){
+        if( o.checked == true ){
+            $('input[name="checkbox"]').attr('checked','true');
+        }else{
+            $('input[name="checkbox"]').removeAttr('checked');
+        }
+    }
+	var checkFriend = function(){
+		if($('#ui_fri_ids').val()!=''){
+			return true;
+		}else{
+			ui.error('请选择好友');
+			return false;
+		}
+		
+	}
+</script>
+<div class="content_holder">
+<div class="content"><!-- 内容 begin  --> 
+  <div class="main no_l"> <!-- 右侧内容 begin  -->
+    <div class="mainbox">
+      <div class="mainbox_appC no_r">
+    <include file="_tab" />
+    <!-- 切换标签 end  -->
+    <div class="groupBox">
+      <div class="create_box" style="*zoom:1;height:30px">
+        <div class="left l250"><php>if ($memberInfo['membercount'] >= 1) {</php>该组织有{$memberInfo['membercount']}名成员，继续邀请成员加入>> <php>} else {</php>该组织还没有其它成员，邀请成员加入>> <php>}</php></div>
+        <div class="left l400">
+          <form action="{:U('home/OrgAccount/create',array('orgid'=>$orginfo['orgid']))}" method="post" name="group_invite" id="group_invite" onsubmit="return checkFriend(this)">
+              <!-- 添加好友-->
+              <div class="left w300">{:W('SelectMembers')}</div>
+              <div class="left">
+	              <input type="hidden" value="1" name="sendsubmit" />
+	              <input type="submit" class="btn_b" value="发送邀请" />
+              </div>
+          </form>
+        </div>
+      </div>
+      <!--create_box-->
+    </div>
+    <!--2012.09.13修改-->
+    <!--<div class="mainbox_C_C">
+    		 <div class="groupBox">
+    <div class="boxL" style="width:100%;_width:99%">
+    <ul class="feed_list">
+          <volist name="memberInfo['data']" id="_member">
+    		<li class="lineD_btm">
+    			<div class="left checkbutton" style=""><input type="checkbox" id="checkto"/></div>
+    			<div class="userPic"><space uid="_member['uid']" target="_blank">{uavatar=m}</space></div>				
+				<php>if ($mid > 0 && $_member['uid'] != $mid) {</php>
+				<div class="right pr10" id="follow_list_{$_member.uid}" >
+					<script>document.write(followState('{$_member.followState}','dolistfollow',{$_member.uid}))</script>
+				</div>
+				<php>}</php>
+				<div class="right pr10">
+					<a href="">删除</a>
+				</div>
+				<div class="right pr10">
+					<a href="">加入黑名单</a>
+				</div>
+    			<div class="feed_c" style="margin-right:100px;">
+    				<div class="mb5"><if condition="$_member['level'] eq 1">
+    				  <span class="creator" title="创建者">&nbsp;</span>
+    				<elseif condition="$_member['level'] eq 2" />
+    				  <span class="newer" title="管理者">&nbsp;</span>
+    				<else />    				
+    				  
+    				</if><space uid="_member['uid']" class="fn" target="_blank">{uname}</space>
+    				</div>
+                    <div class="mb5">
+                      <if condition="$_member['weibo']">
+                      最近微博：<a href="{:U('group/Group/detail', array('gid'=>$_member['weibo']['gid'],'id'=>$_member['weibo']['weibo_id']))}" class="cGray" target="_blank">{$_member['weibo']['content']}</a>
+                      <else />
+                      该用户还未发布微博
+                      </if>
+					</div>
+                    <div><em>最近访问：{$_member['mtime']|friendlyDate}</em> </div>
+    			</div>    			 			
+    		</li>
+          </volist>
+     </ul>
+     <div class="page">{$memberInfo['html']}</div>
+    </div>
+  <!-- end  >
+  </div>
+    </div>-->
+    <div class="main no_l"> 
+    <!-- 右侧内容 begin  -->
+    <div class="mainbox">
+      <div class="mainbox_appC mainC_pad" style="margin-right:0"> <include file="../Public/manage_group_top" />
+        <div class="MenuSub">
+          <a href="#" class="on">所有成员</a>
+          |
+          <a href="{:U('home/OrgAccount/managemem',array('orgid'=>$orginfo['orgid'],'type'=>'apply'))}">申请加入的人</a>
+        </div>
+        <form method="post" name="actionform" action="{:U('home/OrgAccount/memberaction')}">
+          <input type="hidden" name="orgid" value="{$orgid}">
+          <input type="hidden" name="op" value="">
+          <input type="hidden" name="uid" value="">
+        </form>
+        <div class="groupBox">
+          <div style="width:100%;">
+            <dl class="memberlist">
+              <dt class="cGray2">
+              <div class="left mr10"><input name="checkbox" type="checkbox" value="0" class="ck" style="margin-top:3px" onclick="checkAll(this)"></div>
+                <div class="c1">名字</div>
+                <div class="c2">身份</div>
+                <div class="c3">操作</div>
+                <div class="c"></div>
+              </dt>
+              <volist name="memberInfo['data']" id="member">
+                <dd>
+                <div class="left mr10"><input name="checkbox" type="checkbox" rel="member" value="{$member['uid']}"  class="mt10 ck"></div>
+                  <div class="c1"><span class="pic30 mr5 alM"><space uid="member['uid']" target="_blank">{uavatar=s}</space></span><space uid="member.uid" class="fn" target="_blank">{uname}</space></div>
+                  <div class="c2">
+                    <eq name="member['level']" value="1">创建者</eq>
+                    <eq name="member['level']" value="2">管理者</eq>
+                    <eq name="member['level']" value="3">普通成员</eq>
+                  </div>                  
+                  <!-- 如果是成员 start -->                  
+                  <div class="c3">
+                    <a href="javascript:manage({$member['uid']},'black');">加入黑名单</a>
+                    <a href="javascript:manage({$member['uid']},'out');">踢出本组织</a>
+                  </div>
+                  <div class="c"></div>
+                  <!-- 如果是成员 end -->
+                </dd>
+              </volist>
+              <dd class="cGray2">
+                <input name="checkbox" type="checkbox" value="0" class="ck" onclick="checkAll(this)" />
+                <label><!--<a href="javascript:void(0)" onclick="manageBatch('admin')">升为管理员</a>&nbsp;|&nbsp;--><a href="javascript:void(0)" onclick="manageBatch('out')">踢出本组织</a></label>
+                <div class="c"></div>
+              </dd>
+            </dl>
+            <p class="sum mt10">共{$memberInfo['count']}名成员</p>
+            <div class="page">{$memberInfo['html']}</div>
+            <div class="c"></div>
+          </div>
+          <!-- end  --> 
+        </div>
+      </div>
+      <div class="c"></div>
+    </div>
+  </div>
+  <!-- 右侧内容 end  --> 
+</div>
+</div>
+      </div>
+    </div>
+  </div>
+  <!-- 右侧内容 end  -->
+  <div class="c"></div>
+</div>
+</div>
+<!-- 内容 end --> 
+<include file="__THEME__/footer" />

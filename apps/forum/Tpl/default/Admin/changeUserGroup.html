@@ -1,0 +1,14 @@
+<div style="margin:20px atuo; width:200px; text-align:center">
+将 {$unames} 转移至: 
+<p style="height:26px;"><select name=user_group_id" id="user_group_id">
+	<volist name="usergroup" id="vo">
+		<option value="{$vo.gid}">{$vo.name}</option>
+	</volist>
+</select>
+</p>
+</div>
+
+
+<script type="text/javascript">
+var uid = "{$uids}";
+</script>

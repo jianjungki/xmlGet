@@ -1,0 +1,86 @@
+<include file="__THEME__/header" />
+<link href="../Public/login.css" rel="stylesheet" type="text/css" />
+
+<!--日期-->
+<script  type="text/javascript" src="../Pulbic/js/rcalendar.js" ></script>
+<!--表单验证-->
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="../Public/js/jquery.validator.reg.js"></script>
+<script type="text/javascript" src="../Public/js/jquery.corners.min.js"></script>
+<link href="__PUBLIC__/js/form_check/type.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" src="../Public/js/register.js" ></script>
+<div class="content_holder">
+<div class="content"><!-- 内容 begin  --> 
+  <div class="main no_l">
+    <div class="mainbox boxspace">
+    <div class="mainbox_appR">
+    	<div class="reg_process">
+        <div class="reg_process_def"><div>1.完善组织资料</div></div>
+        <div class="reg_process_on"><div>2.提交组织凭证</div></div>
+        <div class="reg_process_def"><div>3.等待审核</div></div>
+        <div class="reg_process_def"><div>4.添加成员<br></div></div>
+        <div class="reg_process_def" style="height:60px;"><div>(审核通过后登陆到 账号—〉组织设置－〉成员管理 中添加)</div></div>
+        <div class="reg_process_def"><div>5.完成，进入我的首页</div></div>
+        </div>
+    </div>
+    <div class="mainbox_appC boxspace_L">
+    <div class="reg_box">
+    <div class="left lineS_btm" style="width:100%">
+    
+        <h2 class="cBlue"><strong style="font-size:45px">02.</strong>上传组织凭证，获得组织微博特权</h2>
+</div>
+        <form action="{:U('home/Public/verifyfile')}" method="post" id="regform" name="reg" onsubmit="return checkform()">
+			<php>if(!empty($invite)) {</php>
+			<php>}</php>
+          
+            <ul class="form_list">
+            	<li class="form_li">
+                    <div class="reg_li_4">组织名称：</div>
+                    <div class="reg_li_2">
+                      <!--<input type="text" readonly="readonly" name="nickname" value="{$nickname}" class="text35" style="width:250px;" min="2" max="10" maxLength="10" require="true" datatype="require|ajax" url="{:U('home/Public/isValidNickName')}" msg="重要！请填写昵称|昵称不符合要求或已被使用!" />-->
+                      <span>{$nickname}</span>
+                      <if condition="UC_SYNC">(注: 昵称只能由2-10个中英文、数字、下划线和中划线组成)</if>
+                    </div>
+                    <div class="reg_li_3">
+                        <div id="success_nickname" style="display:none;">
+                            <span class="ico_cue_ok"></span>
+                        </div>
+                        <div class="error_nickname" style="position: relative;display:none;">
+                                <span class="ico_cue_no"></span><span id="error_nickname"></span>
+                        </div>
+                    </div>
+                   
+                </li>
+                <li class="form_li">
+                    <div class="reg_li_4" style="width: 15%;text-align:right;display:block">组织凭证：<em color="red">*</em></div>
+                    <div class="left mr5" style="width: 50%;font-size: 10px;">
+                    	{:W('UploadAttach',array('limit' =>'1'))}
+                    	<div>请上传组织相关扫描件、或其他能有效证明组织身份的资料！</div>
+                    </div>		                    
+		   		</li>
+                <li class="form_li">
+                <div class="reg_li_1">&nbsp;</div><div class="reg_li_2">
+					<input type="submit" class="btn_green" value="提交组织凭证">
+					</div>
+                </li>
+            </ul>
+        </form>
+    </div>
+    <div class="c"></div>
+    </div>
+    </div>
+  <div class="clear"></div>
+</div>
+</div>
+</div>
+<script>
+	function  checkform(){
+		if(!$('input[name=attach[]]').val()){
+			ui.error("请上传相关凭证，以便认证工作进行");
+			return false;
+		}
+		return true;
+	}
+</script>
+<include file="__THEME__/footer" />

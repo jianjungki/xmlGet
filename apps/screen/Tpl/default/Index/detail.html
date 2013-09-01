@@ -1,0 +1,90 @@
+<include file="__THEME__/header" />
+<link rel="stylesheet" href="../Public/screen.css" type="text/css" media="screen" charset="utf-8" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="{:U('weibo/Plugins/init')}"></script>
+
+<php>if($mid==-1){</php>
+<!-- 快速注册 -->
+<div class="quick_reg mt10">
+<div class="reg_box">
+	<h2 class="cBlue"><span class="right">已有帐号？<a href="###">马上登录</a></span><strong>赶快注册XX微博,和我一起随时随地分享生活的新鲜资讯吧!</strong></h2>
+    <ul style=" width:380px;" class="form_list">
+    	<li class="form_li"><div class="left alR" style="width:85px;">电子邮箱：</div><div class="left" style="width:260px;"><input type="text" class="text" style="width:250px;" name="email" require="true"  /></div></li>
+        <li class="form_li"><div class="left alR" style="width:85px;">&nbsp;</div><div class="left" ><a href="###" class="btn_reg"><strong>快速创建我的微博</strong></a></div></li>
+    </ul>
+    <div class="clew_bg left" style="width:605px;">
+    <div class="clew_bg_arrow_l"></div>
+    	<div class="clew_bg_top"><div></div></div>
+        <div class="clew_bg_con" style="height:70px;">为什么要注册、登录？<br />
+XX微博为每一位用户提供不同的服务，登录才能记住你的喜好。</div>
+        <div class="clew_bg_btm"><div></div></div>
+    </div>
+    <div class="c"></div>
+    </div>
+</div>
+<div class="quick_reg mt10">
+<div class="reg_box">
+	<h2 class="cBlue"><span class="right cG">已有帐号？<a href="###">马上登录</a></span><strong>赶快注册XX微博,和我一起随时随地分享生活的新鲜资讯吧!</strong></h2>
+    <ul class="form_list">
+    	<li class="form_li"><div class="left alR" style="width:85px;">电子邮箱：</div><div class="left" style="width:260px;"><input type="text" class="text" style="width:250px;" name="email" require="true"  /></div><div class="left"><span class="ico_cue_ok">&nbsp;</span></div></li>
+        <li class="form_li"><div class="left alR" style="width:85px;">电子邮箱：</div><div class="left" style="width:260px;"><input type="password" class="text" style="width:250px;" name="password" id="password" require="true" value="" datatype="limit"  min="6" max="16" /></div><div class="left"><span  class="ico_cue_no"></span>邮箱格式不对</div></li>
+        <li class="form_li"><div class="left alR" style="width:85px;">电子邮箱：</div><div class="left" style="width:260px;"><input type="password" class="text" style="width:250px;" name="repassword" require="true" value="" datatype="repeat|limit"  min="6" max="16" to="password" />
+                    </div><div class="left"><span></span>邮箱格式不对</div></li>
+        <li class="form_li"><div class="left alR" style="width:85px;">验证码：</div><div class="left" style="width:100px;"><input type="text" class="text" style="width:90px;" name="email" require="true"  /></div><div class="left"><span></span>12341</div></li>
+        <li><div class="left alR" style="width:85px;">&nbsp;</div><div class="left" ><a href="###" class="btn_reg"><strong>快速创建我的微博</strong></a></div></li>
+    </ul>
+    <div class="c"></div>
+</div>
+</div>
+<php>}</php>
+<div class="content_holder">
+<div class="content"><!-- 内容 begin  --> 
+  <div class="main no_l">
+    <div class="mainbox boxspace">
+    <include file="../Public/_right" />
+      <div class="mainbox_appC boxspace_L">
+        <div class="otheruser_info">
+ 			<dl class="otheruser_info_left">
+        <neq name="screen.logo" value="">
+            <dt><a href="#" class="username"><img src="{$screen.logo}"></a></dt>
+        </neq>
+        <eq name="screen.logo" value="">
+            <dt><a href="#" class="username"><img src="__PUBLIC__/themes/newstyle/images/ts.png"></a></dt>
+        </eq>
+            </dl>
+          <div class="otheruser_info_right">
+       		  	<h4>{$screen.title} {$screen.class.buffer}</h4>
+                <h5><space uid='screen.uid'>{uname}</space></h5>
+				<div><span>时间：</span>{$screen.time_start} 至 {$screen.time_end}</div>
+				<div><span>简介：</span>{$screen.explains}</div>
+          </div>
+        </div>
+        <div class="roundbgF6">
+         <ul class="listscreen_info">
+         <li><span>活动网址：</span><a href="{:U('screen/index/detail',array('id'=>$screen['screen_id']))}">{:U('screen/index/detail',array('id'=>$screen['screen_id']))}</a></li>
+         <li><span>活动参与方式：</span>发送带有<a href="{:U('home/User/topics',array('k'=>urlencode($screen['topic'])))}"> #{$screen.topic}# </a>的微博均有机会出现在大屏幕上。</li>
+         <li><span>已绑定的话题：</span><a href="{:U('home/User/topics',array('k'=>urlencode($screen['topic'])))}">#{$screen.topic}#</a></li>
+         <li><span>已绑定的关键字：</span>{$screen.keyword}</li>
+        </ul>
+        </div>
+        <div class="tab-menu mt20">
+            <php>if($screen.type == ScreenModel::TYPE_RUNING){</php>
+        	<a href="javascript:void(0)" onclick="weibo.quickpublish('#{$screen.topic}#')" class="btn_b right">立即参于</a>
+        	<php>}</php>
+        	<ul>
+            <li><a href="javascript:void(0)" class="feed_item on"><span>所有讨论</span></a></li>
+            </ul>
+        </div>
+        <div class="feedBox">
+            {:W('WeiboList', array('mid'=>$mid, 'list'=>$list['data'],'insert'=>1))}
+        </div>
+        <p class="page">{$list.html}</p>
+      <div class="c"></div>
+    </div>
+  </div>
+  <div class="clear"></div>
+</div>
+</div>
+</div>
+<!-- 内容 end --> 
+<include file="__THEME__/footer" /> 

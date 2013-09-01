@@ -1,0 +1,47 @@
+<include file="__THEME__/header" />
+<link href="../Public/css/bbs.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" src="../Public/js/lang.js"></script>
+<script> var LANGUAGE_NAME = 'zh-cn'; </script>
+<script type="text/javascript">
+	/* 全局JS常量 */
+	var THEME = "__THEME__";
+	var APP    = "__APP__";
+	var URL    = "__URL__";
+	var JS_DIR     = "../Public/js";
+	var PUBLIC = "../Public";
+	var SITE_URL = "<php>echo SITE_URL</php>";
+	var EDITER_BASE = JS_DIR+"/kissy/";
+	var EDITER_UPLOAD = "{:U('home/Attach/index')}";
+</script>
+<script type="text/javascript" src="../Public/js/tbox/tbox.js" ></script>
+<div style="_margin-top:68px;">
+<div class="bbs_nav">
+	<span class="R pt10 f12 right"><a href="{:U('forum/List/index',array('class'=>$fid) )}">返回前台</a></span>
+	<ul>
+	<php>if($popedom->check('allow_adjust_popedom')){</php>
+		<li><a href="{:U('forum/Manage/index',array('class'=>$fid) )}" <eq name="ACTION_NAME" value="index">class="current"</eq> >{:L('base_nav_thread')}</a></li>
+    <php>}</php>
+    
+    <php>if($popedom->check('allow_check_attach')){</php>
+    	<li><a href="{:U('forum/Manage/attach',array('type'=>'nocheck','class'=>$fid) )}" <eq name="ACTION_NAME" value="attach">class="current"</eq>>附件审核</a></li>
+    <php>}</php>
+    
+    <php>if($popedom->check('allow_commend_popedom')){</php>
+    <li><a href="{:U('forum/Manage/commend',array('class'=>$fid) )}" <eq name="ACTION_NAME" value="commend">class="current"</eq>>热门推荐</a></li>
+    <php>}</php>
+    
+    <php>if($popedom->check('allow_edit_report')){</php>
+    	<li><a href="{:U('forum/Manage/affiche',array('class'=>$fid) )}" <eq name="ACTION_NAME" value="affiche">class="current"</eq>>首页公告</a></li>
+    <php>}</php>
+    
+	<php>if($popedom->check('allow_tclass_manage')){</php>
+    <li><a href="{:U('forum/Manage/tclass',array('class'=>$fid) )}" <eq name="ACTION_NAME" value="tclass">class="current"</eq>>{:L('base_nav_tclass')}</a></li>
+	<php>}</php>
+	
+	<php>if($popedom->check('allow_log_manage')){</php>
+    	<li><a href="{:U('forum/Manage/log',array('class'=>$fid) )}" <eq name="ACTION_NAME" value="log">class="current"</eq>>{:L('base_nav_log')}</a></li>
+    <php>}</php>
+    </ul>
+</div>
+</div>

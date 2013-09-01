@@ -1,0 +1,75 @@
+<include file="../Public/manage_top" />
+<link href="../Public/css/bbs.css" rel="stylesheet" type="text/css" />
+<link href="../Public/css/layout.css" rel="stylesheet" type="text/css" />
+<link href="../Public/css/public.css" rel="stylesheet" type="text/css" />
+<!--中间内容-->
+<div class="content zbg">
+  <div class="bbs_left"> <include file="../Public/manage_left" /> </div>
+  <include file="nav" />
+  <div class="bbs_main">
+    <div class="tit_line">敏感词管理</div>
+    <form action="{:U('forum/Manage/doAddFilter',array('class'=>$fid))}" method="POST" onSubmit="return checkForum();">
+    <div class="mb20">
+      <div class="cr lh22">输入敏感词：</div>
+      <div class="cl">
+        <textarea class="in_put" style="width:350px;" id="words" name="words" rows="5" cols="120"></textarea>
+        <p style="color:#999">输入的一个敏感词在页面将用"*"代替，敏感词之间请用","分隔！</p>
+        <p class="pt10">
+          <input class="btn_sea" type="submit" value="添加">
+          </input>
+        </p>
+      </div>
+      </form>
+      <div class="C"></div>
+    </div>
+    <div class="mb20">
+    <div class="cr lh22">查找敏感词：</div>
+    <div class="cl"><form method="post" action="{:U('forum/Manage/filterWord',array('class'=>$fid))}">  <input class="in_put" name="words"  type="text" value="{$search.words}"><input class="btn_sea ml5" value="查找" type="submit"></input></form></div>
+  <div class="C"></div>
+</div>
+<div class="mb20 tagList">
+  <ul>
+    <volist name="list" id="vo">
+      <li rel="tags" onMouseOver="this.className='bg';" onMouseOut="this.className='';" id="tag_{$vo.id}" class="a1"><a href="#" class="a1">{$vo.name}</a><a title="删除" onClick="delTag({$vo.id})" class="a2" href="javascript:void(0)"> <img title="删除" src="__ROOT__/apps/forum/Tpl/default/Public/images/transparent_03.gif"></a></li>
+    </volist>
+  </ul>
+</div>
+<!--表单设置修改模块 begin -->
+</form>
+</div>
+<div class="C"></div>
+</div>
+<include file="__THEME__/footer" /> 
+<script type="text/javascript">
+var fid = {$fid};
+var wordId;
+var tagName;
+function delTag(tagId,tagName){
+	wordId = tagId;
+	tagName = tagName;
+	$.tbox.confirm("你确定要删除此敏感词吗?","提示",{ok:"delFilterWord"});
+}
+
+function delFilterWord(){
+	tagId = wordId;
+	$.post('{:U("forum/Admin/doDelWord")}',{tagid:tagId,fid:fid},function(txt){
+		if(txt){
+			$("#tag_"+tagId).html('<font color=red>删除成功</font>');
+			$("#tag_"+tagId).fadeTo(1000, 0.25, function(){
+				$("#tag_"+tagId).remove();
+			});			
+		}else{
+			$.tbox.no('失败');
+		}
+	});
+}
+
+function checkForum(){
+	if($.trim($('#words').val()).length < 1 || $.trim($('#words').val()) == "&nbsp"){
+		$.tbox.no("请输入敏感词");
+		setTimeout("$.tbox.close()",1500);
+		return false;
+	}
+	
+}
+</script>

@@ -1,0 +1,286 @@
+<include file="__THEME__/header" />
+<link href="../Public/account.css" rel="stylesheet" type="text/css" />
+<link href="../Public/js/setavatar/css/imgareaselect-default.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="../Public/js/avatar/avatar.js"></script>
+<script type="text/javascript" src="../Public/js/account.js"></script>
+<script type="text/javascript" src="../Public/js/setavatar/jquery.imgareaselect.min.js"></script>
+<div class="content_holder">
+<div class="content"><!-- 内容 begin  --> 
+  <div class="main no_l"><!-- 右侧内容 begin  -->
+    <div class="mainbox">
+      <div class="mainbox_appC no_r">
+    <include file="_tab" />
+    <!-- 切换标签 end  -->
+    <div class="mainbox_C_C">
+		<div class="setupBox">
+          <div class="setItems">
+            <div class="setFold setUnfold" rel="base" >
+              <h2>基本信息<span id="verified_tips" class="cRed" style="font-weight:normal;"><php>
+              	  if ('1' == $verified['verified']) {</php>(认证成功)</span><php>
+              	  } else if ('0' === $verified['verified']) {
+              	  </php>(认证中……)<php>}</php></span></h2>
+              <div class="setStep"> <span class="txt1">组织基本信息</span>&nbsp;&nbsp;<span>以上资料若有修改，点击提交后将进入认证资料变更审核，审核过后才能成功被修改（审核时间为最少3~7个工作日起）</span></div>
+            </div>
+            <div class="data">
+              <!-- 基本资料 begin  -->
+		          <form action="{:U('home/OrgAccount/Orgupdate')}" method="post" dotype="ajax" class="form_validator" type="base" id="regform" oncomplete="false">
+			        <input type="hidden" name="dotype" value="upbase">
+		            <dl class="set_basic">
+		                <dd>
+		                    <label>组织简称：</label>
+                            <div class="left">
+		                       <input name="unitShortName" maxLength="110" type="text" class="text" value="{$OrguserInfo.Orgdetail.unitShortName}" />
+		                    </div>
+						</dd>
+						
+						<dd>
+		                    <label>组织全称：</label>
+                            <div class="left">
+		                        <input name="unitFullName" maxLength="110" type="text" class="text" value="{$OrguserInfo.Orgdetail.unitFullName}" />
+		                    </div>
+						</dd>
+						
+						<dd>
+		                    <label>行业类别：</label>
+                            <div class="left">
+		                       <select name="category">
+		                       		{:getDatadictData("org_catalog",$OrguserInfo['Orgdetail']['category'])}
+		                       </select>
+		                    </div>
+						</dd>
+		                
+		                <dd id="isLocation" style="display:none;">
+		                    <label>所在地区：</label>
+		                    <div class="left" style="_width:600px"><iframe style="position:absolute;_filter:alpha(opacity=0);opacity=0;z-index:-1;width:100%;height:100%;top:0;left:0;scrolling:no;" frameborder="0" src="about:blank"></iframe>
+							      <script>ui.getarea('area','',{$OrguserInfo.detail.province},{$OrguserInfo.detail.city});</script>
+		                    </div>
+		                </dd>
+		                
+		                <dd>
+		                    <label>公司网址：</label>
+                            <div class="left">
+		                        <input name="website" maxLength="110" type="text" class="text" value="{$OrguserInfo.Orgdetail.website}" />
+		                    </div>
+						</dd>
+						
+						<dd>
+		                    <label>联系人姓名：</label>
+                            <div class="left">
+								<input name="username" maxLength="110" type="text" class="text" value="{$OrguserInfo.Orgdetail.username}" />
+		                    </div>
+						</dd>
+						
+						<dd>
+		                    <label>联系人电话：</label>
+		                    <input name="telephone" maxLength="110" type="text" class="text" value="{$OrguserInfo.Orgdetail.telephone}" />
+                            <div class="left">
+		                    </div>
+						</dd>
+						
+						
+						<dd>
+		                    <label>认证资料：</label>
+		                    <div class="left" style="width: 50%;">
+		                      <div class="left mr5"><textarea name="content" cols="40" rows="3" onfocus="this.className='text2'" onblur="this.className='text'">{$OrguserInfo.Orgdetail.content}</textarea></div>
+		                    </div>
+		                </dd>
+		                 <dd>
+		                    <label>组织凭证：</label>
+		                    <div class="left mr5" style="width: 80%;">
+		                    	{:W('UploadAttach',array('limit' =>'1'))}
+		                    	<div>请上传组织相关扫描件、或其他能有效证明组织身份的资料！</div>
+		                    	<div style="width: 50%;height: 100px ;border: 1px solid #00bfff">
+		                    		<img src="{:showAttach($verified['attachment'],$mid)}" style="width: 100%;">
+		                    	</div>
+		                    </div>		                    
+		                </dd>
+		          </dl>
+				  {:Addons::hook('home_account_profile_base')}
+		          <dl class="set_basic"><dd id="sub_field"><label>&nbsp;</label>
+		          	<if condition="$verified['verified'] eq 0">
+		          		<input type="submit" disabled value="提交认证"/><em>不能多次提交认证，请等待认证成功</em>
+		          	<else/>
+		          		<input type="submit" id="sub_button" class="btn_b" value="提交认证"/>
+		          	</if>
+		          	</dd></dl><br>
+		          </form>
+		          <br />
+			      <div style="margin-left: 16%"><span>以下资料可直接修改即时生效，无需审核</span></div>
+		          <form action="{:U('home/OrgAccount/InfoUpdate')}" method="post" dotype="ajax" id="infoarea" class="form_validator">
+			          <dl class="set_basic">
+			          <dd>
+			                    <label>组织简介：</label>
+	                            <div class="left">
+			                        <textarea name="aboutit" cols="90" rows="10">{$OrguserInfo.Orgdetail.aboutit}</textarea>*组织简介不需要认证即可修改
+			                    </div>
+					  </dd>
+					  </dl>
+					  <dl class="set_basic"><dd><label>&nbsp;</label><input type="hidden" value="{$OrguserInfo.Orgdetail.orgid}" name="orgid"/><input type="submit" class="btn_b" value="提交修改" /></dd></dl>
+				  </form>
+		        </div>
+		        
+		        <!--  组织信息修改列表  -->
+		        
+		    <div style="margin: 10px 5% 0 5%;border-top:  3px solid #00bfff;padding: 5px 2px">
+		    	<span style="font-weight: bold;font-size: 14px;line-height: 25px;display: block;">组织信息修改记录</span>
+		    </div>    
+		    <div style="width:90%;margin-left: 5%">
+            <dl class="modifylist">
+              <dt class="cGray2">
+                <div class="c1">组织简称</div>
+                <div class="c1">组织全称</div>
+                <div class="c1">行业类别</div>
+                <div class="c1">所在地区</div>
+                <div class="c1">公司网址</div>
+                <div class="c1">联系人姓名</div>
+                <div class="c1">联系人电话</div>
+                <div class="c1">申请时间</div>
+                <div class="c1">审批通过时间</div>
+                <div class="c"></div>
+              </dt>
+			<volist  name="veridata.data" id="vo">
+                <dd style="height:20px;">
+                  <div class="c1">
+                  	{$vo.unitShortName}&nbsp;
+                  </div>
+                  <div class="c1">
+                  	{$vo.unitFullName}&nbsp;
+                  </div>                              
+                  <div class="c1">
+                    {$vo.category}&nbsp;
+                  </div>
+                  <div class="c1">
+                  	{$vo.location}&nbsp;
+                  </div>
+                  <div class="c1">
+                  	{$vo.website}&nbsp;
+                  </div>
+                  <div class="c1">
+                  	{$vo.realname}&nbsp;
+                  </div>
+                  <div class="c1">
+                  	{$vo.phone}&nbsp;
+                  </div>
+                  <div class="c1">
+                  	{$vo.veritime|date='Y-m-d',###}&nbsp;
+                  </div>
+                  <div class="c1">
+                  	{$vo.passedtime|date='Y-m-d',###}&nbsp;
+                  </div>
+                </dd>
+		</volist>
+		<div class="page" style="vertical-align: bottom">{$veridata['html']}</div>
+            </dl>
+            <div class="c"></div>
+          </div>
+		        
+          </div>
+          {:Addons::hook('home_account_profile_bottom')}
+          <div class="c"></div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+  <!-- 右侧内容 end  -->
+  <div class="c"></div>
+</div>
+</div>
+
+<script>
+	$(document).ready(function(){
+		var hs = document.location.hash;
+		var up_pic_width =50;
+		var up_pic_height =50;
+
+		var type = hs.replace('#','');
+		if(type == 'base' || type == '') {
+			$('#isLocation').css('display', 'block');
+		}
+				
+		$('#infoarea').ajaxForm(function() { 
+            ui.success("更新成功!"); 
+        }); 
+		/*		
+		changeModel( hs.replace('#','') );
+		$('.setFold').click(function(){
+			if( $(this).attr('class')=='setFold' ){
+				changeModel( $(this).attr('rel') );
+			}else{
+				$(this).removeClass('setUnfold');
+				$(this).next('.setItemsInfo').hide();
+			}
+			location.href='#'+$(this).attr('rel');
+			if($(this).attr('rel') == 'base') {
+				$('#isLocation').css('display', '');
+			} else {
+				$('#isLocation').css('display', 'none');
+			}
+		})*/
+
+
+		$(document).ready(function(){
+		var hs = document.location.hash;
+		changeModel( hs.replace('#','') );
+		$('.setFold').click(function(){
+			if( $(this).attr('class')=='setFold' ){
+				changeModel( $(this).attr('rel') );
+			}else{
+				$(this).removeClass('setUnfold');
+				$(this).next('.setItemsInfo').hide();
+			}
+			location.href='#'+$(this).attr('rel');
+		})
+	});
+	
+	//切换操作模块
+	function changeModel( type ){
+		var t = type || 'base';
+		$('.setFold').removeClass('setUnfold');
+		$('.setItemsInfo').hide();
+		var handle = $('div[rel="'+t+'"]');
+		handle.addClass('setUnfold');
+		handle.next('.setItemsInfo').show();
+	}
+		
+		//监听 form 表单提交
+	  	$(".form_validator").bind('submit', function() {
+			var callbackfun = $(this).attr('callback');
+			var type   = $(this).attr('type');
+			var options = {
+			    success: function(txt) {
+			    	txt = eval("("+txt+")");
+					if(callbackfun){
+						callback(eval(callbackfun),txt);
+					}else{
+						  if(txt.boolen){
+							  ui.success( txt.message );
+							  if(txt.setno){
+							  	$("#sub_button").removeClass();
+							  	$("#sub_field").append("<em>不能多次提交认证，请等待认证成功</em>");
+							  	$("#sub_button").attr("disabled","disabled");
+							  }
+						  }else{
+							  ui.error( txt.message );
+						  }
+						  	 
+					}
+			    }
+			};		
+	         $(this).ajaxSubmit(options);
+			 return false;
+	    });
+	
+	});
+	
+	function callback(fun,argum){
+		fun(argum);
+	}
+	
+		
+	
+</script>
+
+<!-- 内容 end --> 
+<include file="__THEME__/footer" />

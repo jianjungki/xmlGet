@@ -1,0 +1,61 @@
+<div class="wmenu">
+	<php>
+		$selectedCate = explode( ',',$_GET['class'] ) ;
+		$attentiondisplay = ( $_COOKIE['menuSwitch']['attention']==1 || ACTION_NAME=='all')?'true':'false';
+	</php>
+<div class="menu">
+	<span <eq name='attentiondisplay' value="false">class="R_x"<else />class="R_s"</eq> onclick="hideswitch(this,'attention')" ></span>
+	<a id="a_attention" href="{:U('bbs/Index/all')}" <eq name='attentiondisplay' value="true">class="on"</eq> href="javascript:void(0)" >{:L('my_subscibe')}</a> </div>
+	<ul rel="attention" <eq name='attentiondisplay' value="false">style="display:none"</eq> >
+	 <li><span class="ico_rss hand" onclick="attention()">{:L('board_subscibe')}</span><a title="{:L('all_threads')}" href="{:U('bbs/Index/all')}">{:L('all_threads')}</a></li>
+	 <li><a title="{:L('all_boards')}" href="{:U('bbs/Index/index')}">{:L('all_boards')}</a></li>
+<volist id="vo" name="Core['myAttention']">
+	<li><a title="{$vo.title}" href="{:U('bbs/Index/forumlist',array('class'=>$vo['cid']))}">{$vo.title}</a></li>
+</volist>
+</ul>
+<volist id="vo" name="Core['category']">
+	<php>$display = ( $_COOKIE['menuSwitch'][$vo['a']]==1 || $selectedCate[0]==$vo['a'])?'true':'false';</php>
+	<div class="menu"><span <eq name='display' value="false">class="R_x"<else />class="R_s"</eq> onclick="hideswitch(this,'{$vo.a}')" ></span><a id="a_{$vo.a}" <eq name='display' value="true">class="on"</eq> title="{$vo.t}" href="{:U('bbs/Index/forumlist',array('class'=>$vo['a']))}">{$vo.t}</a></div>
+	<ul rel="{$vo.a}" <eq name='display' value="false">style="display:none"</eq> >
+		<volist id="svo" name="vo['d']">
+			<php>if($svo['t']){</php>
+				<li><a title="{$svo.t}" <php>if( $selectedCate[1]==$svo['a'] ){</php>class="pitch_on"<php>}</php> href="{:U('bbs/Index/forumlist',array('class'=>$vo['a'].','.$svo['a']))}">{$svo.t}</a></li>
+			<php>}</php>
+		</volist>
+	</ul>
+</volist>	
+</div>
+<script>
+	function attention(){
+		$.tbox.popup('{:U("bbs/Index/attention")}','{:L("board_attention")}',{ok:'subscibeCate'});
+	}
+	
+	function hideswitch(o,id){
+		if( $(o).attr('class')=='R_s'){
+			$(o).attr('class','R_x');
+			$("ul[rel='"+ id +"']").slideUp('fast');
+			$("#a_"+id).removeAttr('class');
+			document.cookie = 'menuSwitch['+id+']=0;path=/;domain={:C("COOKIE_DOMAIN")}';
+		}else{
+			$(o).attr('class','R_s');
+			$("ul[rel='"+ id +"']").slideDown('fast');
+			$("#a_"+id).attr('class','on');
+			document.cookie = 'menuSwitch['+id+']=1;path=/;domain={:C("COOKIE_DOMAIN")}';
+		}
+	}
+	
+	function changeIframe(){
+		if( $('div .bbs_left').css('display')=='none'){
+			$('div .bbs_left').show();
+			$('div .rightBox').attr('style','margin-left:150px;_margin-left:0px');
+			$('#sideBarIcon').attr('src','../Public/images/clearleft.gif');
+			document.cookie = 'menuSide=0;path=/;domain={:C("COOKIE_DOMAIN")}';
+		}else{
+			$('div .bbs_left').hide();
+			$('div .rightBox').css('margin-left',0);
+			$('#sideBarIcon').attr('src','../Public/images/clearright.gif');
+			document.cookie = 'menuSide=1;path=/;domain={:C("COOKIE_DOMAIN")}';
+		}
+
+	}
+</script>

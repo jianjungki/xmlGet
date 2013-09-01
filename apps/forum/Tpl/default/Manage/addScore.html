@@ -1,0 +1,86 @@
+<include file="../Public/manage_top" />
+<link href="../Public/css/bbs.css" rel="stylesheet" type="text/css" />
+<link href="../Public/css/layout.css" rel="stylesheet" type="text/css" />
+<link href="../Public/css/public.css" rel="stylesheet" type="text/css" />
+<!--中间内容-->
+
+<div class="content zbg">
+<div class="bbs_left"> <include file="../Public/manage_left" /> </div>
+<include file="nav" />
+<div class="bbs_main">
+  <div class="tit_line">添加积分</div>
+  <form action="{:U('forum/Manage/doAddScore',array('fid'=>$fid))} " method="post" onSubmit="return checkForm();">
+    <div class="mb10">
+      <div class="cr lh22" style="width: 12%;">请输入昵称：</div>
+      <div class="cl" >
+        <input class="in_put" name="maskName" type="text" id="maskname">
+        </input>
+        <a class="ml5" href="javascript:void(0)" onClick="findScore()">查看积分</a><font color="red"><span id="nowscore"></font></span></div>
+      <div class="C"></div>
+    </div>
+    <div class="mb10">
+      <div class="cr lh22" style="width: 12%;">积分操作：</div>
+      <div class="cl">
+        <input name="type" type="radio" checked="checked" value="add">
+        &nbsp;加
+        </input>
+        &nbsp;
+        <input name="type" type="radio" value="subtract">
+        &nbsp;减
+        </input>
+      </div>
+      <div class="C"></div>
+    </div>
+    <div class="mb10">
+      <div class="cr lh22" style="width: 12%;">积分：</div>
+      <div class="cl">
+        <input class="in_put" name="score" type="text" maxlength="6"  id="score" onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
+        </input>
+      </div>
+      <div class="C"></div>
+    </div>
+    <div>
+      <div class="cr" style="width: 12%;">&nbsp;</div>
+      <div class="cl" >
+        <input class="btn_sea" type="submit" name="" value="提交">
+        </input>
+      </div>
+      <div class="C"></div>
+    </div>
+  </form>
+</div>
+<div class="C"></div>
+</div>
+<include file="__THEME__/footer" /> 
+<script>
+  	function findScore(){
+		var maskName = $('#maskname').val();
+		if(	maskName == ''){
+				$.tbox.no("请输入昵称","提示");
+				setTimeout("$.tbox.close()",1500);
+				return false;
+		}
+		var fid = {$fid};
+		$.post("{:U('forum/Manage/findMaskScore')}",{fid:fid,maskName:maskName},function(txt){
+				if(txt == -1){
+					$.tbox.no("无此用户","提示");
+				}else{
+					$('#nowscore').html(txt);
+				}
+		});
+  	 }
+  function checkForm(){
+		var maskName = $('#maskname').val();
+		var score = $('#score').val();
+		if(maskName == ''){
+			$.tbox.no("请输入昵称","提示");
+			setTimeout("$.tbox.close()",1500);
+			return false;
+		}
+		if(score == ''){
+			$.tbox.no("请输入所要操作的积分数","提示");
+			setTimeout("$.tbox.close()",1500);
+			return false;			
+			}
+	  }
+  </script>

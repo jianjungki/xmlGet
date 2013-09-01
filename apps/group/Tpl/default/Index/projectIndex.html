@@ -1,0 +1,80 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="../Public/Js/common.js"></script>
+<script type="text/javascript" src="../Public/Js/group.interesting.js"></script>
+<link  href="../Public/group.css" rel="stylesheet" type="text/css"/>
+<script>
+var display_interesting_group = 'main';
+$(document).ready(function(){
+	change_interesting_group(1);
+});
+</script>
+<!-- <script type="text/javascript">
+/*
+	-需要：引入一个jquery的包
+*/
+//function showAllGroup(){
+//    $('#allGroup').slideDown(1000);
+////    alert("OK");
+//}
+
+function toggleAllGroup(){
+    $('#allGroup').toggle(1000);
+}
+
+</script> -->
+
+<div class="content_holder">
+<div class="content no_bg"><!-- 内容 begin  -->
+<include file="../Public/_projectMainNav" />
+
+<div class="main no_l"><!-- 画布 begin  -->
+    <div class="mainbox u_main p_main">
+      <include file="../Public/_isProjectHotList" />
+      <div class="mainbox_appC u_right p_right">
+	<div class="u_benner"><a href="{:U('group/Index/addPro')}"><img src="__THEME__/images/project3.jpg" width="755" height="299" /></a></div>
+     <div>
+       <div class="u_main_left">
+       <p>项目功能介绍</p>
+       <ul>
+         <img src="__THEME__/images/default/project/3.jpg" width="70" height="60" />
+          <h3>项目管理</h3><li>记录与管理你的项目，在此项目成员能够进行充分的沟通</li>
+       </ul>
+       <ul>
+       <img src="__THEME__/images/default/project/4.jpg" width="70" height="60" />
+          <h3>文档共享</h3><li>项目成员之间可以方便的分享文档</li>
+       </ul>
+       <ul>
+       <img src="__THEME__/images/default/project/5.jpg" width="70" height="60" />
+          <h3 style="color:#696">私密性</h3><li>项目是一个私密群组，只有内部成员可以共享信息和文档</li>
+       </ul>
+       <ul>
+       <img src="__THEME__/images/default/project/6.jpg" width="70" height="60" />
+          <h3 style="color:#696">即时提醒</h3><li>你参加的项目动态会产生即时提醒，不会错过重要信息</li>
+       </ul>
+       </div>
+       <div class="u_main_right">
+       <p>常见问题</p>
+       <ul>
+       <h3>Q：项目同圈子有什么区别？</h3>
+       <li>A：社区中的圈子分为私密圈和公开圈，由圈子的创建人进行设置，且圈子是基于某一个兴趣或者方面的内容而创建的；项目则是一个高度私密的地方，其创建是基于共同的工作内容，进入项目的成员均为该工作范围人员；</li>
+       <h3>Q：一个用户可创建几个项目？</h3>
+       <li>A：普通用户可创建三个项目；经过天工社区认证的用户可创建五个项目；</li>
+       <h3>Q：若我已经创建了项目，是否可加入别的项目？</h3>
+       <li>A：可以；</li>
+       <h3>Q：怎样加入项目？</h3>
+       <li>A：天工社区给予项目一个异常私密的环境，故项目的加入仅能通过该项目创建者对您发出的加入邀请；</li>
+       <h3>Q：项目中的讨论、工作文件等是否能转发到个人微博？</h3>
+       <li>A：不能，项目中所涉及到的所有资料都仅能在项目中体现，不可对外传播；</li>
+       </ul>
+       </div>
+     </div>
+        <div class="c"></div>
+      </div>
+    </div>
+    <!-- 内容 end --> 
+  </div>
+</div>
+</div>
+<!-- 内容 end --> 
+<include file="__THEME__/footer" /> 
+

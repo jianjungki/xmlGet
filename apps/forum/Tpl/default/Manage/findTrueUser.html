@@ -1,0 +1,41 @@
+<include file="../Public/manage_top" />
+<link href="../Public/css/bbs.css" rel="stylesheet" type="text/css" />
+<link href="../Public/css/layout.css" rel="stylesheet" type="text/css" />
+<link href="../Public/css/public.css" rel="stylesheet" type="text/css" />
+<!--中间内容-->
+<div class="content zbg"> 
+  <div class="bbs_left">
+ 	<include file="../Public/manage_left" />
+  </div><include file="nav" />
+  <div class="bbs_main">
+  <div class="tit_line">查找昵称</div>
+<form action="" method="post">
+<div class="cl">
+	请输入你要查找的昵称名字：<input class="in_put " type="text" name="maskName" value="{$maskName}"></input><input class="btn_sea ml5" type="submit" value="查询">
+</div>	
+</form>
+<div class="list_box">
+
+
+<dl>
+	<dt>
+		<div class="cl" style="width:30%">昵称</div>
+		<div class="cl" style="width:30%">账户</div>
+	    <div class="C"></div>
+	</dt>
+	<volist name="trueUser['data']" id="vo">
+	
+	<dd>
+		<div class="cl"style="width:30%">{$vo.name}</div>
+		<div class="cl"style="width:30%">{$vo.uname}</div>
+	</dd>
+	</volist>
+</dl>
+	<php>if(empty($trueUser['data'])){</php>
+<div class="no_data">无符合数据 </div>
+<php>}</php>
+</div>
+</div>
+<div class="C"></div>
+</div>
+<include file="__THEME__/footer" /> 

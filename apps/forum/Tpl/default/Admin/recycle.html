@@ -1,0 +1,217 @@
+<include file="_header" />
+<link href="../Public/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript"  src="../Public/WP/WdatePicker.js"></script>
+<body>
+<div class="so_main">
+	<include file="_tab" />
+  <div class="form">
+  <div class="bbs_sea_tab">
+    <form action="" method="GET">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td height="30">
+          <div class="cr lh22" style="width:100px">版块选择：</div>
+            <div class="cl lh22 mr10"><a class="pl5" href="javascript:void(0)" onClick="selectCategory()">选择版块</a></div>
+			<div id="cateList" class="cl lh22 ml5"></div>
+			<input class="txt" type="hidden" name="fid" value="" id='fid' />
+          <div class="cl lh22 ml5" id="ca" >
+          <php>$temp = explode(',',$category);
+            				 foreach($temp as $key=>$v){
+            				 	$value = explode('|',$v);
+            				 		$temp[$key] = $value[1];
+            				 }
+            				 $t = implode('->',$temp);
+            				 </php>{$t}</div><div class="clear"></div></td>
+          <td height="30"><div class="cr lh22" style="width:100px;">帖子类型：</div>
+            <div class="cl" style="height:25px;">
+              <select style="width: 200px;"  name="signid" >
+                <option value="0">全部</option>
+                <volist id="vo" name="forumSign">
+                  <option <php>if($signid==$vo['signid']){ </php>selected="selected"<php>}</php>value="{$vo.signid}">{$vo.name}</option>
+                </volist>
+              </select>
+            </div><div class="clear"></div></td>
+        </tr>
+        <tr>
+          <td height="30"><div class="cr lh22" style="width:100px;">昵称：</div>
+            <div class="cl">
+              <input type="text" value="{$username}" name="username" style="width: 200px;" class="txt">
+            </div><div class="clear"></div></td>
+          <td height="30"><div class="cr lh22" style="width:100px;">发表时间范围：</div>
+            <div class="cl">
+              <input type="text" value="{$fromTime}" onClick="WdatePicker()" name="fromTime" style="width: 100px;" id="fromTime" class="txt">
+              &nbsp;至&nbsp;
+              <input type="text" value="{$toTime}" onClick="WdatePicker()" name="toTime" style="width: 100px;" id="toTime" class="txt">
+            </div><div class="clear"></div></td>
+        </tr>
+        <tr>
+          <td height="30"><div class="cr lh22" style="width:100px;">标题关键词：</div>
+            <div class="cl">
+              <input type="text" value="{$title}" name="title" style="width: 200px;" class="txt">
+            </div></td>
+          <td height="30"><div class="cr lh22" style="width:100px;">点击次数范围：</div>
+            <div class="cl">
+              <input type="text" value="{$fviewcount}" name="fviewcount" style="width: 100px;" class="txt" maxlength="6"   onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
+              &nbsp;至&nbsp;
+              <input type="text" value="{$tviewcount}" name="tviewcount" style="width: 100px;" class="txt" maxlength="6"   onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
+            </div><div class="clear"></div></td>
+        </tr>
+        <tr>
+          <td height="30"><div class="cr lh22" style="width:100px;">多少天零回复：</div>
+            <div class="cl">
+              <input type="text" value="{$rdays}" name="rdays" style="width: 200px;" class="txt" maxlength="6"   onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
+            </div></td>
+          <td height="30"><div class="cr lh22" style="width:100px;">回复次数范围：</div>
+            <div class="cl">
+              <input type="text" value="{$fReplyCount}" name="fReplyCount" style="width: 100px;" class="txt"maxlength="6"   onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
+              &nbsp;至&nbsp;
+              <input type="text" value="{$tReplyCount}" name="tReplyCount" style="width: 100px;" class="txt"maxlength="6"   onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
+            </div><div class="clear"></div></td>
+        </tr>
+      </table>
+      <div>
+				<input type="hidden" name="app" value="{*APP_NAME}" />
+				<input type="hidden" name="mod" value="{*MODULE_NAME}" />
+				<input type="hidden" name="act" value="{*ACTION_NAME}" />
+</div>
+      <div class="sea_left mt10" style="padding-left:100px;">
+        <input class="btn_b" type="submit" value="查询">
+        </input>
+      </div>
+    </form>
+  </div>
+  <div class="list">
+   <div class="Toolbar_inbox">
+       <div class="page right">{$html}</div>
+    <a href="javascript:void(0)" onClick="delForum('add')"  class="btn_a"><span>还原</span></a> 
+      <a href="javascript:void(0)"  onClick="delForum('delete')" class="btn_a"><span>彻底删除</span></a> 
+    </div>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <th style="width:30px;"> <input type="checkbox" name="checkbox" class="checkbox">
+          <label for="checkbox"></label></th>
+        <th class="line_l">主题</th>
+        <th class="line_1">版块</th>
+        <th class="line_l">昵称</th>
+        <th class="line_l">查看/回复</th>
+        <th class="line_l">最后回复</th>
+      </tr>
+      <volist name="data" id="vo">
+        <tr id="topic_{$vo.tid}">
+          <td><input class="checkbox2" type="checkbox" id="signid_{$vo.signid}" name="forumid"  value={$vo.tid}></td>
+          <td style="width:40%"><a target="_blank" href="{:U('forum/Detail/index',array('id'=>$vo['tid'],'admincheck'=>1))}">{$vo.title}</a></td>
+          <td><a href="{:U('forum/List/index','class='.$vo['fid'])}" target="_blank">{$vo.fid|getBlockName}</a></td>
+          <td>{$vo.maskName}</td>
+          <td>{$vo.viewcount}/{$vo.replycount}</td>
+          <td>{$vo.lastreuid|getUserName}<br>
+            {$vo.rTime|friendlyDate=###,'full'}</td>
+        </tr>
+      </volist>
+    </table>
+     <div class="Toolbar_inbox">
+       <div class="page right">{$html}</div>
+    <a href="javascript:void(0)" onClick="delForum('add')"  class="btn_a"><span>还原</span></a> 
+      <a href="javascript:void(0)"  onClick="delForum('delete')" class="btn_a"><span>彻底删除</span></a> 
+    </div>
+    
+  </div>
+  </div>
+</div>
+<script style="javascript/text"> 
+	var type;
+	$(function(){
+		$('.checkbox').click(function(){
+			var check = $('.checkbox').attr("checked");
+			if(check){
+				$('.checkbox2').attr("checked","checked");
+			}else{
+				
+				$('.checkbox2').removeAttr("checked");
+			}
+		});
+	});
+
+	function delForum(type){
+		var forumId = new Array();
+		$('.checkbox2').each(function(){
+			if($(this).attr("checked")){
+				 forumId.push($(this).val());
+			}
+		});
+		if(forumId.length == 0){
+			$.tbox.no("请选择你要操作主题！","提示");
+			setTimeout('$.tbox.close()',1500);
+			return false;
+		}
+		if(type == 'delete'){
+			if(!confirm("你确定要彻底删除吗？"))
+				return false;
+		}
+		else if(type == 'add'){
+			if(!confirm("你确定要还原帖子吗？"))
+				return false;
+			}
+		$.post("{:U('forum/Admin/doForum')}",{type:type,forumId:forumId},function(txt){
+			if(txt){
+				$.tbox.yes("操作成功");
+				setTimeout('reloadWindow();',1500);
+			}else{
+				$.tbox.no("操作失败");
+				setTimeout('$.tbox.close()',1500);
+			}
+		});
+		}
+	function reloadWindow(){
+		$.tbox.close();
+		$('.checkbox').removeAttr("checked");
+		$('.checkbox2').removeAttr("checked");
+		window.location.reload();
+	}
+	
+	function selectCategory(){
+		$.tbox.popup(URL+"&act=selectBlockCate","选择版块",true);
+	}
+
+	function ok(){
+		var selectedTempCategory = new Array();
+		var cidarr=new Array();
+		$('#categoryList').children().each(function(){
+			var temp = $(this).val()+"";
+			if ( temp == 'null' ) return;
+			selectedTempCategory[$(this).find('option[value='+$(this).val()+']').html()] = temp;
+
+			//if(cid=='') cid = $(this).val();
+			//else		cid += ','+$(this).val();
+			cidarr.push($(this).val());
+		});
+		
+		var len = cidarr.length; 
+		var cid = cidarr[len-1];
+		
+		var length = 0;
+		var tempArray = new Array();
+		var tempArray2 = new Array();
+		for(var one in selectedTempCategory){
+			if(one == 'remove') continue;
+			length ++;
+			tempArray2.push(one);
+			tempArray.push(selectedTempCategory[one]+"|"+one);
+		}
+		delete selectedTempCategory;
+		if(length == 0){
+					$.tbox.no("{:L('ask_please_select')}","{:L('ask_remind_info')}");
+					setTimeout("$.tbox.close()",1500);
+					return;
+		}
+		browse_category_id = tempArray.join(',');
+		browse_category_title = tempArray2.join(' > ');
+		
+		//子层
+		var html = '<input class="in_mr5" id="categoryId" name="category" type="radio" checked value="'+browse_category_id+'" />'+browse_category_title;
+		
+		$('#cateList').html(html);
+		$('#fid').val(cid);
+		$('#ca').html('');
+	}
+</script>
+<include file="_footer" />

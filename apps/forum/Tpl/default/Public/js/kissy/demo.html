@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+<title>KISSY Editor Demo</title>
+
+<!-- 1. 页头引入 editor css -->
+<link rel="stylesheet" href="themes/default/editor-min.css" type="text/css" />
+
+</head>
+
+<body>
+<div id="ewebeditor"></div>
+<div id="demo-page">
+
+    <h1>KISSY Editor: </h1>
+
+    <form id="demo-form" action="preview.php" method="POST">
+
+        <textarea name="code" id="demo" rows="50" cols="152" style="width: 900px; height: 295px"></textarea>
+
+        <p>
+
+		<button id="submit-btn" type="submit">Preview</button>
+
+		- <a href="javascript:void(0)" onClick="getContent();">获取内容</a>
+
+		- <a href="javascript:void(0)" onClick="getCount();">统计字数</a>
+
+		</p>
+
+    </form>
+
+	
+</div>
+
+<!-- 2. 页尾引入 editor js and init code -->
+<script type="text/javascript" src="neweditor.js"></script>
+
+<script type="text/javascript">
+
+	//实例化编辑器
+	E	=	KISSY.Editor( "demo" , { base: "http://localhost/public/js/kissy/", upload_url: "http://localhost/index.php?app=home&mod=Attach" } );
+	//可用方法
+	/*
+		//获取编辑器内容
+		E.getData();
+		//计算以输入字数
+		E.getData().length;
+		//获得焦点
+		E.focus();
+		//将光标移到最后
+		E._focusToEnd();
+	
+	*/
+	//获取编辑器内容
+	function getContent(){
+		alert(E.getData());
+	}
+
+	//获取当前字数
+	function getCount(){
+		alert(E.getData().length);
+	}
+
+</script>
+</body>
+</html>

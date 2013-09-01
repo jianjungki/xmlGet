@@ -1,0 +1,121 @@
+<include file="_header" />
+<script  type="text/javascript" src="__PUBLIC__/js/rcalendar.js" ></script>
+<script type="text/javascript">
+ window.onload=function(){
+	
+	 var mStatus = {$status} ;	 
+     document.getElementById("status")[mStatus].selected=true; 
+}
+</script>
+
+<div class="so_main">
+	<include file="_tab" />
+  <div class="form2">
+  	<form method="post" action="{:U('weibo/Admin/doEditInterview')}" enctype="multipart/form-data">
+    <dl>
+      <dt><span>*</span>话题：</dt>
+      <dd>
+        <input type="text" name="name" style="width:300px" value="{$name}" />
+      </dd>
+    </dl>
+
+    <dl>
+      <dt><span>*</span>注释：</dt>
+      <dd>
+        <textarea id="note" name="note" cols="50" rows="5" value="{$note}">{$note}</textarea>
+      </dd>
+    </dl>
+
+    <dl>
+      <dt>专题域名：</dt>
+      <dd>
+        {:SITE_URL}/topics/<input name="domain" type="text" value="{$domain}" />
+      </dd>
+    </dl>
+
+    <dl>
+      <dt>内容：</dt>
+      <dd>
+        <textarea id="content" name="content" cols="50" rows="5" value="{$content}">{$content}</textarea>
+      </dd>
+    </dl>
+
+    <dl>
+      <dt>缩略图：</dt>
+      <dd>
+        <if condition="$pic"><img alt="{$name}" src="{:SITE_URL}/data/uploads/{$pic}" />        
+        <label><input name="nopic" type="checkbox" value="1" />删除图片</label><br /><br /></if>
+        <input name="pic" type="file" /> 建议图片宽度为60px，高度60px
+      </dd>
+    </dl>
+	
+	<dl>
+      <dt>大图：</dt>
+      <dd>
+        <if condition="$big_pic"><img alt="{$name}" src="{:SITE_URL}/data/uploads/{$big_pic}" />        
+        <label><input name="nobigpic" type="checkbox" value="1" />删除图片</label><br /><br /></if>
+        <input name="big_pic" type="file" /> 建议图片宽度为980px，高度300px
+      </dd>
+    </dl>
+    
+    <dl>
+      <dt>广场图片：</dt>
+      <dd>
+        <if condition="$show_pic"><img alt="{$name}" src="{:SITE_URL}/data/uploads/{$show_pic}" />        
+        <label><input name="noshowpic" type="checkbox" value="1" />删除图片</label><br /><br /></if>
+        <input name="show_pic" type="file" /> 建议图片宽度为150x，高度113px
+      </dd>
+    </dl>
+    <dl>
+      <dt>微访谈首页图片：</dt>
+      <dd>
+        <if condition="$index_pic"><img alt="{$name}" src="{:SITE_URL}/data/uploads/{$index_pic}" />        
+        <label><input name="noindexpic" type="checkbox" value="1" />删除图片</label><br /><br /></if>
+        <input name="index_pic" type="file" /> 建议图片宽度为770px，高度185px
+      </dd>
+    </dl>
+    <dl>
+      <dt>外链：</dt>
+      <dd>
+        <input name="link" type="text" value="{$link}" />  
+      </dd>
+      
+    </dl>
+    
+    <dl>
+      
+     <dt>微访谈时间：</dt>
+      <dd>
+        <div class="c2">
+                      <input value="{$time_start|date='Y-m-d H:i:s',###}" name="time_start" type="text" class="text" id="sTime" onfocus="this.className='text2';rcalendar(this,'full');" onblur="this.className='text'" readonly />
+                      -
+                      <input  value="{$time_end|date='Y-m-d H:i:s',###}" name="time_end" type="text" class="text" id="eTime" onfocus="this.className='text2';rcalendar(this,'full');" onblur="this.className='text'" readonly />
+        
+                                                         状态： 
+                        <select id="status"  name="status" class="text" >
+                        <option value="0" se>即将开始</option>
+                        <option value="1">开始中</option>
+                        <option value="2">已结束</option>
+                        </select>
+                        
+                                                         栏目： <select name="column" type="text">
+                       	   <option value="{$column}">{$column}</option>
+                       	   {:getDatadictData('interview_catalog',$column)}                       	
+                       </select>  
+                      
+        </div>
+      </dd>
+      
+      
+      
+    </dl>
+
+    <div class="page_btm">
+      <input type="hidden" name="topics_id" value="{$topics_id}" />
+      <input type="hidden" name="is_visit" value="1" />
+      <input type="submit" class="btn_b" value="确定" />
+    </div>
+    </form>
+  </div>
+</div>
+<include file="_footer" />

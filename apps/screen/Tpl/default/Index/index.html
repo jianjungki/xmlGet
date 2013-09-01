@@ -1,0 +1,82 @@
+<include file="__THEME__/header" />
+<link rel="stylesheet" href="../Public/screen.css" type="text/css" media="screen" charset="utf-8" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="{:U('weibo/plugins/init')}"></script>
+<script src="__PUBLIC__/js/date.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/js/jquery.datapicker.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/js/jquery.validVal-3.0.4.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" href="__PUBLIC__/js/jquery.datapicker.css" type="text/css" media="screen" charset="utf-8" />
+
+<script src="../Public/screen.js" type="text/javascript" charset="utf-8"></script>
+<script>
+$(document).ready(function(){
+	$(".checkall").click(function(){
+		var div = '#star_box_'+$(this).attr("cid");
+		if( this.checked == true ){
+			$(div+" input[name='followuid[]']").attr('checked',true);
+		}else{
+			$(div+" input[name='followuid[]']").removeAttr('checked');
+		}
+	});
+});
+</script>
+<script language="javascript"> 
+  function over(){ 
+  document.getElementByIdx("card").style.display="block"; 
+  } 
+  function out(){ 
+  document.getElementByIdx("card").style.display="none"; 
+  } 
+</script> 
+<div class="content_holder">
+<div class="content"><!-- 内容 begin  -->
+<include file="_left" />
+  <div class="main">
+    <div class="mainbox">
+      <div class="mainbox_appC"  style="margin:0">
+        <div class="hd_sereen">
+        <a class="btn_app" href="javascript:void(0)" onclick="Screen.applyPopup()"></a>
+        <div class="tit_screen">
+        <span>√ 电脑   √ 手机客户端   √ 3G版</span>
+        当前已有<b>{$count}</b>人申请使用
+        </div>
+        </div>
+        <div class="tab-menu mt20">
+        	<ul>
+        	    <volist name="tab" id="vo">
+        	        <li>{$vo}</li>
+        	    </volist>
+            </ul>
+        </div>
+        <div class="clearfix">
+            <ul class="screen_list">
+                <volist name="list.data" id="vo">
+                  <li class="lineD_btm">
+                    <div class="userFace">
+                      <neq name="screen.logo" value="">
+                      <a class="username" href="{:U('screen/index/detail',array('id'=>$vo['screen_id']))}"><img src="{$vo.logo}" /></a></neq>
+                      <eq name="screen.logo" value="">
+                      <a class="username" href="{:U('screen/index/detail',array('id'=>$vo['screen_id']))}"><img src="__PUBLIC__/themes/newstyle/images/ts.png" /></a></eq>
+                    </div>
+                    <div class="userInfo">
+                    <h4>
+                      <if condition="$vo.time_start lt $vo.time_end">
+                      <a href="{:U('screen/index/detail',array('id'=>$vo['screen_id']))}"><b class="btn_b right">立即参与</b></a></if>
+                      <if condition="$vo.time_start gt $vo.time_end">
+                      <a href="{:U('screen/index/detail',array('id'=>$vo['screen_id']))}"><b class="btn_b right">已停止</b></a></if>
+                        <a href="{:U('screen/index/detail',array('id'=>$vo['screen_id']))}">{$vo.title}</a>{$vo.class.buffer}</h4>
+                    <h5><a href="#"></a></h5>
+                    <div><span>时间：</span><span class="{$vo.class.color}">{$vo.time_start} 至 {$vo.time_end}</span></div>
+                    <div><span>简介：</span>{$vo.explains}</div>
+                    </div>
+                 </li>
+                </volist>
+            </ul>
+            <p class="page">{$html}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<include file="__THEME__/footer" />

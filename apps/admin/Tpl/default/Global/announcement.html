@@ -1,0 +1,34 @@
+<include file="../Public/_header" />
+<div class="so_main">
+  <div class="page_tit">公告配置</div>
+  
+  <div class="form2">
+    <form method="post" action="{:U('admin/Global/announcement')}">
+    <dl class="lineD">
+      <dt>是否开启公告：</dt>
+      <dd>
+        <label><input name="is_open" type="radio" value="0" <neq name="is_open" value="1">checked</neq> />关闭</label><br/>
+        <label><input name="is_open" type="radio" value="1" <eq name="is_open" value="1">checked</eq>/>开启</label>
+      </dd>
+    </dl>
+    <dl class="lineD">
+      <dt>内容：</dt>
+      <dd>
+        <input name="content" type="text" value="{$content}" style="width:400px;height:15px">
+      </dd>
+    </dl>
+    <dl class="lineD">
+      <dt>公告链接：</dt>
+      <dd>
+        <input name="ann_url" type="text" value="{$ann_url}" style="width:400px;height:15px">
+        <p>输入公告对应的链接地址,外部链接请加上http://</p>
+      </dd>
+    </dl>
+    <div class="page_btm">
+      <input type="submit" class="btn_b" value="确定" />
+    </div>
+    </form>
+  </div>
+
+</div>
+<include file="../Public/_footer" />

@@ -1,0 +1,167 @@
+<include file="__THEME__/header" />
+<link rel="stylesheet" href="../Public/event.css" type="text/css" media="screen" charset="utf-8" />
+<script  type="text/javascript" src="__PUBLIC__/js/rcalendar.js" ></script>
+<script type="text/javascript" src="../Public/js/event.js"></script>
+
+<div class="content_holder">
+<div class="content no_bg">
+  <!-- 内容 begin  -->
+<include file="../Public/_mainNav" />
+  <div class="main no_l">
+    <!-- 画布 begin  -->
+    <div class="mainbox">
+      <include file="../Public/_isHotList" />
+       
+      <div class="mainbox_appC">
+        <div style="display: none"><include file="../Public/_searchBar" /></div>
+        <div class=page_title>
+          <!-- page_title begin -->
+         <!--  <h2><span class="right fn f12px"><a href="javascript:history.back( -1 )">返回上一页</a></span>{$title}</h2> -->
+        </div>
+        <!-- page_title end -->
+        <div class="tab-menu">
+          <!-- 切换标签 begin  -->
+          <div class="right">
+            {:W('Weibo',array('tpl_name'=>$_SESSION['new_event'] == 1?'event_create_weibo':'event_share_weibo','button_title'=>'分享'))}
+			<php>
+			    $tpl_data = urlencode(serialize(array(
+			                  'author'=>getUserName($uid),
+			                  'title'=>$title,
+                              'url'=>U('event/Index/eventDetail',array('id'=>$id,'uid'=>$uid)),
+                )));
+			    $param_data = urlencode(serialize(array('has_status'=>1,'is_success_status'=>1,'status_title'=>'发起活动成功')));
+			</php>
+			<php>if($_SESSION['new_event'] == 1){</php>
+			    <!-- 自动弹出分享 -->
+			    <script>
+			    $(document).ready(function(){
+			    	_widget_weibo_start('', '{$tpl_data}', '{$param_data}');
+			    	
+			    	var topWin = window.top.document.getElementById("photoFrame").contentWindow;
+             		//通过获取到的window对象操作HTML元素，这和普通页面一样
+            		topWin.document.getElementById("exit").style.visibility = "visible";
+
+			    });
+			    </script>
+			<php>unset($_SESSION['new_event']);}</php>			
+<!--             <input type="button" value="分享" class="BtnShare" onclick="_widget_weibo_start('', '{$tpl_data}');" id="BtnShare_{$id}"/> -->
+          </div>
+          <ul>
+            <li><a href="{:U('//eventDetail',array('id'=>$id,'uid'=>$uid))}"><span>活动</span></a></li>
+            <li><a href="{:U('//member',array('id'=>$id))}"><span>成员</span></a></li>
+            <php>if($uid==$mid){</php>
+				<li><a href="{:U('/Index/eventPhoto',array('id'=>$id,'uid'=>$uid))}" class="on"><span>照片</span></a></li>
+			<php>}</php>
+          </ul>
+        </div>
+        <!-- 切换标签 end  -->
+        <div class="groupBox">
+          
+          <div class="boxL">
+            
+          <!-- 引用相册应用的iframe  -->   
+            <div class="box1" style="overflow: hidden">
+      			<span style="font-size: 15px;color: grey;"><b>{$name}</b></span>
+	        	<iframe id="photoFrame" style="margin: -125px 0 0 -20px;_margin: -100px 0 0 -22px;overflow-x: hidden" src="{:U('photo/Index/album',array('id'=>$aid,'uid'=>$uid,'eid'=>$id))}"  frameborder="0" scrolling="no" marginheight="0" marginwidth="0" width="100%" height="200px"></iframe>
+	        </div>
+            
+            
+            
+            </div>
+            <div class="c"></div>
+          <!-- end  -->
+        </div>
+      </div>
+      <div class="c"></div>
+    </div>
+  </div>
+  <!-- 画布 end  -->
+  <script  type="text/javascript" src="../Public/js/preview.js" ></script>
+  
+</div>
+</div>
+<!-- 内容 end -->
+<include file="__THEME__/footer" /> 
+
+
+<script>
+    $(document).ready(function(){
+	    setTimeOut(	
+	    	$('#photoFrame').load(function(){
+			var $iframe = $(this); 
+				var $contents = $iframe.contents();
+				var divheight = $contents.find(".content.no_bg").height();
+				if(divheight!=null){
+					
+					$(this).height(divheight+55);
+					$contents.find(".mainbox_appC").height(divheight+55);
+				}else{
+					$(this).height(400);
+				}
+				 $contents.find(".mainbox_appC").width(720);
+				 if($contents.find('#mypic').html()!=null){
+					$contents.find('#mypic').css('display','none');
+				};
+				
+				var rtmp = $contents.find('.lineS_btm .rtmp');
+				if(rtmp.html()!=null){
+					rtmp.css('display','none');
+				};
+				
+				// $contents.find('.lineS_btm.lh30 a').css('display','none');
+
+
+				 var $selectobj = $contents.find('.c2 select');
+				 if($selectobj.html() != null){
+				 	$selectobj.css('display','none');
+				 	$selectobj.children().each(function(j){
+				 		if($(this).attr("selected")==true){
+				 			var aid = $contents.find(".c2 .aidClass");
+						 	aid.html($(this).html());
+				 		}
+				 	});
+				 };
+			
+			// $contents.find('body').css({overflow:'scroll';overflow-x:'hidden'});				
+
+			// 取得 iframe 中的元素
+			// $contents.find('body').css({OVERFLOW:'SCROLL';OVERFLOW-X:'HIDDEN'});
+
+				$contents.find('#editlink').css('display','none');
+				$contents.find('.mainbox_appR').css('display','none');
+				
+				$contents.find('.footer_bg').css('display','none');
+				$contents.find('.index_line').css('display','none');
+				
+				 var $upl = $contents.find('.upload .c2 a');
+				 if($upl.html() != null){
+				 	$upl.css('display','none');
+				 }
+				 
+				 var $pi = $contents.find('.person_info h2 a');
+				 if($pi.html() != null){
+				 	$pi.replaceWith("<span>"+$pi.html()+"</span>");
+				 }
+
+
+
+				$contents.find('div.tab-menu ul').children().last().css('display','none');
+				 var $str = $contents.find('div.tab-menu ul').children().first().children('a').attr('href');
+				 var $flag = $str.match('albumId');
+				 
+				 if($flag!='albumId'){
+					 $str = $str+'&albumId={$aid}';
+					 $contents.find('div.tab-menu ul').children().first().children('a').attr('href',$str);
+				 }
+				 
+				 $str = $contents.find('div.tab-menu ul').children().first().next().children('a').attr('href');
+				 $flag = $str.match('albumId');
+				 if($flag!='albumId'){
+					 $str = $str+'&albumId={$aid}';
+					 $contents.find('div.tab-menu ul').children().first().next().children('a').attr('href',$str);
+				 }
+	 
+		}),4000);
+
+    });
+</script>

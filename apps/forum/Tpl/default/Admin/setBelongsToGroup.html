@@ -1,0 +1,25 @@
+<include file="_header" />
+
+<link href="../Public/style.css" rel="stylesheet" type="text/css">
+
+<div class="so_main">
+	<include file="_tab" />
+	<div class="form">
+		<form action="{:U('forum/Admin/doSetBelongsToGroup')}" method="post">
+			<dl>
+			<volist name="userGroup" id="vo">
+				<dt>{$vo.name}：</dt>
+				<dd>
+					<label style="display:inline;"><input class="radio" type="radio" value="1" <?php if($vo['type'] == 1) {echo 'checked="checked"';}?> name="usergroup_{$vo.gid}" />管理组</label>
+					<label style="display:inline;"><input class="radio" type="radio" value="0" <?php if($vo['type'] == 0) {echo 'checked="checked"';}?> name="usergroup_{$vo.gid}" />用户组</label>
+				</dd>
+			</volist>
+			</dl>
+			<div class="sea_left">
+				<input type="submit" class="btn_b" value="确定" />
+			</div>
+		</form>
+	</div>
+</div>
+
+<include file="_footer" />

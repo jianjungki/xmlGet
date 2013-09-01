@@ -1,0 +1,159 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="../Public/Js/common.js"></script>
+<script type="text/javascript" src="../Public/Js/group.interesting.js"></script>
+<link  href="../Public/group.css" rel="stylesheet" type="text/css"/>
+<script>
+var display_interesting_group = 'main';
+$(document).ready(function(){
+	change_interesting_group(1);
+	
+	$.post("{:U('group/Index/setStatus')}",{flag:1},function(txt){
+    	// alert(txt);
+    	if(txt==1){
+    		$('#allGroup').css('display','block');
+    	}else{
+    		$('#allGroup').css('display','none');
+    	}
+    });
+});
+</script>
+<script type="text/javascript">
+/*
+	-需要：引入一个jquery的包
+*/
+function toggleAllGroup(){
+    $.post("{:U('group/Index/setStatus')}",{flag:2},function(txt){
+    	// alert(txt);
+    	if(txt){
+    		$('#allGroup').toggle(1000);
+    	}
+    });
+}
+
+</script>
+
+<div class="content_holder">
+<div class="content no_bg"><!-- 内容 begin  -->
+<include file="../Public/_mainNav" />
+<div class="main no_l"><!-- 画布 begin  -->
+    <div class="mainbox">
+      <include file="../Public/_isHotList" />
+      <div class="mainbox_appC">
+	<div class="box_data_group" >
+            <h4>
+                <em class="right ico_quotes_right"></em>
+                <em class="left ico_quotes_left"></em>
+                <span><strong class="f1">{$count.member}</strong>个圈居民</span>
+                <span onclick="toggleAllGroup()"><a><strong class="f2">{$count.group}</strong>个兴趣圈</a></span>
+                <span><strong class="f3">{$count.topic}</strong>个圈话题</span>
+            </h4>
+            <h5>每天100多个新圈子诞生,300多位新人入住,总有一圈人和你一样!</h5>
+            
+    <!--       <volist name="hot_group_list_new" id="vo"> 
+                <span><img src="__ROOT__/thumb.php?w=25&h=25&t=f&url={$vo['logo']|get_photo_url}" class="userPhoto"></span>
+                <span>{$vo.id}</span>
+                <span style="margin:2px 10px">{$vo['name']|getShort=4,'...'}</span><br>
+                            
+            </volist> 
+     -->        
+            
+        </div>
+        
+        <div class="searchBox">
+            <form action="{:U('group/Index/search')}" method="POST" onsubmit="javascript:if(this.k.value.length <= 0){return false;}">
+          	  <div><input name="k" type="text" class="text_group left" value="请输入您要查找的圈名称..."  onfocus="if(this.value == '请输入您要查找的圈名称...')this.value='';" onblur="if(this.value == '')this.value='请输入您要查找的圈名称...';" /><input type="submit" class="btn_group" value="" /></div>
+            </form>
+          </div>
+        <!-- 你可能敢兴趣的圈 --> 
+        <div class="group_box" id="interesting_group_list">
+        </div>
+        
+        <!-- 所有圈子 --> 
+        <div id="allGroup" class="groupBox" style="display: none">
+            <div class="boxL"><!-- 好友日志 begin  -->
+                <ul class="search">
+                    <volist name="grouplist.data" id="group">
+                        <li class="lineD_btm">
+                            <div class="face">
+                                <a href="{$group['id']|group_id_to_url}"><img src="{$group['logo']|logo_path_to_url}"/></a>
+                            </div>
+                            <div class="rmenu right">
+                                <if condition="$group['status'] eq 1">
+                                    <a href="{:U('group/Group/index',array('gid'=>$group['id']))}">浏览该圈</a>
+                                    <php>$level = getLevel($uid, $group['id']);</php>
+                                    <php>if($level===null){</php>
+                                    <a href="javascript:joingroup({$group['id']});">加入该圈</a>
+                                    <php>} else if($level==='0'){</php>
+                                    &nbsp;成员审核
+                                    <php>} else if($level==1 || $level==2){</php>
+                                    <a href="{:U('group/Manage/index',array('gid'=>$group['id']))}">管理该圈</a>
+                                    <php>} else if($level==3){</php>
+                                    &nbsp;该圈成员
+                                    <php>}</php>
+                                    <else />
+                                    &nbsp;圈子审核
+                                    <a href="javascript:;" onclick="delgroup({$group['id']});" >解散该圈</a>
+                                </if>
+                            </div>
+                            <div class="info">
+                                <h3><if condition="$group['status'] eq 1"><a href="{:U('group/Group/index',array('gid'=>$group['id']))}">{$group['name']}</a><else />{$group['name']}</if></h3>
+                                <p>创建：{$group['ctime']|friendlyDate}</p>
+                                <p>类型：{$group['cid0']|getCategoryName}</p>
+                                <p>创建人：<space uid="group['uid']" target="_blank">{uname}</space></p>
+                                <p><a href="{:U('group/Member/index',array('gid'=>$group['id']))}">圈成员({$group['membercount']})：</a>
+                                	<volist name="group.member" id="m">
+                                		<php>if(isJoinGroup($m['uid'],$group['id'])){</php>
+			<!--                 		&nbsp;&nbsp;&nbsp;&nbsp;<space uid="m['uid']" target="_blank">{uname}</space> -->
+				                		&nbsp;&nbsp;
+				                		<a target="_blank" href="{:U('home/Space/index',array('uid'=>$m['uid']))}" rel='face' uid="{$m['uid']}">
+				                          {$m.uid|getUserName|getShort=4,'...'}
+				                      	</a>
+                                		<php>}</php>
+                                	</volist>
+                                </p>
+                            </div>
+                            <div class="c"></div>
+                        </li>
+                    </volist>
+                </ul>
+                <div class="page">{$grouplist['html']}</div>
+            </div>
+            <!-- 好友日志 end  -->
+        </div>
+        
+        <!-- 圈子热帖 -->
+        <div class="group_hot_list">
+          <h2 class="lineS_btm">圈子热帖</h2>
+          <if condition="$hot_thread_list">
+          <ul>
+            <volist name="hot_thread_list" id="thread">
+                <li>
+                  <div class="c1 OverH hot_topic_tit">
+                  	<span class="hot_tit">
+                    <if condition="$thread['dist']"><span class="jh right" style="display:none" title="精华">精</span></if>
+                    <a href="{:U('group/Topic/topic',array('gid'=>$thread['gid'], 'tid'=>$thread['id']))}" title="{$thread['title']}" target="_blank">
+                        {$i}. {$thread['title']|getShort=###, 15, '...'}</a>
+                        <if condition="$thread['attach'] && 'N;' neq $thread['attach']"><img
+                        src="{:SITE_URL}/apps/{$app_show}/Tpl/default/Public/images/ico_acc.gif" alt="附件" title="附件" class="alM" /></if>
+                     </span>                   
+                  </div>
+                    <div class="feed_quote">
+                          <div class="q_tit"><img src="http://localhost/ts_2.5/public/themes/newstyle/images/zw_img.gif" class="q_tit_l"></div>
+                          <div class="q_con"><php>echo getShort(text($thread['content']),200,'...');</php></div>
+                    <div class="q_btm"><img src="http://localhost/ts_2.5/public/themes/newstyle/images/zw_img.gif" class="q_btm_l"></div>
+                  </div>
+                  </li>
+            </volist>
+          </ul>
+          </if>
+        </div>
+        <div class="c"></div>
+      </div>
+    </div>
+    <!-- 内容 end --> 
+  </div>
+</div>
+</div>
+<!-- 内容 end --> 
+<include file="__THEME__/footer" /> 
+

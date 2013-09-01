@@ -1,0 +1,116 @@
+<include file="_header" />
+<link href="../Public/style.css" rel="stylesheet" type="text/css">
+<!-- <link href="../Public/css/admin_forum.css" rel="stylesheet" type="text/css" /> -->
+  <script type="text/javascript">
+  	$(function(){
+  	  	$('.policy').click(function(){
+   	  	   var name = $(this).attr('name');
+  	  	   var value = $(this).attr('ref');
+  	  	 	$("#policy").val($("#policy").val()+" "+value);
+  	  	});
+  	});
+  </script>
+<div class="so_main">
+	<include file="_tab" />
+	<!--
+<form action="{:U('forum/Admin/addPolicy')}" method="post">
+ <div class="form">
+        <div class="mb5">
+	<div class="cr lh22" style="width:170px;"><font color="red">*</font> 名称：</div>
+	<div style="padding:0px 0 8px 10px; float:left;"> <label>
+   			<input class="txt" type="text" name="name" /> <span class="cGray2 ml5">特殊策略名称</span>
+         </label>
+    </div>
+    <div class="C"></div>
+</div>
+    <div class="mb5">
+	<div class="cr lh22" style="width:170px;"><font color="red">*</font> 策略图标：</div>
+	<div style="padding:0px 0 8px 10px; float:left;"> <label>{:W( 'UploadAttach',array( 'uid'=>$mid , 'type'=>'system' , 'callback'=>'attach_upload_success','limit'=>1,'allow_exts'=>'gif','allow_size'=>'50') )}</label></div>
+    <div class="C"></div>
+</div>
+   		<div class="sea_left"><input class="btn_b" type="submit" value="添加"></input></div>
+   		 </form>
+		 -->
+    <div class="list">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <th style="width:30px;">
+        <input type="checkbox" name="checkbox" class="checkbox">
+          <label for="checkbox"></label></th>
+        <th class="line_l">名称</th>
+        <th class="line_l">图标</th>
+        <th class="line_l">操作</th>
+      </tr>
+      <volist name="list['data']" id="vo">
+      <tr id="sign_{$vo.signid}">
+        <td><input class="checkbox2" type="checkbox" id="signid_{$vo.signid}" name="signid"  value={$vo.signid}></td>
+        <td>{$vo.name}</td>
+        <td><img  src="{$vo.icon}" /></td>
+        <td><php>if($vo['type']==0){</php><a class="mr5" href="{:U('forum/Admin/editPolicy',array('signid'=>$vo['signid']))}">编辑</a><php>}else{</php><a class="mr5" href="{:U('forum/Admin/editPolicy',array('signid'=>$vo['signid']))}">编辑</a><a href="javascript:void(0)" onClick="delPolicy({$vo.signid})">删除</a><php>}</php></td>
+      </tr>
+ 	</volist>
+    </table>
+     <div class="Toolbar_inbox">
+       <div class="page right">{$list['html']}</div>
+    <a href="javascript:void(0)" onClick="delPolicy()"  class="btn_a"><span>删除</span></a> 
+    </div>
+  </div>
+    </div>
+  </div>
+ 
+<include file="_footer" />
+<script style="javascript/text">
+	$(function(){
+		$('.checkbox').click(function(){
+			var check = $('.checkbox2').attr("checked");
+			if(!check){
+				$('.checkbox2').attr("checked","checked");
+			}else{
+				
+				$('.checkbox2').removeAttr("checked");
+			}
+		});
+	});
+
+
+	function delPolicy(id){
+		if(id){
+			signid = id;
+		}else{
+			var signid = new Array();
+			$('.checkbox2').each(function(){
+				if($(this).attr("checked")){
+					 signid.push($(this).val());
+				}
+			});
+		}
+		if(signid==''){
+			alert("请选择你要删除的策略名。");
+			return false;
+		}
+		if(signid!=''&&!confirm("你确定要删除吗?"))
+				{ return false;}
+		$.post("{:U('forum/Admin/delPolicy')}",{signid:signid},function(txt){
+			txt = eval("("+txt+")");
+			if(txt.status == 1){
+					alert(txt.info);
+					window.location.reload();
+				}else{
+					alert(txt.info);
+				}
+			});
+		}
+
+	$(function(){
+		$('#check1').click(function(){
+			$('.check1').attr("checked","checked");
+			$('.check2').removeAttr("checked");
+			$('#tempSelect').hide();
+		});
+		$('#check2').click(function(){
+			$('.check2').attr("checked","checked");
+			$('.check1').removeAttr("checked");
+			$('#tempSelect').show();
+		});
+	});
+</script>

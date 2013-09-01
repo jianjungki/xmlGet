@@ -1,0 +1,50 @@
+
+<div class="group_info">    
+    <!--圈子分类-->
+    <div>
+      <php>if(!empty($category_tree)){</php>
+	      <h3>圈子分类</h3>
+	      <ul>
+	        <volist name="category_tree" id="category_top">
+	        <li>
+	          <a href="{:U('group/Index/search', array('cid'=>$category_top['a']))}" class="MIB_linkar">{$category_top['t']}</a><span>({$category_top['count']})</span>
+	        </li>
+	        </volist>
+	      </ul>
+	    <php>}</php>
+    </div>
+    
+    <!--圈子排行榜-->
+    <div>
+      <php>if (!empty($hot_group_list)) {</php>
+      <h3>圈子排行榜</h3>
+      <dl class="fans_toplist" style="margin: 5px 20px 15px 20px;color: #fff">
+      <dt style="color: #fff"><span class="right">成员数</span>圈子</dt>
+        <volist name="hot_group_list" id="hot_group">
+          <php>if($key>2){ $class='no'; }else{ $class='no top'.($key+1); }</php>
+          <dd>
+            <span>{$hot_group['membercount']}</span>
+            <em class="{$class}">{$key+1}</em>
+            <a href="{:U('group/Group/index', array('gid'=>$hot_group['id']))}">
+              <img src="__ROOT__/thumb.php?w=25&h=25&t=f&url={$hot_group['logo']|get_photo_url}" class="userPhoto">
+            </a>
+            <a target="_self" class="username" href="{:U('group/Group/index', array('gid'=>$hot_group['id']))}">{$hot_group['name']|getShort=6,'...'}</a>
+          </dd>
+        </volist>
+        <div class="c"></div>
+      </dl>
+      <php>} // end if</php>
+    </div>
+    
+    <!--热门标签-->
+    <div>
+	    <php>if (!empty($hot_tags_list)) {</php>
+	      <h3>热门圈标签</h3>
+	      <ul class="topic_list">
+	        <volist name="hot_tags_list" id="hot_tag">
+	          <li><a href="{:U('group/Index/search', array('k'=>urlencode($hot_tag['tag_name'])))}">{$hot_tag['tag_name']}</a></li>
+	        </volist>
+	      </ul>
+	    <php>}</php>
+    </div>
+</div>

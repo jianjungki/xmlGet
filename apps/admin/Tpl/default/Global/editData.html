@@ -1,0 +1,144 @@
+<link href="__THEME__/layout.css?20110429" rel="stylesheet" type="text/css" />
+<dl style="margin:10px 10px 5px; height:22px" class="clear">
+  <dt class="left alR " style="width:70px;line-height:20px">名称：</dt><dd class="left alL"><input type="text" id="title" value="{$area['name']}" ></dd>
+</dl>
+<dl style="margin:10px 10px 5px; height:22px" class="clear">
+  <dt class="left alR " style="width:70px;line-height:20px">状态：</dt><dd class="left alL">
+  	<if condition="($area['can_del'] neq -1) AND ($area['can_del'] neq 1)">未启用<input type="radio" name="can_del" value="0" checked /></if>
+           启用<input type="radio" name="can_del" value="1" <eq name="area.can_del" value="1">checked</eq> />禁用<input type="radio" name="can_del" value="-1" <eq name="area.can_del" value="-1">checked</eq>  /></dd>
+  
+</dl>
+ <if condition="($area['can_del'] eq -1) OR ($area['can_del'] eq 1)">
+	<dl style="margin:10px 10px 5px; height:22px" class="clear">
+	  <dt class="left alR " style="width:120px;line-height:20px">标识名（唯一）：</dt><dd class="left alL">{$area['index_char']}</dd>
+	</dl>
+ <else/>
+	<dl style="margin:10px 10px 5px; height:22px" class="clear">
+	  <dt class="left alR " style="width:120px;line-height:20px">标识名（唯一）：</dt><dd class="left alL"><input type="text" name="verify_char" value="{$area['index_char']}"  /></dd>
+	  
+	</dl>
+</if>
+<php>if(isset($area)&&$area['icon_url']){</php>
+		<div style="padding-left:30px;text-align: center;">
+		<img src="{:showAttach($area['icon_url'],$mid)}" width="100px"><br>
+		<input type="hidden" value="{$area.icon_url}" name="picurl"/>
+	            重新上传：{:W('UploadAttach',array('limit' =>'1'))}
+	    </div>
+<php>}else if(isset($area)){</php>
+		<div style="padding-left:30px;text-align: center;">
+		<input type="hidden" value="{$area.icon_url}" name="picurl"/>
+	            重新上传：{:W('UploadAttach',array('limit' =>'1'))}
+	    </div>
+<php>}</php>
+<php>if($flagsign==1){</php>
+	<div style="padding-left:30px;text-align: center;">
+     {:W('UploadAttach',array('limit' =>'1'))}
+    </div>
+<php>}</php>
+<div style="background:#F8F8F8; border-top:1px solid #E6E6E6; padding:5px;text-align:center" class="alR">
+  <php>if (isset($area)) {</php>
+  <input type="button" class="btn_b" onclick="editArea()" value="确定" />
+  <php>}else {</php>
+  <input type="button" class="btn_b" onclick="addArea()" value="确定" />
+  <php>}</php>
+  <input type="button" class="btn_w" onclick="cancel()" value="取消" />
+</div>
+<script type="text/javascript">
+
+//添加地区
+function addArea() {
+	var title = $('#title').val();
+	var title = title.replace(/(^\s*)|(\s*$)/g, ""); 
+	var ucode   = "{$uni_code}";
+	var pid   = "{$pid}";
+	var can_del = $('input[name=can_del]:checked').val();
+	var verify_char = $('input[name=verify_char]').val();
+	var attach = $('input[name=attach[]]').val();
+	if(title.length == 0 ) {
+		ui.box.close();
+		ui.error('请输入数据值');
+		return ;
+	}
+	if(can_del == undefined ) {
+		ui.error('请输入删除状态');
+		return ;
+	}
+	$.post("{:U('admin/Global/Indentify')}",{verify_char:verify_char},function(res){
+		if(res==1&&verify_char){
+			ui.error("标识名称重复，请重新设置");
+			return;
+		}else{
+			//提交修改
+			$.post("{:U('admin/Global/doAddData')}", {name:title,pid:pid,uni_code:ucode,can_del:can_del,attach:attach,verify_char:verify_char}, function(res){
+			    if (res == '0') {
+			        ui.error('保存失败');
+		        }else {
+		        	var url = "{:U('admin/Global/configdict')}";
+		            var html = '';
+		            html += '<tr overstyle="on" id="area_'+res+'">';
+		            html += '<td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="'+res+'"></td>';
+		            html += '<td>'+res+'</td>';
+		            html += '<td><div style="float:left"><a href="'+url+'&pid='+res+'">'+title+'</a></div></td><td>';
+		            if(pid!=0){
+			            html += '<a href="javascript:void(0);" onclick="edit('+res+');">编辑</a> ';
+			            html += '<a href="javascript:void(0);" onclick="del('+res+');">删除</a> ';
+		            }
+		            html += '</tr>';
+		            $('#area_list').append(html);
+		            ui.success('添加成功');
+					ui.box.close();
+				}
+			});
+		}
+	});
+	
+	
+}
+
+//编辑地区
+function editArea() {
+	var value	= $('#title').val();
+	
+	var area_id	= "{$area['id']}";
+	var title = value.replace(/(^\s*)|(\s*$)/g, "");
+	var can_del = $('input[name=can_del]:checked').val();
+	var attach = $('input[name=attach[]]').val();
+	var verify_char = $('input[name=verify_char]').val();
+	var picurl = $('input[name=picurl]').val();
+	
+	if(title=='') {
+        ui.error('请输入名称');
+        return ;
+    }
+    $.post("{:U('admin/Global/Indentify')}",{verify_char:verify_char,area_id:area_id},function(res){
+		if(res==1&&verify_char){
+			ui.error("标识名称重复，请重新设置");
+			return;
+		}else{
+			$.post("{:U('admin/Global/doEditData')}", {id:area_id, name:title,can_del:can_del,attach:attach,picurl:picurl,verify_char:verify_char}, function(res){
+				if (res == '0') {
+		            ui.error('保存失败');
+		        }else {
+		        	$('#area_title_'+area_id).html(title);
+		            ui.success('保存成功');
+		            ui.box.close();
+		        }
+			});
+		}
+	});
+    
+	//判断名称是否有变化
+	/*if(!(title != "{$area['name']}"&&can_del != undefined)) {
+		ui.error('名称无变化和状态未修改，未提交修改');
+		ui.box.close();
+		return false;
+	}*/
+
+	//判断是否有重名
+	
+}
+
+function cancel() {
+	ui.box.close();
+}
+</script>

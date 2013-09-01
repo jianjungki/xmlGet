@@ -1,0 +1,33 @@
+<div class="list">
+        <table id="object_list" width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+		    <th style="width:30px;">
+		      <input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+		      <label for="checkbox"></label>
+		    </th>
+            <th>ID</th>
+            <th>预览</th>
+            <th>名称</th>
+            <th>所属</th>
+            <th>价格</th>
+            <th>数量</th>
+            <th>时间</th>
+            <th>状态</th>
+            <th>操作</th>
+          </tr>
+          <volist name="list.data" id="vo">
+          <tr id="list_{$vo.id}">          
+            <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.id}"></td>
+            【$V3UNDER JGTextBox 13761c9043ab4544bea0c9f233109636】start 【$V3UNDER JGTextBox 13761c9043ab4544bea0c9f233109636】end
+			【$V3UNDER JGImage b9098cad9e59480282c119e9e4ef7e9e】start 【$V3UNDER JGImage b9098cad9e59480282c119e9e4ef7e9e】end
+			【$V3UNDER JGTextBox bc117c08d99148dc9a5850d8df34bcc2】start 【$V3UNDER JGTextBox bc117c08d99148dc9a5850d8df34bcc2】end
+			【$V3UNDER JGTextBox 0ffb791f1cc143858661fa7ae476a8b7】start 【$V3UNDER JGTextBox 0ffb791f1cc143858661fa7ae476a8b7】end
+			【$V3UNDER JGFloatBox 7dd9dd54f2af47319d5ad0566cb3579a】start 【$V3UNDER JGFloatBox 7dd9dd54f2af47319d5ad0566cb3579a】end
+			【$V3UNDER JGIntegerBox d141131d40084e5fb871dea0f33d5007】start 【$V3UNDER JGIntegerBox d141131d40084e5fb871dea0f33d5007】end
+			【$V3UNDER JGDateTimePicker 0e68c10813484677b9d046fdb5f92bc3】start 【$V3UNDER JGDateTimePicker 0e68c10813484677b9d046fdb5f92bc3】end
+			【$V3UNDER JGComboBox 8630cd6d7c6c4ca8a87332133e79c14a】start 【$V3UNDER JGComboBox 8630cd6d7c6c4ca8a87332133e79c14a】end
+			【$V3UNDER JGTextBox 159e52938a7d43b0accf1b13bb5349ca】start 【$V3UNDER JGTextBox 159e52938a7d43b0accf1b13bb5349ca】end
+          </tr>
+          </volist>
+        </table>
+    </div>

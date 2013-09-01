@@ -1,0 +1,198 @@
+<include file="__THEME__/header" />
+<link href="../Public/account.css" rel="stylesheet" type="text/css" />
+<link href="../Public/js/setavatar/css/imgareaselect-default.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="../Public/js/avatar/avatar.js"></script>
+<script type="text/javascript" src="../Public/js/account.js"></script>
+<script type="text/javascript" src="../Public/js/setavatar/jquery.imgareaselect.min.js"></script>
+<div class="content_holder">
+<div class="content"><!-- 内容 begin  --> 
+  <div class="main no_l"> <!-- 右侧内容 begin  -->
+    <div class="mainbox">
+      <div class="mainbox_appC no_r">
+    <include file="_tab" />
+    <!-- 切换标签 end  -->
+    	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<th style="width: 30px;"><input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+						<label for="checkbox"></label></th>
+					<th class="line_l">ID</th>
+					<th class="line_l">公告名称</th>
+					<th class="line_l">发布日期</th>
+					<th class="line_l">公告内容</th>
+					<th class="line_l">操作</th>
+				</tr>
+				<volist id="_group" name="audit_list['data']">
+				<tr id="list_{$_group.id}">
+					<td><input type="checkbox" name="checkbox2" id="checkbox2"
+						onclick="checkon(this)" value="{$_group.id}" /></td>
+					<td>{$_group.id}</td>
+					<td><img
+						src="__ROOT__/thumb.php?w=30&h=30&t=f&url={$_group['logo']|get_photo_url}"></td>
+					<td>{$_group.name}</td>
+					<td>{$_group.intro}</td>
+					<td><space uid="_group.uid" class="fn" target="_blank">{uname}</space></td>
+					<td>{$_group.ctime|friendLydate}</td>
+					<td>
+						<a href="javascript:void(0)"
+						onclick="c.audit('{$_group.id}')">通过</a> <a href="javascript:void(0)"
+						onclick="c.del({$_group.id})">驳回</a>
+					</td>
+				</tr>
+				</volist>
+			</table>
+      </div>
+    </div>
+  </div>
+  <!-- 右侧内容 end  -->
+  <div class="c"></div>
+</div>
+</div>
+<!-- 内容 end --> 
+<include file="__THEME__/footer" />
+<script>
+$(document).ready(function(){
+	var hs = document.location.hash;
+	var up_pic_width =50;
+	var up_pic_height =50;
+	
+	changeModel( hs.replace('#','') );
+	$('.setFold').click(function(){
+		if( $(this).attr('class')=='setFold' ){
+			changeModel( $(this).attr('rel') );
+		}else{
+			$(this).removeClass('setUnfold');
+			$(this).next('.setItemsInfo').hide();
+		}
+		location.href='#'+$(this).attr('rel');
+	})
+	
+	//监听 form 表单提交
+	$("form").bind('submit', function() {
+		var callbackfun = $(this).attr('callback');
+		var type   = $(this).attr('type');
+		var options = {
+			success: function(txt) {
+				txt = eval("("+txt+")");
+				if(callbackfun){
+					callback(eval(callbackfun),txt);
+				}else{
+					  if(txt.boolen){
+						  ui.success( txt.message );
+					  }else{
+						  ui.error( txt.message );
+					  }
+						 
+				}
+			}
+		};		
+		 $(this).ajaxSubmit(options);
+		 return false;
+	});
+
+});
+
+function callback(fun,argum){
+	fun(argum);
+}
+
+function dosaveface(txt){
+	if (txt=='-1') {
+		ui.error('更新失败');
+	}else {
+		alert('更新成功');
+		location.reload();
+	}
+}
+
+function douploadpic(){
+	$('#loading_gif').show();
+	$('input[name="Filedata"]').hide();
+	var options = {
+			success: function(txt) {
+				uploadpic(txt);
+			}
+	};		
+	$('#uploadpic').ajaxSubmit(options);
+	return false;		
+}
+var imgrs;
+function uploadpic(txt){
+	txt = eval('('+txt+')');
+	if(txt.code==1){
+		var tmpDate = new Date(); 
+		set_UP_W_H(txt.data['picwidth'],txt.data['picheight']);
+		var defautlv = ( txt.data['picwidth'] > txt.data['picheight']) ?txt.data['picheight']:txt.data['picwidth'];
+//		$("#photo").attr('src',txt.data['picurl']+'?t='+ tmpDate.getTime());
+		$("#photo").html("<img id='photo_img' src="+txt.data['picurl']+'?t='+ tmpDate.getTime()+">");
+		$("input[name=picurl]").attr('value',txt.data['picurl']);
+		$("#photo_big").attr('src',txt.data['picurl']+'?t='+ tmpDate.getTime());
+	
+		imgrs = $('#photo_img').imgAreaSelect({ 
+					x1: 0, 
+					y1: 0,
+					x2: 100, 
+					y2: 100, 
+					handles: true,
+					onInit:preview,
+					onSelectChange:preview,
+					onSelectEnd:onSelectEnd,
+					aspectRatio: '1:1',
+					instance: true,
+					parent:$('#photo')
+					});
+		$('#loading_gif').hide();
+	 }else{
+		alert(txt.message);
+	 }
+}
+
+//重新上传图片
+function unSetFace(){
+	var defaultpic = "{$mid|getUserFace=b}"
+	$('input[name="Filedata"]').show();
+	$("#photo").html("");
+	$("input[name=picurl]").attr('value','');
+	$("#photo_big").attr('src',defaultpic);
+	$('#photo_big').attr('style','position: relative;');
+	imgrs.setOptions({ remove:true });
+	imgrs.update();
+};	
+
+function set_UP_W_H(w,h){
+	up_pic_width = w;
+	up_pic_height = h;
+}	
+	
+function onSelectEnd(img,selection){
+	$('input[name=x1]').val(selection.x1);
+	$('input[name=y1]').val(selection.y1);
+	$('input[name=x2]').val(selection.x2);
+	$('input[name=y2]').val(selection.y2); 
+	$('input[name=w]').val(selection.width); 
+	$('input[name=h]').val(selection.height); 
+}
+	
+function preview(img, selection) {
+	onSelectEnd(img,selection);
+	var big_scaleX = 150 / (selection.width || 1);
+	var big_scaleY = 150 / (selection.height || 1);
+	
+	$('#photo_big').css({
+		width: Math.round(big_scaleX * up_pic_width) + 'px',
+		height: Math.round(big_scaleY * up_pic_height) + 'px',
+		marginLeft: '-' + Math.round(big_scaleX * selection.x1) + 'px',
+		marginTop: '-' + Math.round(big_scaleY * selection.y1) + 'px'
+	});
+}		
+
+//切换操作模块
+function changeModel( type ){
+	var t = type || 'base';
+	$('.setFold').removeClass('setUnfold');
+	$('.setItemsInfo').hide();
+	var handle = $('div[rel="'+t+'"]');
+	handle.addClass('setUnfold');
+	handle.next('.setItemsInfo').show();
+}
+</script> 

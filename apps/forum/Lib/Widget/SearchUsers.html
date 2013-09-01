@@ -1,0 +1,205 @@
+<script src="__PUBLIC__/js/autocomplete/jquery.autocomplete.js"></script>
+<link rel="stylesheet" href="__PUBLIC__/js/autocomplete/jquery.autocomplete.css" />
+
+<style type="text/css">
+#selected_user_list { font-size: 12px; text-align: left;}
+#selected_user_list dl{ margin: 0px; padding:0 }
+#selected_user_list dt{ background-color: #F0F0F0; line-height: 24px; margin: 0px; padding-top: 0px; padding-right: 5px; padding-bottom: 0px; padding-left: 5px; clear: both; }
+#selected_user_list dd{ color: #666; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #DDDDDD; margin: 0px; line-height: 24px; padding-top: 0px; padding-right: 5px; padding-bottom: 0px; padding-left: 5px; clear: both; height: 24px; margin-bottom:5px;}
+#selected_user_list dd .del{ background: url(../images/ico_del.gif) no-repeat 0px 0px; text-indent: 999px; white-space: nowrap; display: inline-block; width: 12px; overflow: hidden; height: 12px; margin-top: 5px; margin-right: 5px; }
+</style>
+
+<div id="selected_user_list">
+	<dl id="attentionList">
+		<dt>
+			<span class="R" id="select_count_num">已选择{$userCount}人</span>
+		</dt>
+		<php>if(isset($user)){</php>
+			<volist name="user" id="vo" key="key">
+			<dd class="on" id="li_{$vo.uname}">
+			<a href="javascript:void(0)" onclick="deleteUser('{$vo.uname}',{$vo.uid})" class="delR mt5" title="{:L('common_delete')}">{:L('common_delete')}</a><span id="info_{$vo.uname}">{$vo.uname} [ {$vo.email} ]</span>
+			</dd>
+			</volist>
+		<php>}</php>
+	</dl>
+</div>
+<div style="width:100%;" class="cl03 lh22" >请输入用户的邮箱，然后回车</div>
+
+<div class="ui-fs" id="ui-fs" style="">
+	<div class="ui-fs-input">
+		<input type="text" name="{$name}" id="ts_search_handle" style="width: 98%" class="mt10 {$class}"/>
+		<a title="{:L('search_colleague_group')}" href="javascript:void(0)" onclick="selectGroup()" id="select_group_handle" class="ui-fs-icon" style="display:none;"> </a>
+	</div>
+
+	<div class="ui-fs-all" id="ui-fs-all-handle" style="display:none">
+		<div class="top">
+		<php>if($grouplist){</php>	
+			{:L('search_colleague_group')}：<select id="ui-fs-friendtype">
+						<volist id="vo" name="grouplist">
+							<option value="{$key}">{$vo}</option>
+						</volist>
+					</select> 
+					<div style="height:15px;text-align:right;">
+						<a href="javascript:void(0)" style=";width:40px;text-align:center;height:20px">{:L('common_add')}</a>
+					</div>
+		<php>}else{</php>
+			{:L('search_not_group')}
+		<php>}</php>
+		</div>
+	</div>
+</div>
+
+<input type="hidden" name="{$name}_uids" id="ts_search_value" value="<php>if(is_array($userId)){ echo implode(',',$userId);}else{echo $userId ;}</php>" />
+<input type="hidden" name="{$name}_noReg" id="ts_noReg_value" />
+<div id="ts_searchhandle_tip" style="display:none">&nbsp;</div>
+<div id="ts_search_save_data" style="display:none" />
+
+<script type="text/javascript"> 
+var search_data = $('#ts_search_save_data');
+
+$("#ts_search_handle").autocomplete('{:U("home/User/dosearch")}&reg={$reg|intval}', {
+	minChars: 2,
+    width:356,
+	max:30,
+	listenKey:13,    //13
+    matchContains: true,
+    autoFill: false,
+	delay:100,
+	selectFirst: true,
+	dataType: 'json',
+    parse:function(data){
+		var d = data;
+	    var rows = new Array();
+		if(d) {
+			for(var i = 0; i < d.length; i++){
+		    	rows[rows.length]={data:d[i],value:d[i].uid,result:d[i].email}
+		    }
+		    return rows;
+		} else {
+			return '';
+		}
+    }, 
+    formatItem: function(data) {
+   		return data.uname + ' [ ' + data.email + ' ] ';
+    },
+	onselected: function(row){
+		search_doselected( row.data );
+	},
+	nosearchvalue: function(value){
+		search_ShowTip( '{:L('search_not_user')}'+value );
+		$("#ts_search_handle").val('');
+	}
+});
+
+function selectGroup(){
+	if( $('#select_group_handle').hasClass('active') ){
+		$('#select_group_handle').removeClass('active');
+		$('#ui-fs-all-handle').hide();
+	}else{
+		$('#select_group_handle').addClass('active');
+		$('#ui-fs-all-handle').show();
+	}
+}
+
+/*
+*  方法:Array.remove(dx) 通过遍历,重构数组
+*  功能:删除数组元素.
+*  参数:dx删除元素的下标.
+*/
+Array.prototype.remove=function(dx) {
+    if(isNaN(dx)||dx>this.length){return false;}
+    for(var i=0,n=0;i<this.length;i++)
+    {
+        if(this[i]!=this[dx])
+        {
+            this[n++]=this[i]
+        }
+    }
+    this.length-=1
+}
+
+//已激活用户ID
+var hasSelectedUserId = new Array();
+//未激活用户工号
+var hasSelectedNotRegUserId = new Array();
+
+//以选中的用户
+var hasSelectedUids = new Array();
+var hasSelectedUidsWithString = "{$userId}";
+hasSelectedUids = (hasSelectedUidsWithString.length == 0) ? new Array() : hasSelectedUidsWithString.split(',');
+
+var select_group_to_uids   = new Array();
+
+//点击选项后的数据处理操作 - 加入选中UID与判断是否已选择
+function search_doselected(data) {
+	$.merge(hasSelectedNotRegUserId, hasSelectedUids);
+	if($.inArray(data.uid, hasSelectedNotRegUserId ) != -1) {
+		search_ShowTip('{:L('search_user')} "'+ data.uname +'" {:L('search_user_has_add')} ');
+	} else {
+		hasSelectedNotRegUserId.push(data.uid);
+		$("#ts_noReg_value").val(hasSelectedNotRegUserId);
+		search_recombine();
+		appendUserHtml(data);
+	}
+	
+	$("#ts_search_handle").val('');
+}
+
+//对数组进行去重
+function unique(arr){    
+	var temp={},result=[]; 
+	for(var i=0; i < arr.length; i++) {    
+	    if(!temp[arr[i]]) {    
+	        result.push(arr[i]);    
+	        temp[arr[i]] = true;    
+	    }    
+	}    
+	return result;
+}  
+
+//重组数据
+function search_recombine(){
+	hasSelectedUserId = new Array();
+	$.merge(hasSelectedUserId, hasSelectedUids);
+	$.merge(hasSelectedUserId, hasSelectedNotRegUserId);
+	hasSelectedUserId = unique(hasSelectedUserId);
+	$('#select_count_num').html('{:L('search_has_select')}<font color="red">'+ ( hasSelectedUserId.length ) +'</font>{:L('search_human')}');
+	$("#ts_search_value").val(hasSelectedUserId);
+}
+
+//向列表中添加项
+function appendUserHtml(data) {
+	var html = '';
+	html += ' <dd class="on" id="li_'+data.uid+'">\
+    <a href="javascript:void(0)" onclick=\'deleteUser("'+data.uid+'",'+false+')\' class="delR mt5" title="删除">{:L('common_delete')}</a><span id="info_'+ data.uid +'" uid="'+ data.uid +'">'+data.uname+' [ ' + data.email + ']</span></dd>';		
+	$('#selected_user_list dl').append( html );
+}
+
+//删除某个已选项
+function deleteUser(short,uid){
+	if(uid != false){
+		for(var j=0;j<hasSelectedUids.length;j++){
+			if(uid == hasSelectedUids[j] ){
+				hasSelectedUids.remove(j);
+			}
+		}
+		search_recombine();
+	}else{
+		for(var j=0;j<hasSelectedNotRegUserId.length;j++){
+			if(short == hasSelectedNotRegUserId[j] ){
+				hasSelectedNotRegUserId.remove(j);
+			}
+		 }
+		$("#ts_noReg_value").val(hasSelectedNotRegUserId);	
+		search_recombine();
+	}
+	$("#li_"+short).remove();
+}
+
+//搜索信息提示
+function search_ShowTip(html){
+	$('#ts_searchhandle_tip').html( html );
+	$('#ts_searchhandle_tip').show();
+	setTimeout("$('#ts_searchhandle_tip').hide()", 2000);
+}
+</script> 

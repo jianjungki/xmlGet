@@ -1,0 +1,169 @@
+<include file="__THEME__/header" />
+<link href="../Public/account.css" rel="stylesheet" type="text/css" />
+<link href="../Public/js/setavatar/css/imgareaselect-default.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="../Public/js/avatar/avatar.js"></script>
+<script type="text/javascript" src="../Public/js/account.js"></script>
+<script type="text/javascript" src="../Public/js/setavatar/jquery.imgareaselect.min.js"></script>
+<script>
+	function clearnotice() {
+		if (confirm('你确定要清空群的公告吗？')) {
+			document.noticeform.postcontent.value = '';
+		}
+	}
+
+	function checknotice() {
+		var length = getLength(document.noticeform.postcontent.value);
+		if (length > 300) {
+			ui.error('公告不能超过300个字')
+			return false;
+		}
+		return true;
+	}
+
+	function checkAll(o) {
+		if (o.checked == true) {
+			$('input[name="checkbox2"]').attr('checked', 'true');
+		} else {
+			$('input[name="checkbox2"]').removeAttr('checked');
+		}
+	}
+	function branchset(op) {
+		var statidJson = new Array();
+		$('input[name="checkbox2"]').each(function() {
+			if($(this).attr('checked') == true && $(this).val() != 0) {
+				statidJson.push($(this).val());
+			}
+		});
+		if(statidJson.length == 0) {
+			alert('请选择公告');
+			return;
+		}
+		v_prompt = "";
+		if(op == 'alldel'){
+			v_prompt = '你确定要删除公告';
+		}
+		if(v_prompt.length){
+			if (!confirm(v_prompt))
+			{
+				return;
+			}
+		}
+		document.actionform.statid.value = statidJson;
+		document.actionform.op.value = op;
+		document.actionform.submit();
+	}
+	function orgset(op,statid) {
+		v_prompt = "";
+		if(op == 'del'){
+			v_prompt = '你确定要删除公告';
+		}
+		if(v_prompt.length){
+			if (!confirm(v_prompt))
+			{
+				return;
+			}
+		}
+		document.actionform.statid.value = statid;
+		document.actionform.op.value = op;
+		document.actionform.submit();
+	}
+</script>
+<style>
+    table th.line_l {
+        text-align: center;
+        color: #999999;
+    }
+    table tr {
+        height: 30px;
+        text-align: center;
+    }
+</style>
+<div class="content_holder">
+	<div class="content">
+		<!-- 内容 begin  -->
+		<div class="main no_l">
+			<!-- 右侧内容 begin  -->
+			<div class="mainbox">
+				<div class="mainbox_appC no_r">
+					<include file="_tab" />
+					<!-- 切换标签 end  -->
+						
+					<form method="post" name="actionform" action="{:U('home/orgAccount/statementact')}">
+			          <input type="hidden" name="orgid" value="{$orgid}">
+			          <input type="hidden" name="op" value="">
+			          <input type="hidden" name="statid" value="">
+			        </form>
+					<div style="width:90%;position: relative;left: 5%">
+						<div>
+							<table width="100%" border="0" cellspacing="0" cellpadding="0">
+								<tr class="header">
+									<th style="width: 30px;text-align: center;">
+									<input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+									<label for="checkbox"></label></th>
+									<th class="line_l">公告内容</th>
+									<th class="line_l">发布日期</th>
+									<th class="line_l">公告发布人</th>
+									<th class="line_l">操作</th>
+								</tr>
+								<volist id="item" name="stateinfo['data']">
+									<tr id="list_{$item.id}">
+										<td>
+										<input type="checkbox" name="checkbox2" id="checkbox2"
+										onclick="checkon(this)" value="{$item.id}" />
+										</td>
+										<td>{$item.postcontent|substr=0,30}</td>
+										<td>{$item.postdate}</td>
+										<td>{$item.postman}</td>
+										<td><a href="javascript:void(0)"
+										onclick="orgset('del','{$item.id}')">删除</a>&nbsp;|&nbsp;<a href="javascript:void(0)"
+										onclick="orgset('edit','{$item.id}')">编辑</a></td>
+									</tr>
+								</volist>
+								<tr>
+									<td>
+									<input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+									</td>
+									<td style="text-align: left;">&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)"
+									onclick="branchset('alldel')">批量删除</a></td>
+								</tr>
+							</table>
+							{$html}
+						</div>
+					</div>
+					<div style="width:100%;">
+					<php>if(!empty($stateitem['postcontent'])){</php>
+						<form action="{:U('home/orgAccount/statement',array('op'=>'edit','statid'=>$stateitem['id']))}" method="post" name="noticeform" onSubmit="return checknotice();">
+					<php>}else{</php>
+						<form action="{:U('home/orgAccount/statement')}" method="post" name="noticeform" onSubmit="return checknotice();">
+					<php>}</php>
+						
+							<div class="msg" id="msg" style="display:none;">
+								修改成功
+							</div>
+							<h2 style="font-size:14px;margin:20px 40px 10px;">发布公告(最多可输入300个汉字)</h2>
+							<div class="alR" style="margin:0 50px 0 40px;">
+								<textarea name="postcontent" rows="5" class="text" style="width:850px;height:90px;overflow:auto"  onBlur="this.className='text'" onFocus="this.className='text2'">{$stateitem['postcontent']}</textarea>
+								<div class="alR mt10">
+									<input type="hidden" name="orgid" value="{$orgid}">
+									<input type="hidden" name="editsubmit" value="1">
+									<php>if(!empty($stateitem['postcontent'])){</php>
+										<input name="button" type="submit" class="btn_b" id="button" value="更新" />
+									<php>}else{</php>
+										<input name="button" type="submit" class="btn_b" id="button" value="发布" />
+									<php>}</php>
+									<input name="button2" type="button" class="btn_w" id="button2" value="清除" onClick="clearnotice();"/>
+								</div>
+							</div>
+						</form>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<!-- 右侧内容 end  -->
+		<div class="c"></div>
+	</div>
+</div>
+<!-- 内容 end -->
+<include file="__THEME__/footer" />

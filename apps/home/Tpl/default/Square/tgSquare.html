@@ -1,0 +1,385 @@
+<include file="__THEME__/header" />
+<link rel="stylesheet" type="text/css" href="../Public/css/square.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/weibo.js"></script>
+<script type="text/javascript" src="../Public/js/square.js"></script>
+<script type="text/javascript" src="../Public/js/square.slide.js"></script>
+<script type="text/javascript" src="../Public/js/slides.min.jquery.js"></script>
+<style>
+.pagination {display:none}
+</style>
+<script>
+$(document).ready(function(){
+	$('.squareicon_left .ad_square').css("border", "0");
+	$('.squareicon_left .ad_square').css({"width": "663px"});
+	$('.squareicon_left .ad_square .ke-post').css({"width": "661px" });
+	$('.squareicon_left .ad_square .ke-post .flashNews').css({"width": "661px" });
+	$('.squareicon_left img').css({"width": "661px"});
+});
+</script>
+<script>
+var showCount = 8;
+$(document).ready(function(){
+	$('#slides').slides({
+		preload: true,
+		play: 5000,
+		pause: 2500,
+		hoverPause: true,
+		container: "imgb"
+});
+$('#slides2').slides({
+		preload: true,
+		play: 5000,
+		pause: 2500,
+		hoverPause: true,
+		container: "imgb"
+});
+	$(".checkall").click(function(){
+		var div = '#tg_list_'+$(this).attr("cid");
+		if( this.checked == true ){
+			$(div+" input[name='followuid[]']").attr('checked',true);
+		}else{
+			$(div+" input[name='followuid[]']").removeAttr('checked');
+		}
+	});
+	
+	var lastHideKey = {};
+	$('.list_square').each(function(){
+	    var count = 0;
+	    var self = $(this);
+	    lastHideKey[$(this).attr('id')] = -1;
+	    $(this).children('li').each(function(key){
+	       count++;
+	       if(count <= showCount ){
+	           $(this).show();
+	           lastHideKey[self.attr('id')] = key;
+	       }
+	    });
+	});
+	
+	$('.changes').each(function(){
+	    $(this).click(function(){
+	        var count = 0;
+	        var target = $(this).attr('star_target');
+	        var nowLast = lastHideKey[target];
+	        var size = $('#'+target).children('li').size();
+	        var self = $(this);
+	        if(lastHideKey[target] == -1){
+        		self.css('color','#fff');
+        		// self.addClass('top');
+        	}
+	        $('#'+target).children('li').each(function(key){
+	             $(this).hide();
+	             if(key > nowLast && key <= nowLast +showCount){
+	                 $(this).show();
+	                 lastHideKey[target] = key;
+	                 if(key>=size-1){
+	                     // self.hide();
+	                     lastHideKey[target] = -1;
+	                     self.css('color','#ddd');
+	                 }
+	                 //if($(this).eq(last)) self.hide();
+	             }
+	        });
+	    });
+	});
+	
+	
+	
+	<php>if($aboutkey){</php>
+	//今日看点
+	var scrtime;
+	var $ul = $('#topic_user_list');
+	var $u  = $ul.find('.topic_user:first');
+
+	$ul.hover(function(){
+         clearInterval(scrtime);
+
+ 	},function(){
+		scrtime = setInterval(function(){
+			$u.fadeOut("slow",function(){
+				if($u.css('display')=='none'){
+					$next = $u.next();
+					if($next.hasClass('topic_user')){
+						$u = $next;
+					}else{
+						$u = $ul.find('.topic_user:first');
+					}
+					$u.fadeIn();
+				}else{
+					$u.css('display','block');
+				}
+			});
+		},4500);
+
+ 	}).trigger("mouseleave");
+	<php>}</php>
+
+	//活跃用户
+	<if condition="$hotUserSlide">hot_user_slide();</if>
+
+	//专家推荐
+	star_list();
+
+	//微博列表
+	$("#square_list_tab a").click(function(){
+		var $a = $(this);
+		if(!$a.hasClass("on")){
+			$("#square_list_tab a").removeClass("on");
+			$a.addClass("on");
+		}
+
+		var url = $a.attr("source");
+		square_index_weibo(url);
+		return false;
+	});
+	square_index_weibo();
+	
+	
+	
+});
+  var weibo = $.weibo({
+          timeStep : 60000
+    });
+
+// 加入圈子
+function joingroup(gid) {
+	// 未登录则弹出登录框
+	if ($CONFIG['mid'] <= 0) {
+		ui.quicklogin();
+		return ;
+	}
+    ui.box.load(U('group/Group/joinGroup')+'&gid='+gid,{title:'加入圈子'});
+}
+
+
+
+</script>
+
+
+
+<div class="content_holder">
+<div class="content" style="background-color: white"><!-- 内容 begin  -->
+  <include file="_left" />
+  
+  
+  <div class="main no_l">
+    <div class="mainbox">
+    <!-- <div class="mainbox_R">
+    {:Addons::hook('home_square_index_right_top')}
+    
+  	</div> -->
+  	
+  	<!-- 广场左侧 -->
+  	<div class="squareicon_left">
+  		<!-- 广告   -->
+		<php>if(!empty($ts['ad']['square'][0])){</php>
+			<volist name="ts['ad']['square']" id="vo"> 
+			    <div class="ad_square"><div class="ke-post">{$vo['content']}</div></div>
+			</volist>  
+		<php>}else{</php>
+			<div style="margin: 20px 0px 10px 22px; width: 700px">
+		  		<div id="slides">
+		      	    	<div class="imgb">
+		      	    	  {:Interview_Image()}
+						</div>
+					</div>
+		  		 
+		  	</div>
+		<php>}</php>  	
+		
+	  	
+	      <div class="mainbox_C main_pad weibolist" style="width: 663px;min-height: 1000px">
+	        
+			<!--大家在说-->
+	        {:Addons::hook('home_square_index_middle')}
+	        <div class="tab-menu" id="square_list_tab">
+	          <ul>
+	            <volist name="square_list_menu" id="vo">
+	              <li><a class="feed_item <if condition="!$key">on</if>" source="{:U('home/square/index_weibo', array('type'=>$key))}"><span>{$vo}</span></a></li>
+				</volist>
+	          </ul>
+	        </div>
+			<!--//大家在说-->
+	        <div id="square_list"><img src="__THEME__/images/icon_waiting.gif" width="20" style="margin:33px 50% 0 50%;" /></div>
+	        
+	        </div>
+        
+  	</div>
+  	
+  	<!-- 广场右侧 -->
+  	<div class="squareicon_right">
+  	<div class="interview_top">
+        	 <dl style="position: relative">
+        		<dd><a href="{:U('home/Square/interview')}"></a> </dd> 
+
+						<dt>
+							<div>
+								<div id="slides2">
+									<div class="imgb">
+										{:Interview_Image(165,220)}
+									</div>
+									<div><a href="{:U('home/Square/interview')}"><img src="__THEME__/images/square/interview_tit.jpg" /></a></div>
+								</div>
+
+							</div>
+						</dt>
+        		
+        		 <volist name='arrss' id='vo'>
+<php>
+        		
+        		  $URL = U('home/Square/interview');
+        		
+        		 switch($vo['status']){
+	        	    case '0': 
+	        	       $URL = U('home/Square/interviewPage',array('type_to'=>'all','k'=>$vo['name'],'status'=>'before'));
+	        	       break;
+	        	    case '1':
+	        	      $URL = U('home/Square/interviewPage' ,array('type_to'=>'all','k'=>$vo['name'],'status'=>'start'));
+	        	       break;
+	        	    case '2':
+	        	       $URL = U('home/Square/interviewPage',array('type_to'=>'all','k'=>$vo['name'],'status'=>'end'));
+	        	       break;
+
+	        	  }
+        		
+        		</php>
+        		
+	        	<dd style="line-height: 20px; padding-top:4px;"><a href="{$URL}"> 
+	        	
+	        	<php>
+	        	$v = $vo['name'];
+	        	mb_internal_encoding('utf-8');
+	        	if(mb_strlen($v)>7)
+	        	   echo mb_substr($v,0,7);
+	        	else
+	        	    echo $v;
+	        	</php>
+	        	</a>
+	        	 <php>
+	        	
+	        	  switch($vo['status']){
+	        	    case '0': 
+	        	       echo '[即将开始]';
+	        	       break;
+	        	    case '1':
+	        	       echo '[正在进行]';
+	        	       break;
+	        	    case '2':
+	        	       echo '[已结束]';
+	        	       break;
+	        	    default:
+                        echo '';
+	        	  }
+	        	  </php>
+	        	
+	        	  
+	        	<!--
+	        	<switch name="vo.status">
+	        	  <case value="0">
+	        	   [即将开始]
+	        	  </case>
+	        	  <case value="1">
+	        	   [正在进行]
+	        	  </case>
+	        	  <case value="2">
+	        	   [已结束]
+	        	  </case>
+	        	
+	        	</switch>
+	        	-->
+	        	</dd>
+	        	
+	        	
+	        	</volist> 
+	        	
+	        	
+	        	<div align="right" style="margin-right:35px;color:#fff;font-weight:bold;position: absolute;right: 0;bottom: 0; font-family:Arial, Helvetica, sans-serif;" ><a href="{:U('home/Square/interviewList')}">更多...</a></div>
+
+        	</dl>
+        </div> 
+        
+	
+        
+        <div>
+        	
+        	<!--  专家分组  -->
+        <volist name="tglist" id="t" key="k">
+          <div id="tg_box_{$k}" class="list_box Share_box">
+            <form action="{:U('home/public/followuser')}" method="post">
+              <input type="hidden" name="doajax" value="1">
+              <div class="topic_tit2">
+                  <span class="right top" >
+                      <php>if(count($t['data'])>8){</php>
+                    <a class="changes" href="javascript:void(0)" star_target="tg_list_{$k}">换一换</a>
+                      <php>}else{</php>
+                      	<span style="color: #b5b5b5;cursor: pointer">换一换</span>
+                      <php>}</php>
+                    </span>
+                <strong>{$t.title}</strong>
+                </div>
+              <ul class="list_square" id="tg_list_{$k}">
+                <volist name="t.data" id="group">
+                  <li style="display:none;">
+                    <php>if($t['title']=='圈子'){</php>
+                    	<a href="{$group['id']|group_id_to_url}" target="_blank">
+	                    	<div class="userPic relative">
+		                    
+	                    	<img style='width:50px;height:50px' title="{$group['name']}" src="{$group['logo']|logo_path_to_url}"/>
+	                    	
+		                    </div>
+		                    
+		                    <div id="user_{$group.id}" class="title">
+		                      {$group['name']}
+		                    </div>
+	                    </a>
+                    <php>}</php>	
+                    <div class="userPic relative" <eq name="t.title" value="圈子">style="display:none"</eq>>
+                     
+                     <input name="followuid[]" type="checkbox" value="{$group.uid}" class="ckbox" />
+                     
+                    <space uid="group.uid">{uavatar}</space>
+<!--                     <img style='width:50px;height:50px' title="{$group['name']}" src="{$group['logo']|logo_path_to_url}"/> -->
+                    </div>
+                    
+                    <div id="user_{$group.uid}" class="title" <eq name="t.title" value="圈子">style="display:none"</eq>>
+                      <space uid="group.uid">{uname}</space>
+                      </div>
+                    
+                    
+                    </li>	
+                  </volist>
+               
+                <div class="c"></div>
+                </ul>
+                
+              </form>
+              <div class="btm">
+	              <span class="right" >
+	                  <php>if($t['title']!='圈子'){</php>
+	                <label>
+	                	<input type="checkbox" class="checkall checkbox1" cid="{$k}" value="b{$k}">&nbsp;&nbsp;全选&nbsp;
+	                </label>
+	                <!--<input type="button" value="关注已选" class="btn_b" onclick="dofollow('#star_box_{$g.star_group_id}')" />-->
+	                &nbsp;|&nbsp;&nbsp;<a href="javascript:void(0)" onclick="dofollow('#tg_box_{$k}')">关注已选</a>
+	                 <php>}</php>
+	             </span>
+             </div>
+          </div>
+          
+        	</volist> 
+        	
+        	
+        </div>	        
+    </div>
+        
+ 
+    <div class="clear"></div>
+  </div>
+</div>
+</div>
+{:Addons::hook('weibo_js_plugin')}
+
+<!-- 内容 end --> 
+<include file="__THEME__/app_show" />
+<include file="__THEME__/footer" /> 

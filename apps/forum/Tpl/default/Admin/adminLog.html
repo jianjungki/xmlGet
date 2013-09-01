@@ -1,0 +1,65 @@
+<include file="__THEME__/admin" />
+<link href="../Public/style.css" rel="stylesheet" type="text/css">
+<div class="so_main">
+<script type="text/javascript"  src="../Public/WP/WdatePicker.js"></script>
+<div class="page_tit">管理日志</div>
+<div class="form">
+<div class="Toolbar_inbox">
+	<a class="btn_a" href="javascript:void(0)" onClick="makesure(90)" /><span>清除90天前的日志</span></a>
+	<a class="btn_a" href="javascript:void(0)" onClick="makesure(180)" /><span>清除180天前的日志</span></a>
+	<a class="btn_a" href="javascript:void(0)" onClick="makesure(360)" /><span>清除360天前的日志</span></a>
+</div>
+<form action="" method="POST">
+日志查询：<input class="txt" name="fromTime" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" value="{$search.fromTime}" type="text">&nbsp;至 &nbsp;<input class="txt" name="toTime" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" value="{$search.toTime} "type="text"><input class="btn_b ml10" type="submit" value="查询"></input>
+</form>
+<div class="list">
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<th class="line_l">操作日志</th>
+		<th class="line_l">时间</th>
+	</tr>
+	<volist name='logList' id='vo'>
+	<tr class="cell altbg1">
+		<td align="left" style="width: 80%; padding-left: 10px">{$vo.data}</td>
+		<!--<td align="center" style="width:20%">{$vo.info}</td>-->
+		<td align="left" style="width: 20%">{$vo.cTime|friendlyDate="full"}</td>
+	</tr>
+	</volist>
+	</table>
+</div>
+
+<div class="Toolbar_inbox">
+<div class="page right">共有{$count}条日志{$html}</div>
+	<a class="btn_a" href="javascript:void(0)" onClick="makesure(90)" /><span>清除90天前的日志</span></a>
+	<a class="btn_a" href="javascript:void(0)" onClick="makesure(180)" /><span>清除180天前的日志</span></a>
+	<a class="btn_a" href="javascript:void(0)" onClick="makesure(360)" /><span>清除360天前的日志</span></a>
+</div>
+</div>
+<script type="text/javascript">
+function cleancache(){
+	 var type = $("input[name='type']:checked").val();
+	 var url = "__ROOT__/cleancache.php";
+	 if(type!=0){
+		 url += "?"+type;
+	 }
+	 window.location.href = url;
+}
+ var days ;
+function makesure(day){
+	days = day;
+	$.tbox.confirm("你确定要删除日志？","提示",{ok:"cleanFeed"})
+}
+function cleanFeed(){
+	$.post("{:U('forum/Admin/doCleanFeed')}",{dataType:days},function(txt){
+		txt = eval("("+txt+")");
+		if(txt){
+			$.tbox.yes(txt.info);
+			setTimeout("$.tbox.close()",1500);
+		}else{
+			$.tbox.no(txt.info);
+			setTimeout("$.tbox.close()",1500);
+		}
+
+	})
+}
+</script>

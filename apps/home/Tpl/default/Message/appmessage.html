@@ -1,0 +1,98 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<link href="__PUBLIC__/js/editor/editor/theme/change.css" rel="stylesheet"/>
+<!--[if IE 6]>
+<script type="text/javascript" src="..Public/js/png.js"></script>
+<script type="text/javascript">
+		DD_belatedPNG.fix('.logo,.squareicon,.line,#icon,#button');
+</script>
+<![endif]-->
+<div class="t_column  iepng">
+  <div class="t_column_left"><img src="__PUBLIC__/js/editor/editor/theme/images/icon/message.png" width="128" height="39" id="icon" /></div>
+  <div class="t_column_right">
+   <ul>
+   <li><div class="sixin_right"><a href="javascript:void(0)" onclick="ui.sendmessage();"></a></div></li>
+   </ul>
+  </div>
+</div>
+<div class="p_main">
+   <div class="project_left">
+       <div class="p_nav">
+         <ul>
+           <li id="p_nav_3"><a href="{:U('home/Message/index')}">查看私信</a></li>
+           <li id="p_nav_3"><a href="{:U('home/User/new_atme')}">查看@我</a></li>
+           <li id="p_nav_3"><a href="{:U('home/User/new_comments')}">查看评论</a></li>
+           <li id="p_nav_3"><a href="{:U('home/Message/notify')}">系统通知</a></li>
+           <li id="p_nav_1"><a href="{:U('home/Message/appmessage')}">应用消息</a></li>
+           <li id="p_nav_3"><a href="javascript:void(0)" onclick="ui.sendmessage();">发私信</a></li>
+         </ul>
+       </div>
+      
+   </div>
+   <div class="project_right">
+      <div class="mainbox_C no_r boxMessage" style="position:relative;margin:20px;">
+        <div class="tab-menu">
+			<include file="_tab" />
+        </div>
+        <div style="width:100%; overflow:hidden;">
+          <php>if (empty($data)) {</php>
+              暂无应用消息
+          <php>}</php>
+         <ul class="feed_list"   style="text-align: left;">
+          	<volist id="vo" name="data">
+          	<php>if($vo['typename'] == 'toa'){</php>
+            <li class="lineD_btm" id="myinvite_{$vo.hash}">
+                <div class="userPic">
+                    <a href="{:U('home/space/index',array('uid'=>$vo['fromuid']))}" title="">
+                        <img card="1" src="{$vo.fromuid|getUserFace}">
+                    </a>
+                </div>
+                <div style="margin-left:70px;margin-top:30px;"><a href="{$vo.myml}" target="_blank">查看</a></div>
+            </li>
+            <php>}else{</php>
+            <li class="lineD_btm" id="myinvite_{$vo.hash}">
+                <div class="userPic">
+                    <a href="{:U('home/space/index',array('uid'=>$vo['fromuid']))}" title="">
+                        <img card="1" src="{$vo.fromuid|getUserFace}">
+                    </a>
+                </div>
+                <div style="margin-left:70px;">{$vo.myml}</div>
+            </li>
+            <php>}</php>
+			</volist>
+          </ul>
+          <div class="c"></div>
+        </div>
+        
+      </div>
+    </div>
+   </div>
+<!-- 内容 end --> 
+<script>
+var weibo = $.weibo({
+  timeStep : 60000
+});
+	function manyou_add_userapp(hash, url){
+        if (url) {
+            ui.success("正在跳转至应用...");
+        }
+        setTimeout(function(){
+	        $.post( "{:U('home/Message/deleteMyInvite')}", {hash:hash}, function(res){
+	            if (res == '1') {
+	                if (url) {
+	                    //同意
+	                    self.location.href = url;
+	                }else {
+	                    //忽略
+	                    ui.success("忽略成功");
+	                    $("#myinvite_"+hash).remove();
+	                }
+	            }else {
+	                ui.error("操作失败");
+	            }
+	        });
+        }, 1500);
+	}
+</script>	
+{:Addons::hook('weibo_js_plugin')}
+<include file="__THEME__/footer" /> 

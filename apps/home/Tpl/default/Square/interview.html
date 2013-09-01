@@ -1,0 +1,235 @@
+<include file="__THEME__/header" />
+<link rel="stylesheet" href="../Public/event.css" type="text/css" media="screen" charset="utf-8" />
+<script type="text/javascript" src="../Public/js/slides.min.jquery.js"></script>
+<script type="text/javascript" src="../Public/js/event.js"></script>
+<style>
+	.userinfo{padding:0 0 10px 10px;overflow:hidden;*zoom:1}
+	.userinfo{padding:0 0 10px 10px;overflow:hidden;*zoom:1}
+	.userinfo .userpic{width:50px;height:50px;float:left;position:relative}
+	.userinfo .userpic span {}
+	.userinfo .userpic span img {border:#fff solid 1px;width:50px;height:50px}
+	.userinfo .userpic a.pic{display:none}
+	.userinfo .over a.pic{filter:alpha(opacity=60);opacity:0.6;position:absolute;right:0px;bottom:0px;width:100%;background:#000;color:#fff;line-height:20px;text-align:center;display:block}
+	.userinfo .user_name{margin-left:60px;_margin-left:57px;}
+	.userinfo .user_name h2, .user_app .userinfo .user_name h2 a{font-size:12px;margin:0;color:#fff}
+	.userdata li{float:left;}
+	.guanzhu{float:right;position:relative;right:70px;}
+	.pagination {display:none}
+	 b{font-family:"微软雅黑";}
+</style>
+
+<div class="content_holder">
+<div class="content no_bg"  style="background: white;">
+<include file="../Public/_mainNav" />
+<include file="_left" />
+  <div class="main no_l">
+    <!-- 画布 begin  -->
+    <div class="mainbox">
+      <include file="../Public/right_interviewStart" />
+       <!--推荐活动--> 
+          
+     	<php>if(empty($is_bigcover_list)){</php>
+     		<div id="act" style="width: 630px;height:220px;margin-left:25px;margin-right:25px;padding-top:25px;overflow: hidden">
+	      	    <div id="slides">
+	      	    	<div class="imgb">
+	      	    	<volist name="list" id="vo">
+	      	    		<php>if(!empty($vo['index_pic'])){</php>
+						<div class="c1" >
+							<a href="{:U('home/Square/interviewPage',array('type_to'=>'all','k'=>$vo['name'],'status'=>$setinfo[$vo['status']]))}"> 
+								<img style="width: 630px;height: 220px" src="{:SITE_URL}/data/uploads/{$vo['index_pic']}" /> 
+							</a>
+						</div>
+						<php>}</php>
+					</volist>
+					</div>
+				</div>
+	  		</div>
+     	<php>}else{</php>
+      	<php>$count = count($is_bigcover_list);</php>
+		<switch name="count">
+		<case value="1">
+			<div id="act" style="width: 630px;height: 220px;margin:0 25px;padding-top: 15px;overflow: hidden">
+	      	<ul>
+				<volist name="is_bigcover_list" id="li">
+					<li>
+						<div class="c1" >
+							<a href="{:U('//eventDetail',array(uid=>$li['uid'],id=>$li['id']))}"> 
+							<img src="{$li['bigcoverId']}" /> 
+							</a>
+						</div>
+					</li>
+				</volist>
+	        </ul>
+	  		</div>
+		</case>
+		<default  />
+			<div id="activity" style="width: 630px;height: 220px;margin:0 25px;padding-top: 15px;overflow: hidden">
+				<ul>
+					<volist name="is_bigcover_list" id="li">
+						<li>
+							<div class="c1" >
+								<a href="{:U('//eventDetail',array(uid=>$li['uid'],id=>$li['id']))}"> 
+								     <img src="{$li['bigcoverId']}" /> 
+								</a>
+							</div>
+						</li>
+					</volist>
+				</ul>
+			</div>
+		</switch>
+        <php>}</php> 
+        <div class="mainbox_appC" style="width: 630px;">
+            <div style="line-height: 40px;">
+			<div  style="float:right;margin-right:5px;" >
+					<a href="{:U('home/Square/wonderfulView')}">
+						更多访谈
+					</a>
+			</div>
+			<div  style="font-size:16px;background-color:#F7F7F7;width:100px;text-align:center;color:black;">
+				<b>精彩访谈</b>
+				
+			</div>
+					
+        	</div>
+        <hr style="border:#F7F7F7 solid 1px;position:relative;top:-8px;width:100%"/>
+        <volist name='arr' id='vo'>
+    
+     <div align="center" style="line-height:20px; width:600px;">
+        <div style="float:left;margin-right: 50px;">
+			<img  src="{:SITE_URL}/data/uploads/{$vo['pic']}" width="100px" height="100px;" />
+		</div>
+        <div style="text-align: left;margin-bottom: 30px;margin-left:150px;">
+        	<a href="{:U('home/Square/interviewPage',array('type_to'=>'all','k'=>$vo['name'],'status'=>$setinfo[$vo['status']]))}"><strong style="font-size:15px;margin-right:20px;">{:getInterviewName($vo['topic_id'])}</strong></a>
+         <php>
+	        	  switch($vo['status']){
+	        	    case '0': 
+	        	       echo '<image src="__PUBLIC__/themes/images/after_interview.png" style="position:relative;top:4px;margin-right:5px;">';
+	        	       break;
+	        	    case '1':
+	        	       echo '<image src="__PUBLIC__/themes/images/star_interview.png" style="position:relative;top:4px;margin-right:5px;">';
+	        	       break;
+	        	    case '2':
+	        	       echo '<image src="__PUBLIC__/themes/images/end_interview.png" style="position:relative;top:4px;margin-right:5px;">';
+	        	       break;
+	        	  }
+	      </php>
+         <br/>
+					 <image src="__PUBLIC__/themes/images/time_count.jpg" style="position:relative;top:4px;margin-right:5px;">时间：{$vo['time_start']|date='Y年m月d日 H:i',###} - {$vo['time_end']|date='H:i',###}<br/>
+                      <image src="__PUBLIC__/themes/images/guest_name.png" style="position:relative;top:4px;margin-right:5px;">嘉宾：{:getGuestName($vo['topic_id'])}<br/>
+					<p style="position:relative;color:gray;margin-left: 20px;">{$vo['content']}<p>
+                    <div style="position:relative;margin-left: 20px;">
+                    <span style="margin-right:8px;">嘉宾回复：<font color="orange" style="font-weight:bold;">{:AnswerCount($vo['topic_id'])}</font></span>
+					<span style="margin-right:8px;">网友提问：<font color="orange" style="font-weight:bold;">{:AskCount($vo['topic_id'])}</font></span>
+					<php>if(($vo['column'])){</php>
+                       栏目：<a href="##">{$vo['column']}</a>
+					<php>}</php>
+					</div>
+        </div>		
+    </div>
+    </volist>
+   </div>
+     
+   
+   <div class="mainbox_appC" style="width: 630px;">
+   	 <div style="line-height: 40px;">
+	 <div  style="float:right;margin-right:5px;" >
+					<a href="{:U('home/Square/interviewList')}">
+						更多推荐
+					</a>
+			</div>
+			<div  style="font-size:16px;background-color:#F7F7F7;width:100px;text-align:center;color:black;">
+				<b>更多推荐</b>
+				
+			</div>
+     </div>
+   	 <hr style="border:#F7F7F7 solid 1px;position:relative;top:-8px;width:100%"/>	
+   		
+   		<volist name='list' id='vo'>
+    
+     <div align="center" style="line-height:20px;margin-bottom:30px; width:630px;">
+        <div style="float:left;margin-right: 50px;"><img  src="{:SITE_URL}/data/uploads/{$vo['pic']}" width="100px" height="100px;" /></div>
+        <div style="text-align: left;margin-bottom: 30px;margin-left:150px;">
+        	<a href="{:U('home/Square/interviewPage',array('type_to'=>'all','k'=>$vo['name'],'status'=>$setinfo[$vo['status']]))}"><strong style="font-size:15px;margin-right:20px;">{:getInterviewName($vo['topic_id'])}</strong></a>
+         <php>
+	        	  switch($vo['status']){
+	        	    case '0': 
+	        	       echo '<image src="__PUBLIC__/themes/images/after_interview.png" style="position:relative;top:4px;margin-right:5px;">';
+	        	       break;
+	        	    case '1':
+	        	       echo '<image src="__PUBLIC__/themes/images/star_interview.png" style="position:relative;top:4px;margin-right:5px;">';
+	        	       break;
+	        	    case '2':
+	        	       echo '<image src="__PUBLIC__/themes/images/end_interview.png" style="position:relative;top:4px;margin-right:5px;">';
+	        	       break;
+	        	  }
+	      </php>
+         <br/>
+					 <image src="__PUBLIC__/themes/images/time_count.jpg" style="position:relative;top:4px;margin-right:5px;">时间：{$vo['time_start']|date='Y年m月d日 H:i',###} - {$vo['time_end']|date='H:i',###}<br/>
+                      <image src="__PUBLIC__/themes/images/guest_name.png" style="position:relative;top:4px;margin-right:5px;">嘉宾：{:getGuestName($vo['topic_id'])}<br/>
+					<p style="position:relative;color:gray;margin-left: 20px;">{$vo['content']}<p>
+                    <div style="position:relative;margin-left: 20px;">
+                    <span style="margin-right:8px;">嘉宾回复：<font color="orange" style="font-weight:bold;">{:AnswerCount($vo['topic_id'])}</font></span>
+					<span style="margin-right:8px;">网友提问：<font color="orange" style="font-weight:bold;">{:AskCount($vo['topic_id'])}</font></span>
+					<php>if(($vo['column'])){</php>
+                     		  栏目：<a href="##">{$vo['column']}</a>
+					<php>}</php>
+					</div>
+        </div>
+	<hr style="border: 1px solid #eee; height:1px;width: 100%;"/>		
+    </div>
+   
+   </volist> 
+   </div>   
+   
+   
+                 
+          
+      
+      
+      <div class="c"></div>
+    </div>
+  </div>
+</div>
+</div>
+<!-- 右侧内容 end  -->
+<include file="__THEME__/footer" /> 
+
+
+
+<script type="text/javascript">
+/*
+	-需要：引入一个jquery的包
+	-原理：
+		隐藏第一组<span></span>标签（包含里面的内容），然后用slideDown效果渐渐下滑显示出来
+		再把最后一组<span></span>标签插入到最前面并隐藏，形成循环
+*/
+$(function() {
+var interval = 4000;
+var slide    =  setInterval(slideIt,interval);
+	function slideIt() {
+	  var obj = $('li','#activity');//定义一个变量obj，把id为guduk里的所有<span></span>标签赋给它
+	  obj.last().hide().prev().fadeOut(3000);//倒数2个隐藏
+	  obj.last().insertBefore(obj.first()).fadeIn(3000);//把id为guduk里的最后一组<span></span>标签插到最前面（这样容器里的<span></span>标签就可以循环起来）
+	  obj.last().prev().fadeOut(3000);//第5个span淡出
+
+	};
+
+	$('#activity').mouseover(function() {
+		clearInterval(slide);//当鼠标移上去的时候停止下滑
+	}).mouseout(function() {
+		slide = setInterval(slideIt,interval);//当鼠标移开的时候继续下滑
+	});
+
+	slideIt();
+	
+	$('#slides').slides({
+		preload: true,
+		play: 5000,
+		pause: 2500,
+		hoverPause: true,
+		container: "imgb"
+});
+});
+
+
+</script>

@@ -1,0 +1,96 @@
+<include file="_header" />
+<!-- <script type="text/javascript" src="../public/calender.js" ></script> -->
+<link href="../Public/style.css" rel="stylesheet" type="text/css">
+<div class="so_main">
+	<include file="_tab" />
+<div class="form">
+  <div class="Toolbar_inbox">
+    <a href="{:U('forum/admin/addWidgetEdit')}"  class="btn_a"><span>创建新选项</span></a> 
+      <a href="javascript:void(0)"  onClick="delWidget()" class="btn_a"><span>删除选项</span></a> 
+    </div>
+  <div class="list">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <th style="width:30px;"><input type="checkbox" name="checkbox" class="checkbox" >
+          <label for="checkbox"></label></th>
+        <th class="line_l">ID</th>
+        <th class="line_l">名称</th>
+        <th class="line_l">变量名</th>
+        <th class="line_l">类型</th>
+        <th class="line_l">操作</th>
+      </tr>
+      <volist name="data" id="vo">
+	      <tr id="widget_{$vo.id}">
+	        <td><input type="checkbox" name="checkbox2" class="checkbox2" value="{$vo.id}"></td>
+	        <td>{$vo.id}</td>
+	        <td>{$vo.label}</td>
+	        <td>{$vo.field}</td>
+	        <td>
+	        	{$type[$vo['widget']]}({$vo.widget})
+	        </td>
+	        <td>
+		        	<a href="{:U('forum/admin/widgetEdit',array('id'=>$vo['id']))}">编辑</a>
+		        	<a href="javascript:void(0)" onClick="delWidget({$vo.id})">删除</a>
+	        </td>
+	      </tr>
+      </volist>
+    </table>
+     <div class="Toolbar_inbox">
+    <a href="{:U('forum/admin/addWidgetEdit')}"  class="btn_a"><span>创建新选项</span></a> 
+      <a href="javascript:void(0)"  onClick="delWidget()" class="btn_a"><span>删除选项</span></a> 
+    </div>
+  </div>
+  </div>
+  </div>
+  
+  <script>
+  $(function(){
+		$('.checkbox').click(function(){
+			var check = $('.checkbox2').attr("checked");
+			if(!check){
+				$('.checkbox2').attr("checked","checked");
+			}else{
+				
+				$('.checkbox2').removeAttr("checked");
+			}
+		});
+	});
+		function delWidget(id){
+			if(id){
+				var	widgetId  = id;
+			}else{
+				var widgetId = new Array();
+				$('.checkbox2').each(function(){
+					if($(this).attr("checked")){
+						widgetId.push($(this).val());
+					}
+				});
+			}
+			if(widgetId.length == 0 ){
+				$.tbox.no("请选择要删除的模板选项");
+				setTimeout("$.tbox.close()",1500);
+				return false;
+			}
+			if(!confirm('你确定要删除吗？')) return false; 
+			
+			$.post("{:U('forum/Admin/delOption')}",{widgetId:widgetId},function(txt){
+				if(txt>0){
+						ws = widgetId.toString();
+						ws = ws.split(',');
+					for(i = 0; i <ws.length; i++) {
+						$('#widget_'+ws[i]).remove();
+					}
+					$.tbox.yes("删除成功");
+					setTimeout("$.tbox.close()",1500);
+				}else{
+					$.tbox.no("删除失败");
+					setTimeout("$.tbox.close()",1500);
+				}
+			});
+			}
+
+		
+  
+  
+  </script>
+<include file="_footer" />

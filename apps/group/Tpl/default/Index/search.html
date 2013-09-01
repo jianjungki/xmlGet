@@ -1,0 +1,87 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="../Public/Js/Common.js"></script>
+<link  href="../Public/group.css" rel="stylesheet" type="text/css"/>
+<div class="content_holder">
+<div class="content no_bg"><!-- 内容 begin  -->
+<include file="../Public/_mainNav" />
+  <div class="main no_l"><!-- 画布 begin  -->
+    <div class="mainbox">
+      <include file="../Public/_isHotList" />   
+      <div class="mainbox_appC">
+      <div>
+        <if condition="$search_key">
+          <div class="f14px">搜索"<span class="cRed">{$search_key}</span>"圈({$group_list['count']})</div>          
+          
+        <elseif condition="$current_cid" />
+          <!-- <h2 class="f14px lh30" style="line-height:30px"><span class="right fn f12px"><a href="{:U('group/Index/find')}#group_category">&gt;&gt; 全部分类</a></span><strong>{:implode(' > ', $top_path)}</strong></h2> -->
+          <div style="width:auto; _width:99%; overflow:hidden">
+            <a href="{:U('group/Index/search', array('cid'=>$top_category['id']))}" <php>if ($top_category['id'] == $current_cid) {</php>style="font-weight:bold;color:#000;"<php>}</php>>{$top_category['title']}</a> > 
+          	<volist name="son_categorys" id="son">
+             <span class="ml10"><a href="{:U('group/Index/search', array('cid'=>$son['id']))}" <php>if ($son['id'] == $current_cid) {</php>style="font-weight:bold;color:#000;"<php>}</php>>{$son['title']}</a></span>
+          	</volist>
+          </div>
+        </if>
+        <div class="group_box">
+          <div class="searchBox">           
+            <form action="{:U('group/Index/search')}" method="POST">
+            <div>
+            <label class="find_group">找圈:</label>
+            <input name="k" type="text" value="{$search_key}" class="txt_group"/>
+            <input type="submit" class="btn_group" value="" /></div>
+            </form>
+          </div>
+        </div>
+        <if condition="$search_key && !$group_list['data']">
+        <div class="f14px cGray" style="margin:20px 0">
+            <p>你来早了一步，"<span class="cRed">{$search_key}</span>"圈还没人创建呢……  现在就<a class="ml5" href="{:U('group/Index/add', array('k'=>$search_key))}" ><strong>创建一个</strong></a></p>
+        </div>
+        </if>
+        <ul class="search">
+          <volist name="group_list['data']" id="group">
+          <li class="lineD_btm">
+            <div class="group_pic">
+              <a href="{:U('group/Group/index', array('gid'=>$group['id']))}">
+                <img src="__ROOT__/thumb.php?w=60&h=60&t=f&url={$group['logo']|get_photo_url}">
+              </a>
+            </div>
+            <div class="rmenu right">
+                <if condition="$group['status'] eq 1">
+                    <a href="{:U('group/Group/index',array('gid'=>$group['id']))}">浏览该圈</a>
+                    <php>$level = getLevel($uid, $group['id']);</php>
+                    <php>if($level===null){</php>
+                    <a href="javascript:joingroup({$group['id']});">加入该圈</a>
+                    <php>} else if($level==='0'){</php>
+                    &nbsp;成员审核
+                    <php>} else if($level==1 || $level==2){</php>
+                    <a href="{:U('group/Manage/index',array('gid'=>$group['id']))}">管理该圈</a>
+                    <php>} else if($level==3){</php>
+                    &nbsp;该圈成员
+                    <php>}</php>
+                    <else />
+                    &nbsp;圈子审核
+                    <a href="javascript:;" onclick="delgroup({$group['id']});" >解散该圈</a>
+                </if>
+            </div>
+            <div style="margin-left:75px">
+              <h3><a href="{:U('group/Group/index', array('gid'=>$group['id']))}"> {$group['name']}</a></h3> 
+              <p><span class="mr10">成员：{$group['membercount']}</span></p>
+              <p><span class="f12px fn">创建：{$group['ctime']|friendlyDate=###,'ymd'}</span></p>
+              <p>类型：{$group['cid0']|getCategoryName}</p>
+              <p>标签：{$group['tags']}</p>
+              <p>简介：{$group['intro']}</p>
+            </div>
+            <div class="c"></div>
+          </li>
+          </volist>
+        </ul>
+       	<div class="page">{$group_list['html']}</div>
+        <div class="c"></div>
+        </div>
+      </div>
+    </div>
+    <!-- 内容 end --> 
+  </div>
+</div>
+</div>
+<!-- 内容 end --> 
+<include file="__THEME__/footer" /> 

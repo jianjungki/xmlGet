@@ -1,0 +1,37 @@
+
+<div class="supplement_box" style="width:590px;">
+    <dl>
+      <dd style="width:100%;">
+        {:W("SearchUsers",array('class'=>'line lh25','name'=>'selectedTo',)) }
+      </dd>
+    </dl>
+</div>
+
+<script>
+	function savetranscribe(){
+		var html = "";
+		if(hasSelectedNotRegUserId.length !== 0 ){
+			for(var i=0;i<hasSelectedNotRegUserId.length;i++){
+				html+='<a href="javascript:void(0)" rel="'+hasSelectedNotRegUserId[i]+'">'+$("#info_"+hasSelectedNotRegUserId[i]).text()+"</a>";
+			}
+		}
+		
+		if(hasSelectedGroupId.length !== 0 ){
+			for(var i=0;i<hasSelectedGroupId.length;i++){
+				html+='<a href="index.php?app=home&mod=Colleague&act=index&g='+hasSelectedGroupId[i]+'" target="_blank">'+$("span[id=info_g"+hasSelectedGroupId[i]+"]").html()+'</a>';
+			}
+		}
+			
+		if(hasSelectedUids.length !== 0 ){
+			for(var i=0;i<hasSelectedUids.length;i++){
+				html+='<a href="index.php?app=space&mod=View&uid='+hasSelectedUids[i]+'" rel="'+hasSelectedUids[i]+'" target="_blank">'+$("span[uid="+hasSelectedUids[i]+"]").text()+'</a>';
+			}
+		}
+
+		
+		$('#transcribeuid').val(hasSelectedUserId);
+		$('#transcribeuname').val(hasSelectedNotRegUserId);
+		$('#expertUserList').html('<div class="expert_id">'+html+'</div>');
+		
+	}	
+</script>

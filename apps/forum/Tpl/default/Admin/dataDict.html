@@ -1,0 +1,64 @@
+<include file="__THEME__/admin" />
+<link href="../Public/style.css" rel="stylesheet" type="text/css" />
+<div id="so_main" class="so_main">
+    	<div class="page_tit"></span>数据字典</div>
+<form action="{:U('forum/Admin/addDict')}" method="post">
+<div class="form">
+    <dl>
+      <dt>中文名称：</dt>
+      <dd>
+        <input class="txt" id="wlable" name="name" value="" type="text">
+    </dl>
+    <dl>
+      <dt>key值：</dt>
+      <dd>
+        <input class="txt" id="wlable" name="key" value="" type="text">
+    </dl>
+     <dl>
+      <dt>value：</dt>
+      <dd>
+        <input class="txt" id="wlable" name="value" value="" type="text">
+    </dl>
+   <div class="sea_left">
+      <input type="submit" class="btn_b" value="确定">
+    </div>
+ </div>
+</form>
+    <div class="list">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <th style="width:30px;">
+          <label for="checkbox"></label></th>
+        <th class="line_l">中文名</th>
+        <th class="line_l">key值</th>
+         <th class="line_l">value</th>
+        <th class="line_l">操作</th>
+      </tr>
+      <volist name="data['data']" id="vo">
+      <tr id="dict_{$vo.id}">
+      <td>&nbsp;</td>
+        <td>{$vo.name}</td>
+        <td>{$vo.key}</td>
+        <td>{$vo.value}</td>
+        <td><a class="mr5" href="{:U('forum/Admin/editDict',array('id'=>$vo['id']))}">编辑</a><a href="javascript:void(0)" onClick="delDict({$vo['id']})">删除</a</td>
+      </tr>
+ 	</volist>
+    </table>
+     <div class="Toolbar_inbox">
+       <div class="page right">{$list['html']}</div>
+    </div>
+  </div>
+    </div>
+    
+   <script type="text/javascript">
+	function delDict(id){
+		if(confirm("此项是系统配置，确认要删除吗？")){
+			$.post("{:U('forum/Admin/delDict')}",{id:id},function(txt){
+				if(txt){
+					window.location.reload();
+				}
+			});
+		}
+	}
+	</script>
+    

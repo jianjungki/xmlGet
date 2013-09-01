@@ -1,0 +1,95 @@
+<div style="float:right;background: #F9F9F9;width:230px;margin-bottom: 20px;"> 
+<div class="add_app_right" style="border-top: solid #F0F0F0 1px;">
+	<div style="line-height: 60px;">
+		<span style="font-size:15px;line-height: 30px;position:relative;"><b>应用搜索</b></span>
+		<form action="{:U('home/Index/doSearchApp')}" method="post" onsubmit="searchapp()" id="search_form">
+			<input type="text" name="app_name" class="text" style="width: 100px;margin-right: 10px;" value="{$checkname}">
+			<input class="btn_b" type="submit" value="搜索"/>
+			<input type="hidden" value="全部" name="app_type" id="apptype"/>
+			<input type="hidden" value="0" name="app_type_id" id="apptypeid"/>
+		</form>
+	</div>
+</div>
+<div class="add_app_right">
+	<span style="font-size:15px;line-height: 30px;position:relative;top:10px;"><b>应用分类</b></span>
+	<div class="search_select">
+		<ol>
+			<li id="type_0">
+				<a href="javascript:void(0);" onclick="checkit(0)">全部</a>
+			</li>
+			<volist name="app_type" id="vo">
+				<li  id="type_{$vo.id}"  alt="{$vo.name}">
+					<a href="javascript:void(0);" onclick="checkit({$vo.id})">{$vo.name}
+				</li></a>
+			</volist>
+		</ol>
+	</div>
+	</div>
+
+<div class="add_app_right">
+	<div class="tabMenu" style="height:30px;background:none;">
+		<ol>
+			<li>
+				<a href="javascript:void(0);" onclick="changetab('install');" class="on" id="first"><h2>安装榜</h2></a>
+			</li>
+			<li>
+				<a href="javascript:void(0);" onclick="changetab('good');" id="second"><h2>评分榜</h2></a>
+			</li>
+		</ol>
+	</div>
+	<div class="mod_ranking clearfix" id="installed">
+		<dl class="fans_toplist">
+			<dt>
+				<span class="right">安装数量</span>应用
+			</dt>
+			<volist name="installapp" id="vo">
+				<php>
+					if($key>2){ $class='no'; }else{ $class='no top'.($key+1); }
+				</php>
+				<dd>
+					<span>{$vo['add_num']}</span>
+					<em class="{$class}">{$key+1}</em>
+					<a href="http://localhost/sns/index.php?app=group&amp;mod=Group&amp;act=index&amp;gid=1">
+					<php>
+						if($vo['host_type']!=0){
+					</php> <img src="{$vo['icon_url']}" class="userPhoto" width="15px" height="15px">
+					<php>
+						}else{
+					</php> <img src="{:getAppIconUrl($vo['icon_url'],$vo['app_name']);}" class="userPhoto" width="15px" height="15px">
+					<php>
+						}
+					</php> </a>
+					<a target="_self" class="username" href="{:U($vo['app_name'].'/'.$vo['app_entry'].'&appid='.$vo['app_id'])}">{$vo['app_alias']}</a>
+				</dd>
+			</volist>
+		</dl>
+	</div>
+	<div class="mod_ranking clearfix" id="goodcomment" style="display: none;">
+		<dl class="fans_toplist">
+			<dt>
+				<span class="right">评分榜</span>应用
+			</dt>
+			<volist name="bestapp" id="vo">
+				<php>
+					if($key>2){ $class='no'; }else{ $class='no top'.($key+1); }
+				</php>
+				<dd>
+					<span>{$vo['avgstar']|round=###,1}</span>
+					<em class="{$class}">{$key+1}</em>
+					<a href="http://localhost/sns/index.php?app=group&amp;mod=Group&amp;act=index&amp;gid=1">
+					<php>
+						if($vo['host_type']!=0){
+					</php> <img src="{$vo['icon_url']}" class="userPhoto" width="15px" height="15px">
+					<php>
+						}else{
+					</php> <img src="{:getAppIconUrl($vo['icon_url'],$vo['app_name']);}" class="userPhoto" width="15px" height="15px">
+					<php>
+						}
+					</php> </a>
+					<a target="_self" class="username" href="{:U($vo['app_name'].'/'.$vo['app_entry'].'&appid='.$vo['app_id'])}">{$vo['app_alias']}</a>
+				</dd>
+			</volist>
+		</dl>
+	</div>
+</div>
+</div>

@@ -1,0 +1,21 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script>
+var weibo = $.weibo({
+  timeStep : 60000
+});
+</script>
+<div class="content_holder">
+<div class="content content_bg"><!-- 内容 begin  -->
+  <include file="_left" />
+  <div class="main no_l">
+    <div class="mainbox">
+		{:Addons::addonsHook($_REQUEST['addon'],$_REQUEST['hook'])}
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+</div>
+<!-- 内容 end --> 
+{:Addons::hook('weibo_js_plugin')}
+<include file="__THEME__/footer" />

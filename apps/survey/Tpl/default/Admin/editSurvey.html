@@ -1,0 +1,120 @@
+<include file="public/admin/header.html" />
+<if condition="$id">
+<script type="text/javascript" src="__PUBLIC__/js/jquery-ui-1.8.6.custom.min.js"></script>
+<link href="../Public/css/admin.css" rel="stylesheet" type="text/css"  />
+<style>
+.ui-state-highlight { height: 1.5em; line-height: 1.2em; background-color:#eef2f8 }
+</style>
+<script>
+$(function() {
+	var status = '{$_GET['status']}';
+	if (1 == status) {
+		ui.success( '操作成功' );
+	}
+
+    $( "#sortable_question" ).sortable({
+        placeholder: "ui-state-highlight"
+    });
+    $( "#sortable_question" ).disableSelection();
+});
+</script>
+
+<script type="text/javascript">
+var survey_id = '{$id}';
+var ctrl = function(name){
+};
+ctrl.prototype = {
+	del:function(id){
+		var id = id ? id : getChecked();
+		id = id.toString();
+		if(id=='' || id==0){
+			ui.error('没有指定问题');
+			return false;
+		}
+	    if (confirm("确认删除选定的问题？")) {
+	        $.post( '{:U('survey/Admin/deleteQuestion')}',{id:id,survey_id:survey_id},function(txt){
+	        	txt = eval('(' + txt + ')');
+	        	if (1 == txt.status) {
+	                var id_list = id.split( ',' );   
+	        		if (id_list.length > 1) {
+		                for (var j=0 ; j< id_list.length ; j++) {
+		                	$('#list_' + id_list[j]).remove(); 
+		                }
+	        		} else {
+		                $('#list_' + id).remove();
+	        		}
+	                ui.success( "操作成功" );
+	            } else {
+	            	ui.error(txt.info);
+	            }
+	        });
+	    }
+	}
+};
+var c = null;
+</script>
+</if>
+<div class="so_main">
+  <div id="editTpl_div">
+  	<div class="page_tit"><if condition="$id">编辑<else />添加</if>问卷</div>
+	
+	<div class="form2">
+	<form method="post" action="{:U('survey/Admin/saveSurvey')}">
+	<if condition="$id"><input type="hidden" name="id" value="{$id}"></if>
+    <dl>
+      <dt>标题：<span>*</span></dt>
+      <dd>
+        <input name="title" type="text" value="{$title}" style="width:360px;" class="text">
+	  </dd>
+    </dl>
+    <dl>
+      <dt>描述：<span>&nbsp;</span></dt>
+      <dd>
+      	<textarea name="description" id="description" style="width:360px;height:100px" class="text">{$description}</textarea>
+	  </dd>
+    </dl>
+
+    <if condition="$id">
+    <dl class="">
+      <dd>
+      	<input type="button" class="btn_b" onclick="ui.box.load( '{:U('survey/Admin/editQuestion', array('survey_id'=>$id))}',{title:'添加问题'});" value="添加问题" />
+	  </dd>
+    </dl>
+
+	<div class="list">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" >
+			<tr>
+				<th class="line_l" width="5%">顺序</th>
+				<th class="line_l" width="73%" >问题（可按住鼠标左键，进行拖动排序）</th>
+		        <th class="line_l">操作</th>
+			</tr>
+			<tr>
+				<td colspan="99" style="border:0">
+					<ul id="sortable_question" class="list_t">
+					  <volist name="list" id='fetch'>
+						<li id="list_{$fetch.question_id}">
+							<div class="c1">{:++$firstRow}</div>
+							<div class="c2">{$fetch['title']}</div>
+ <div class="c3"><a href="javascript:void(0)" onclick="ui.box.load( '{:U('survey/Admin/editQuestion', array('id'=>$fetch['question_id'], 'survey_id'=>$id))}',{title:'编辑问题'});">编辑</a>
+							<a href="javascript:void(0)" onclick="c.del({$fetch.question_id})">删除</a>
+							<input type="hidden" name="question_id[]" value="{$fetch.question_id}"/></div></li>
+					  </volist>
+					</ul>
+				</td>
+			</tr>
+		</table>
+	</div>
+	</if>
+
+    <div class="page_btm" style="border-top:0">
+        <if condition="$id"><input type="submit" class="btn_b" value="提交" /><a href="{:U('survey/Survey/survey', array('id'=>$id))}" class="btn_a ml5" target="_blank"><span style="padding-left:10px; padding-right:20px;">预览</span></a>
+        <else /><input type="submit" class="btn_b" value="创建" /></if>
+    </div>
+	</form>
+  </div>
+  </div>
+</div>
+<include file="public/admin/footer.html" />
+<script>
+c = new ctrl();
+</script>

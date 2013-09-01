@@ -1,0 +1,384 @@
+<include file="__THEME__/header" />
+<include file="../Public/forum_header" />
+
+<style>
+	.expert_id a{ margin-left:5px;}
+	.choice-list li{display:block;}
+</style>
+
+<div class="contents">
+  <div>
+    <h3 class="box_tit"><div class="box_tit_r"><strong>发表投票</strong></div></h3>
+    <div class="add_vote" style="width:99.8%; overflow:hidden; padding:20px 0">
+    <input type="hidden" id="bbs_is_second" value="<php>if($defaultCategory != false){ echo true;}else{ echo false; } </php>"/>
+	<form name="voteForm" action="{:U('forum/Do/post')}" method="post" onsubmit="return checkForm();return false;" autocomplete="off">
+	<input type="hidden" name="board" id="bbs_category" value="{$fid}">
+	<input type="hidden" name="vote" id="bbs_category" value="1">
+	
+      <table align="left" style="line-height:25px; float:left" width="99%">
+        <tr height="30">
+          <td align="right" width="15%"><font color="red">*</font> {:L('edit_title')}：</td>
+          <td align="left" width="83%">         
+            <php>if( $tclasslist  ){</php>
+	          	<select name="tclass" id="tclass" class="in_put">
+	          	   <option value="0" rel="0">选择分类</option>
+		       			<volist id="vo" name="tclasslist">
+		       				<php>$selected=($_GET['cate']==$key)?'selected':''</php>
+		          			<option value="{$key}" rel="{$vo.template}" {$selected}>{$vo.name}</option>
+						</volist>
+	          	</select>
+          	<php>}</php>
+			<input type="text"  name="title" id="title" class="in_put" style="width:357px;" value=""/></td>
+
+<script type="text/javascript">
+function check_add_vote() {
+	var flag = 0;
+	$(".vote_opt").each(function (i) {
+		if($.trim($(this).val())) flag++;
+	});
+	if(flag<2){
+		alert("至少填写2个选项!");
+		return false;
+	}
+	var typ = $( '#vote_type' ).val();
+	if( typ > flag-1 ){
+	  alert( '投票选项不得少于可投选项限数' ) ;
+	  return false;
+	}
+	return true;
+}
+	
+var flag = 1;
+var num_limit=4;
+function check_vote() {
+	var title = $.trim($("#vote_title").val());
+	if(!title){
+		alert("{:L(add_0001)}");
+		return false;
+	}
+	flag = 0;
+	$(".vote_opt").each(function (i) {
+		if($.trim($(this).val())) flag++;									
+	})
+	if(flag<2){
+		alert("{:L(add_0032)}");
+		return false;
+	}
+	var type = $( '#vote_type' ).val();
+	if( type > flag-1 ){
+	  alert( '{:L(add_0033)}' ) ;
+	  return false;
+	}
+}
+
+function more(){
+	var new_vote = $( '#vote_another' ).clone();
+	if( flag == 1 ){
+		flag += $('.vote_opt').size();
+	}
+
+	new_vote.removeAttr("id").children( '.tempAnother' ).html( "<span style='width:10px; display:inline-block'></span>{:L(add_0017)} "+flag+"：" ).show();
+	var va = flag-1;
+	$('#vote_type').append("<option value='"+va+"'>最多可选"+flag+"项</option>");
+	new_vote.find( 'input' ).val( '' );
+	flag++;
+
+	$( '#vote_more_opts' ).before( new_vote );
+}
+</script>
+
+<tr height="30">
+	<td align="right" valign="top" class="pt10" width="15%"><span style="width:10px; display:inline-block"></span>{:L(add_0009)}：</td>
+    <td align="left" width="83%" class="pt10"><textarea id="vote_explain" name="explain" rows="5" class="in_put"  style="width:57%; height:97px" ></textarea></td>
+</tr>
+<tr height="30">
+	<td align="right" width="15%" class="pt10"><span style="width:10px; color:red;display:inline-block">*</span> {:L(add_0017)} 1：</td>
+    <td align="left" width="83%" class="pt10"> <input name="opt[]" type="text" class="in_put vote_opt" id="textfield3" style="width:57%;" /></td>
+</tr>
+<tr height="30">
+	<td align="right" width="15%" class="pt10"><span style="width:10px; color:red;display:inline-block">*</span> {:L(add_0017)} 2：</td>
+    <td align="left" width="83%" class="pt10"><input name="opt[]" type="text" class="in_put vote_opt" id="textfield3" style="width:57%" /></td>
+</tr>
+
+<tr height="30">
+	<td align="right" width="15%" class="pt10"><span style="width:10px; display:inline-block"></span> {:L(add_0017)} 3：</td>
+    <td align="left" width="83%" class="pt10"> <input name="opt[]" type="text" class="in_put vote_opt" id="textfield3" style="width:57%" /></td>
+</tr>
+<tr height="30">
+	<td align="right" width="15%" class="pt10"><span style="width:10px;display:inline-block"></span> {:L(add_0017)} 4：</td>
+    <td align="left" width="83%" class="pt10"> <input name="opt[]" type="text" class="in_put vote_opt" id="textfield3" style="width:57%" /></td>
+</tr>
+
+<tr height="30">
+	<td align="right" width="15%" class="pt10"><span style="width:10px;display:inline-block"></span> {:L(add_0017)} 5：</td>
+    <td align="left" width="83%" class="pt10"><input name="opt[]" type="text" class="in_put vote_opt" id="textfield3" style="width:57%" /></td>
+</tr>
+<tr height="30" id="vote_another">
+	<td align="right" width="15%" class="tempAnother pt10"><span  style="width:10px;display:none"></span> {:L(add_0017)} 6：</td>
+    <td align="left" width="83%" class="pt10"><input name="opt[]" type="text" class="in_put vote_opt" id="textfield3" style="width:57%" /></td>
+</tr>
+<tr height="30" id="vote_more_opts">
+	<td align="right" width="15%">&nbsp;</td>
+    <td align="left" width="83%"><a id="add_more" href="javascript:more()">{:L(add_0004)}</a></td>
+</tr>
+
+<tr height="30">
+	<td align="right" width="15%"><span style="width:10px;display:inline-block"></span> {:L(add_0008)}：</td>
+    <td align="left" width="83%">
+    	<select id="vote_type" name="type" class="in_put_01">
+			<option value="0">单选</option>
+			<option value="1">最多可选2项</option>
+			<option value="2">最多可选3项</option>
+			<option value="3">最多可选4项</option>
+			<option value="4">最多可选5项</option>
+			<option value="5">最多可选6项</option>
+		</select>
+	</td>
+</tr>
+<tr height="30">
+	<td align="right" width="15%"><span style="width:10px;display:inline-block"></span> {:L(add_0007)}：</td>
+    <php>
+						$now_year  = date('Y');
+						$now_month = date('m');
+						$now_day   = date('d');
+					</php><td align="left" width="83%"> <input type="radio" class="deadline_type" name="deadline_type" id="deadline_type_7" value="7" checked="checked"/> {:L(add_0028)} 
+						<input type="radio" class="deadline_type" name="deadline_type" id="deadline_type_30" value="30" /> {:L(add_0015)} 
+						<input type="radio" class="deadline_type" name="deadline_type" id="deadline_type_u" value="u" /> {:L(add_0029)} <!-- TODO 灰色 -->
+						<select name="year" id="vote_year" class="in_put_01" onchange="YYYYDD(this.value,document.voteForm.month,document.voteForm.day)"></select>
+						{:L(year)}
+						<select name="month" id="vote_month" class="in_put_01" onchange="MMDD(this.value,document.voteForm.year,document.voteForm.day)"></select>
+						{:L(month)}
+						<select name="day" id="vote_day" class="in_put_01" onchange="DD()"></select>
+						{:L(day)}
+					</td>
+</tr>
+  <eq name="type" value="1">
+<tr height="30">
+	<td align="right" width="15%">&nbsp;</td>
+    <td align="left" width="83%"><input type="submit" class="btn_sea" value="{:L(add_0012)}" /></td>
+</tr>
+   </eq>   
+    <!-- LogList end  -->
+        <php>if($popedom->check("allow_post_hide") || $popedom->check("allow_post_close")){</php>
+	        <tr height="30">
+	          <td align="right" >选项：</td>
+	          <td align="left">
+			<!--
+			<php>if($popedom->check("allow_post_hide")){</php>
+          		<label><input class="mr5" name="hide" value="1" id="tags" type="checkbox" />仅内部可见</label>
+          	<php>}</php>
+			--> 
+          	 <php>if($popedom->check("allow_post_noRely")){</php>
+          		<label><input class="mr5" name="close" value="1" id="tags" type="checkbox"/>不允许回复</label>
+          	<php>}</php> 
+          	</td>
+	        </tr>
+        <php>}</php>
+        <php>if($popedom->check("allow_post_attach")){</php>
+        <tr height="30">
+          <td align="right" valign="top" class="pt5">{:L('thread_attach')}：</td>
+          <td align="left" valign="top" class="pt5">
+              <div>{:W( 'UploadAttach',array( 'uid'=>$mid , 'type'=>'forum','allow_size'=>$Core['setting']['attach_size'],'limit'=>$Core['siteSetting']['attach_num'],'allow_exts'=>$Core['setting']['attach_type'],'fid'=>$fid,'callback'=>'attach_upload_success','need_review'=>$popedom->check("attach_need_auditing")) )}</div>
+			  <div class="attach"></div>
+           </td>
+	   </tr>	   
+	   <php>}</php>
+         <tr height="40">
+          <td></td>
+          <td align="left" valign="middle">
+            <input class="btn_sea" name="" type="submit" value="发表投票" /><input class="btn_sea_n ml5"  onClick="javascript:history.back(-1)" type="button" value="{:L('edit_back')}" /></td>
+        </tr>
+      </table>
+	  	</form>
+    <!--右边警告 begin-->
+    <div class="C"> </div>
+  </div>
+  <!--右边警告 begin-->
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	checkBoard();	
+	//E	=	KISSY.Editor( "content" );
+	YYYYMMDDstart(document.voteForm.year,document.voteForm.month,document.voteForm.day);
+});
+
+//抄送
+function transcribe(){
+	$.tbox.popup("{:U('forum/Index/transcribe')}&uids="+$("#transcribeuid").val(),'{:L("thread_add_transcribe")}',{ok:'savetranscribe'});
+}
+
+//选择分类
+function selectCategory(){
+	var o = ($("#bbs_category").val())?"&class="+$("#bbs_category").val():'';
+	$.tbox.popup("{:U('forum/Index/selectCategory')}"+o,"{:L('select_full_category')}",false);
+}
+
+//确定选择
+function ok(){
+	var fid = $('#categoryList').children(":last").val();
+	var selectedTempCategory = new Array();
+	$('#categoryList').children().each(function(){
+		var temp = $(this).val()+"";
+		if ( temp == 'null' ) return;
+		selectedTempCategory.push($(this).find('option[value='+$(this).val()+']').html());
+	});
+	if( fid == null || $('#categoryList').children(":nth-child(2)").val() == null ){
+		$("#boardMessage").html('{:L("select_full_category")}',"{:L('wrong')}");
+		return false;
+	}else{
+		 $.getJSON("{:U('forum/Index/getCategory')}",{fid:fid},function(txt){
+		 		var optionlist = '';
+				if(txt){
+			 		$.each(txt,function(i,n){
+						optionlist += '<option value='+i+'>'+n+'</option>';
+					});
+				}else{
+					optionlist += '<option value=0>{:L("edit_default_tclass")}</option>';
+				}
+
+				$('#tclass').html(optionlist);
+		 });
+		 var browse_category_title = selectedTempCategory.join(' > ');
+		 $('#categorySelectedList').html(browse_category_title);
+		 $('#bbs_category').val(fid);
+		 $.tbox.close();
+	 }
+}
+
+function checkBoard(){
+	var selectedclass = $('#bbs_category').val();
+	if( selectedclass == 0 ){
+		selectCategory();
+		return false;
+	}else{
+		return true;
+	}
+	
+}
+
+var now_data =  <php>echo date('Ymd');</php>;
+function checkForm(){
+	var arr = new Array();
+	var a;
+	var b;
+	$(".vote_opt").each(function (i) {
+		if($.trim($(this).val())) 
+			arr.push($.trim($(this).val())) ;
+	});
+	for(var i=0;i<arr.length;i++){
+		for(var j=0;j<arr.length;j++){
+			if(arr[i]== arr[j] && i != j ){
+				a = arr[i];
+				b = arr[j];
+				$.tbox.no("有重复的投票选项，请重新输入!","提示");
+				setTimeout("$.tbox.close()",1500);
+				return false;
+			}
+		}
+	}
+	if(a != undefined && b != undefined && a == b){
+		return false;
+	}
+	var vote_year = $('#vote_year').val();
+	var vote_month = $('#vote_month').val();
+	if(parseInt(vote_month)<10){
+		vote_month = '0'+vote_month;
+	}
+	var vote_day  =	$('#vote_day').val();
+	if(parseInt(vote_day)<10){
+		vote_day = '0'+vote_day;
+	}
+	var choseDate = vote_year+vote_month+vote_day;
+	choseDate = parseInt(choseDate);
+	
+	if($('#deadline_type_u').attr("checked")&& choseDate < now_data){
+		$.tbox.no("你自定义时间小于当前时间，请重新选择!","提示");
+		setTimeout("$.tbox.close()",1500);
+		//提示信息
+		return false;
+	}
+	
+	var typ = $('#vote_type').val();
+	var al = arr.length -1;
+	if(typ>al){
+		$.tbox.no("最多可投项数超过选项数,请重新选择","提示");
+		setTimeout("$.tbox.close()",1500);
+		return false;
+	}
+	if( checkBoard() ){
+		if( $.trim($('#title').val()).length<1 || $.trim($('#title').val()) == "&nbsp"  ){
+			$.tbox.no("{:L('edit_un_validate')}","{:L('wrong')}");
+			$('#title').focus();
+			return false;
+		}
+	}else{
+		return false;
+	}
+	if(check_add_vote() == false) {
+		return false;
+	}
+}
+
+function YYYYMMDDstart(year,month,day)
+{
+	　　 MonHead = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+	　　 //先给年下拉框赋内容
+	　　 var y = new Date().getFullYear();
+	　　 for (var i = (y); i < (y+5); i++) //以今年为准，前30年，后30年
+	　　 year.options.add(new Option(i,i));
+	　　 //赋月份的下拉框
+	　　 for (var i = 1; i < 13; i++)
+	　　 month.options.add(new Option(i,i));
+	　　 year.value = y;
+	　　 month.value = new Date().getMonth() + 1;
+	　　 var n = MonHead[new Date().getMonth()];
+	　　 if (new Date().getMonth() ==1 && IsPinYear(year.options[year.selectedIndex].value)) n++;
+	　　 writeDay(n,day); //赋日期下拉框Author:meizz
+	　　 day.value = new Date().getDate();
+}
+function YYYYDD(str,month,day) //年发生变化时日期发生变化(主要是判断闰平年)
+{
+		var DDvalue = day.value;
+	　　 var MMvalue = month.options[month.selectedIndex].value;
+	　　 if (MMvalue == "" ){ var e = day; optionsClear(e); return;}
+	　　		var n = MonHead[MMvalue - 1];
+	　　 if (MMvalue ==2 && IsPinYear(str)) n++;
+	　　 	writeDay(n,day);
+		day.value = DDvalue;
+		$('#deadline_type_u').attr("checked","ture");
+}
+function MMDD(str,year,day) //月发生变化时日期联动
+{		
+		var DDvalue = day.value;
+	　　 var YYYYvalue = year.options[year.selectedIndex].value;
+	　　 if (YYYYvalue == "" ){ var e = day; optionsClear(e); return;}
+	　　 var n = MonHead[str - 1];
+	　　 if (str ==2 && IsPinYear(YYYYvalue)) n++;
+	　　 writeDay(n,day);
+		day.value = DDvalue;
+		$('#deadline_type_u').attr("checked","ture");
+		
+}
+function DD(){
+	$('#deadline_type_u').attr("checked","ture");
+}
+
+function writeDay(n,day) //据条件写日期的下拉框
+{
+	　　 var e = day; optionsClear(e);
+	　　 for (var i=1; i<(n+1); i++)
+	　　 e.options.add(new Option(i,i));
+}
+function IsPinYear(year)//判断是否闰平年
+{
+	 return(0 == year%4 && (year%100 !=0 || year%400 == 0));
+	}
+function optionsClear(e)
+{
+	　　 for (var i=e.options.length; i>=0; i--){
+		　　 e.remove(i);
+		}
+}
+</script>
+<include file="__THEME__/footer" /> 

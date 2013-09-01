@@ -1,0 +1,136 @@
+<include file="__THEME__/admin" />
+<link href="../Public/style.css" rel="stylesheet" type="text/css">
+<div class="so_main">
+<div class="page_tit">添加头像分组</div>
+  <div class="form2">
+  <dl>
+	<dt>分组名称：</dt>
+	<dd><input class="txt mr10" id="faceCate" type="text" name="cateName"></input><input type="button" class="btn_b" onClick="addFaceCate()" value="添加"></input></dd>
+</dl>
+</div>
+
+<div class="page_tit">上传头像</div>
+
+  <div class="form2">
+  <php>if(empty($systemFace)){</php>
+  		<P>请添加分组后再上传头像！</P>
+   <php>}else{</php>
+    <div class="tab">
+      <ul>
+      	<volist name="systemFace" id="vo">
+        <li <php>$temp = $_GET['type'];
+        if(empty($temp)){ $temp = $systemFace[0]['id'];}</php>
+          <php>if($temp == $vo['id']){</php>class="on"<php>}</php>><a href="{:U('forum/Admin/systemFace',array('type'=>$vo['id']))}">{$vo.name}</a></li>
+         </volist>
+      </ul>
+    </div>
+ 
+<php>if($temp==$type){</php>
+<div class="cr" style="width:70px;padding:5px 0 0;"> 上传头像：</div>
+ <div style="padding:0px 0 8px 10px;">{:W( 'UploadAttach',array( 'uid'=>$mid , 'type'=>"system_face" , 'faceCate'=>$type,'callback'=>'face_upload_success','allow_exts'=>'gif,jpg,jpeg','allow_size'=>500,'limit'=>0,"head"=>'true'))}</div>
+    <ul class="face_box" id="faceList">
+      <volist name="facelist" id="vo">
+        <li>
+          <div> <img src="{$vo.path|getGroupIcon}" id="sysetemFace_{$vo.id}"><br /><span>{$vo.name}</span></div>
+              <input class="checkface" type="checkbox" value={$vo.id}/><a onclick="delFace({$vo['id']})" href="javascript:void(0)" id="used_171">删除</a>
+        </li>
+      </volist>
+    </ul>
+ <div class="C"></div>
+</div>
+ <div class="mt10" style="border-top:1px solid #ddd; padding-top:10px;"><div class="page right">{$html}</div>
+     <input type="checkbox" id="allcheck" onClick="check(this)">全选</input>
+      <input class="btn_b" type="button" onClick="delFace('b')" value="删除图片" />
+      <input  class = "btn_b" type="button" onClick="delCate({$type})" value="删除该分组"/>
+      </div>
+      <php>}</php>
+<php>}</php>
+   </div>   
+
+
+<script>
+function addFaceCate(){
+	var name = $('#faceCate').val();
+	$.post("{:U('forum/Admin/doAddFaceCate')}",{name:name},function(txt){
+		txt = eval("("+txt+")");
+		if(txt.status){
+			$.tbox.yes(txt.info);
+			$('#faceCate').attr("value"," ");
+			setTimeout('reloadWindow();',1500);
+		}else{
+			$.tbox.no(txt.info);
+			setTimeout("$.tbox.close()",1500);
+			}
+	});
+}
+
+function delCate(id){
+	if(confirm("删除该分组将删除此分组以及此分组下所有的图片")){
+	$.post("{:U('forum/Admin/doDelCateFace')}",{id:id},function(txt){
+		txt = eval("("+txt+")");
+		if(txt.status){
+			$.tbox.yes(txt.info);
+			setTimeout('reloadWindow();',1500);
+			}
+	})
+}
+}
+function reloadWindow(){
+	$.tbox.close();
+	window.location.href = "{:U('forum/Admin/systemFace')}";
+}
+
+ function check(o){
+		if( o.checked == true ){
+			$('.checkface').attr('checked','true');
+		}else{
+			$('.checkface').removeAttr('checked');
+		}
+	}
+//获取已选择用户的ID数组
+ function getChecked() {
+ 	var postId = new Array();
+ 	$('.checkface').each(function(i, n){
+ 		if($(this).attr("checked")){
+ 			postId.push( $(this).val() );
+ 			}
+ 		
+ 	});
+ 	return postId;
+ }
+ function delFace(id){
+	 if(id == '' || !confirm('你确定要删除头像吗？')) return false;
+		var url = "{:U('forum/Admin/delSystemFace')}";
+		var postId;
+		if(id == 'b'){
+			postId = getChecked();
+		}else{
+			postId =  id;
+		}
+		if (!postId){
+			alert('请选择需要删除的头像！');
+			return false;
+		}
+		$.post(url,{id:postId},function(result){
+			if(result){
+				location.reload();
+			}else{
+				alert('删除失败');
+				}
+			
+		});
+	}
+  
+ function face_upload_success(info){
+	 	var faceName = info.name.split(".");
+	 	face =faceName[0];
+		var attachInfo = '<input class="attach'+info.id+'" type="hidden" name="attach[]" value="'+info.id+'|'+info.name+'"/>'+'<p><a class="attach'+info.id+'" href= javascript:void(0) onclick="deleteAttach('+info.id+')">[ 删除 ]</a>&nbsp;<span class="attach'+info.id+'"> '+info.name+'</span></p>';
+//		var attachid = '<input id="faceid" type="hidden" value="'+info.id+' />';
+		$('#faceid').val(info.id);
+		//$('#attach_upload_data').append(attachid);
+		//$('#attach_upload_data').append(attachInfo);
+		//$('#face').attr('src','<php>echo UPLOAD_URL;</php>/'+info.savepath+info.savename);
+		var attachShow = "<li><div><img src='"+'<php>echo SITE_URL . "/data/uploads/";</php>/'+info.savepath+info.savename+"' id='sysetemFace_"+info.id+"'><br/> <span>"+face+"</span></div> <div> <input class='checkface' type='checkbox' value='"+info.id+"'> </input> <a onclick='delFace("+info.id+")' href='javascript:void(0)' id='used_"+info.id+"'>删除</a></div></li>";
+		$('#faceList').append(attachShow);
+ }
+ </script>

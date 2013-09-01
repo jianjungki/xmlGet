@@ -1,0 +1,127 @@
+<include file="../Public/_header" />
+<div class="so_main">
+  <div class="page_tit"><eq name="type" value="edit">编辑组织<else/>添加组织</eq></div>
+  
+  <eq name="type" value="add">
+  <form method="post" action="{:U('admin/User/doAddOrgUser')}">
+  <else/>
+  <form method="post" action="{:U('admin/User/doEditOrgUser')}">
+  	<input type="hidden" name="uid" value="{$uid}" />
+  </eq>
+  <input name="deputyoriid" id="deputyoriid" type="hidden" value="{$deputyoriid}">
+  <div class="form2">
+    <dl class="lineD">
+      <dt>Email：</dt>
+      <dd>
+        <input name="email" id="email" type="text" value="{$email}"><span>*</span>
+        <p>组织进行登录的帐号</p>
+    </dl>
+	
+	<dl class="lineD">
+      <dt>组织全称：</dt>
+      <dd>
+        <input name="unitFullName" id="unitFullName" type="text" value="{$unitFullName}"><span>*</span>
+        <p>2-50位个中英文、数字、下划线和中划线组成</p>
+    </dl>
+	
+	<dl class="lineD">
+      <dt>组织简称：</dt>
+      <dd>
+        <input name="uname" id="uname" type="text" value="{$uname}"><span>*</span>
+        <p>2-10位个中英文、数字、下划线和中划线组成</p>
+    </dl>
+	
+    <dl class="lineD">
+      <dt>密码：</dt>
+      <dd>
+        <input name="password" id="password" type="text"><span>*</span>
+        <p>组织进行登录的密码</p>
+    </dl>
+	
+    <dl class="lineD">
+      <dt>组织联系人姓名：</dt>
+      <dd>
+        <input name="username" id="username" type="text" value="{$username}"><span>*</span>
+    </dl>
+    <dl class="lineD">
+      <dt>组织联系人电话：</dt>
+      <dd>
+        <input name="telephone" id="telephone" type="text" value="{$telephone}"><span>*</span>
+    </dl>
+    <dl class="lineD">
+      <dt>个性域名：</dt>
+      <dd>
+        <input name="domain" id="domain" type="text" value="{$domain}">
+        <p>个性域名</p>
+    </dl>
+
+        <volist name="credit_type" id="ct">
+	<dl class="lineD">
+      <dt>{$ct.alias}：</dt>
+      <dd>
+        	<input name="{$ct.name}" type="text" value="{$user_credit[$ct['name']]['credit']}" />
+      </dd>
+    </dl>
+        </volist>
+	<eq name="type" value="edit">
+	<dl class="lineD">
+      <dt>认证信息：</dt>
+      <php>if(!empty($verifydata)){</php>
+      <table style="margin:0px;">
+	        <tr><td>真实姓名：</td><td>{$verifydata.realname}</td></tr>
+	        <tr><td>联系人电话：</td><td>{$verifydata.phone}</td></tr>
+	        <tr><td>认证文件：</td><td><a href="{:U('home/Attach/download',array('id'=>$verifydata['attach_id'],'uid'=>$uid))}">{$verifydata.attachment}</a></td></tr>
+	        <tr><td>认证原因：</td><td>{$verifydata.reason}</td></tr>
+	  </table>
+      <php>}else{</php>
+      		<dd>无相关认证信息
+      <php>}</php>
+    </dl>
+    <else/>
+    <dl class="lineD">
+      <dt>用户ID：<span class="cRed pr5">*</span></dt>
+      <dd>
+        <input name="uid" id="uid" type="text" value="{$verified.uid}">
+      </dd>
+    </dl>
+
+    <dl class="lineD">
+      <dt>认证原因：</dt>
+      <dd>
+        <textarea name="reason" id="reason" cols="40" rows="3">{$verified.reason}</textarea>
+      </dd>
+    </dl>
+
+    <dl class="lineD">
+      <dt>认证资料：<span class="cRed pr5">*</span></dt>
+      <dd>
+        <textarea name="info" id="info" cols="40" rows="3">{$verified.info}</textarea>
+      </dd>
+    </dl>
+    </eq>
+	
+	<dl class="lineD">
+      <dt>是否激活：</dt>
+      <dd>
+        <label><input name="is_active" type="radio" value="1" <eq name="is_active" value="1">checked</eq>>是</label>
+        <label><input name="is_active" type="radio" value="0" <neq name="is_active" value="1">checked</neq>>否</label>&nbsp;<span style="color:red">*激活后会相应地通过认证</span>
+    </dl>
+	 
+	<dl>
+      <dt>用户组：</dt>
+      <dd>
+        <php>if($type=='add'){</php>
+        {:W('SelectUserGroup')}
+        <php>}else {</php>
+        {:W('SelectUserGroup', array('uid'=>$uid))}
+        <php>}</php>
+      </dd>
+    </dl>
+	
+    <div class="page_btm">
+      <input type="submit" class="btn_b" value="确定" />
+    </div>
+  </div>
+  </form>
+</div>
+<include file="../Public/_footer" />

@@ -1,0 +1,62 @@
+<style>
+    .checkbutton {
+        position: relative;
+        padding-right: 10px;
+        top: 18px;
+    }
+    .create_box {
+        margin: 0;
+        padding: 20px;
+        background-color: #F8F8F8;
+        border: 1px solid #EBEBEB;
+        -moz-border-radius: 3px;
+        -khtml-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        border-radius: 3px;
+        color: #666666
+    }
+    .l250 {
+        width: 230px;
+        color: #666;
+    }
+    .l400 {
+        width: 370px;
+    }
+    .w300 {
+        width: 300px;
+        background: #fff;
+        margin: 0 5px 0 0;
+    }
+</style>
+<script>
+	var toFriend = function(){
+		if($('#ui_fri_ids').val()!=''){
+			$('#hostsId').val($('#ui_fri_ids').val());
+			$('#hostform').submit();
+			ui.box.close();
+		}else{
+			ui.error('请选择主持人');
+			return false;
+		}
+		
+	}
+</script>
+<div class="create_box" style="*zoom:1;height:30px">
+	<div class="left l250">
+		同时选择多个主持人 >>
+	</div>
+	<div class="left l400">
+			<!-- 添加嘉宾-->
+			<div class="left w300">
+				{:W('ToHosts')}
+			</div>
+			<div class="left">
+				<input type="hidden" value="1" name="sendsubmit" />
+				<input type="button" class="btn_b" value="选择" onclick="toFriend(this)"/>
+				 <form action="{:U('weibo/Admin/setHost')}" method="post" id="hostform" name="hostform">
+        	       <input type="hidden" id="hostsId" name="hostsId"/>
+        	       <input type="hidden" id="topics_id" name="topics_id" value="{$topicid}"/>
+                 </form>
+			</div>
+	</div>
+</div>

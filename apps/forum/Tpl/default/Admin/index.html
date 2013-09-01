@@ -1,0 +1,39 @@
+<include file="_header" />
+<script type="text/javascript" src="../Public/admin.js" ></script>
+<script type="text/javascript" src="../Public/js/sortale.js"></script>
+<link href="../Public/style.css" rel="stylesheet" type="text/css">
+<div class="so_main">
+	<include file="_tab" />
+<div class="form">
+{$forum}
+<form id="saveThread" action="{:U('forum/admin/addThreadSetting')}" method="post">
+<div class="sort">
+	<div class="tit">
+	<div class="c1">分类名称</div>
+	<div class="line_l c3" style="width:364px">操作</div>
+	<div class="line_l c3" style="width:300px">版主</div>
+	</div>
+</div>
+<div id="rootList" class="sort">
+	{$list}
+</div>
+</div>
+<div class="list_btm"></div>
+<div class="Toolbar_inbox">
+<a href="javascript:void(0)" onclick="$('#saveThread').submit()" class="btn_a"><span>提交</span></a>
+<a href="javascript:void(0)" class="btn_a" onClick="addChildrenThread({$root},15)"><span>增加新分区</span></a>
+
+</div>
+</form>
+	<div id="addThread" style="display:none;">
+		<input type="text" value="新版块名称"/>
+		<div style="display:none">
+		<input  checked type="checkbox" value="1" />继承上级版块设置</div>
+	</div>
+</div>
+<script>
+	function changeParent(fid){
+		$.tbox.popup('{:U("forum/admin/changeParent")}'+"&fid="+fid,"转移分区",{ok:"doChangeParent"});
+	}
+</script>
+<include file="_footer" />

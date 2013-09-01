@@ -1,0 +1,65 @@
+<include file="../Public/manage_top" />
+<link href="../Public/css/bbs.css" rel="stylesheet" type="text/css" />
+<link href="../Public/css/layout.css" rel="stylesheet" type="text/css" />
+<link href="../Public/css/public.css" rel="stylesheet" type="text/css" />
+<div class="content zbg">
+	
+  <div class="bbs_left">
+ 	<include file="../Public/manage_left" />
+  </div>
+  <div class="bbs_main">
+    <div class="top_address">
+<span class="edi_adder">
+			{$_topnav}
+	  </span></div>
+	  <php>
+
+	  	
+      	function paramLog($content){
+      		  	$filterTemp = array("script","iframe","alert");
+			  	$filter = array();
+			  	foreach($filterTemp as $value){
+			  		$filter[0][] = $value;
+			  		$filter[1][] = chunk_split($value,2,"-"); 
+			  	}
+			foreach($content as $key=>$value){
+				if(is_array($value)){
+					$str[] .= $key."=(".paramLog($value).")";
+				}else{
+					$temp = str_ireplace($filter[0],$filter[1],t($value));
+					$str[] = $key ."=".$temp;
+				}
+			}      		
+			return implode(";",$str);
+      	}
+	  </php>
+      <div class="tit_line">{:L('base_nav_log')}</div>
+	  <php>if(empty($data)){</php>
+        <div class="no_data">暂无数据</div>
+     <php>}else{</php>       
+	    <div class="list_box1">
+	      <dl>
+	        <dt>
+	          <div style="width: 18%;" class="cl">{:L('log_do_time')}</div>
+	          <div style="width: 15%;" class="cl">{:L('log_do_author')}</div>
+	          <div style="width: 36%;" class="cl">{:L('log_do_event')}</div>
+	          <div style="width: 30%;" class="cl">查看参数</div>
+	        </dt>
+			<volist id="vo" name="data">
+	        <dd class="det_l">
+	          <div style="width: 18%;" class="cl">{$vo.cTime|friendlyDate=###,'full'}</div>
+	          <div style="width: 15%;" class="cl lh16">{$vo.uid|getUserName}<br/>
+	           </div>
+	          <div style="width: 36%;" class="cl">{$vo.content}</div>
+	          <div style="width: 30%;" class="cl lh16"><php>echo paramLog(unserialize($vo['param']));</php></div>
+	          <div class="C"></div>
+	        </dd>
+			</volist>
+	      </dl>
+	    </div>
+	    <div class="page mt5 alR mb20">{$topic['html']}</div>
+	 <php>}</php>
+  </div>
+<div class="C"></div>
+</div>
+<include file="__THEME__/footer" /> 

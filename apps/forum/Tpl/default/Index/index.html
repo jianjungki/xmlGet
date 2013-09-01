@@ -1,0 +1,121 @@
+<include file="__THEME__/header" />
+<link href="../Public/css/public.css" rel="stylesheet" type="text/css" />
+<link href="../Public/css/bbs.css" rel="stylesheet" type="text/css" />
+<link href="../Public/css/theme.css" rel="stylesheet" type="text/css" />
+<div>
+<div class="content line_bule">
+  <div class="contents_left">
+	<volist name="list" id="vo">
+		<php>$first = $vo;</php>
+     	<div class="bli">
+        <h3 class="box_tit">
+        	<div class="box_tit_r"><strong>{$first['name']}</strong></div>
+        </h3>
+        <div class="bli_box">
+		<ul style=" padding-top:10px;overflow:hidden;*zoom:1;">
+	        <php>foreach($first['children'] as $so){</php>
+	        <php>if($so['fid'] == $Core['dict']['policy_study']['value'] && $mid==-1){
+	        continue;
+	        }</php>
+        	<li>
+				<div class="headpic63 L"><a href="{:U('forum/List/index',array('class'=>$so['fid']))}" target="_blank"> <img src="{$so.forum_icon}"></a></div>
+				<div class="LC">
+                <h5><a href="{:U('forum/List/index',array('class'=>$so['fid']))}" title="{$so.name}">{$so.name}</a></h5>
+                <p class="LC_p">主题: <php>echo $so['t_count']?$so['t_count']:0;</php>, 回复: <php>echo $so['p_count']?$so['p_count']:0;</php></p>
+                <p class="LC_p">最后发表:<em> <?php if(empty($so['lastpost_time'])) { echo '无';} else {echo friendlyDate($so['lastpost_time'], 'full');} ?></em></p>
+				</div>
+				<div class="C"></div>
+			</li>
+            <php>}</php>
+            <div class="c"></div>
+		</ul>
+		</div>
+		</div>
+	</volist>
+	  <!--
+    <php>if($mid != -1){</php>  
+    <php>$second = $list[1];</php>
+    
+    <div class="bli"  style="margin-bottom:20px">
+        <h3 class="box_tit">
+          <div class="box_tit_r">
+            <strong>{$second.name}</strong></div>
+        </h3>
+        <php>
+        $topicCount = 0;
+        $postCount  = 0;
+        $lastPost = array();
+        foreach($second['children'] as $vo){
+        	$topicCount += $vo['t_count'];
+        	$postCount  += $vo['p_count'];
+        	$lastPost[] =  $vo['lastpost_time'];
+        }
+        sort($lastPost);
+        $lastPost = array_pop($lastPost); 
+        </php>
+        <div class="bli_box_help">
+		  <div class="pic_left"><div class="headpic63 cl">
+          	<img height="45" width="45" src="../Public/images/sub_pic.gif"></div><div class="city_con"><p class="tit">求助信息</p><p>主题:{$topicCount} , 回复: {$postCount} </p><p>最后发表:<em> {$lastPost|friendlyDate=###,'full'}</em></p></div><div class="C"></div>
+		  </div>
+          <div class="city_name">
+	          <ul>
+		          <volist name="second.children" id="vo">
+		          	<li><a title="{$vo.name}" href="{:U('forum/List/index',array('class'=>$vo['fid']))}">{$vo.name}</a></li>
+				  </volist>
+			  </ul>
+		  </div>
+          <div class="C"></div>
+        </div>
+      </div>
+      <php>}</php>
+	  -->
+  </div>
+  <div class="contents_right nar">
+     <div class="mod_create">
+       <a href="javascript:void(0);" onclick="selectCategory();" title="发表{$ts['app']['app_alias']}" class="btn_forum_c"></a>
+    </div>
+     <div class="right_box">
+         <h4>首页公告</h4>
+         <ul>
+         	<volist name="afficheInfo" id="vo">
+         		<li><a target="_blank" href="{:U('forum/Detail/index',array('id'=>$vo['tid']))}" title="{$vo['title']}">{$vo['title']|getShort=###,20}</a></li>
+         	</volist>
+       </ul>
+     </div>
+  </div>
+  <div class="C"></div>
+</div>
+</div>
+
+<link href="../Public/layout.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../Public/js/jquery-1.4-and-jquery-ui-core-1.7.2.js"></script>
+<script type="text/javascript" src="../Public/js/dragable.js" ></script><script type="text/javascript" src="../Public/js/lang.js"></script>
+<script type="text/javascript">
+	var LANGUAGE_NAME = 'zh-cn';
+	var AJAX_URL = "{:U('forum/Admin/selectBlockCate')}";
+	var POST_FORUM = "{:U('forum/Index/post')}";
+</script>
+<script type="text/javascript" src="../Public/js/tbox/tbox.js" ></script>
+<script type="text/javascript" src="../Public/js/json2select.js"></script>
+<script type="text/javascript">
+function selectCategory() {
+	$.tbox.popup(AJAX_URL,"选择版块",true);
+}
+
+function ok(){
+	var cidarr = new Array();
+	$('#categoryList').children().each(function() {
+		var temp = $(this).val() + "";
+		if(temp == 'null') {
+			return;
+		}
+		cidarr.push($(this).val());
+	});
+	
+	var len = cidarr.length; 
+	var cid = cidarr[len-1];
+	
+	window.open(POST_FORUM + '&class=' + cid);
+}
+</script>
+<include file="__THEME__/footer" /> 

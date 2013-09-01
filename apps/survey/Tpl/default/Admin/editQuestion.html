@@ -1,0 +1,117 @@
+<style>
+.sec_widget{}
+#widget_data {overflow:hidden; zoom:1;}
+#widget_data li {margin-bottom:5px; float:none;}
+.ta_h_1 .h_1{ padding:5px;}
+</style>
+<form id="edit_question" action="{:U('survey/Admin/saveQuestion')}" method="post">
+<div class="ta_h_1">
+<div class="h_1">标题：<span class="cRed mr5">*</span><input class="text" name="title" type="text" value="{$title}" style="width:360px;"></div>
+<div class="h_1"><span style="vertical-align:top">描述：</span><span class="cRed mr5">&nbsp;</span><textarea class="text" name="description" style="width:360px;height:70px">{$description}</textarea></div>
+<div class="h_1">类型：<span class="cRed mr5">*</span>
+    <select id="select_widget" name="widget">
+	    <volist name="widget_options" id="w_v">
+	    <option value="{$key}">{$w_v}</option>
+		</volist>
+	</select></div>
+	
+	<div id="widget_data_box" class="h_1">
+    <div class="left sec_widget">选项：<span class="cRed mr5">*</span></div>
+		<ul id="widget_data" <if condition="!$data">style="display:none;"</if>>
+			<volist name="data" id="d_v">
+			<li><input type="{$widget|strtolower}" class="li_type reado mr5" disabled="disabled" /><input class="text" type="text" name="data[{$key}]" value="{$d_v}" /><a class="ml5" href="javascript:;" onclick="edit_question.delete_option(this)">删除</a></li>
+			</volist>
+		</ul>
+		<div style="padding-left:40px;"><input class="text" type="text" id="new_option" /><input class="ml5 btn_b" type="button" onclick="edit_question.add_option();return false;" value="添加" /></div>
+        <div class="clear"></div>
+	</div>
+<div class="h_1" style=" padding-left:50px; padding-top:10px;"><if condition="$id"><input type="hidden" name="question_id" value="{$question_id}" /></if>
+	<if condition="$survey_id"><input type="hidden" name="survey_id" value="{$survey_id}" /></if>
+	<input type="submit" class="btn_b" value="提交" /></div></div>
+</form>
+<script>
+var edit_question = {
+	widget:'{$widget}',
+	default_widget:'CheckBox',
+	max_number:'{$data|array_flip|max|intval}',
+	LI_TYPE:'<input type="$TYPE$" class="li_type reado mr5" disabled="disabled" /> ',
+	HTML:'<li><input type="$TYPE$" class="reado li_type mr5" disabled="disabled" /> '
+		 + '<input class="text"  type="text" name="data[$NUMBER$]" value="$OPTION$" /> '
+		 + '<a class="ml5" href="javascript:;" onclick="edit_question.delete_option(this)">删除</a></li>',
+	input_type:function() {
+		var type = '';
+		switch(this.widget){
+			case 'Radio':
+				type = 'radio';
+				break;
+			case 'CheckBox':
+				type = 'checkbox';
+				break;
+			default:
+				type = '';
+				break;
+		}
+		return type;
+	},
+	data_box:function() {
+		if ('TextArea' == this.widget) {
+			$('#widget_data_box').css('display', 'none');
+		} else {
+			$('#widget_data input.li_type').remove();
+			$('#widget_data li').prepend(this.LI_TYPE.replace('$TYPE$', this.input_type()));
+			$('#widget_data_box').css('display', 'block');
+		}
+	},
+	init:function() {
+		$(document).ready(function(){
+			var $select_widget = $('#select_widget');
+			// 初始化
+			edit_question.widget = edit_question.widget ? edit_question.widget : edit_question.default_widget;
+			$select_widget.val(edit_question.widget);
+			edit_question.data_box();
+
+			// 监听
+			$select_widget.change(function(){
+				edit_question.widget = $(this).val();
+				edit_question.data_box();
+			});
+
+			$('#edit_question').submit(function(){
+	            if ('TextArea' != edit_question.widget && !$('#widget_data li').html()) {
+	                ui.error('请设置选项');
+	                $('#new_option').focus();
+	                return false;
+	            }
+	            return true;
+			});
+
+			// 排序
+		    $( "#widget_data" ).sortable({
+		        placeholder: "ui-state-highlight"
+		    });
+		});
+	},
+	add_option:function()
+	{
+		var option =  $('#new_option').val();
+		var html = this.HTML.replace('$TYPE$', this.input_type())
+				   .replace('$NUMBER$', ++ this.max_number).replace('$OPTION$', option);
+		if (!option) {
+			ui.error('请输入选项内容');
+			$('#new_option').focus();
+			return false;
+		}
+		$('#widget_data').css('display', 'block').append(html);
+		$('#new_option').val('');
+	},
+	delete_option:function(e)
+	{
+		$(e).parent().remove();
+		var html = $('#widget_data li').html();
+		if (!html) {
+			$('#widget_data').css('display', 'none');
+		}
+	}
+};
+edit_question.init();
+</script>

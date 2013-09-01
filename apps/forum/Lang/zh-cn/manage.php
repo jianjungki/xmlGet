@@ -1,0 +1,52 @@
+<?php 
+return array(
+	"do_point"                      => "将",
+	"revert"                        => "还原",
+	"delete"                        => "删除",
+	"base_title"                    => "版块管理 - 论坛",
+	"base_nav_thread"               => "主题管理",
+	"base_nav_board"                => "版块设置",
+	"base_nav_log"                  => "管理日志",
+	"base_nav_tclass"               => "分类管理",
+	"base_board_thread"             => "版块主题",
+	"base_thread_recycle"           => "主题回收站",
+	"base_thread"                   => "主题",
+	"back_to_index"                 => "返回前台",
+
+	"thread_movetorecycle"          => "移入回收站",
+	"thread_movetorecycle_info"     => "确认要将所选主题移入回收站吗？",
+	"thread_reverttopic"            => "还原主题",
+	"thread_reverttopic_info"       => "确认要将所选主题还原吗？",
+	"thread_deletetopic"            => "彻底删除",
+	"thread_deletetopic_info"       => "确认要删除所选主题吗？",
+	"thread_movetocategory"         => "转移至版块",
+	"thread_movetocategory_info"    => "转移主题版块",
+	"thread_movetocategory_info2"   => "确认要将所选主题转移至",
+	"thread_movetotclass"           => "转移至分类",
+	"thread_movetotclass_info"      => "转移主题分类",
+	"thread_movetotclass_info2"     => "更改主题分类",
+	"thread_movetotclass_info3"     => "确认要将所选主题转移新的分类吗？",
+
+	"log_do_time"                   => "时间",
+	"log_do_author"                 => "操作人",
+	"log_do_event"                  => "事件",
+	"log_do_topicnum"               => "个主题",
+	"log_do_movetotcategory"        => "个主题移转移至新版块",
+	"log_do_movetotclass"           => '个主题移转移至新分类',
+	"log_do_movetotrecycle"         => "个主题移入回收站",
+
+
+	"set_board_rule"                => "板块规则",
+	"set_board_remind"              => "温馨提示",
+	"set_board_message"              => "无论您是专家还是草根，在这里都会受到以文章论英雄的同等对待，同时也会对您的精品内容进行包装、宣传、推广。来这里扩大申请标准：<br />1. 大部分的作品是真实的原创文;<br />2. 有一定数量的作品积累理解hi是一个聚焦于工作的知识分享平台，因此我的博客会聚焦于：技术分享、业务思考、管理经验等方面。",
+ 
+	"tclass_name"                   => "分类名称",
+	"tclass_thread_num"             => "主题数",
+	"tclass_delete"                 => "删除",
+	"tclass_delete_confirm"         => "你确定要删除此分类吗？",
+	"tclass_delete_success"         => "删除成功",
+	"tclass_delete_error"           => "删除失败",
+	"tclass_add"                    => "新增",
+	"tclass_save_info"              => "拖动组件可进行排序，修改完毕后点击“确定”进行保存",
+)
+?>

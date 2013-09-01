@@ -1,0 +1,35 @@
+
+
+
+<php>if(ACTION_NAME == 'attach'){ $type = 'nocheck';}</php>
+
+
+<php>if($Core['isWebAdmin']){</php>
+<div class="wmenu">
+<h3 class="box_tit"><div class="box_tit_r"><strong>版块列表</strong></div></h3>
+
+<volist id="vo" name="allBlock">
+	<volist id="v" name="vo['children']">
+	<ul >
+		<li> <a <php> if($_GET['class']==$v['fid']){ </php> class="on" <php>}</php> href="{:U('forum/Manage/',array('act'=>ACTION_NAME,'class'=>$v['fid'],'type'=>$type))}"> {$v.name}</a></li>
+	</ul>
+	</volist>
+</volist>
+</div> 
+<php>}elseif($Core['isAdmin']){</php>
+
+
+<div class="wmenu">
+<h3 class="box_tit"><div class="box_tit_r"><strong>版块列表</strong></div></h3>
+<volist id="vo" name="myAllBlock">
+	
+
+		<ul>
+		<li> <a <php>if($_GET['class']==$vo){</php>class="on"<php>}</php> href="{:U('forum/Manage/',array('act'=>ACTION_NAME,'class'=>$vo,'type'=>$type))}">{$vo|getBlockName}</a></li>
+		</ul>
+		
+	
+</volist>
+
+</div>
+<php>}</php>

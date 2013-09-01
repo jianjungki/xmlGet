@@ -1,0 +1,68 @@
+<include file="__THEME__/admin" />
+ <script type="text/javascript" src="__PUBLIC__/js/json2select.js" ></script>
+<link href="../Public/style.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript"  src="../Public/WP/WdatePicker.js"></script>
+
+<p>选择版块</p><a class="pl5" href="javascript:void(0)" onClick="selectCategory()">选择版块</a>
+<span id="cateList" class="insty"></span> &nbsp;&nbsp;&nbsp;
+<input type="hidden" name="fid" value="" id='fid' />
+<select name="type">
+	<option value="1">所有版块</option>
+	<option value="2">用户</option>
+	<option value="3">昵称</option>
+	<option value="4">帖子</option>
+
+</select>
+<input name="fromTime" onClick="WdatePicker()" type="text">&nbsp;至 &nbsp;<input name="toTime" onClick="WdatePicker()" type="text"><input class="btn_b ml10" type="submit" value="导出统计"></input>
+
+
+<script>
+function selectCategory(){
+	$.tbox.popup(URL+"&act=selectBlockCate","选择版块",true);
+}
+
+function ok(){
+	var selectedTempCategory = new Array();
+	var cidarr=new Array();
+	$('#categoryList').children().each(function(){
+		var temp = $(this).val()+"";
+		if ( temp == 'null' ) return;
+		selectedTempCategory[$(this).find('option[value='+$(this).val()+']').html()] = temp;
+
+		//if(cid=='') cid = $(this).val();
+		//else		cid += ','+$(this).val();
+		cidarr.push($(this).val());
+	});
+	
+	var len = cidarr.length; 
+	var cid = cidarr[len-1];
+	
+	var length = 0;
+	var tempArray = new Array();
+	var tempArray2 = new Array();
+	for(var one in selectedTempCategory){
+		if(one == 'remove') continue;
+		length ++;
+		tempArray2.push(one);
+		tempArray.push(selectedTempCategory[one]+"|"+one);
+	}
+	delete selectedTempCategory;
+	if(length == 0){
+				$.tbox.no("{:L('ask_please_select')}","{:L('ask_remind_info')}");
+				setTimeout("$.tbox.close()",1500);
+				return;
+	}
+	browse_category_id = tempArray.join(',');
+	browse_category_title = tempArray2.join(' > ');
+	
+	//子层
+	var html = '<input class="in_mr5" id="categoryId" name="category" type="radio" checked value="'+browse_category_id+'" />'+browse_category_title;
+	
+	$('#cateList').html(html);
+	$('#fid').val(cid);
+	$('#ca').html('');
+}
+
+
+</script>

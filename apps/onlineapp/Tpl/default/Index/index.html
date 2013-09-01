@@ -1,0 +1,291 @@
+<include file="__THEME__/header" />
+<link href="../Public/style.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/js/editor/editor/theme/change.css" rel="stylesheet"/>
+<style>
+.content{width:1002px;}
+.t_column_left{ float:left; width:130px;}
+.t_column_right{ float:left; width:858px;}
+.t_column_right li{ float:right; }
+</style>
+<!--投票插件-->
+<link rel="stylesheet" type="text/css" href="../Public/jRating.jquery.css" media="screen">
+
+<div class="content_holder">
+
+<div class="t_column iepng">
+  <div class="t_column_left"><img src="__PUBLIC__/themes/images/icon/app.png" width="128" height="39" id="icon"></div>
+  <div class="t_column_right">
+   <ul>
+   <li class="app2_right"><a href="{:U('home/Index/editapp')}"></a></li>
+   <li class="app1_right"><a href="{:U('home/Index/addapp')}"></a></li>
+   </ul>
+  </div>
+</div>
+<div class="content no_bg"> 
+  <!-- 内容 begin  -->
+<include file="../Public/_mainNav" />
+  <div class="main no_l"> 
+    <!-- 右侧内容 begin  -->
+    <div class="mainbox">
+    <!--<include file="../Public/_indexRight" />-->
+    <div class="mainbox_app">
+				<div>
+					
+				<div class="appinfo iepng" >
+						<php>if($host_type==0){</php>
+							<img src="{:getAppIconUrl($large_icon_url,$app_name);}" style="height: 128px;width: 128px;"></img>
+						<php>}else{</php>
+							<img src="{$large_icon_url}" style="height: 128px;width: 128px;"></img>
+						<php>}</php><br><br>
+					<div id="appabout" >
+						<php>if(in_array($app_id,$installed) || $status==1){</php>
+							
+							<p>已添加</p>
+							
+							
+							<p class="btn_b">
+							<php>if($host_type==2&&$app_name=='onlineapp'){</php>
+							    <a href="{$link_url}">客户端下载</a>
+							  <php>}else if($host_type==1&&$app_name=='onlineapp'){</php>
+							  	<a href="{:U('onlineapp/Index/showapp',array('appid'=>$app_id))}">在线使用</a>
+							  <php>}else{</php>
+							  	<a href="{:U($app_name.'/'.$app_entry)}"><font color="#ffffff">直接打开</font></a>
+							  <php>}</php>
+							</p>
+							
+						 <php>}else{</php>
+						 	<a style="float:left;" href="{:U('home/Index/install',array('app_id'=>$app_id))}">我要添加</a>
+						 <php>}</php>
+						
+					</div>
+					<table style="margin-top: 30px;" id="shorttd">
+						<tr>
+							<td>用户数：</td>
+							<td>{$add_num}</td>
+						</tr>
+						<tr>
+							<td>应用类别：</td>
+							<td><a href="{:U('home/Index/doSearchApp',array('app_type_id'=>$category_id,'app_type'=>$category))}">{$category}</a></td>
+						</tr>
+						<tr>
+							<td>计费类型：</td>
+							<td>{$type_name}</td>
+						</tr>
+						<tr>
+							<td>评价得分：</td>
+							<td>{$avgstar}</td>
+						</tr>
+					</table>
+				</div>
+				<div> 
+					<include file="../Public/app_right"/>
+					<div class="app_score" style="float:left;">
+					<div style="line-height: 20px;font-size: 16px;margin-bottom: 20px; border-bottom:1px #e7e7e7 dashed; height:30px; font-family:'微软雅黑'"><span><b>{$app_alias}</b></span></div>
+					
+					<div class="score" >
+						<div class="pingfen_all" id="leftitem"></div>	<div id="rightitem">{$avgstar}评分</div>
+					</div>
+					<div class="score">
+						<div class="pingfen5" id="leftitem"></div>	<div id="rightitem">{$fivestar}个</div>
+					</div>
+					<div class="score">
+						<div class="pingfen4" id="leftitem"></div>	<div id="rightitem">{$fourstar}个</div>
+					</div>
+					<div class="score">
+						<div class="pingfen3" id="leftitem"></div>	<div id="rightitem">{$threestar}个</div>
+					</div>
+					<div class="score">
+						<div class="pingfen2" id="leftitem"></div>	<div id="rightitem">{$twostar}个</div>
+					</div>
+					<div class="score">
+						<div class="pingfen1" id="leftitem"></div>	<div id="rightitem">{$onestar}个</div>
+					</div>
+					
+					<div>
+				    <div class="tab-menu_app" style="text-align: center">
+						<ul>
+							<li><a href="javascript:void(0);" onclick="tabto('detail')" id="first" style="width:80px;" class="on">详情</a></li>
+							<li><a href="javascript:void(0);" onclick="tabto('comment')" id="second" style="width:80px;">评论</a></li>
+							<li><a href="javascript:void(0);" onclick="tabto('aboutit')"  id="third" style="width:80px;">相关</a></li>
+						</ul>
+					</div>
+					<div class="tabitem" id="detail">
+						<div class="theitem">
+							<span style="font-size:14px; font-family:'微软雅黑';"><b>应用简介：</b></span><br>
+							<div class="description" style="font-size: 12px;">
+								<p style="line-height: 15px;">{:getShort($description,350,"<a href='javascript:clickmore()'>更多</a>")}</p>
+							</div><br>
+							<div>
+								{:Addons::hook('home_space_middle', array('uid'=>$cid,'albumType'=>2,'appId'=>$app_id))}
+								<div class="c"></div>
+							</div>
+						</div>
+					</div>
+					<div class="tabitem" style="display: none" id="comment">
+						<volist name="data" id="message"> 
+						<div  class="theitem">
+									<div style="height: 40px;">
+										<span style="float:left;position:relative;padding-right:10px;">
+											<space uid="message['uid']" target="_blank">{uavatar=s}</space>
+										</span>
+										<div style="margin-top: 8px;position: relative;">
+											<space uid="message.uid" class="fn" target="_blank">{uname}</space>
+										</div>
+									</div>
+									<div class="c2" style="line-height: 40px; border-bottom:1px #d7d7d7 dashed;">{$message['commentinfo']}</div>
+									
+								
+						</div>
+						</volist>
+						<div  class="page" align="center">
+							{$html}
+						</div>
+					</div>
+					<div class="tabitem" style="display: none" id="aboutit">
+						<div class="theitem">
+							<span style="font-size:14px; font-family:'微软雅黑';"><b>相关应用：</b></span><br>
+							<div class="description" style="margin-top: 10px;margin-left: 10px;width:400px;">
+								<ul>
+									<volist id="vo" name="applike">
+									<li style="float:left;margin-right: 10px;text-align: center;">
+									   <div>
+									   <php>if($vo['host_type']==0){</php>
+											<img src="{:getAppIconUrl($vo['large_icon_url'],$vo['app_name']);}" style="height: 50px;width: 50px;"></img>
+										<php>}else{</php>
+											<img src="{$vo.large_icon_url}" style="height: 50px;width: 50px;"></img>
+										<php>}</php>
+										</div>
+										<span><a href="{:U('onlineapp/Index/index',array('appid'=>$vo['app_id']))}">{$vo.app_alias}</a></span>
+									</li>
+									</volist>
+								</ul>
+							</div>
+						</div>
+					</div>
+					</div>
+				</div>
+				
+				</div>
+		</div>
+    </div>
+	
+  </div>
+  <div class="c"></div>
+</div>
+</div>
+</div>
+<!-- 右侧内容 end  -->
+</div>
+<!-- 内容 end --> 
+<script type="text/javascript" src="../Public/jRating.jquery.js"></script>
+<script>
+    $(document).ready(function(){
+    	$('#ttl strong').html('应用图片');
+    	$('#allbtn').css('display','none');
+    });
+</script>
+<script>
+	$(document).ready(function(){
+			$(".pingfen_all").jRating({
+				smallStarsPath: "../Public/icons/small.png",
+				bigStarsPath : "../Public/icons/stars.png",
+				type : 'small',
+				isDisabled:true,
+				length: {$avgstar},
+				rateMax : 5,
+				step:true
+			});
+			$(".pingfen5").jRating({
+				smallStarsPath: "../Public/icons/small.png",
+				bigStarsPath : "../Public/icons/stars.png",
+				type : 'small',
+				isDisabled:true,
+				length:5,
+				rateMax : 5,
+				step:true
+			});
+			$(".pingfen4").jRating({
+				smallStarsPath: "../Public/icons/small.png",
+				bigStarsPath : "../Public/icons/stars.png",
+				type : 'small',
+				isDisabled:true,
+				length:4,
+				rateMax : 5,
+				step:true
+			});
+			$(".pingfen3").jRating({
+				smallStarsPath: "../Public/icons/small.png",
+				bigStarsPath : "../Public/icons/stars.png",
+				type : 'small',
+				isDisabled:true,
+				length:3,
+				rateMax : 5,
+				step:true
+			});
+			$(".pingfen2").jRating({
+				smallStarsPath: "../Public/icons/small.png",
+				bigStarsPath : "../Public/icons/stars.png",
+				type : 'small',
+				isDisabled:true,
+				length:2,
+				rateMax : 5,
+				step:true
+			});
+			$(".pingfen1").jRating({
+				smallStarsPath: "../Public/icons/small.png",
+				bigStarsPath : "../Public/icons/stars.png",
+				type : 'small',
+				isDisabled:true,
+				length:1,
+				rateMax : 5,
+				step:true
+			});
+			$(".scoreit").jRating({
+				smallStarsPath: "../Public/icons/small.png",
+				bigStarsPath : "../Public/icons/stars.png",
+				type : 'big',
+				phpPath : "{:U('onlineapp/Public/StarIt',array('appid'=>$app_id))}",
+				rateMax : 5,
+				decimalLength:0.5
+			});
+	});
+	function tabto(param){
+		if('detail'==param){
+			$(".tabitem").hide();
+			$(".tab-menu_app a").removeClass();
+			$("#first").addClass("on");
+			$("#detail").show();
+		}else if('comment'==param){
+			$(".tabitem").hide();
+			$(".tab-menu_app a").removeClass();
+			$("#second").addClass("on");
+			$("#comment").show();
+		}else if('aboutit'==param){
+			$(".tabitem").hide();
+			$(".tab-menu_app a").removeClass();
+			$("#third").addClass("on");
+			$("#aboutit").show();
+		}
+	}
+	
+	function submitinfo(){
+		var commentinfo = $("#commentinfo").val();
+		var appid = "{$app_id}";
+		$.post("{:U('onlineapp/Public/doAjaxcomment')}",{'commentinfo':commentinfo,'appid':appid},function(res){
+			getinfo = eval('(' + res + ')');
+			if(getinfo.status)
+				ui.success(getinfo.message);
+			else
+				ui.error(getinfo.message);
+		})
+	}
+	
+	function clickmore(){
+		var  appid = "{$app_id}";
+		$.post("{:U('onlineapp/Public/getDesc')}",{'appid':appid},function(res){
+			
+			$(".description p").html(res);
+		});
+	}
+</script>
+<include file="__THEME__/footer" />

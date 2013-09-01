@@ -1,0 +1,230 @@
+<include file="../Public/manage_top" />
+<link href="../Public/css/bbs.css" rel="stylesheet" type="text/css" />
+<link href="../Public/css/layout.css" rel="stylesheet" type="text/css" />
+<link href="../Public/css/public.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../Public/js/jquery-admin-box.js" ></script>
+<script type="text/javascript"  src="../Public/WP/WdatePicker.js"></script>
+<div class="content zbg">
+  <div class="bbs_left">
+ 	<include file="../Public/manage_left" />
+  </div>
+   <div class="rightBox" style="margin-left:150px;_margin-left:0px;">
+	<!--<div onclick="changeIframe()" class="sideBarToggle"><img src="../Public/images/clearleft.gif"  /></div>-->
+  <div class="bbs_main">
+  <div class="tit_line">主题管理</div>
+    <div class="top_address">
+ <form action="" method="POST">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td height="30"><div class="cr lh22" style="width:80px; padding-right:5px;">选择分类:</div>
+          <select class="in_put" name="tclass" >
+          <option <php>if($search['tclass']==0){echo "selected";}</php> value="0">全部</option>
+          	<volist name="tclasslist" id="vo" key="key">
+          	<option <php>if($search['tclass']==$vo['id']){echo "selected";}</php> value="{$vo.id}" > {$vo.name}</option>
+          	
+          	</volist>
+          </select>
+          <td height="30"><div class="cr lh22" style="width:80px;padding-right:5px;">帖子类型:</div>
+            <div class="cl">
+            <select class="in_put" style="width: 200px;"  name="forumSign">
+            <option  <php>if($search['forumSign']===0){echo "selected";}</php> value="0" >全部</option>
+            	<volist id="vo" name="forumSign">
+            		<option   <php>if($search['forumSign']===$vo['signid']) {echo "selected";}</php> value="{$vo.signid}">{$vo.name}</option>
+            	</volist>
+            </select>
+             
+            </div></td>
+        </tr>
+
+        <tr>
+          <td height="30"><div class="cr lh22" style="width:80px;padding-right:5px;">昵称:</div>
+            <div class="cl">
+              <input type="text" value="{$search.username}" name="username" style="width: 200px;" class="in_put">
+            </div></td>
+          <td height="30"><div class="cr lh22" style="width:80px;padding-right:5px;">发表时间范围:</div>
+            <div class="cl">
+              <input type="text" value="{$search.fromTime}" name="fromTime" onClick="WdatePicker()" style="width: 80px;" id="fromTime" class="in_put">&nbsp;至&nbsp;<input type="text" onClick="WdatePicker()" value="{$search.toTime}" name="toTime" style="width: 80px;" id="toTime" class="in_put">
+
+            </div></td>
+        </tr>
+        <tr>
+          <td height="30"><div class="cr lh22" style="width:80px;padding-right:5px;">标题关键词:</div>
+            <div class="cl">
+              <input type="text" value="{$search.title}" name="title" style="width: 200px;" class="in_put">
+            </div></td>
+         <td height="30"><div class="cr lh22" style="width:80px;padding-right:5px;">点击次数范围:</div>
+
+            <div class="cl">
+              <input type="text" value="{$search.fviewcount}" name="fviewcount" style="width: 80px;" class="in_put" maxlength="6"   onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">&nbsp;至&nbsp;<input type="text" value="{$search.tviewcount}" name="tviewcount" style="width: 80px;" class="in_put" maxlength="6"   onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
+            </div></td>
+        </tr>
+        <tr>
+          <td height="30"><div class="cr lh22 " style="width:80px;padding-right:5px;">多少天零回复:</div>
+            <div class="cl">
+              <input type="text" value="{$search.rdays}" name="rdays" style="width: 200px;" class="in_put" maxlength="6"   onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
+
+            </div></td>
+          <td height="30"><div class="cr lh22 " style="width:80px;padding-right:5px;">回复次数范围:</div>
+            <div class="cl">
+              <input type="text" value="{$search.fReplyCount}" name="fReplyCount" style="width: 80px;" class="in_put" maxlength="6"   onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">&nbsp;至&nbsp;<input type="text" value="{$search.tReplyCount}" name="tReplyCount" style="width: 80px;" class="in_put" maxlength="6"   onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
+            </div></td>
+        </tr>
+      </table>
+      <div style="margin-top:10px;"><input class="btn_sea" type="submit" value="查询"></input></div>
+</form>
+	 <form autocomplete="off">
+    <div class="mt20">
+      <ul class="tab">
+     	<li <eq name="type" value="index">class="on"</eq> ><span><a href="{:U('forum/Manage/index',array('type'=>'index','class'=>$fid))}">{:L('base_board_thread')}</a></span></li>
+     <!--    <li <eq name="type" value="recycle">class="on"</eq> ><span><a href="{:U('forum/Manage/index',array('type'=>'recycle','class'=>$fid))}">回收站</a></span></li>--> 
+      </ul></div>
+      <div class="list_box">
+      <dl>
+        <dt>
+          <div style="width: 4%;" class="cl left">{:L('operation')}</div>
+          <div style="width: 49%;" class="cl mr10 left">{:L('base_thread')}</div>
+          <div style="width: 10%;" class="cl left">昵称</div>
+          <div style="width: 10%;" class="cc left">{:L('thread_reply_count')}/{:L('thread_view_count')}</div>
+          <div style="width: 23%;" class="cr left">最后回复时间</div>
+        </dt>
+  <volist name="topic['data']" id="vo">
+      <dd>
+        <div class="cl" style="width: 4%;">	
+        <php>if($type=='index'){</php>
+        <input type="checkbox" class="forum_admin_check mt10" style="_margin-top:5px;+margin-top:5px;" rel="{$topicAdminKey}" dataId="{$vo.tid}">
+        <php>}elseif($type=='recycle'){</php>
+        <input type="checkbox" class="checkbox2 mt10" style="_margin-top:5px;+margin-top:5px;" value="{$vo.tid}" ></input>
+        <php>}</php>
+		</div>
+        <div class="L mr10" style="width:49%">
+        <div class="cl" style="padding-top:7px;"><php>$signIcon = $vo['sign'];</php><volist name="signIcon" id="so"><img title="{$so.name}" align="absmiddle" class="mr5" src="{$so.icon}"/> </volist></div>
+        <div class="cl over_det" style="width:250px; "><a <php>if($vo['highlight']){</php> style="color:{$vo['highlight']};" <php>}</php> target="_blank" href="{:U('forum/Detail/index',array('id'=>$vo['tid']))}"  title="{$vo.title}">{$vo.title}</a></div><div class="C"></div></div>
+        <div class="cl" style="width: 10%;height:30px">{$vo.maskName}</div>
+       <div class="cc" style="width: 10%;">{$vo.replycount}/{$vo.viewcount}</div>
+       <div class="cr" style="width: 23%;">{$vo.rTime|friendlyDate=###,'full'}</div>
+       <div class="C"></div>
+      </dd>
+ 	</volist>
+      </dl>
+    </div>
+	</form>
+<!--	<php>if(!empty($topic)){</php>
+	  <php>if($type=='recycle'){</php>  
+	 <div style="padding-top:10px;">
+      <div class="page R">{$html}</div>
+      <div><input type="checkbox" id="allcheck" onClick="check(this)">
+      全选
+      </input>
+      <input class="btn_sea mb5" type="button" onClick="doThread('add')" id="checkall" value="还原">
+      <input class="btn_sea mb5" type="button" onClick="doThread('delete')" id="checkall" value="彻底删除">
+      </input>
+    </div><php>}</php>
+    <php>}</php>-->
+     <php>if(empty($topic['data'])){</php>
+        <div class="no_data">暂无数据</div>
+        <php>}</php>
+   <div class="page mt5 alR mb20">{$topic['html']}</div>
+  </div>
+</div>
+</div>
+<div class="C"></div>
+</div>
+  <div id="topicadmin" style="display:none;"> 
+  	<a href="javascript:void(0)" onclick="moveTorecycle()">{:L('thread_movetorecycle')}</a>
+  	<a href="javascript:void(0)" onclick="revertTopic()">{:L('thread_reverttopic')}</a>
+	<a href="javascript:void(0)" onclick="deleteTopic()">{:L('thread_deletetopic')}</a>
+	<a href="javascript:void(0)" onclick="moveToCategory()">{:L('thread_movetocategory')}</a>
+	<a href="javascript:void(0)" onclick="moveToTclass()">{:L('thread_movetotclass')}</a>
+  </div>
+  <div id="topicAdmini" style="display:none">
+  <volist name="topicAdmin" id="so"> 
+  <a href="javascript:void(0)" onclick="adminCheck('{$so.url}','{$so.name}','{$so.popup}','{$so.alert}','{$so.url}','{$so.jump}','{$topic.tid}')">{$so.name}</a>
+  </volist>
+  
+	</div>
+  <script>
+  $(function(){
+	    $('.forum_admin_check').removeAttr("checked");
+	     $.fn.admin({
+		     prefix:'topic_',
+		     checkClass:'forum_admin_check',
+		     hiddenId:'topicAdmini',
+			 lMinOffset:1,
+			 position:'right',
+			 type:false
+	     });
+});
+  
+	var doadminurl = "{:U('bbs/Manage/doadmin',array('class'=>$board))}";
+
+	
+
+
+var checkData = new Array();
+var actionUrl = '';
+var needJump = false;
+function adminCheck(key,title,popup,fire,url,jump,tid){
+	actionUrl = url;
+	checkData = $.fn.getData('topic_');
+	 needJump = jump;
+	 if(fire){
+		 $.tbox.confirm("是否对帖子进行操作？","操作提示",{ok:"action"});
+	}
+
+	if(popup){
+		$.tbox.popup("{:U('forum/Manage/adminPopUp')}"+"&actionId="+url+"&fid={$fid}");
+        var button = '<p><input class="btn_sea" id="savemodel"  name="" type="button" value="确定" /></p>';
+        $('#tbox .tb_button_list').show().html(button);
+        $('#savemodel').click(function(){
+            adminStatus($.fn.getData('topic_'));
+            $.tbox.close();
+        });	
+	}
+}
+function action(){
+	$.post("{:U('forum/Do/action')}",{id:checkData,action:actionUrl},function(result){
+			result = eval('('+result+")");
+			if(result.status){
+				if(needJump){
+					location.href=result.info;
+				}else{
+					//alert(result.info);
+					location.reload();
+				}
+			}else{
+				alert(result.info);
+				$.tbox.close();
+			}
+			needJump = false;
+			 actionUrl = "";
+			 checkData = new Array();
+		});
+}
+
+function check(o){
+	if( o.checked == true ){
+		$('.checkbox2').attr('checked','true');
+	}else{
+		$('.checkbox2').removeAttr('checked');
+	}
+}
+
+function doThread(type){
+	var forumId = new Array();
+	$('.checkbox2').each(function(){
+		if($(this).attr("checked")){
+			 forumId.push($(this).val());
+		}
+	});
+	$.post("{:U('forum/Admin/doForum')}",{type:type,forumId:forumId},function(txt){
+		
+		if(txt){
+			alert("成功");
+			window.location.reload();
+		}else{
+			alert("失败");
+		}
+	});
+	}
+</script>
+<include file="__THEME__/footer" /> 

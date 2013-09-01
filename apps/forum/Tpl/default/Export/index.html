@@ -1,0 +1,77 @@
+<include file="__THEME__/header" />
+<link href="../Public/css/bbs.css" rel="stylesheet" type="text/css" />
+<php>if($step==1){</php>
+		<form action="{:U('/Export/index')}" method="post">
+		<input type="hidden" name="tostep" value="2">
+		<table>
+			<tr>
+				<td style="width:30%">选择原论坛版块</td> <td style="width:70%;">选择导入论坛的版块</td>
+			</tr>
+			
+			<tr>
+				<td>
+					<select name="oldforumID" multiple="multiple">
+						<volist id="vo" name="oldforumlist">
+						<option value="{$vo.FORUMID}">{$vo.NAME}</option>
+						</volist>
+					</select>
+				</td>
+				
+				<td>
+				    <span id="newforumlist">
+				    </span>
+				</td>
+			</tr>
+			
+			<tr><td colspan="2"><input type="submit" value="下一步"></td></tr>
+		</table>
+		</form>
+<php>}else if($step==2){</php>
+		<form action="{:U('/Export/doexport')}" method="post">
+		<table>
+			<tr>
+				<td style="width:30%">选择原论坛分类</td> <td style="width:70%;">选择导入论坛的分类</td>
+			</tr>
+			
+			<tr>
+				<td>
+					<select name="oldcategoryId" multiple="multiple" style="width:250px;">
+						<option value="all">All Threads</option>
+						<volist id="vo" name="oldcategorylist">
+							<option value="{$vo.TYPE_ID}">{$vo.TYPE_NAME}</option>
+						</volist>
+						<option value="0">No Type</option>
+					</select>
+				</td>
+				
+				<td>
+					<select name="newcategoryId" multiple="multiple" style="width:250px;">
+						<option value="0">All Threads</option>
+						<volist id="vo" name="newcategorylist">
+							<option value="{$key}">{$vo}</option>
+						</volist>
+					</select>
+					<br>
+					<a href="javascript:void(0)" onclick="addCategory()">添加版块</a>
+				</td>
+			</tr>
+			
+			<tr><td colspan="2"><input type="submit" value="下一步"></td></tr>
+		</table>
+		<input type="hidden" name="oldforumID" value="{$oldforumID}">
+		<input type="hidden" name="newforumId" value="{$newforumID}">		
+		</form>
+<php>}</php>
+
+		
+
+<script type="text/javascript" src="__PUBLIC__/js/tsjs.json2select.js" ></script>
+<script>
+	
+	function addCategory(){
+		
+	}
+	
+	$("#newforumlist").json2select({$json},[{$class}],"newforumID[]");
+</script>
+<include file="__THEME__/footer" /> 

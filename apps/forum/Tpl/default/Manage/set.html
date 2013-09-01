@@ -1,0 +1,33 @@
+<include file="../Public/manage_top" />
+<div class="contents" >
+  <div class="bbs_left">
+ 	<include file="../Public/manage_left" />
+  </div>
+  <div class="bbs_main">
+    <div class="top_address">
+<span class="edi_adder">
+			{$_topnav}
+	  </span></div>
+      <div class="tit_line">{:L('base_nav_board')}</div>
+	  <form action="{:U('forum/Manage/set',array('class'=>$fid))}" method="post" >
+	  	<input type="hidden" name="class" value="{$board}">
+    	<div class="block_box">
+        	<dl class="block_box_dl">
+            	<!--<dt>{:L('set_board_rule')}：</dt>-->
+                <dd><textarea class="in_put" style="width:350px; height:120px;" name="rule" cols="" rows="">{$list.rule}</textarea></dd>
+                <dd class="mt10"><input type="submit" class="btn_sea" value="{:L('confirm')}"/></dd>
+            </dl>
+            <dl class="L" style="width:260px;">
+                <dd><div class="clewbox L">
+              <div class="clewbox_bg">{:L('set_board_remind')}：</div>
+              <div class="clewbox_bg_b">{:L('set_board_message')}</div>
+            </div></dd>
+            </dl>
+        </div>
+		</form>
+
+  </div>
+</div>
+<div class="C"></div>
+</div>
+<include file="__THEME__/footer" /> 

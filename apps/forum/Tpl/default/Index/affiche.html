@@ -1,0 +1,150 @@
+<include file="__THEME__/header" />
+<include file="../Public/forum_header" />
+
+<style>
+	.expert_id a{ margin-left:5px;}
+</style>
+
+<div class="content zbg">
+  <div>
+    <h3 class="box_tit"><div class="box_tit_r"><strong>发表公告</strong></div></h3>
+    <div class="add_vote" style="width:99.8%; overflow:hidden; padding:15px 0">
+    <input type="hidden" id="bbs_is_second" value="<php>if($defaultCategory != false){ echo true;}else{ echo false; } </php>"/>
+	<form action="{:U('forum/Do/post')}" method="post" onsubmit="return checkForm();return false;" autocomplete="off">
+	<input type="hidden" name="board" id="bbs_category" value="{$fid}">
+      <table align="left" style="line-height:25px; float:left" width="99%">
+        <tr height="30">
+          <td align="right" valign="top" width="15%"><font color="red">*</font> {:L('edit_title')}：</td>
+          <td align="left">
+			<input type="text"  name="title"  id="title" class="in_put" style="width:350px;" value=""/>
+			</td>
+        </tr>        
+        <tr height="30" class="post_b">
+          <td align="right" valign="top" class="pt10"><font color="red">*</font> {:L('edit_content')}：</td>
+          <td align="left" class="pt10">
+        	<textarea  class="in_put" name="content"  cols="" rows="20" id="content" style="width:680px" ></textarea>
+          </td>
+        </tr>
+        <tr height="30">
+          <td align="right" class="pt5" >选项：</td>
+          <td align="left" class="pt5">
+          	<!--
+          	<php>if($popedom->check("allow_post_hide")){</php>
+          		<label><input class="mr5" name="hide" value="1" id="tags" type="checkbox" />仅内部可见</label>
+          	<php>}</php>
+			--> 
+          	 <php>if($popedom->check("allow_post_noRely")){</php>
+          		<label><input class="mr5" name="close" value="1" id="tags" type="checkbox" checked="checked"/>不允许回复</label>
+          	<php>}</php> 
+          	 <input class="mr5" name="affiche" value="1" id="tags" type="hidden" />
+        </tr>
+        <tr height="10">
+          <td align="right" valign="top" class="pt5">{:L('thread_attach')}：</td>
+          <td align="left" valign="top" class="pt5">
+               <div>{:W( 'UploadAttach',array( 'uid'=>$mid , 'type'=>'forum_'.$fid,'allow_size'=>$Core['setting']['attach_size'],'limit'=>$Core['siteSetting']['attach_num'],'allow_exts'=>$Core['setting']['attach_type'],'fid'=>$fid,'callback'=>'attach_upload_success','need_review'=>$popedom->check("attach_need_auditing")) )}</div>
+			  <div class="attach"></div>
+           </td>
+	   </tr>	   
+         <tr height="45">
+          <td></td>
+          <td align="left" valign="middle">
+            <input class="btn_sea" name="" type="submit" value="{:L('edit_submit')}" /><input class="btn_sea_n ml5" onclick="javascript:history.back(-1)" type="button" value="{:L('edit_back')}" /></td>
+        </tr>
+      </table>
+	  	</form>
+    <!--右边警告 begin-->
+    <div class="C"> </div>
+  </div>
+  <!--右边警告 begin-->
+</div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	E =	KISSY.Editor( "content" );
+	checkBoard();	
+});
+
+//抄送
+function transcribe(){
+	$.tbox.popup("{:U('forum/Index/transcribe')}&uids="+$("#transcribeuid").val(),'{:L("thread_add_transcribe")}',{ok:'savetranscribe'});
+}
+
+//自动获取Tag
+/*
+function autoTags(){
+	var content =  E.getData()+" "+$('#title').val();
+	$.post("{:U('ask/do/getTags')}",{content:content},function(result){
+		$('#tags').val(result);
+	})
+}
+*/
+
+//选择分类
+function selectCategory(){
+	var o = ($("#bbs_category").val())?"&class="+$("#bbs_category").val():'';
+	$.tbox.popup("{:U('forum/Index/selectCategory')}"+o,"{:L('select_full_category')}",false);
+}
+
+//确定选择
+function ok(){
+	var fid = $('#categoryList').children(":last").val();
+	var selectedTempCategory = new Array();
+	$('#categoryList').children().each(function(){
+		var temp = $(this).val()+"";
+		if ( temp == 'null' ) return;
+		selectedTempCategory.push($(this).find('option[value='+$(this).val()+']').html());
+	});
+	if( fid == null || $('#categoryList').children(":nth-child(2)").val() == null ){
+		$("#boardMessage").html('{:L("select_full_category")}',"{:L('wrong')}");
+		return false;
+	}else{
+		 $.getJSON("{:U('forum/Index/getCategory')}",{fid:fid},function(txt){
+		 		var optionlist = '';
+				if(txt){
+			 		$.each(txt,function(i,n){
+						optionlist += '<option value='+i+'>'+n+'</option>';
+					});
+				}else{
+					optionlist += '<option value=0>{:L("edit_default_tclass")}</option>';
+				}
+
+				$('#tclass').html(optionlist);
+		 });
+		 var browse_category_title = selectedTempCategory.join(' > ');
+		 $('#categorySelectedList').html(browse_category_title);
+		 $('#bbs_category').val(fid);
+		 $.tbox.close();
+	 }
+}
+
+//验证是否选择了版块
+function checkBoard() {
+	var selectedclass = $('#bbs_category').val();
+	if(selectedclass == 0){
+		selectCategory();
+		return false;
+	} else {
+		return true;
+	}
+}
+
+//验证表单数据
+function checkForm() {
+	if(checkBoard()) {
+		if($.trim($('#title').val()).length < 1 || $.trim($('#title').val()) == "&nbsp") {
+			$.tbox.no("{:L('edit_un_validate')}","{:L('wrong')}");
+			$('#title').focus();
+			return false;
+		}
+		if($.trim(E.getData()).length<1 || $.trim(E.getData()) == "<br>" || $.trim(E.getData()) == "&nbsp") {
+			$.tbox.no("{:L('edit_content_empty')}","{:L('wrong')}");
+			E._focusToEnd()
+			return false;
+		}
+	} else {
+		return false;
+	}
+}
+</script>
+<include file="__THEME__/footer" /> 

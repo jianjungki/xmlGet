@@ -1,0 +1,99 @@
+<include file="_header" />
+
+<div class="so_main">
+<div class="page_tit">创建新的选项</div>
+<div class="form">
+    <form action="{:U('forum/admin/doAddWidget')}" method="post" onsubmit="return checkForum();" >
+    <dl>
+      <dt><font color="red">*</font> 名称：</dt>
+      <dd>
+        <input id="label" class="txt" name="label" value="" type="text" maxlength="10" />
+        <span class="cGray2 ml5">请输入名称，前台发布时将显示该名称</span>
+    </dl>
+    <dl>
+      <dt><font color="red">*</font> 变量名：</dt>
+      <dd>
+      	<input id="field" class="txt" name="field" value="" type="text">
+       <span class="cGray2 ml5">请输入英文字符，前台不会显示，具有唯一性</span>
+      	
+    </dl>
+    <dl>
+      <dt><font color="red">*</font> 类型：</dt>
+      <dd>
+      <select name="widget" onchange="checkData($(this));">
+      		<volist name="type" k="key" id="vo">
+      			<option value="{$key}" >{$vo}({$key})</option>
+      		</volist>
+     	 </select>
+      </dd>
+    </dl>
+    <dl> 
+       <dt>简单描述：</dt>
+      <dd>
+		<textarea class="tarea" cols="50" id="info" name="info" onkeyup="textareasize(this, 0)" ondblclick="textareasize(this, 1)" rows="6" style=""></textarea>
+      </dd>
+    </dl>
+    <dl> 
+       <dt id="data">数据项：</dt>
+      <dd>
+		<textarea class="tarea" cols="50" id="checkData" name="data" onkeyup="textareasize(this, 0)" ondblclick="textareasize(this, 1)" rows="6" style=""></textarea>
+       <p>只在类型为可选时有效，每行一个选项，等号前面为选项索引(建议用数字)，后面为内容，例如:</p>
+		<p>1 = 光电鼠标</p>
+<p>2 = 机械鼠标</p>
+<p>3 = 没有鼠标</p>
+<p>注意: 选项确定后请勿修改索引和内容的对应关系，但仍可以新增选项。</p>
+
+      </dd>
+    </dl>
+    <dl>
+      <dt>必填：</dt>
+      <dd>
+      	<input type="checkbox" name="must" value="1">
+    </dl>
+    <div class="sea_left">
+      <input type="submit" class="btn_b" value="确定">
+    </div>
+    </form>
+  </div>
+ <script>
+ 
+ var mustChcek = false;
+function checkData(obj){
+	var val = obj.val();
+	switch(val){
+	case "radio":
+	case "checkbox":
+	case "select":
+		$('#data').html("数据项：");
+		$('#data').prepend('<font color="red">*</font> ');
+		mustCheck = true;
+		break;
+	default:
+		$('#data').html("数据项：");
+		mustCheck = false;
+		break;
+	}	
+}
+
+function checkForum(){
+	if($.trim($('#label').val()).length < 1 || $.trim($('#label').val()) == "&nbsp"){
+		$.tbox.no("请输入选项名称");
+		setTimeout("$.tbox.close()",1500);
+		return false;
+	}
+	
+	if($.trim($('#field').val()).length < 1 || $.trim($('#field').val()) == "&nbsp"){
+		$.tbox.no("请输入选项变量");
+		setTimeout("$.tbox.close()",1500);
+		return false;
+	}
+	if(mustCheck){
+		if($.trim($('#checkData').val()).length < 1 || $.trim($('#checkData').val()) == "&nbsp"){
+			$.tbox.no("请输入选项数据名称");
+			setTimeout("$.tbox.close()",1500);
+			return false;
+		}
+	}
+}
+ </script>
+<include file="_footer" />

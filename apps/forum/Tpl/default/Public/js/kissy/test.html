@@ -1,0 +1,12 @@
+<script>
+//var data	=	'file://\\121.101.1.1\asdfasdf\asdfasdf\ <a href="http://aaa.jpg">aaaa</a>';
+//i	=	data.match(/file:[^><]*\.(jpg|png|bmp|gif)/gi);
+//if(i!=null){
+//	alert(i);
+//}
+
+var data	=	'<v:imagedata o:title="" src="http://hi.huawei.com/data/uploads/2010/0420/10/4bcd16837b163.png"><font face="Times New Roman"></font></v:imagedata><v:imagedata o:title="" src="http://hi.huawei.com/data/uploads/2010/0420/10/4bcd16837b163.png"><font face="Times New Roman"></font></v:imagedata>';
+
+data = data.replace(/<v:imagedata([^>]*)src="([^\"]*)">[^:]*<\/v:imagedata>/gi, '<img src="$2" />');
+alert(data);
+</script>

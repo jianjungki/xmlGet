@@ -1,0 +1,111 @@
+<include file="__THEME__/header" />
+
+<script src="__PUBLIC__/js/jquery.validVal-3.0.4.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="{:U('weibo/plugins/init')}"></script>
+
+<link rel="stylesheet" href="__PUBLIC__/js/jquery.datapicker.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="../Public/screen.css" type="text/css" media="screen" charset="utf-8" />
+
+<script src="../Public/screen.js" type="text/javascript" charset="utf-8"></script>
+<div class="content_holder">
+<div class="content"><!-- 内容 begin  --> 
+<div class="main no_l">
+  <div class="mainbox boxspace">
+    <div class="mainbox_appR">
+      <div class="right_box mt10">
+        <a href="javascript:void(0);" id="screen_manager" class="{$manage}"></a>        
+        </div>
+      <div class="right_box mt10">
+        <div class="box_Playlist">
+          <h4><span class="right"><a href="javascript:void(0)" class="clear_queue">清空列表</a></span>已有<em id="queue_count">{$queue|count}</em>条微博在排队</h4>
+          <ul class="listPlay">
+            <volist name="queue" id="vo">
+                
+              <li id="queue_item_{$vo.weibo_id}">
+                <a href="javascript:void(0)" weiboId="{$vo.weibo_id}" class="right del_S delete_queue"></a>
+                <div class="wrap_Playlist">
+                  <h4><space uid="vo.uid">{uname}</space>：</h4>
+                  <span>{$vo.content}</span>
+                  <h5 class="mt10"><span class="date_S">{$vo.ctime|friendlyDate}</span></h5>
+                  </div>
+                </li>
+              </volist>
+            <li style="display:none;">
+                <a href="javascript:void(0)"  class="right del_S delete_queue"></a>
+                <div class="wrap_Playlist">
+                <h4><a class="username"></a>：</h4><span>defalut</span>
+                <h5 class="mt10"><span class="date_S">defalut</span></h5>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    <div class="mainbox_appC boxspace_L">
+      <div class="otheruser_info">
+        <dl class="otheruser_info_left"><dt><a href="#" class="username"><img src="{$screen.logo}"></a></dt></dl>
+        <div class="otheruser_info_right">
+          <h4>{$screen.title} {$screen.class.buffer}</h4>
+          <h5><space uid='screen.uid'>{uname}</space></h5>
+          <div><span>时间：</span>{$screen.time_start} 至 {$screen.time_end}</div>
+          <div><span>简介：</span>{$screen.explains}</div>
+          </div>
+        </div>
+      <div class="roundbgF6">
+        <ul class="listscreen_info">
+          <li><span>活动网址：</span><a href="{:U('screen/index/detail',array('id'=>$screen['screen_id']))}">{:U('screen/index/detail',array('id'=>$screen['screen_id']))}</a></li>
+          <li><span>活动参与方式：</span>发送带有<a href="{:U('home/User/topics',array('k'=>urlencode($screen['topic'])))}"> #{$screen.topic}# </a>的微博均有机会出现在大屏幕上。</li>
+          <li><span>已绑定的话题：</span><a href="{:U('home/User/topics',array('k'=>urlencode($screen['topic'])))}">#{$screen.topic}#</a></li>
+          <li><span>已绑定的关键字：</span>{$screen.keyword}</li>
+          </ul>
+        </div>
+      <div class="tab-menu mt20">
+        <ul>
+          <volist name="tab" id="vo">
+            <li><a href="{$vo.url}" class="feed_item {$vo.class}"><span>{$vo.name}</span></a></li>
+            </volist>
+          </ul>
+        </div>
+      <php>if($_GET['type']){</php>
+      <div class="searchBox mt10">
+        <form action="{:U('screen/index/detail'),array('id'=>$screen['screen_id'])}" method="GET" id="search">
+          <input name="app" type="hidden" value="screen"/>
+          <input name="mod" type="hidden" value="index" />
+          <input name="act" type="hidden" value="detail"/>
+          <input name="id"  type="hidden" value="{$screen.screen_id}" />
+          <input name="type" type="hidden" value="{$_GET['type']}" />
+          <div>
+            <eq name='k' value=''>
+            <input name="k" type="text" class="txt_Group placeholder left" value="请输入您要查找的微博关键字..."></eq>
+            <neq name='k' value=''>
+            <input name="k" type="text" class="txt_Group placeholder left" value="{$k}"></neq>
+            <input type="submit" class="btn_weibo" value="" /></div>
+          </form>
+        </div>
+      <php>}</php>
+      <div class="feedBox">
+        {:W('WeiboList', array('mid'=>$mid, 'list'=>$list['data'],'simple'=>true))}
+        </div>
+      <p class="page">{$list.html}</p>
+      
+      <div class="c"></div>
+      </div>
+    </div>
+  <div class="clear"></div>
+</div>
+</div>
+</div>
+<script>
+    Screen.detailAdmin.init({
+        search:"#search",
+        screenId:'{$screen.screen_id}',
+        weiboListClass:".def",
+        deleteClass:".delete_queue",
+        clearClass:".clear_queue",
+        queueUlClass:".listPlay",
+        queueManage:{button:"#screen_manager", start:"btn_play",stop:"btn_pause"},
+        queue:<php>echo json_encode($queue);</php>
+    });
+</script>
+<!-- 内容 end --> 
+<include file="__THEME__/footer" /> 

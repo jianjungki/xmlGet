@@ -1,0 +1,34 @@
+<div class="box-out" style="width:200px;">
+                      </div>
+                      <div class="box-in">
+                      </div>
+                      <div class="box-inner">
+                        <div class="alL lh25" style="margin:10px">
+                          <strong>{:L('thread_movetotclass_info2')}：</strong>
+						  <select id="newtclass">
+					  		<volist id="vo" name="tclasslist">
+					  			<option value="{$key}">{$vo}</option>
+					  		</volist>
+					  	</select>
+                        </div>
+                      </div>
+					  <div>
+					  	
+                      <div class="box-out" id="boardMessage" style="margin:5px;color:red">
+                      </div>
+<div style="display: block;" id="tb_content_list" class="tb_button_list">
+	<p>
+		<input type="button" value="{:L('confirm')}" onclick="doMove()"  name="" id="tb_button_ok" />
+		<input type="button" value="{:L('cancel')}" onclick="$.tbox.close()" id="tb_button_no" name="" class="ml5"/>
+	</p>
+</div>
+
+<script>
+	function doMove(){
+		if(confirm('{:L("thread_movetotclass_info3")}' )){
+			$.post(doadminurl,{type:'moveToTclass',id:$.fn.getData('topic_'),newtclass:$("#newtclass").val()},function(txt){
+				window.location.reload()
+			});
+		}
+	}
+</script>

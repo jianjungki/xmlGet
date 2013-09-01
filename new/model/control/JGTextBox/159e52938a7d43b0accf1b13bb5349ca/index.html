@@ -1,0 +1,11 @@
+<td>
+            	<span id="button{$vo['id']}" >
+                <php>if($vo['status']==0){</php>
+                    <a href="javascript:void(0);" onclick="c.resume('{$vo.id}')">启用</a>
+                <php>}else{</php>
+                    <a href="javascript:void(0);" onclick="c.forbid({$vo.id})">禁用</a>
+                <php>}</php>
+                </span>
+                <a href="javascript:void(0);" onclick="c.edit_tab('编辑','{$vo.id}')">编辑</a>
+                <a href="javascript:void(0);" onclick="c.del('{$vo.id}')">删除</a>
+             </td>

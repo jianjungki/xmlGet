@@ -1,0 +1,62 @@
+@charset "utf-8";
+/* CSS Document */
+
+body{background:#fff url(hd.jpg) no-repeat 50% 0;}
+.line_bule{background:#fff;border:1px solid #ddd;zoom:1;_marign-top:70px;}
+.quick-list li.cl_yk a{ color:#07a; font-weight:bold}
+.quick-list li .fB{color:#07a;}
+
+
+/*导航*/
+.header_nav {background:url(nv_bg.gif) no-repeat left center ;}
+.header_nav ul li a.on,.header_nav ul li a:hover{background:url(nv_li_bg.gif) no-repeat 0 -42px;}
+.header_nav ul li a.on span,.header_nav ul li a.on:visited span,.header_nav ul li a:hover span{background:url(nv_li_bg.gif) no-repeat right -42px;}
+.header_nav ul li.line{background:url(nv_li_bg.gif) right 7px no-repeat; }
+.header_nav dl dd a:hover{background:none;}
+
+/*导航下拉*/
+.tabbox .lap_mod a:hover{ background:#2873c2;}
+
+/*tit*/
+.box_tit_r strong{background-position:-283px -322px; }
+.box_sobor{border:1px solid #c4d6e4;}
+.bli_box,.box_list_bbs,.hot_list,.add_vote,.bli_box_help{border:1px solid #ddd; border-top:0; zoom:1}
+
+/*首页颜色*/
+.box_list_bbs ul li.w .ht2 span a, .hot_list li.w .ht2 span a:hover {color:#ff6600;}
+
+/*列表页border样式*/
+.list_nv ul li a { border:1px solid #ddd;border-bottom:none;}
+.list_bm td, .list_bg td {border-bottom:1px solid #ddd;}
+table tr.list_bm{background:#F8FBFE }
+.list_bm td ,.list_bg td{border-right:1px solid #ddd}
+
+/*详细页border样式*/
+.bbs_de_bg{border:1px solid #ddd ; zoom:1; border-top:0}
+.floorBox{border-top:1px solid #ddd;}
+.floorBox_right{}
+.bbs_app{border-top:1px solid #ddd;}
+.bbs_de_bg h2{border-top:1px solid #ddd;}
+.pls{ background:#F8FBFE; border-right:1px solid #ddd;}
+
+/*后台border样式*/
+.wmenu ul{border:1px solid #ddd; }
+.wmenu li a.on,.wmenu li a:hover{ background:#2873c2; }
+
+/*全局背景颜色更换背景*/
+.text_button,.seach .button,.seach .input,.hot_list li,.box_list_bbs li,.btn_sea,#tbox .tb_button_list #tb_button_ok{background: url(images/N_button_BG.gif) no-repeat 0 0;}
+.list_2_tit,.list_nv ul,.box_tit_r strong{background:#eee;background-repeat: no-repeat;}
+
+
+/*tab导航*/
+.bbs_nav {border-bottom:2px solid #2873c2;}
+.bbs_nav ul li a {background-color:#f3f3f3;border:1px solid #e7e7e7; }
+.bbs_nav ul li a:hover, .bbs_nav ul li a.current {background-color:#2873c2;border:1px solid #2873c2;}
+
+/* 翻页样式 */
+.page span.current{background-color:#E5EDF2;border:1px solid #C2D5E3;}
+.page a, .page a:link, .page a:visited{border:1px solid #ddd;}
+.page a:hover{border:1px solid #069;color:#069;}
+
+/*按钮颜色*/
+.btn_sea_n{background:#E5EDF2;border-color:#C2D5E3 #336699 #336699 #C2D5E3;}

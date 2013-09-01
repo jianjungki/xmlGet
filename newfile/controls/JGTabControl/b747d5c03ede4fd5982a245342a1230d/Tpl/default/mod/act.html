@@ -1,0 +1,82 @@
+<li><a <eq name="ACTION_NAME" value="giftlist">class="on"</eq> href="__URL__&act=giftlist">{$ts['app']['app_alias']}管理</a></li>
+【$V3UNDER JGTabPage 5da3be44b56d4fa4b760123e87aff722】start 【$V3UNDER JGTabPage 5da3be44b56d4fa4b760123e87aff722】end
+</ul>
+</div>
+    <div id="searchObject_div" <neq name="isSearch" value="1">style="display:none;"</neq>>
+    <div class="page_tit">搜索{$ts['app']['app_alias']} [ <a href="javascript:void(0);" onclick="searchObject();">隐藏</a> ]</div>
+	<div class="form2">
+    <form action="__URL__&act=giftlist" method="post">
+    <input type="hidden" name="isSearch" value="1"/>
+        <php>if($isSearch != '1') $uid = '';</php>
+        <dl class="lineD">
+          <dt>{$ts['app']['app_alias']}ID：</dt>
+          <dd>
+            <input name="id" class="txt" value="{$id}">
+          </dd>
+        </dl>
+	    <dl class="lineD">
+          <dt>{$ts['app']['app_alias']}名称：</dt>
+          <dd>
+            <input name="name" class="txt" value="{$name}"/><span> 支持模糊查询。</span>
+          </dd>
+        </dl>
+	    <dl class="lineD">
+          <dt>所属类别：</dt>
+          <dd>
+            <select name="categoryId">
+              <option value="">所有类别</option>
+           	  <php>foreach($categorysInfo as $k=>$v){
+				   if($categoryId==$k) { </php>
+					   <option value="{$k}" selected="selected">{$v}</option>
+			  <php>}else{</php>	
+					   <option value="{$k}">{$v}</option>
+			  <php>}}</php>
+			</select>
+          </dd>
+        </dl>
+	    <dl class="lineD">
+          <dt>启用状态：</dt>
+          <dd>
+            <select name="status">
+              <option value="">所有</option>
+              <option value="1" <eq name="status" value="1">selected</eq>>启用</option>
+              <option value="0" <eq name="status" value="0">selected</eq>>禁用</option>
+			</select>
+          </dd>
+        </dl>
+	    <dl class="lineD">
+          <dt>结果排序：</dt>
+          <dd>
+            <select name="order">
+			  <option value = "desc" <eq name="order" value="desc">selected</eq>>降序排列，新的在前</option>
+			  <option value = "asc" <eq name="order" value="asc">selected</eq>>升序排列，旧的在前</option>
+			</select>
+          </dd>
+        </dl>
+        <div class="page_btm">
+	      <input type="submit" class="btn_b" value="确定" />
+	    </div>
+    </form>
+    </div>
+    </div>  
+	<div class="Toolbar_inbox">
+	    【$V3UNDER JGPaging e6ecbfc2dbb0435ca77db4fd1ca01cce】start 【$V3UNDER JGPaging e6ecbfc2dbb0435ca77db4fd1ca01cce】end
+        【$V3UNDER JGButton 7c43868af21b405bbd77d953353e32be】start 【$V3UNDER JGButton 7c43868af21b405bbd77d953353e32be】end
+		【$V3UNDER JGButton 282e60307af24cecb148e6637deb8ad9】start 【$V3UNDER JGButton 282e60307af24cecb148e6637deb8ad9】end
+		【$V3UNDER JGButton 0f92e07c3abc4689a7b132d4157ef367】start 【$V3UNDER JGButton 0f92e07c3abc4689a7b132d4157ef367】end
+		【$V3UNDER JGButton eb80fd0196df4846b980d30042060dd3】start 【$V3UNDER JGButton eb80fd0196df4846b980d30042060dd3】end
+		【$V3UNDER JGButton edbac2a6e9e24455b3430c909e968e12】start 【$V3UNDER JGButton edbac2a6e9e24455b3430c909e968e12】end
+    </div>
+		【$V3UNDER JGDataGrid 51d69ab9ade643e69926261df2148cf0】start
+		【$V3UNDER JGDataGrid 51d69ab9ade643e69926261df2148cf0】end
+    <div class="Toolbar_inbox">
+        <div class="page right">{$list.html}</div>
+        <a href="javascript:void(0);" class="btn_a" onclick="searchObject();">
+            <span class="searchObject_action"><neq name="isSearch" value="1">搜索{$ts['app']['app_alias']}<else/>搜索完毕</neq></span>
+        </a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.edit_tab('添加')"><span>添加{$ts['app']['app_alias']}</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.del()"><span>删除{$ts['app']['app_alias']}</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.resume()"><span>启用{$ts['app']['app_alias']}</span></a>
+        <a href="javascript:void(0);" class="btn_a" onclick="c.forbid()"><span>禁用{$ts['app']['app_alias']}</span></a>
+    </div>
+</div>

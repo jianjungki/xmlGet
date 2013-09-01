@@ -1,0 +1,226 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>昵称列表</title>
+<link href="../Public/style.css" rel="stylesheet" type="text/css">
+<link href="__PUBLIC__/js/tbox/box.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/tbox/box.js"></script>
+</head>
+
+<div class="so_main">
+
+  <!-------- 搜索用户 -------->
+  <div id="searchUser_div">
+  	<div class="page_tit">搜索昵称</div>
+	
+	<div class="form2">
+	<form method="GET" action="{:U('forum/Admin/dummyList')}">
+	
+    <dl>
+      <dt>用户名：</dt>
+      <dd>
+        <input class="txt" name="fullname" id="uname" type="text" value="{$search.fullname}">
+      </dd>
+    </dl>
+	
+ <!--     <dl>
+      <dt>用户ID：</dt>
+      <dd>
+        <input name="uid" id="uid" type="text" value="{$search.uid}">
+      </dd>
+    </dl>-->
+	 <dl>
+      <dt>账户：</dt>
+      <dd>
+		  <input class="txt" name="uname" id="uname" type="text" value="{$search.uname}">
+      </dd>
+    </dl>
+    
+     <dl>
+      <dt>昵称状态：</dt>
+      <dd>
+		  <select name="isdel" >
+		  <option value="0">全部</option>
+		  <option <php>if($search['isdel']==1){</php>selected<php>}</php> value="1">已删除</option>
+		  <option <php>if($search['isdel']==2){</php>selected<php>}</php> value="2">已启用</option>
+		  <option <php>if($search['isdel']==3){</php>selected<php>}</php> value="3">未删除</option>
+		  </select>
+      </dd>
+    </dl>
+     <div>
+				<input type="hidden" name="app" value="{*APP_NAME}" />
+				<input type="hidden" name="mod" value="{*MODULE_NAME}" />
+				<input type="hidden" name="act" value="{*ACTION_NAME}" />
+</div>
+    <div class="sea_left">
+      <input type="submit" class="btn_b" value="提交" />
+    </div>
+	</form>
+  </div>
+  </div>
+  <!-------- 用户列表 -------->
+  <div class="page_tit">昵称列表</div>
+  <div class="form">
+  <div class="Toolbar_inbox">
+<!--  	<a href="javascript:void(0);" class="btn_a" onclick="searchUser();">
+		<span class="searchUser_action"><neq name="type" value="searchUser">搜索昵称<else/>搜索完毕</neq></span>
+	</a>-->
+	<a href="javascript:void(0);" class="btn_a" onclick="deleteMask(0,'del');"><span>删除昵称</span></a>
+  <!-- 	<a href="javascript:void(0);" class="btn_a" onclick="changeUserGroup();"><span>转移用户组</span></a> -->
+	<a href="javascript:void(0);" class="btn_a" onclick="deleteMask(0,'delete');"><span>释放昵称</span></a>
+  </div>
+  <div class="list">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th style="width:30px;">
+		<input type="checkbox" id="checkbox_handle" onclick="checkAll(this)" value="0">
+    	<label for="checkbox"></label>
+	</th>
+    <th class="line_l">ID</th>
+    <th class="line_l">昵称名</th>
+    <th class="line_1">用户名</th>
+   <th class="line_l">账户</th>
+    <th class="line_l">状态</th>
+    <th class="line_l">操作</th>
+  </tr>
+  <volist id="vo" name="data">
+	  <tr overstyle='on' id="user_{$vo['maskId']}">
+	    <td><input type="checkbox" name="checkbox" id="checkbox2" onclick="checkon(this)" value="{$vo.maskId}"></td>
+	    <td>{$vo.maskId}</td>
+	    <td>
+			<div style="float:left;margin-right:10px;border:1px solid #8098A8;height:30px;padding:1px;width:30px;""><img src="{$vo.faceid|getMaskFaces}" height="28" width="28"></div>
+			<div style="float:left">{$vo.name}<br></div></td>
+	 <!--    <td>
+			<php>if(empty($vo['user_group'])){</php>暂无用户组信息<php>}</php>
+			<volist name="vo['user_group']" id="group">
+				{$group['gname']}<br />
+			</volist>
+		</td> -->
+		<td>{$vo.fullname}</td>
+		<td>{$vo.uname}</td>
+		
+	    <td><php>if($vo['isdel']==1){ echo "已删除";}
+	    		 elseif($vo['status']==1) {echo "当前启用";}
+	    		 elseif($vo['status']==0) {echo "未使用";}</php></td>
+	 
+		<td><php>if($vo['isdel']==1){</php>	<a href="javascript:void(0)" onClick="deleteMask({$vo.maskId},'delete')">释放昵称</a> <php>}</php>
+	    <php>if($vo['isdel']==0){</php>	<a href="javascript:void(0)" onClick="deleteMask({$vo.maskId},'del')">删除昵称</a> 	<php>}</php></td>
+		
+	  </tr>
+  </volist>
+  </table>
+  </div>
+  
+<!--  <div class="list_btm">选择：<a href="javascript:void(0)" onClick="checkAll">全部</a> - <a href="#">反选</a> - <a href="#">不选</a></div>-->
+  <div class="Toolbar_inbox">
+	<div class="page right">{$html}</div>
+<!-- 	<a href="javascript:void(0);" class="btn_a" onclick="searchUser();">
+		<span class="searchUser_action"><neq name="type" value="searchUser">搜索昵称<else/>搜索完毕</neq></span>
+	</a>
+  	<a href="javascript:void(0);" class="btn_a" onclick="changeUserGroup();"><span>转移用户组</span></a> -->
+  <a href="javascript:void(0);" class="btn_a" onclick="deleteMask(0,'del');"><span>删除昵称</span></a>
+	<a href="javascript:void(0);" class="btn_a" onclick="deleteMask(0,'delete');"><span>释放昵称</span></a>
+	
+  </div>
+</div>
+</div>
+<script>
+	//鼠标移动表格效果
+	$(document).ready(function(){
+		$("tr[overstyle='on']").hover(
+		  function () {
+		    $(this).addClass("bg_hover");
+		  },
+		  function () {
+		    $(this).removeClass("bg_hover");
+		  }
+		);
+	});
+	
+	function checkon(o){
+		if( o.checked == true ){
+			$(o).parents('tr').addClass('bg_on') ;
+		}else{
+			$(o).parents('tr').removeClass('bg_on') ;
+		}
+	}
+	
+	function checkAll(o){
+		if( o.checked == true ){
+			$('input[name="checkbox"]').attr('checked','true');
+			$('tr[overstyle="on"]').addClass("bg_on");
+		}else{
+			$('input[name="checkbox"]').removeAttr('checked');
+			$('tr[overstyle="on"]').removeClass("bg_on");
+		}
+	}
+
+	//获取已选择用户的ID数组
+	function getChecked() {
+		var uids = new Array();
+		$.each($('table input:checked'), function(i, n){
+			uids.push( $(n).val() );
+		});
+		return uids;
+	}
+
+
+	
+	//删除用户
+	function deleteMask(maskid,type) {
+		maskid = maskid ? maskid : getChecked();
+		maskid = maskid.toString();
+		if(type=='del'){
+			if(maskid == '' || !confirm('你确定要删除吗，确认继续？'))
+			 return false;
+		}
+		if(type=='delete'){
+			if(maskid == '' || !confirm('你确定要释放昵称吗，确认继续？'))
+				return false;
+		} 
+		$.post("{:U('forum/Admin/delMask')}", {maskid:maskid,type:type}, function(res){
+			if(res == '1'&& type == 'delete') {
+				maskid = maskid.split(',');
+				for(i = 0; i < maskid.length; i++) {
+					$('#user_'+maskid[i]).remove();
+				}
+				//ui.success('释放成功～');
+				window.location.reload();
+			}else if( res == '1'&& type == 'del'){
+					ui.success('删除成功～');
+					window.location.reload();
+			}else {
+				ui.success('操作失败～');
+			}
+		});
+	}
+	
+	//搜索用户
+	var isSearchHidden = <neq name="type" value="searchUser">1<else/>0</neq>;
+	function searchUser() {
+		if(isSearchHidden == 1) {
+			$("#searchUser_div").slideDown("fast");
+			$(".searchUser_action").html("搜索完毕");
+			isSearchHidden = 0;
+		}else {
+			$("#searchUser_div").slideUp("fast");
+			$(".searchUser_action").html("搜索昵称");
+			isSearchHidden = 1;
+		}
+	}
+	
+	function folder(type, _this) {
+		$('#search_'+type).slideToggle('fast');
+		if ($(_this).html() == '展开') {
+			$(_this).html('收起');
+		}else {
+			$(_this).html('展开');
+		}
+		
+	}
+</script>

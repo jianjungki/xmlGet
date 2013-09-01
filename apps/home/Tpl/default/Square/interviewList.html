@@ -1,0 +1,83 @@
+<include file="__THEME__/header" />
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div class="content_holder">
+<div class="content"><!-- 内容 begin  -->
+  <div class="main no_l">
+    <div class="mainbox boxspace" style="background-color:white;margin-left: 40px;">
+   
+   <div align="left" style="height:60px;">
+   	<div style="line-height:60px;">
+   		    访谈状态：
+       	    <input type="radio" value="all" onclick="filter('all')" <php> if($get_status==0) echo("checked");</php> >所有
+       		<input type="radio" value="before"  onclick="filter('before')" <php> if($get_status==1) echo("checked");</php> >即将开始
+       		<input type="radio" value="begin" onclick="filter('begin')"  <php> if($get_status==2) echo("checked");</php> >正在进行
+       		<input type="radio" value="after" onclick="filter('after')" <php> if($get_status==3) echo("checked");</php> >已结束
+      </div> 		
+   </div>
+   <div>
+   <ul align="left" style="width:100%">
+   <volist name='data' id='vo'>
+    	<li style="float:left;">
+     <div align="left" style=" width:400px; height:100px; background-color:#F8F8F6;margin-bottom: 20px;padding-top:10px;padding-left:10px;margin-left: 30px;">
+       <div style="width:250px;float:left">
+       <a href="{:U('home/Square/interviewPage',array('type_to'=>'all','k'=>$vo['name'],'status'=>$setinfo[$vo['status']]))}">{$vo['name']}</a>.<br/>
+                     嘉宾：{:getGuestName(0,$vo['name'])}<br/>
+                    开始 时间：{$vo['time_start']|date='Y-m-d H:i:s',###} <br/>
+                    结束时间： {$vo['time_end']|date='Y-m-d H:i:s',###}<br/>
+        状态：
+        <php>
+	        	
+	        	  switch($vo['status']){
+	        	    case '0': 
+	        	       echo '[即将开始]';
+	        	       break;
+	        	    case '1':
+	        	       echo '[正在进行]';
+	        	       break;
+	        	    case '2':
+	        	       echo '[已结束]';
+	        	       break;
+	        	    default:
+                        echo '';
+	        	  }
+	       
+	        	
+	       </php><br>
+	       栏目：{$vo['column']}
+	        	</div>
+	        	<div style="float:right;margin-right:15px;">
+	        	{:InterviewImage($vo['pic'],60,60)}
+	        </div>
+	       </div>
+       </li>
+   </volist>
+   </ul>
+   </div>
+   <div class="page" style="">{$html}</div>
+</div>
+    <div class="clear"></div>
+  </div>
+</div>
+</div>    
+<script>
+	function filter(param){
+		var some = 0;
+		if(param=='all'){
+			some = 0;
+		}else if(param=='before'){
+			some = 1;
+		}else if(param=='begin'){
+			some = 2;
+		}else if(param=='after'){
+			some = 3;
+		}
+		window.location = "{:__URL__}&act=interviewList&status="+some;
+	}
+</script>
+<include file="__THEME__/footer" /> 

@@ -1,0 +1,28 @@
+<include file="__THEME__/admin" />
+<link href="../Public/style.css" rel="stylesheet" type="text/css" />
+<div id="so_main" class="so_main">
+    	<div class="page_tit"></span>数据字典</div>
+<form action="{:U('forum/Admin/doEditDict')}" method="post">
+<div class="form">
+    <dl>
+      <dt>中文名称：</dt>
+      <dd>
+        <input class="txt" id="wlable" name="name" value="{$data.name}" type="text">
+    </dl>
+    <dl>
+      <dt>key值：</dt>
+      <dd>
+        {$data.key}
+    </dl>
+     <dl>
+      <dt>key对应值：</dt>
+      <dd>
+        <input class="txt" id="wlable" name="value" value="{$data.value}" type="text">
+    </dl>
+   <div class="sea_left">
+   <input type="hidden" name="id" value="{$data.id}"></input>
+      <input type="submit" class="btn_b" value="确定">
+    </div>
+ </div>
+</form>
+</div>

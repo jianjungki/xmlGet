@@ -1,0 +1,143 @@
+<include file="_header" />
+<link href="../Public/style.css" rel="stylesheet" type="text/css">
+<div class="so_main">
+	<include file="_tab" />
+<div class="form">
+  <div class="Toolbar_inbox">
+    <a href="javascript:void(0)" onclick="addNewTemplate()" class="btn_a"><span>创建新模板</span></a> 
+    <a href="javascript:void(0)" onclick="delTemplate()" class="btn_a"><span>删除模板</span></a> 
+    </div>
+  <div class="list">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <th style="width:30px;"><input type="checkbox" name="checkbox" class="checkbox">
+          <label for="checkbox"></label></th>
+        <th class="line_l">ID</th>
+        <th class="line_l">名称</th>
+        <th class="line_l">操作</th>
+      </tr>
+      <volist name="data" id="vo">
+	      <tr id="temple_{$vo.id}">
+	        <td><input type="checkbox" name="checkbox2" class="checkbox2" value="{$vo.id}"></td>
+	        <td>{$vo.id}</td>
+	        <td>{$vo.name}</td>
+	        <td>
+		        <php>if($vo['type'] != 0 && $vo['type']!= 2){</php>
+		        	<a href="{:U('forum/admin/templateEdit',array('id'=>$vo['id']))}">编辑</a><a class="ml5" href="javascript:void(0)" onClick="delTemplate({$vo.id})">删除</a> 
+		        <php>}elseif($vo['type'] == 2){</php>
+		        	<a href="{:U('forum/admin/templateEdit',array('id'=>$vo['id']))}">编辑</a>
+		        <php>}</php></td>
+	        </td>
+	      </tr>
+      </volist>
+      
+    </table>
+     <div class="Toolbar_inbox">
+    <a href="javascript:void(0)" onclick="addNewTemplate()" class="btn_a"><span>创建新模板</span></a> 
+    <a href="javascript:void(0)" onclick="delTemplate()" class="btn_a"><span>删除模板</span></a> 
+    </div>
+  </div>
+</div>
+</div>
+  <script>
+function addNewTemplate(){
+	$.tbox.text("请输入模板名称","创建新的模板");
+	$('#tb_input_text').bind('keyup', function() {
+		limitInputLength(this, 20);
+	});
+}
+function ok(){
+	var newTitle = $.trim($('#tb_input_text').val());
+	if(newTitle == ""){
+		$.tbox.no("请输入模板名称");
+		setTimeout("$.tbox.close()",3000);
+		return;
+	}
+	$.post(URL+"&act=doAddTemplate",{title:newTitle},function(result){
+		result = eval("("+result+")");
+		if(result.status == 0){
+			$.tbox.no(result.info,"提示");
+			setTimeout("$.tbox.close()",3000);
+		}else{
+			location.reload();
+		}
+		
+	});
+}
+
+$(function(){
+	$('.checkbox').click(function(){
+		var check = $('.checkbox2').attr("checked");
+		if(!check){
+			$('.checkbox2').attr("checked","checked");
+		}else{
+			$('.checkbox2').removeAttr("checked");
+		}
+	});
+});
+
+	function delTemplate(id){
+		if(id){
+			var	templeId  = id;
+		}else{
+			var templeId = new Array();
+			$('.checkbox2').each(function(){
+				if($(this).attr("checked")){
+					templeId.push($(this).val());
+				}
+			});
+		}
+		if(templeId.length == 0 ){
+			$.tbox.no("请选择要删除的模板");
+			setTimeout("$.tbox.close()",1500);
+			return false;
+		}
+		
+		if(!confirm('你确定要删除吗？')) 
+				return false; 
+		
+		$.post("{:U('forum/Admin/templateDel')}",{templeId:templeId},function(txt){
+			txt = eval('('+txt+')');
+			if(txt.status=1){
+				alert(txt.info);
+				window.location.href = window.location.href;
+			}else{
+				alert(txt.info);
+			}
+		});
+}
+
+//对输入表单中的字数进行控制
+var limitInputLength = function(obj, byteLength) {
+	var value = obj.value;
+	var newValue = value.replace(/[^\x00-\xff]/g, "**");
+	var length = newValue.length;
+	
+	if(length * 1 <= byteLength * 1) {
+		return false;
+	}
+	
+	var limitDate = newValue.substr(0, byteLength);
+	var count = 0;
+	var limitValue = "";
+	for(var i = 0; i < limitDate.length; i++) {
+		var flat = limitDate.substr(i, 1);
+		if(flat == "*") {
+			count++;
+		}
+	}
+	var size = 0;
+	var istar = newValue.substr(byteLength * 1 - 1, 1);
+	
+	if(count % 2 == 0) {
+		size = count / 2 + (byteLength * 1 - count);
+		limitValue = value.substr(0, size);
+	} else {
+		size = (count - 1) / 2 + (byteLength * 1 - count);
+		limitValue = value.substr(0, size);
+	}
+	
+	obj.value = limitValue;
+}
+  </script>
+<include file="_footer" />

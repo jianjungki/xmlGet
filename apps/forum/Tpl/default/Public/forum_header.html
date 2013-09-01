@@ -1,0 +1,37 @@
+<link href="../Public/css/public.css" rel="stylesheet" type="text/css" />
+<link href="../Public/css/layout.css" rel="stylesheet" type="text/css" />
+<link href="../Public/css/theme.css" rel="stylesheet" type="text/css" />
+<link href="../Public/css/bbs.css" rel="stylesheet" type="text/css" />
+<link href="../Public/js/kissy/themes/default/editor-min.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" src="../Public/js/kissy/neweditor.js"></script>
+<script type="text/javascript" src="../Public/js/jquery-admin-box.js"></script>
+<script type="text/javascript" src="../Public/js/scroller.js"></script>
+<script src="../Public/js/kissy/kissy-min.js" type="text/javascript"></script>
+<script src="../Public/js/kissy/datalazyload-pkg-min.js" type="text/javascript"></script>
+<script src="../Public/js/jquery-admin-box.js" type="text/javascript"></script>
+<script type="text/javascript" src="../Public/js/lang.js"></script>
+<script type="text/javascript" src="../Public/js/tbox/tbox.js" ></script>
+
+<script> var LANGUAGE_NAME = 'zh-cn'; </script>
+<script type="text/javascript">
+	/* 全局JS常量 */
+	var THEME = "__THEME__";
+	var APP    = "__APP__";
+	var URL    = "__URL__";
+	var JS_DIR     = "../Public/js";
+	var PUBLIC = "../Public";
+	var SITE_URL = "<php>echo SITE_URL</php>";
+	var EDITER_BASE = JS_DIR+"/kissy/";
+	var EDITER_UPLOAD = "{:U('home/Attach/index')}";
+</script>
+
+<php>if(!empty($nowPath)){</php>
+<div style="_margin-top:55px;">
+<div class="path lh16">
+  <php>if($Core['isWebAdmin'] || $Core['isAdmin']){</php>
+  <span class="R"><a href="{:U('forum/Manage/index',array('class'=>$fid))}">版块管理</a></span>
+  <php>}</php>
+  当前位置：{$nowPath} </div>
+</div>
+<php>}</php>

@@ -1,0 +1,74 @@
+<include file="__THEME__/header" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.form.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/weibo.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.autocomplete.js"></script>
+<link href="__PUBLIC__/js/editor/editor/theme/change.css" rel="stylesheet"/>
+<script src="../Public/js/slides.min.jquery.js"></script>
+<div class="content_holder"> 
+<div class="content" style="width:1002px;"><!-- 内容 begin  --> 
+		<div class="t_column">
+		  <div class="t_column_left iepng"><img src="__PUBLIC__/js/editor/editor/theme/images/org.png" width="128" height="39"></div>
+		  <!--<div class="t_column_right">
+			   <ul>
+				   <li><a href="#"><img src="__PUBLIC__/js/editor/editor/theme/images/org2.png" width="98" height="39" id="button"></a></li>
+				   <li><a href="#"><img src="__PUBLIC__/js/editor/editor/theme/images/org1.png" width="98" height="39" id="button"></a></li>
+			   </ul>
+		  </div>-->
+		</div>
+			
+		<div class="org_main">
+		
+			<div class="orgTitle">
+				<div  style="float:right;height:25px;margin:6px 7px 0px 0px;_margin:7px 4px 0px 0px"><a href="javascript:changeit(20)" class="btn_b">换一换</a></div>
+				<h2 style="font-size:16px;line-height:28px;margin:6px 15px;color:#2679A5; font-family:'微软雅黑';">组织推荐</h2>
+			</div>
+          <ul class='re_OrgUl' id="recomlist" style="border-bottom:0;">
+          </ul>
+			
+			<div class="newOrgTitle">
+					<div class="searchBox">
+						  <form action="{:U('home/user/searchuser')}" method="post"  >
+							<input type="text" name="k" class='searchText' value="{$search_key}" onfocus="if(this.value == '{$search_key}')this.value='';" onblur="if(this.value == '')this.value='{$search_key}';" />
+						    <input type="submit" value="" class='searchButt'/>
+					  </form>
+					</div>
+					<h2 style="font-size:16px;line-height:28px;margin:6px 15px;color:#2679A5; font-family:'微软雅黑';">最新组织</h2>
+			</div>
+						
+			<ul class='bestNewOrg'>
+			<volist name="new_org.data" id="vo">
+				<li>
+               		<space uid="vo['uid']" target="_blank">{uavatar=m}</space>
+                      <label style='width:50px;padding:10px 0;color: #00576C;text-align: left;'>{$vo.uid|getUserName|getShort=8,"..."}</label>
+                </li>
+				</volist>
+				 <div class="page" style="vertical-align: bottom;padding-top: 30px;">{$new_org.html}</div>
+			</ul>
+		</div>
+</div> 
+</div>
+
+<include file="__THEME__/footer" /> 
+
+<script type="text/javascript">
+//绑定如下格式的a标签-可以显示小名片 <a href="#" rel="face" uid="1">##</a>
+$(document).ready(function(){
+	$.post(U("home/User/ChangeOrgUser"), {limit:20,count:0}, function(res){
+		                $('#recomlist').html('');
+		                $('#recomlist').html(res); 
+	 });
+	$("a[rel='face']").userCard();
+	
+})
+var numcount = 1;
+function changeit(limit){
+	if($('#recomlist li').size()<20)
+		                	numcount = 0;
+		                else 
+		                	numcount++;
+	$.post(U("home/User/ChangeOrgUser"), {limit:limit,count:numcount}, function(res){
+		                $('#recomlist').html('');
+		                $('#recomlist').html(res); 
+	 });
+}
+</script>

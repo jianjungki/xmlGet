@@ -1,0 +1,66 @@
+<link rel="stylesheet" href="../Public/screen.css" type="text/css" media="screen" charset="utf-8" />
+<div class="no_bg">
+  <div class="popPage">
+<script>
+    $(function() {
+        Screen.applyPopup.onload();
+    });
+
+    //验证内容字数 
+function keyUp(){ 
+     var brief = document.step1.brief; 
+     if ( 9 >= brief.value.length >= 1 ){ 
+          var nn = "0" + brief.value.length; 
+      }else{ 
+          var nn = brief.value.length; 
+      } 
+
+      var num = document.getElementById('num'); 
+      var numsh = document.getElementById('numShYu'); 
+      if (parseInt(brief.value.length) >= 200){ 
+          ui.error("内容已达到最大字数，不能再输入！"); 
+          brief.value = brief.value.substring(0,200); 
+          num.innerHTML = "200"; 
+          numsh.innerHTML = "0"; 
+          return false; 
+     } 
+      num.innerHTML = nn; 
+      numsh.innerHTML = 200 - parseInt(brief.value.length); 
+  } 
+</script>
+  <ul class="step_apply step1"><li>①填写资料</li><li>②绑定话题</li><li>③申请成功</li></ul>
+        <form action="javascript:void(0)" id="step1" name='step1'>
+        <ul class="list_appStep clearfix" >
+        <li><label><em>*</em>活动名称：</label><div class="c1"><input id="title" limit="20" name="" type="text"  class="text_Pop required" style="width:280px"/><b id="title-num"></b></div></li>
+        <li><label><em>*</em>开始时间：</label><div class="c1"><input id="start-date" name="" type="text"  class="text_Pop required date-pick" style="width:280px"/></div></li>
+        <li><label><em>*</em>结束时间：</label><div class="c1"><input id="end-date" name="" type="text" class="text_Pop required date-pick" style="width:280px"/></div></li>
+
+        <li><label><em>&nbsp;</em>活动描述：</label><div class="c1"><textarea   onkeyup="keyUp();" name="brief" limit="200" id="explains" cols="45" rows="5" class="text_Pop" style="width:280px"></textarea><span id="explains-num"></span></div></li>
+        <li><label><em>*</em>活动Logo：</label><div class="c1"> {:W('UploadAttach', array('uid'=>$mid,'limit'=>1))}</div></li>
+        <li class="mt20"><span>&nbsp;</span>
+            <a href="javascript:void(0)" onclick="Screen.apply.next()" class="btn_b ml5">确定</a>
+            <a href="javascript:void(0)" onclick="Screen.apply.previous()" class="btn_w ml5">取消</a>
+        </li>
+        </ul>
+        </form>
+        <form id="step2" action="javascript:void(0)" style="display:none">
+        <ul class="list_appStep clearfix" id="step2" >
+        <li><label><em>*</em>绑定话题：</label><div class="c1"><input name="" type="text" id="topic" class="text_Pop required"  style="width:200px"/>(限绑定一个话题)</div></li>
+        <li><label><em>*</em>关键字：</label><div class="c1"><textarea name="textarea" id="keyword" cols="45" rows="5" class="text_Pop required" style="width:200px"/ ></textarea>(每一个关键字为一行)</div></li>
+        <div class="tipsPop">
+            <div class="tipsPop_tit">小提示</div>
+            <div class="tipsPop_arrt"><div class="topic_arr"></div></div>
+            <div class="tipsPop_info">绑定话题及关键字后，所有包含该话题和关键字的微博均会自动推送到内容页，筛选后展示。</div>
+        </div>
+        <li class="mt20"><span>&nbsp;</span>            
+            <a href="javascript:void(0)" onclick="Screen.apply.next()" class="btn_b ml5">确定</a>
+            <a href="javascript:void(0)" onclick="Screen.apply.previous()" class="btn_w ml5">取消</a>
+        </li>
+        </ul>
+        </form>
+        <div class="block_apply_s" id="step3" style="display:none">
+            
+        </div>
+  </div>
+</div>
+
